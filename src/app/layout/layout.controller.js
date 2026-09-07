@@ -21,7 +21,7 @@ class LayoutController {
   }
 
   updateTabbar(){
-    this.isWithPlaybackBar = this.$state.$current.name === 'volumio.playback' && this.themeManager.theme === 'volumio3';
+    this.isWithPlaybackBar = this.$state.$current.name === 'volumio.playback' && ['volumio3', 'artwork'].indexOf(this.themeManager.theme) > -1;
   }
 
   initMainMenu(){

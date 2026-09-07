@@ -5,7 +5,7 @@
         <div class="boxHeader">
           <div class="title">
             <h2>
-              <a ui-sref="volumio.settings" class="btn btn-primary" ng-if="pluginComponent.themeManager.theme === 'volumio3'">
+              <a ui-sref="volumio.settings" class="btn btn-primary" ng-if="(pluginComponent.themeManager.theme === 'volumio3' || pluginComponent.themeManager.theme === 'artwork')">
                 <i class="fa fa-arrow-left" style="font-size: 24px"></i>
               </a>
               {{pluginComponent.pluginObj.page.label}}

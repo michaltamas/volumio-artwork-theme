@@ -22,7 +22,7 @@ class FooterController {
   }
 
   updateTabbar(){
-    this.showPlayerFooter = this.state.$current.name === 'volumio.playback' && this.themeManager.theme === 'volumio3';
+    this.showPlayerFooter = this.state.$current.name === 'volumio.playback' && ['volumio3', 'artwork'].indexOf(this.themeManager.theme) > -1;
   }
 }
 

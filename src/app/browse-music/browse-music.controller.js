@@ -956,7 +956,7 @@ class BrowseMusicController {
   }
 
   isVolumio3Theme(){
-    return this.themeManager.theme === 'volumio3';
+    return ['volumio3', 'artwork'].indexOf(this.themeManager.theme) > -1;
   }
 
   fetchTrackTypeImage() {
