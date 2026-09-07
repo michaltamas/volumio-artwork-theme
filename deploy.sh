@@ -1,61 +1,26 @@
-#!/bin/bash
-set -e # exit with nonzero exit code if anything fails
+#!/usr/bin/env bash
+# Deploy built dist/ to the device as the additive "Artwork One" UI variant.
+set -euo pipefail
+HOST="volumio@192.168.1.131"
+DIST="$(dirname "$0")/dist"
+[ -d "$DIST" ] || { echo "No dist/ — run ./build.sh artwork artwork first"; exit 1; }
 
-# VOLUMIO THEME
-# clear and re-create the dist directory
-rm -rf dist || exit 0;
-mkdir dist;
+# 1) sync build to a NEW folder (never touches www/www3/www4)
+ssh "$HOST" 'mkdir -p /volumio/http/www5'
+rsync -az --delete -e ssh "$DIST"/ "$HOST":/volumio/http/www5/
 
-# Build Volumio UI
-echo "Building Volumio UI"
-gulp build --theme="volumio" --env="production"
+# 2) register variant idempotently, backing up the list first
+ssh "$HOST" 'bash -s' <<'REMOTE'
+set -e
+LIST=/volumio/volumioUisList.json
+cp -n "$LIST" "$LIST.bak.$(date +%Y%m%d%H%M%S)"
+node -e '
+  const fs=require("fs"), p="/volumio/volumioUisList.json";
+  const a=JSON.parse(fs.readFileSync(p,"utf8"));
+  if(!a.some(u=>u.uiName==="artwork")) a.unshift({uiPrettyName:"Artwork One",uiName:"artwork",uiPath:"/volumio/http/www5"});
+  fs.writeFileSync(p, JSON.stringify(a,null,2));
+  console.log("registered:", a.map(u=>u.uiName).join(","));
+'
+REMOTE
 
-# Fallback to 127.0.0.1 (for Ui on non-networked systems)
-echo "Writing local-config.json"
-echo '{"localhost": "http://127.0.0.1:3000"}' > dist/app/local-config.json
-
-# go to the dist directory and create a *new* Git repo
-echo "Initializing Git Repo"
-cd dist
-git init
-
-# inside this git repo we'll pretend to be a new user
-echo "Writing Git Config"
-git config user.name "Volumio"
-git config user.email "info@volumio.org"
-
-# Deploy
-echo "Deploying to Dist Branch"
-git add .
-git commit -m "Deploy to Dist Branch"
-
-# Force push from the current repo's master branch to the dist branch for deployment
-echo "Pushing to Dist Branch"
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:dist > /dev/null 2>&1
-
-cd ..
-# VOLUMIO3 THEME
-# clear and re-create the dist directory
-rm -rf dist || exit 0;
-mkdir dist;
-
-# Build Volumio UI
-gulp build --theme="volumio3" --env="production"
-
-# Fallback to 127.0.0.1 (for Ui on non-networked systems)
-echo '{"localhost": "http://127.0.0.1:3000"}' > dist/app/local-config.json
-
-# go to the dist directory and create a *new* Git repo
-cd dist
-git init
-
-# inside this git repo we'll pretend to be a new user
-git config user.name "Volumio"
-git config user.email "info@volumio.org"
-
-# Deploy
-git add .
-git commit -m "Deploy to Dist3 Branch"
-
-# Force push from the current repo's master branch to the dist branch for deployment
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:dist3 > /dev/null 2>&1
+echo "Deployed. Run: ssh $HOST 'volumio vrestart'  (then pick 'Artwork One' in the UI switcher)"
