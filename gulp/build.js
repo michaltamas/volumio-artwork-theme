@@ -186,7 +186,10 @@ gulp.task('clean', function (done) {
 
 gulp.task('credits', function (cb) {
   exec('node src/app/themes/' + themeSelected + '/scripts/credits.js ' + themeSelected + ' ' + variantSelected, function (err, stdout, stderr) {
-    cb(err);
+    // credits.js requires the 'npm' module (a heavy build-only dep). If it is
+    // absent, fall back to the committed credits.json instead of failing build.
+    if (err) { console.log('[credits] skipped (using committed credits.json):', err.message); }
+    cb();
   });
 })
 
