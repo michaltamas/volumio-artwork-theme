@@ -1,5 +1,13 @@
 <!-- NOTE: MOVE HERE THE BACKGROUND IF POSSIBLE -->
 
+<!-- Artwork Is The Interface: full-frame blurred cover behind every screen (spec §4) -->
+<div class="art-stack" aria-hidden="true">
+  <img class="art-bg"
+       ng-if="layout.playerService.state.albumart"
+       ng-src="{{ layout.playerService.albumart }}" alt="">
+  <div class="art-scrim"></div>
+</div>
+
 <wait-backend-scrim></wait-backend-scrim>
 <div id="wizardScrim"></div>
 

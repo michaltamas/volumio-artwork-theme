@@ -1,0 +1,34 @@
+/* Full-frame artwork background (spec §4). Sits behind all screens.
+   Uses the fixed scrim (spec §4.2 fallback); sampled color-mix scrim is Plan 2. */
+.art-stack {
+  position: fixed; inset: 0; overflow: hidden; z-index: 0;
+  background: var(--ground); /* ground shows before a cover loads */
+}
+.art-bg {
+  position: absolute; width: 150%; height: 150%; left: -25%; top: -25%;
+  object-fit: cover;
+  filter: blur(90px) saturate(1.6);
+  -webkit-filter: blur(90px) saturate(1.6);
+  opacity: .9;
+  transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
+}
+.art-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(6, 10, 13, .40) 0%,
+    rgba(6, 10, 13, .72) 55%,
+    rgba(6, 10, 13, .94) 100%);
+}
+/* §10 fallback: no backdrop-filter / low power — flat, still intentional */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .art-bg { filter: none; -webkit-filter: none; opacity: .35; }
+  .art-scrim { background: rgba(8, 10, 13, .86); }
+}
+/* keep app content above the background; reveal the background for this theme only
+   (scoped by body id, which theme-manager sets to the theme name) */
+#layout-container { position: relative; z-index: 1; }
+body#artwork,
+body#artwork #layout-container,
+body#artwork .main-container,
+body#artwork #contentWrapper,
+body#artwork #content { background-color: transparent; }

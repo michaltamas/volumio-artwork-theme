@@ -1,11 +1,14 @@
 class LayoutController {
-  constructor($state, $scope, themeManager, $log, matchmediaService) {
+  constructor($state, $scope, themeManager, $log, matchmediaService, playerService) {
     'ngInject';
     this.$state = $state;
     this.$scope = $scope;
     this.themeManager = themeManager;
     this.$log = $log;
     this.matchmediaService = matchmediaService;
+    // exposed so the artwork theme's full-frame background can bind to the
+    // currently playing cover from any screen (additive; other themes ignore it)
+    this.playerService = playerService;
 
     this.wrapperColumnClass = '';
     
