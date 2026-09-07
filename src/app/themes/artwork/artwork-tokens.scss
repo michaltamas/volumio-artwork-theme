@@ -1,0 +1,22 @@
+:root {
+  /* ground & ink (spec §3.1) */
+  --ground:#0a0c0e; --ground-deep:#080a0c; --card-flat:#141414;
+  --ink:#ffffff; --ink-1:#f2f3f5; --ink-2:#e4e7ea; --ink-3:#c2c8cd;
+  --ink-muted:#a7adb3; --ink-dim:#8c9298; --ink-faint:#71777d;
+  /* glass (spec §3.2) */
+  --glass-1-fill:rgba(8,10,13,.42); --glass-1-blur:30px; --glass-1-border:rgba(255,255,255,.07);
+  --glass-2-fill:rgba(255,255,255,.10); --glass-2-border:rgba(255,255,255,.13); --glass-2-hover:rgba(255,255,255,.16);
+  --glass-3-fill:rgba(0,0,0,.28); --glass-3-blur:34px; --glass-3-border:rgba(255,255,255,.14);
+  --hairline:rgba(255,255,255,.14); --hairline-soft:rgba(255,255,255,.08);
+  /* signal (spec §3.3) */
+  --ok:#7de3b4; --ok-alt:#5fd35f; --warn:#e07b2c; --err:#e0453a;
+  /* radius / space / rail (spec §3.4) */
+  --r-frame:18px; --r-panel:16px; --r-card:14px; --r-cover:6px; --r-control:12px; --r-pill:999px;
+  --rail-w:76px; --rail-item:46px; --gap-shelf:22px; --gap-row:2px;
+}
+/* sampled palette ground (spec §4.3).
+   NOTE: @property registration (for smooth crossfade interpolation, §7.1) is
+   deferred to Plan 2 — the legacy gulp-csso minifier cannot parse @property,
+   so it must be injected outside the SCSS→CSSO pipeline when we add palette
+   sampling. Until then these are plain (snap-on-change) custom properties. */
+:root { --art-1:#1a1c1e; --art-2:#141618; }
