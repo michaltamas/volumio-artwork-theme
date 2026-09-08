@@ -291,3 +291,9 @@ body#artwork .aw-state-myvolumio-profile .box .avatar-letter {
     font-size: 104px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: #fff; }
 }
 body#artwork .aw-state-myvolumio-profile .box .user-data .user-title .btn { order: 2; }
+/* measured: the core pricing-table styles still win on the card surface and paint the
+   footer divider pure white — pin both */
+body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card .panel.panel-primary {
+  background: rgba(255, 255, 255, .06) !important; border: 1px solid rgba(255, 255, 255, .1) !important;
+  .panel-footer { border-top-color: rgba(255, 255, 255, .1) !important; }
+}

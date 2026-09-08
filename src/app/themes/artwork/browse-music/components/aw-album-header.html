@@ -1,5 +1,5 @@
 <!-- Artwork album/playlist header (clean bespoke markup, no inherited styles) -->
-<div class="aw-albumhead" ng-class="{'aw-albumhead--playlist': browse.browseService.info.type === 'playlist'}">
+<div class="aw-albumhead" ng-class="{'aw-albumhead--playlist': browse.isPlaylistInfo}">
 
   <!-- blurred backdrop of this item's cover -->
   <div class="aw-albumhead__bg" aria-hidden="true">
@@ -12,7 +12,7 @@
     <button class="aw-back" ng-click="browse.goBack()" aria-label="Back" title="Back">
       <span class="material-symbols-rounded">arrow_back</span>
     </button>
-    <div class="aw-albumhead__eyebrow mono">{{ browse.browseService.info.type === 'playlist' ? 'PLAYLIST' : 'ALBUM' }}</div>
+    <div class="aw-albumhead__eyebrow mono">{{ browse.isPlaylistInfo ? 'PLAYLIST' : 'ALBUM' }}</div>
   </div>
 
   <div class="aw-albumhead__cover">
@@ -32,12 +32,13 @@
     <span ng-if="(browse.browseService.info.year || browse.browseService.info.genre) && browse.browseService.info.trackType"> · </span>
     <span ng-if="browse.browseService.info.trackType">{{browse.browseService.info.trackType}}</span>
     <span ng-if="browse.browseService.info.duration"> · {{browse.browseService.info.duration}}</span>
+    <span ng-if="browse.isPlaylistInfo && browse.currentListCount">{{browse.currentListCount}} TRACKS</span>
   </div>
 
   <div class="aw-albumhead__actions">
     <button class="aw-btn aw-btn--primary" ng-click="browse.playItemsList(browse.browseService.info)">
       <span class="material-symbols-rounded">play_arrow</span>
-      <span>{{ browse.browseService.info.type === 'playlist' ? 'Play' : 'Play album' }}</span>
+      <span>{{ browse.isPlaylistInfo ? 'Play' : 'Play album' }}</span>
     </button>
     <button class="aw-iconbtn" ng-click="browse.addToFavorites($event, browse.browseService.info)" title="Favourite">
       <span class="material-symbols-rounded">favorite</span>

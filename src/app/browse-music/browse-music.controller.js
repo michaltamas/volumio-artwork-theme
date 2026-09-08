@@ -194,6 +194,12 @@ class BrowseMusicController {
     const r = this.browseService.currentFetchRequest;
     return r ? (r.name || r.title || '') : '';
   }
+  // Volumio types a playlist page as 'playlist' or 'play-playlist'
+  get isPlaylistInfo() {
+    const t = this.browseService.info && this.browseService.info.type;
+    return t === 'playlist' || t === 'play-playlist';
+  }
+
   get currentListCount() {
     try { return this.browseService.lists[0].items.length; } catch (e) { return 0; }
   }

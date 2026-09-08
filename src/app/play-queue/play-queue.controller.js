@@ -55,6 +55,13 @@ class PlayQueueController {
       }
       this.list += `</div>`;
 
+      // Artwork theme: duration column (spec §5.9). Other themes keep their rows.
+      if (this.$document[0].body.id === 'artwork' && item.duration) {
+        const s = Math.max(0, parseInt(item.duration, 10) || 0);
+        const mm = Math.floor(s / 60), ss = s % 60;
+        this.list += `<div class="duration mono">${mm}:${ss < 10 ? '0' + ss : ss}</div>`;
+      }
+
       this.list +=
         `<div class="commandButtons">
           <button

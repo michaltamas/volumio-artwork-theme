@@ -172,3 +172,5 @@ body#artwork {
   }
   #playQueueList { padding-top: 8px; }
 }
+/* duration column (spec §5.9): mono, --ink-faint, right of the title block */
+body#artwork #playQueueList .duration { flex: none; margin-right: 10px; font-size: 12px; letter-spacing: .04em; color: var(--ink-faint); }
