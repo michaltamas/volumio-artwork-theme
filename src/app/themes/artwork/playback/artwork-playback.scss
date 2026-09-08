@@ -275,8 +275,8 @@ div#goBackPanelWrapper {
 body#artwork .with-playback-bar #content { padding-bottom: 0; }
 
 /* topbar zone · output readout (spec §6.1) */
+#np .np-topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
 #np .np-zone {
   font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  max-width: 50%; text-align: center;
 }

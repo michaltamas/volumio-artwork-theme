@@ -2,11 +2,13 @@
 <div id="np" class="hidden-xs hidden-sm">
 
   <div id="np-topbar">
-    <a class="np-chevron" ng-click="playback.goBack()" aria-label="Back" title="Back">
-      <span class="material-symbols-rounded">expand_more</span>
-    </a>
-    <div class="np-zone mono" ng-if="playback.npRoom">
-      <span>{{playback.npRoom}}</span><span ng-if="playback.npOutput">&nbsp;·&nbsp;{{playback.npOutput}}</span>
+    <div class="np-topbar-left">
+      <a class="np-chevron" ng-click="playback.goBack()" aria-label="Back" title="Back">
+        <span class="material-symbols-rounded">expand_more</span>
+      </a>
+      <div class="np-zone mono" ng-if="playback.npRoom">
+        <span>{{playback.npRoom}}</span><span ng-if="playback.npOutput">&nbsp;·&nbsp;{{playback.npOutput}}</span>
+      </div>
     </div>
     <div id="np-badge-slot">
       <div class="np-badge">
