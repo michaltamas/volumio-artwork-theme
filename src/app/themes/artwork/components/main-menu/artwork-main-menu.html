@@ -35,7 +35,7 @@
 
   <ul class="main-menu-bottom">
     <li ng-if="mainMenu.isAuthActive()">
-      <a ng-click="mainMenu.$state.go('myvolumio')" aria-label="MyVolumio" title="MyVolumio"
+      <a ng-click="mainMenu.goToMyVolumio()" aria-label="MyVolumio" title="MyVolumio"
          ng-class="{active: mainMenu.$state.current.name.indexOf('myvolumio') === 0}">
         <span class="material-symbols-rounded">person</span>
       </a>

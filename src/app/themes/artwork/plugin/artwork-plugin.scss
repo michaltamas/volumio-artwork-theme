@@ -149,3 +149,5 @@ body#artwork #pluginWrapper .form-group {
    select colour from the base theme — decoration, not status (spec §3.3) */
 body#artwork #pluginWrapper [ng-include*="core-plugin"] div { border-bottom-color: rgba(255, 255, 255, .06); border-top-color: rgba(255, 255, 255, .06); }
 body#artwork #pluginWrapper .ui-select-container { color: var(--ink-1); }
+/* base theme paints a green inset box-shadow on ui-select containers */
+body#artwork #pluginWrapper .ui-select-container, body#artwork #pluginWrapper .ui-select-container:focus-within { box-shadow: none !important; }

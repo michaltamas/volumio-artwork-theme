@@ -114,6 +114,20 @@ class MainMenuController {
     }, true);
   }
 
+  // MyVolumio profile is a child state guarded by requireUser: auth must be
+  // enabled first (the core user card does the same), then go to the profile
+  goToMyVolumio() {
+    const go = () => this.$state.go('myvolumio.profile');
+    try {
+      this.authService.enableAuth();
+      // the user resolves asynchronously after enableAuth — navigate once the
+      // auth state is known, so the profile's requireUser guard doesn't bounce
+      const wait = this.authService.waitForUser && this.authService.waitForUser();
+      if (wait && typeof wait.then === 'function') { wait.then(go, go); return; }
+    } catch (e) { /* auth plugin missing: fall through, the guard redirects */ }
+    go();
+  }
+
   isAuthActive() {
     return this.isPluginActiveById('my-volumio');
   }

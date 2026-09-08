@@ -183,3 +183,111 @@ body#artwork .setting-container.panel {
 }
 .aw-settings-hint { margin-top: 34px; font-size: 11px; letter-spacing: .18em; color: #8c9298; }
 body#artwork .myvolumio-card-container { background: transparent; border: 0; box-shadow: none; }
+
+/* ============================================================
+   MyVolumio account (mockup 2f-account) — Volumio's profile page restyled.
+   Scoped by the per-state wrapper class (aw-state-<state>) — CSSO-safe. Real blocks only:
+   avatar / name / email / Edit, Current plan card, devices table.
+   ============================================================ */
+body#artwork .aw-state-myvolumio-profile .box {
+  position: relative; padding: 40px 52px 60px; background: transparent; border: 0; box-shadow: none;
+
+  /* top row: mono eyebrow + Log out pill (mockup) */
+  .boxHeader { background: transparent; border: 0; padding: 0;
+    .title h2 { margin: 0; background: transparent; padding: 0; font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: .2em; text-transform: uppercase; color: #cfd4d8; font-weight: 400; line-height: 36px; } }
+  #authLoginPlugin .panel-heading .btn-danger {
+    position: absolute; top: 40px; right: 52px; margin: 0;
+    display: inline-flex; align-items: center; gap: 9px; height: 36px; padding: 0 16px; border-radius: 18px;
+    background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 14px; font-weight: 500; box-shadow: none;
+    .glyphicon { color: #c2c8cd; font-size: 15px; top: 0; }
+    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+  }
+  #authLoginPlugin.panel, #device-selector-container.panel { background: transparent; border: 0; box-shadow: none; margin: 0; }
+  #authLoginPlugin > .panel-heading { padding: 0; border: 0; background: transparent;
+    .panel-title { display: none; } }
+  #authLoginPlugin > .panel-body { padding: 0; }
+
+  /* profile: 196px avatar tile + name/email/actions, plan card on the right */
+  .my-profile { display: grid; grid-template-columns: 196px 1fr; gap: 44px; margin: 34px 0 0; align-items: start;
+    > [class*="col-"] { width: auto; float: none; padding: 0; } }
+  .avatar-image-box {
+    width: 196px; height: 196px; border-radius: var(--r-cover); display: grid; place-items: center;
+    background: linear-gradient(150deg, #8b7fc4, #5f5590); box-shadow: 0 34px 70px -24px rgba(0, 0, 0, .8);
+    .avatar-letter { font-family: var(--font-ui); font-size: 104px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: #fff; }
+  }
+  .my-profile > div > .row { display: grid; grid-template-columns: 1fr 420px; gap: 44px; margin: 0;
+    > [class*="col-"] { width: auto; float: none; padding: 0; } }
+  .user-data { padding-top: 8px;
+    .user-title { margin: 0; font-family: var(--font-ui); font-size: 56px; font-weight: 800; letter-spacing: -.03em; line-height: 1.02; color: var(--ink); border: 0; padding: 0; }
+    .user-username { margin: 10px 0 0; font-size: 15px; color: #8c9298; }
+    .user-details { margin: 18px 0 0; font-size: 16px; color: #e4e7ea; .glyphicon { color: #a7adb3; margin-right: 8px; } }
+    .btn { display: inline-flex; align-items: center; gap: 9px; height: 48px; padding: 0 22px; border-radius: 24px; margin-top: 22px;
+      background: #fff; color: #0d0e10; border: 0; font-size: 15px; font-weight: 700; box-shadow: none;
+      .glyphicon, .fa { top: 0; color: #0d0e10; } &:hover { background: #f2f3f5; color: #0d0e10; } }
+  }
+
+  /* current plan card */
+  .myvolumio-current-plan-card .panel.panel-primary {
+    border-radius: 16px; padding: 24px 26px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); box-shadow: none; margin: 0;
+    .panel-heading { padding: 0; background: transparent; border: 0;
+      .panel-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #a7adb3; font-weight: 400; text-align: left;
+        .glyphicon { display: none; } } }
+    .panel-body { padding: 0; margin-top: 22px; background: transparent; font-family: var(--font-ui); font-size: 52px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); text-align: left; }
+    .panel-footer { padding: 0; margin-top: 22px; background: transparent; border: 0; border-top: 1px solid rgba(255, 255, 255, .1); padding-top: 22px;
+      .btn { width: 100%; height: 48px; border-radius: 24px; background: #fff; color: #0d0e10; border: 0; font-size: 15px; font-weight: 700; box-shadow: none;
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+        .btn-label { background: transparent; color: #0d0e10; padding: 0; position: static; } .glyphicon { top: 0; }
+        &:hover { background: #f2f3f5; } } }
+  }
+
+  /* activated devices */
+  #device-selector-container > .panel-heading { padding: 0 0 14px; margin-top: 46px; background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, .1);
+    .panel-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #cfd4d8; font-weight: 400; .fa { display: none; } } }
+  #device-selector-container > .panel-body { padding: 0; }
+  #device-selector-container table.table {
+    border-collapse: separate; border-spacing: 0 6px; margin: 4px 0 0; background: transparent;
+    th { border: 0; padding: 16px 14px 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #8c9298; font-weight: 400; }
+    td { border: 0; padding: 14px; background: rgba(255, 255, 255, .06); font-size: 15px; color: var(--ink-1); vertical-align: middle;
+      &:first-child { border-radius: 12px 0 0 12px; font-weight: 600; } &:last-child { border-radius: 0 12px 12px 0; text-align: right; } }
+    .btn { width: 36px; height: 36px; padding: 0; border-radius: 50%; background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #c2c8cd; box-shadow: none;
+      display: inline-grid; place-items: center; .fa, .glyphicon { top: 0; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } }
+  }
+  /* the same 44×26 switch as the settings rows */
+  #device-selector-container .bootstrap-switch {
+    position: relative; width: 44px !important; height: 26px; border-radius: 13px; border: 0; background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
+    .bootstrap-switch-container { display: none; }
+    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
+    &::after { content: 'Off'; position: absolute; left: 56px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; }
+    &.bootstrap-switch-on { background: #fff; &::before { left: 21px; } &::after { content: 'On'; color: var(--ink-1); } }
+  }
+}
+
+/* the core profile SCSS reverses the column placement (measured: the avatar column
+   landed in the 1fr track and the text column in the 196px one) — pin every cell */
+body#artwork .aw-state-myvolumio-profile .box {
+  .my-profile { direction: ltr;
+    > :first-child { grid-column: 1; grid-row: 1; order: 0; }
+    > :last-child  { grid-column: 2; grid-row: 1; order: 1; } }
+  .my-profile > div > .row { direction: ltr;
+    .user-data   { grid-column: 1; order: 0; }
+    .plans-table { grid-column: 2; order: 1; } }
+  /* the Edit button is markup-nested inside the name heading: name left, Edit right */
+  .user-data .user-title { display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    .btn { margin: 0 0 0 auto; float: none; } }
+}
+/* measured: auto-placement put the two cells in different rows; the core pricing
+   table gives .the-price a fixed 364px box */
+body#artwork .aw-state-myvolumio-profile .box {
+  .my-profile > div > .row { .user-data, .plans-table { grid-row: 1; } }
+  .myvolumio-current-plan-card .the-price { height: auto; min-height: 0; padding: 0; margin: 0; line-height: 1; font-size: inherit; background: transparent; border: 0; }
+}
+/* avatar initial: ng-letter-avatar draws a 50px canvas image; render the real
+   initial (data-initial, additive attribute on the core template) crisply instead */
+body#artwork .aw-state-myvolumio-profile .box .avatar-letter {
+  width: 100%; height: 100%; display: grid; place-items: center;
+  img, ng-letter-avatar { display: none; }
+  &::before { content: attr(data-initial); text-transform: uppercase; font-family: var(--font-ui);
+    font-size: 104px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: #fff; }
+}
+body#artwork .aw-state-myvolumio-profile .box .user-data .user-title .btn { order: 2; }

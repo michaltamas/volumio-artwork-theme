@@ -1,6 +1,7 @@
 <div class="avatar-image-box">
   <div ng-if="myVolumioAvatarImageController.imageUrl" class="avatar-image img-circle img-responsive" style="background-image: url('{{myVolumioAvatarImageController.imageUrl}}');"></div>
-  <div ng-if="!myVolumioAvatarImageController.imageUrl" class="avatar-letter">
+  <div ng-if="!myVolumioAvatarImageController.imageUrl" class="avatar-letter"
+       data-initial="{{ (myVolumioAvatarImageController.user.firstName || myVolumioAvatarImageController.user.email || '?').charAt(0) }}">
     <ng-letter-avatar dynamic="true" shape="round" data="{{myVolumioAvatarImageController.user.firstName || myVolumioAvatarImageController.user.email || '?'}}"></ng-letter-avatar>
   </div>
 </div>
