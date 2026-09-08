@@ -5,7 +5,7 @@
       ng-click="playerButtons.playerService.repeatAlbum(true, false)"
       title="{{'TRACK_INFO_BAR.REPEAT_ALL' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
-    <i class="fa fa-repeat"></i>
+    <span class="material-symbols-rounded">repeat</span>
   </button>
   <button ng-if="playerButtons.playerService.state.repeat && !playerButtons.playerService.state.repeatSingle"
       class="btn btn-link playerControls repeat-button"
@@ -13,7 +13,7 @@
       ng-click="playerButtons.playerService.repeatAlbum(true, true)"
       title="{{'TRACK_INFO_BAR.REPEAT_SINGLE' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
-    <i class="fa fa-repeat"></i>
+    <span class="material-symbols-rounded">repeat</span>
   </button>
   <button ng-if="playerButtons.playerService.state.repeat && playerButtons.playerService.state.repeatSingle"
       class="btn btn-link playerControls repeat-button"
@@ -21,7 +21,7 @@
       ng-click="playerButtons.playerService.repeatAlbum(false, false)"
       title="{{'TRACK_INFO_BAR.REPEAT_OFF' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
-    <i class="fa fa-repeat">1</i>
+    <span class="material-symbols-rounded">repeat_one</span>
   </button>
   <button
       id='prev-button'
@@ -30,7 +30,7 @@
       ng-class="{'hidden-xs hidden-sm': playerButtons.isInFooter}"
       title="{{'BROWSER.PREVIOUS_TRACK' | translate}}"
       ng-disabled="playerButtons.playerService.state.disableUi">
-    <i class="fa fa-step-backward"></i>
+    <span class="material-symbols-rounded">skip_previous</span>
   </button>
 
   <div class="playPauseBtnWrapper">
@@ -41,7 +41,7 @@
           class="btn btn-link playPause play"
           title="{{'BROWSER.PLAY' | translate}}"
           ng-disabled="playerButtons.playerService.state.disableUi">
-        <i class="fa fa-play"></i>
+        <span class="material-symbols-rounded">play_arrow</span>
       </button>
 
       <button
@@ -50,7 +50,7 @@
           class="btn btn-link playPause play"
           title="{{'BROWSER.PLAY' | translate}}"
           ng-disabled="playerButtons.playerService.state.disableUi">
-        <i class="fa fa-play"></i>
+        <span class="material-symbols-rounded">play_arrow</span>
       </button>
 
       <button
@@ -60,7 +60,7 @@
           ng-class="{active: playerButtons.playerService.state.status === 'play'}"
           title="{{'BROWSER.PAUSE' | translate}}"
           ng-disabled="playerButtons.playerService.state.disableUi">
-        <i class="fa fa-pause"></i>
+        <span class="material-symbols-rounded">pause</span>
       </button>
 
       <button
@@ -69,7 +69,7 @@
           class="btn btn-link playPause"
           ng-class="{active: playerButtons.playerService.state.status === 'stop'}"
           ng-disabled="playerButtons.playerService.state.disableUi">
-        <i class="fa fa-stop"></i>
+        <span class="material-symbols-rounded">stop</span>
       </button>
 
     </div>
@@ -82,7 +82,7 @@
       ng-class="{'hidden-xs hidden-sm': playerButtons.isInFooter}"
       title="{{'BROWSER.NEXT_TRACK' | translate}}"
       ng-disabled="playerButtons.playerService.state.disableUi">
-    <i class="fa fa-step-forward"></i>
+    <span class="material-symbols-rounded">skip_next</span>
   </button>
 
   <button
@@ -92,7 +92,7 @@
     ng-class="{'active': playerButtons.playerService.state.random, 'player-action-shuffle': true, 'hidden-xs hidden-sm': playerButtons.isInFooter}"
     title="{{'TRACK_INFO_BAR.RANDOM' | translate}}"
     ng-disabled="trackManager.playerService.state.disableUi">
-     <i class="fa fa-random"></i>
+     <span class="material-symbols-rounded">shuffle</span>
   </button>
 
 </div>

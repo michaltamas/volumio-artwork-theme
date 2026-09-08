@@ -1,177 +1,44 @@
+/* Artwork mini player (spec §5.10) — glass bar spanning the content column */
 #footer-content {
-  @include make-row();
+  position: fixed; left: var(--rail-w); right: 0; bottom: 0;
+  height: 98px; z-index: 3;
+  display: flex; align-items: center; padding: 0 22px;
+  background: var(--glass-1-fill);
+  backdrop-filter: blur(var(--glass-1-blur));
+  -webkit-backdrop-filter: blur(var(--glass-1-blur));
+  border-top: 1px solid var(--hairline-soft);
+  color: var(--ink-1);
 
-  #player-bar {
-    @include make-xs-column(24);
-
-    border-top: 1px solid $theme-primary-color;
-    height: $theme-player-height-smartphone;
-    bottom: $theme-tabbar-height-smartphone;
-    background-color: $theme-sidebar-background-color;
-
-    &.playback-bar{
-      height: $theme-playback-bar-height-smartphone;
-      bottom: 0;
-
-      @include breakpoint(md) {
-        height: $theme-player-height-tablet;
-      }
-      @include breakpoint(lg) {
-        height: $theme-player-height-desktop;
-      }
-    }
-
-    @include breakpoint(md) {
-      height: $theme-player-height-tablet;
-      bottom: 0;
-      background: transparent;
-    }
-    @include breakpoint(lg) {
-      height: $theme-player-height-desktop;
-      bottom: 0;
-      background: transparent;
-    }
-
-    > .row{
-      height: 100%;
-    }
-
-    .lined-seekbar{
-      .time-label, .time-right, .time-left{
-        display: none;
-      }
-
-      .seekbar-container{
-        padding-top: 0px;
-
-        .slider.slider-horizontal{
-          height: 8px;
-
-          .slider-track{
-            height: 5px;
-          }
-
-        }
-      }
-
-    }
-
-    .track-info-container{
-      text-align: left;
-      padding-top: 0px;
-      position: relative;
-      height: 100%;
-
-      @include breakpoint(xs){
-        text-align: center;
-        padding-top: 4px;
-      }
-      @include breakpoint(sm){
-        text-align: center;
-        padding-top: 4px;
-      }
-    }
-
-    .controls-container{
-      text-align: center;
-      height: $theme-player-height-smartphone;
-      bottom: 0px;
-
-      @include breakpoint(md){
-        bottom: -20px;
-        border-right: 1px solid $theme-dark-color;
-        border-left: 1px solid $theme-dark-color;
-      }
-      @include breakpoint(lg){
-        bottom: -20px;
-        border-right: 1px solid $theme-dark-color;
-        border-left: 1px solid $theme-dark-color;
-      }
-
-      position: relative;
-
-      player-buttons{
-        display: block;
-      }
-
-      player-seekbar{
-        display: block;
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-      }
-    }
-
-    .volume-container .volume-slider{
-      margin-top: 28px;
-
-      slider{
-
-      }
-
-      .slider-track{
-        height: 10px;
-        background: transparent !important;
-        border-radius: 0px !important;
-        border: 0px !important;
-      }
-
-      .slider-selection{
-        background-image: $theme-slider-bar-full-gradient;
-        border-radius: 0px !important;
-        border: 0px !important;
-      }
-
-      .slider-track-high{
-        background-color: $theme-dark-grey;
-        background-image: none;
-        border-radius: 0px !important;
-      }
-
-      .slider-handle{
-        background-color: $theme-primary-color !important;
-        background-image: none !important;
-        border: none !important;
-        height: 16px !important;
-        width: 8px !important;
-        margin-left: -3px !important;
-        margin-top: -6px !important;
-      }
-
-      .slider-handle.round{
-        border-radius: initial !important;
-      }
-
-    }
-
-    .play-mode-container{
-      margin-top: 28px;
-      text-align: center;
-      padding-right: 0;
-      padding-left: 0;
-    }
-
+  #player-bar { width: 100%; }
+  #player-bar > .row {
+    display: flex; align-items: center; gap: 18px; margin: 0;
+    > [class*="col-"] { float: none; padding: 0; width: auto; }
   }
 
-  #tab-bar {
-    padding-left: 0;
-    padding-right: 0;
+  .track-info-container { flex: 0 0 300px; min-width: 0; }   /* ellipsis-friendly */
+  .controls-container   { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
+  .volume-container     { flex: 0 0 210px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin: 0; }
+  .play-mode-container  { flex: 0 0 auto; }
+
+  #queueOutputButtonsContainer { display: flex; align-items: center; gap: 6px; }
+
+  /* transport / control icon buttons */
+  .btn-link { color: var(--ink-2); border: 0; background: none;
+    .material-symbols-rounded { font-size: 24px; }
+    &:hover { color: var(--ink-1); }
+    &.active { color: var(--ink); }
   }
-
-}
-
-.padding-0{
-  padding: 0;
-}
-
-div#queueOutputButtonsContainer{
-  padding-top: 4px;
-
-  button.btn.btn-link {
-    padding: 0;
+  /* primary play/pause — the only pure-white filled control (spec §5.8) */
+  .playPause {
+    width: 46px; height: 46px; border-radius: var(--r-pill);
+    background: var(--ink); color: var(--ground);
+    display: grid; place-items: center;
+    .material-symbols-rounded { font-size: 26px; }
+    &:hover { color: var(--ground); }
   }
 }
 
-button.btn.btn-link.audio-outputs-button {
-    float: right;
-}
+/* leave room so page content isn't hidden behind the fixed mini player */
+body#artwork #content { padding-bottom: 98px; }
+/* on the full Now Playing screen the mini player yields to the playback bar */
+body#artwork .with-playback-bar #footer-content { display: none; }

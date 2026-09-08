@@ -35,7 +35,7 @@
             ng-mouseleave="hover = ''"
             ng-class="{selected: this.$state.current.name === 'volumio.play-queue'}"
             title="{{'COMMON.TAB_QUEUE' | translate}}">
-            <i class="material-icons">playlist_play</i>
+            <span class="material-symbols-rounded">queue_music</span>
           </button>
           <button
             id="openMenuBtn"
@@ -43,8 +43,8 @@
             ng-disabled="!audioOutputs.isMultiOutputsAvailable()"
             class="btn btn-link audio-outputs-button"
             title="{{'MULTIDEVICE.ZONES_AND_OUTPUTS' | translate}}">
-            <i ng-if="audioOutputs.menuVisible" class="material-icons">close</i>
-            <i ng-if="!audioOutputs.menuVisible" class="material-icons">speaker_group</i>
+            <span ng-if="audioOutputs.menuVisible" class="material-symbols-rounded">close</span>
+            <span ng-if="!audioOutputs.menuVisible" class="material-symbols-rounded">speaker</span>
           </button>
           <div>
           </div>
