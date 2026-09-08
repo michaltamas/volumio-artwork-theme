@@ -34,7 +34,7 @@
   a {
     display: grid; place-items: center;
     width: var(--rail-item); height: var(--rail-item);
-    border-radius: 13px;
+    border-radius: 13px; cursor: pointer;
     color: var(--ink-dim); text-decoration: none;
     transition: background .18s, color .18s;
     .material-symbols-rounded { font-size: 23px; }
@@ -48,7 +48,13 @@
    (#main-menu-container, col-md-4) must NOT reserve grid width, and the
    content column must span full width offset only by the rail. */
 body#artwork #main-menu-container { width: 0; min-width: 0; padding: 0; }
-body#artwork #contentWrapper { width: 100%; float: none; }
-/* #content is position:absolute on some screens (ignores parent padding),
-   so the rail offset must live on it directly. */
-body#artwork #content { padding-left: var(--rail-w); }
+/* Offset the whole content column past the fixed 76px rail via the wrapper's
+   BOX (margin) — not padding. #content and #browse are position:absolute and
+   ignore parent padding, so a padding offset let cards overlap the rail and
+   swallow its clicks. Shifting the wrapper's box moves the containing block
+   for both absolute and relative descendants. */
+body#artwork #contentWrapper {
+  float: none;
+  margin-left: var(--rail-w);
+  width: calc(100% - var(--rail-w));
+}

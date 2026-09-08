@@ -1,32 +1,32 @@
 <!-- Artwork icon rail (spec §5.1). Fixed 76px labelless nav.
-     Icons use Material Symbols Rounded, matching the design mockup.
-     Music sources (Qobuz/Tidal/library) live in the Library screen tabs (§6.2);
-     they remain reachable here via the "browse" icon until then. -->
+     Uses ng-click -> $state.go (ui-sref does not navigate reliably inside this
+     isolate-scope directive). Icons: Material Symbols Rounded (design mockup).
+     Music sources live in the Library screen; reachable via the "browse" icon. -->
 <div id="main-menu">
 
-  <div class="brand" ui-sref="redirect" role="link" tabindex="0" aria-label="Volumio">V</div>
+  <div class="brand" ng-click="mainMenu.$state.go('redirect')" role="link" tabindex="0" aria-label="Volumio">V</div>
 
   <ul class="main-menu-list">
     <li>
-      <a ui-sref="volumio.search" aria-label="Search" title="Search"
+      <a ng-click="mainMenu.$state.go('volumio.search')" aria-label="Search" title="Search"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.search'}">
         <span class="material-symbols-rounded">search</span>
       </a>
     </li>
     <li>
-      <a ui-sref="volumio.home" aria-label="Home" title="Home"
+      <a ng-click="mainMenu.$state.go('volumio.home')" aria-label="Home" title="Home"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.home'}">
         <span class="material-symbols-rounded">home</span>
       </a>
     </li>
     <li>
-      <a ui-sref="volumio.browse" aria-label="Music" title="Music"
+      <a ng-click="mainMenu.$state.go('volumio.browse')" aria-label="Music" title="Music"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.browse'}">
         <span class="material-symbols-rounded">album</span>
       </a>
     </li>
     <li>
-      <a ui-sref="volumio.play-queue" aria-label="Queue" title="Queue"
+      <a ng-click="mainMenu.$state.go('volumio.play-queue')" aria-label="Queue" title="Queue"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.play-queue'}">
         <span class="material-symbols-rounded">queue_music</span>
       </a>
@@ -35,19 +35,19 @@
 
   <ul class="main-menu-bottom">
     <li ng-if="mainMenu.isAuthActive()">
-      <a ui-sref="myvolumio" aria-label="MyVolumio" title="MyVolumio"
+      <a ng-click="mainMenu.$state.go('myvolumio')" aria-label="MyVolumio" title="MyVolumio"
          ng-class="{active: mainMenu.$state.current.name.indexOf('myvolumio') === 0}">
         <span class="material-symbols-rounded">person</span>
       </a>
     </li>
     <li>
-      <a ui-sref="volumio.multi-room" aria-label="Zones" title="Zones"
+      <a ng-click="mainMenu.$state.go('volumio.multi-room')" aria-label="Zones" title="Zones"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.multi-room'}">
         <span class="material-symbols-rounded">speaker</span>
       </a>
     </li>
     <li>
-      <a ui-sref="volumio.settings" aria-label="Settings" title="Settings"
+      <a ng-click="mainMenu.$state.go('volumio.settings')" aria-label="Settings" title="Settings"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.settings'}">
         <span class="material-symbols-rounded">tune</span>
       </a>
