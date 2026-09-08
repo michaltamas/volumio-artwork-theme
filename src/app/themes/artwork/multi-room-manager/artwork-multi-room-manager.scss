@@ -1,0 +1,29 @@
+/* Artwork Zones page — device rows in the mockup's table idiom
+   (44px 1fr 200px 220px 96px 44px grid, pad 14, r12, .06 row, icon tile 44 r11 .1) */
+body#artwork .aw-zones { padding: 34px 52px 48px; color: var(--ink-1);
+  .aw-listhead { margin: 0 0 18px; }
+  .aw-zones__empty { font-size: 15px; color: #a7adb3; margin-top: 12px; }
+  .aw-zones__cols, .aw-zone { display: grid; grid-template-columns: 44px 1fr 300px 220px 200px; align-items: center; gap: 20px; }
+  .aw-zones__cols { padding: 16px 14px 12px; font-size: 10px; letter-spacing: .16em; color: #8c9298; }
+  .aw-zone { padding: 14px; border-radius: 12px; border-top: 1px solid rgba(255, 255, 255, .06);
+    &.aw-zone--self { background: rgba(255, 255, 255, .06); border-top: 0; }
+    &.aw-zone--child { .aw-zone__icon { margin-left: 22px; background: rgba(255, 255, 255, .06); } } }
+  .aw-zone__icon { position: relative; width: 44px; height: 44px; border-radius: 11px; background: rgba(255, 255, 255, .1); display: grid; place-items: center; overflow: hidden;
+    .material-symbols-rounded { font-size: 22px; color: #e4e7ea; }
+    img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; } }
+  .aw-zone__name { min-width: 0; }
+  .aw-zone__title { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aw-zone__sub { font-size: 13px; color: #8c9298; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aw-zone__np { display: flex; align-items: center; gap: 9px; min-width: 0; font-size: 14px; color: #e4e7ea;
+    .aw-zone__track { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .aw-zone__idle { color: #8c9298; text-transform: capitalize; } }
+  .aw-zone__dot { width: 7px; height: 7px; border-radius: 50%; background: #71777d; flex: none; &--on { background: #7de3b4; } }
+  .aw-zone__vol { display: flex; align-items: center; gap: 12px;
+    input[type="range"] { flex: 1; accent-color: #fff; height: 3px; cursor: pointer; }
+    .mono { font-size: 12px; color: #a7adb3; width: 28px; text-align: right; } }
+  .aw-zone__act { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .aw-zone__btn { height: 34px; padding: 0 15px; border-radius: 17px; border: 1px solid rgba(255, 255, 255, .16); background: transparent; color: #e4e7ea; font-size: 13px; font-weight: 500; cursor: pointer;
+    &:hover { background: rgba(255, 255, 255, .06); }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  .aw-zone__group { appearance: none; -webkit-appearance: none; padding-right: 15px; option { color: #0d0e10; } }
+}

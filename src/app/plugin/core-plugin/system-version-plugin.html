@@ -5,8 +5,9 @@
   </div>
   <div class="panel-body">
     <h4 ng-if="false" class="sectionDescription"></h4>
-    <span translate="COMMON.SYSTEM_VERSION"></span>: {{sv.systemVersion.systemversion}}
-    <span translate="COMMON.RELEASED"></span>: {{sv.systemVersion.builddate}}
+    <!-- inline spans: no visual change for the other themes; the Artwork theme lays them out as a card -->
+    <span class="sv-main"><span translate="COMMON.SYSTEM_VERSION"></span>: <span class="sv-value">{{sv.systemVersion.systemversion}}</span></span>
+    <span class="sv-sub"><span translate="COMMON.RELEASED"></span>: <span class="sv-value">{{sv.systemVersion.builddate}}</span></span>
     <h4 ng-if="false" class="sectionDescription"></h4>
     <div ng-if="sv.systemVersion.additionalSVInfo">{{sv.systemVersion.additionalSVInfo}}
     </div>

@@ -681,6 +681,13 @@ body#artwork {
   }
   /* search results grid/list spacing */
   .dedicated-search-container-flow-space { height: 8px; }
+  /* the inherited theme pins a 77px dark band under the input; the Artwork page has no band */
+  #browse .dedicated-search-container { position: static; width: auto; height: auto; background: transparent !important; border: 0; box-shadow: none; }
+  #browse .dedicated-search { background: transparent !important; } /* the inner band carries the base theme's dark fill */
+  #browse .panel .body-content.new-browse.with-search-header { top: 0; height: 100%; padding-top: 0; }
+  .dedicated-search .search-container { max-width: 640px; margin: 0; }
+  .dedicated-search input.form-control { height: 46px; font-size: 15px; border-radius: 23px; background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .11); padding-left: 48px; }
+  .dedicated-search .search-icon .fa { font-size: 17px; color: #a7adb3; }
 }
 
 

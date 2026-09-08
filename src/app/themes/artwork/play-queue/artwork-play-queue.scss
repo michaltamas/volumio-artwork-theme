@@ -150,7 +150,7 @@ body#artwork {
   /* currently playing row — Volumio marks it with .isPlaying (spec §5.9) */
   #playQueueList li.isPlaying, #playQueueList li.playing, #playQueueList li.active {
     background: rgba(255,255,255,.10);
-    .title { color: var(--ok); }
+    .title { color: #fff; font-weight: 700; } /* mockup playing row: white 700 on a .1 row, no accent colour */
     .rollover { opacity: 1; background: transparent; }
   }
 

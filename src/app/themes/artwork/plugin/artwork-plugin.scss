@@ -384,4 +384,12 @@ body#artwork #pluginWrapper {
     td.commandCol .btn { height: 32px; line-height: 30px; padding: 0 10px; }
   }
   @media (max-width: 900px) { #networkDrives table.table tr { grid-template-columns: 1fr 120px 44px; td:nth-child(2) { display: none; } } }
+
+  /* --- System version → software card (mockup: pad 20 22, r16, .09/.14; title 16/600; mono line) --- */
+  #systemVersion > .panel-body {
+    display: block; padding: 20px 22px !important; border-radius: 16px; margin-top: 4px;
+    background: rgba(255, 255, 255, .09) !important; border: 1px solid rgba(255, 255, 255, .14) !important;
+    .sv-main { display: block; font-size: 16px; font-weight: 600; color: var(--ink-1); }
+    .sv-sub { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 11px; color: #8c9298; text-transform: uppercase; letter-spacing: .04em; }
+  }
 }

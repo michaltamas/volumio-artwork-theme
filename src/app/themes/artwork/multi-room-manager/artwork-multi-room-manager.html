@@ -1,0 +1,46 @@
+<!-- Artwork Zones (multiroom): the real device list from multiRoomService, laid out like the
+     mockup's device rows (44px icon tile · name + host · status · volume · actions). -->
+<div id="aw-zones" class="aw-zones">
+
+  <div class="aw-listhead">
+    <h1 class="aw-listhead__title">Zones</h1>
+    <span class="aw-listhead__count mono" ng-if="multiRoomManager.multiRoomService.devices.length">{{multiRoomManager.multiRoomService.devices.length}}</span>
+  </div>
+
+  <p class="aw-zones__empty" ng-if="!multiRoomManager.multiRoomService.devices.length">No other Volumio devices found on this network.</p>
+
+  <div class="aw-zones__cols mono" ng-if="multiRoomManager.multiRoomService.devices.length" aria-hidden="true">
+    <span></span><span>NAME</span><span>NOW PLAYING</span><span>VOLUME</span><span></span>
+  </div>
+
+  <div class="aw-zone" ng-repeat="device in multiRoomManager.multiRoomService.devices track by $index"
+       ng-class="{'aw-zone--self': device.isSelf, 'aw-zone--child': device.isChild}">
+    <div class="aw-zone__icon">
+      <img ng-if="device.state.albumart" ng-src="{{device.state.albumart}}" alt="" onerror="this.style.display='none'">
+      <span class="material-symbols-rounded">speaker</span>
+    </div>
+    <div class="aw-zone__name">
+      <div class="aw-zone__title">{{device.name}}</div>
+      <div class="aw-zone__sub">{{device.host}}<span ng-if="device.isSelf"> · this device</span><span ng-if="device.isChild"> · grouped</span></div>
+    </div>
+    <div class="aw-zone__np">
+      <span class="aw-zone__dot" ng-class="{'aw-zone__dot--on': device.state.status === 'play'}"></span>
+      <span ng-if="device.state.track" class="aw-zone__track">{{device.state.artist}}<span ng-if="device.state.artist && device.state.track"> · </span>{{device.state.track}}</span>
+      <span ng-if="!device.state.track" class="aw-zone__idle">{{device.state.status || 'idle'}}</span>
+    </div>
+    <div class="aw-zone__vol">
+      <input type="range" min="0" max="100" step="1" ng-model="device.state.volume" ng-change="multiRoomManager.setVolume(device)" aria-label="Volume {{device.name}}">
+      <span class="mono">{{device.state.volume}}</span>
+    </div>
+    <div class="aw-zone__act">
+      <button type="button" class="aw-zone__btn" ng-if="!device.isSelf && !device.isChild" ng-click="multiRoomManager.switchTo(device)">Open</button>
+      <select class="aw-zone__btn aw-zone__group" ng-if="!device.isChild && multiRoomManager.groupTargets(device).length"
+              ng-model="device.$groupWith" ng-change="multiRoomManager.group(device, device.$groupWith)"
+              ng-options="d as ('Play with ' + d.name) for d in multiRoomManager.groupTargets(device)" aria-label="Group {{device.name}}">
+        <option value="">Group…</option>
+      </select>
+      <button type="button" class="aw-zone__btn" ng-if="device.isChild" ng-click="multiRoomManager.ungroup(device)">Ungroup</button>
+    </div>
+  </div>
+
+</div>

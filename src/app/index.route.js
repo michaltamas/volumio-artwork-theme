@@ -123,7 +123,11 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider, the
     url: 'multi-room',
     views: {
       'content@volumio': {
-        templateUrl: 'app/themes/axiom/multi-room-manager/axiom-multi-room-manager.html',
+        // the theme's page when it ships one (the axiom template is not part of this build)
+        templateProvider: ['$templateRequest', 'themeManager', ($templateRequest, themeManager) => {
+          const own = themeManager.getHtmlPath('multi-room-manager', 'multi-room-manager');
+          return $templateRequest(own, true).catch(() => $templateRequest('app/themes/axiom/multi-room-manager/axiom-multi-room-manager.html', true));
+        }],
         controller: 'MultiRoomManagerController',
         controllerAs: 'multiRoomManager'
       }

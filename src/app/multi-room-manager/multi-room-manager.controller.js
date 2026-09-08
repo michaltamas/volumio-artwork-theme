@@ -33,6 +33,29 @@ class MultiRoomManagerController {
     }, 300, false);
   }
 
+  /* ---- used by the Artwork Zones page (no drag & drop): open a device, group / ungroup, volume ---- */
+  switchTo(device) {
+    if (device && !device.isChild && !device.isSelf) { this.socketService.host = device.host; }
+  }
+  groupTargets(device) {
+    const all = (this.multiRoomService && this.multiRoomService.devices) || [];
+    return all.filter(d => d !== device && !d.isChild);
+  }
+  group(device, target) {
+    if (!device || !target) { return; }
+    this.multiRoomService.addChild(device, target);
+    device.$groupWith = null;
+  }
+  ungroup(device) {
+    if (device && device.ip) { this.multiRoomService.removeChildDevice(device.ip); }
+  }
+  setVolume(device) {
+    if (!device || !device.state) { return; }
+    const v = parseInt(device.state.volume, 10);
+    if (isNaN(v)) { return; }
+    if (device.isChild) { this.changeChildVolume(device.ip, v); } else { this.changeGroupVolume(device.ip, v); }
+  }
+
   changeChildVolume(ip, volume) {
     if (this.timeoutHandler) {
       this.$timeout.cancel(this.timeoutHandler);
