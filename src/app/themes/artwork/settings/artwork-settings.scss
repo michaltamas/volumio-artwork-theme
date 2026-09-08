@@ -147,6 +147,8 @@ body#artwork .myvolumio-card-container { background: transparent; border: 0; box
    ============================================================ */
 body#artwork .aw-state-myvolumio-profile .box {
   position: relative; padding: 40px 52px 60px; background: transparent; border: 0; box-shadow: none;
+  /* Volumio wraps the profile and the device table in dark .panel-body boxes; the design is flat */
+  .panel, .panel-body, .panel-heading { background: transparent; border: 0; box-shadow: none; }
 
   /* top row: mono eyebrow + Log out pill (mockup) */
   .boxHeader { background: transparent; border: 0; padding: 0;
