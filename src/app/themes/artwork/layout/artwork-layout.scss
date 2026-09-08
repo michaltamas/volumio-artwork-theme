@@ -110,3 +110,7 @@
   body#artwork #main-menu, body#artwork #footer-content { background: rgba(8, 10, 13, .86); }
   body#artwork .aw-sside, body#artwork #playQueue .trackInfoBarButtons { background: rgba(8, 10, 13, .86); }
 }
+
+/* Now Playing has its own transport and no mini-player: the container must not reserve the
+   footer band (mockup NP is the full 900px with its own 38px bottom padding) */
+body#artwork #layout-container .main-container.with-playback-bar { padding-bottom: 0; }

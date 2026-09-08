@@ -284,3 +284,104 @@ body#artwork .aw-state-volumio-plugin-manager #content {
     &.active { background: var(--ok); } }
   .text-muted { color: #8c9298; }
 }
+
+/* ============================================================
+   Volumio core sections inside settings pages, restyled to the mockup (2h Network, 2j Sources).
+   The markup is Volumio's; only presentation changes. Values quoted from the mockup's inline CSS.
+   ============================================================ */
+body#artwork #pluginWrapper {
+  /* --- Network status → two status cards (mockup: flex, cards padding 20 22, r16, .09/.14) --- */
+  #networkStatus > .panel-heading { display: none; } /* the cards speak for themselves */
+  #networkStatus .networkStatus { display: flex; gap: 12px; }
+  #networkStatus .networkStatus > .panel {
+    flex: 1; width: auto; float: none; margin: 0; padding: 20px 22px; border-radius: 16px; box-shadow: none;
+    background: rgba(255, 255, 255, .09) !important; border: 1px solid rgba(255, 255, 255, .14) !important; /* outranks the page-level flattening */
+    > .panel-heading { padding: 0; margin: 0; background: transparent !important; border: 0 !important;
+      .panel-title { margin: 0; font-family: var(--font-ui); font-size: 15px; font-weight: 600; color: #fff; text-transform: capitalize; letter-spacing: 0; } }
+    > .panel-body { padding: 0;
+      ul { list-style: none; margin: 18px 0 0; padding: 0; }
+      li { font-family: var(--font-mono); font-size: 13px; color: #e4e7ea; margin-top: 8px;
+        > span { font-family: var(--font-ui); color: #8c9298; } }
+      /* first line (the address) reads like the mockup's big mono IP */
+      li:first-child { font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin: 0;
+        > span { display: none; } }
+      .fa.true { color: #7de3b4; } .fa.false { color: var(--err); } }
+  }
+
+  /* --- Wireless networks list → rows (mockup grid 26px 1fr …, pad 13 12, r11, first row .06) --- */
+  #wifiPlugin table.table, #wifiPlugin table.table tbody { display: block; width: 100%; margin: 0; }
+  #wifiPlugin table.table tr {
+    display: grid; grid-template-columns: 26px 1fr 24px; align-items: center; gap: 18px;
+    padding: 13px 12px; border-radius: 11px; border-top: 1px solid rgba(255, 255, 255, .05); cursor: pointer;
+    &:first-child { border-top: 0; background: rgba(255, 255, 255, .06); }
+    &:hover { background: rgba(255, 255, 255, .06); }
+    /* explicit rows: with columns only, auto-placement would push the ssid (3rd cell, column 2)
+       below the lock (2nd cell, column 3) */
+    td { grid-row: 1; padding: 0; border: 0; font-size: 16px; font-weight: 600; color: var(--ink-1); vertical-align: middle; }
+    td.wifiIcon { grid-column: 1; img { width: 20px; height: auto; display: block; } .fa { color: #a7adb3; } }
+    td.lockIcon { grid-column: 3; text-align: right; .fa { font-size: 16px; color: #a7adb3; } }
+    td:nth-child(3) { grid-column: 2; }
+    td:nth-child(n+4), td.commandCol { display: none; } /* the connected row's empty/command cells */
+    td.insertPasswordRow { grid-column: 1 / -1; font-weight: 400; font-size: 14px; }
+  }
+
+  /* --- Sources: library counts → stats strip card with the two actions on the right --- */
+  #myMusic > .panel-heading { display: none; }
+  #myMusic > .panel-body {
+    display: grid; grid-template-columns: 1fr auto; column-gap: 26px; align-items: center;
+    padding: 22px 26px !important; border-radius: 16px; margin-top: 4px;
+    background: rgba(255, 255, 255, .09) !important; border: 1px solid rgba(255, 255, 255, .14) !important;
+    table { display: block; grid-column: 1; grid-row: 1 / 3; margin: 0; width: auto;
+      tbody { display: block; }
+      tr { display: flex; gap: 20px; }
+      th, td { flex: 1; border: 0; padding: 0; text-align: left; background: transparent; }
+      th:last-child, td:last-child { flex: 1.3; }
+      th { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; color: #a7adb3; font-weight: 400; text-transform: uppercase; }
+      td { font-family: var(--font-ui); font-size: 38px; font-weight: 800; letter-spacing: -.03em; line-height: 1; padding-top: 10px; color: var(--ink); white-space: nowrap; } }
+    .btn { grid-column: 2; margin: 0; width: 100%; }
+    .btn + .btn { margin-top: 9px; background: transparent; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .18); height: 42px; line-height: 40px; font-weight: 500;
+      &:hover { background: rgba(255, 255, 255, .08); } }
+  }
+
+  /* --- Functionalities (streaming & inputs) → two-column cards with the switch on the right --- */
+  #myMusicPlugins > .panel-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0; }
+  /* Bootstrap's clearfix pseudo-elements (.panel-body/.row ::before/::after, display:table) would become
+     grid/flex items and eat the first cell and the gaps */
+  #myMusicPlugins > .panel-body::before, #myMusicPlugins > .panel-body::after,
+  #myMusicPlugins #installed-plugin-lists .row::before, #myMusicPlugins #installed-plugin-lists .row::after,
+  #myMusic > .panel-body::before, #myMusic > .panel-body::after { display: none; content: none; }
+  #myMusicPlugins #installed-plugin-lists {
+    display: flex; align-items: center; justify-content: flex-start; gap: 14px; padding: 14px 16px; border-radius: 12px; background: rgba(255, 255, 255, .06); min-width: 0;
+    .row, #list-group { display: contents; }
+    [class*="col-"] { width: auto; float: none; padding: 0; min-height: 0; }
+    /* leaf cells become the card's flex items: name · status · settings · switch */
+    > .row > #list-group:first-child > .row > .col-md-16 { order: 1; flex: 1 1 auto; min-width: 0; text-align: left; font-size: 15px; font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      .fa { display: none; } }
+    > .row > #list-group:first-child > .row > .col-md-8 { order: 4; flex: none; .bootstrap-switch { margin-right: 0; } }
+    > .row > #list-group:last-child > .col-md-12:first-child { order: 2; flex: none; font-size: 12px; color: #8c9298; white-space: nowrap; }
+    > .row > #list-group:last-child > .col-md-12:last-child { order: 3; flex: none;
+      .btn { float: none; height: 30px; line-height: 28px; padding: 0 12px; font-size: 12px; background: transparent; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .18); font-weight: 500; } }
+    .pluginDotStatus { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); margin-right: 7px; vertical-align: 1px;
+      &.active { background: #7de3b4; } }
+    /* the switch label "On/Off" would collide with the card edge: keep the pill only */
+    .bootstrap-switch::after { display: none; }
+  }
+
+  /* --- Network drives → rows (mockup grid 44px 1fr 210px 150px 24px, pad 14 12, r11) --- */
+  #networkDrives > .panel-heading .fa-info-circle { display: none; }
+  #networkDrives > .panel-body { padding: 0; }
+  #networkDrives #addNewDrive { float: right; margin-top: -46px; background: transparent; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .18); font-weight: 500; }
+  #networkDrives table.table, #networkDrives table.table tbody { display: block; width: 100%; margin: 0; }
+  #networkDrives table.table tr {
+    display: grid; grid-template-columns: 1fr 210px 150px 44px; align-items: center; gap: 18px; padding: 14px 12px; border-radius: 11px; border-top: 1px solid rgba(255, 255, 255, .05);
+    &:first-child { border-top: 0; padding: 22px 12px 11px; border-radius: 0; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+    th { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; color: #8c9298; font-weight: 400; text-transform: uppercase; padding: 0; border: 0; }
+    td { padding: 0; border: 0; vertical-align: middle; color: var(--ink-1); }
+    td:nth-child(1) { font-size: 16px; font-weight: 600; }
+    td:nth-child(2) { font-family: var(--font-mono); font-size: 12px; color: #8c9298; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    td:nth-child(3) .fa.true { color: #7de3b4; } td:nth-child(3) .fa.false { color: var(--err); }
+    td:nth-child(4) { font-family: var(--font-mono); font-size: 13px; color: #c2c8cd; }
+    td.commandCol .btn { height: 32px; line-height: 30px; padding: 0 10px; }
+  }
+  @media (max-width: 900px) { #networkDrives table.table tr { grid-template-columns: 1fr 120px 44px; td:nth-child(2) { display: none; } } }
+}
