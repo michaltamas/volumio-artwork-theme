@@ -5,7 +5,12 @@
     <a class="np-chevron" ng-click="playback.goBack()" aria-label="Back" title="Back">
       <span class="material-symbols-rounded">expand_more</span>
     </a>
-    <div id="np-badge-slot"><!-- bit-perfect badge (Task 3) --></div>
+    <div id="np-badge-slot">
+      <div class="np-badge">
+        <span class="np-dot"></span>
+        <span class="mono">BIT PERFECT</span>
+      </div>
+    </div>
   </div>
 
   <div id="np-hero">
@@ -19,7 +24,26 @@
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
       <div class="np-artist">{{playback.playerService.state.artist}}</div>
       <div class="np-album">{{playback.playerService.state.album}}</div>
-      <div id="np-chip-slot"><!-- hi-res chip + signal path (Task 3) --></div>
+      <div id="np-chip-slot">
+        <div class="np-quality">
+          <div class="np-chip mono" ng-if="playback.playerService.state.bitdepth || playback.playerService.state.samplerate">
+            <span class="np-chip-val" ng-if="playback.playerService.state.bitdepth">{{playback.playerService.state.bitdepth}}</span>
+            <span class="np-chip-val" ng-if="playback.playerService.state.samplerate">{{playback.playerService.state.samplerate}}</span>
+          </div>
+          <div class="np-chip mono" ng-if="!playback.playerService.state.bitdepth && !playback.playerService.state.samplerate && playback.playerService.state.bitrate">
+            <span class="np-chip-val">{{playback.playerService.state.bitrate}}</span>
+          </div>
+          <span class="np-format mono" ng-if="playback.playerService.state.trackType">{{playback.playerService.state.trackType}}</span>
+        </div>
+        <!-- signal path (§5.6) — static nodes where live data is unavailable; refine later -->
+        <div class="np-signalpath mono" ng-if="playback.playerService.state.samplerate">
+          <span>SOURCE {{playback.playerService.state.bitdepth}} {{playback.playerService.state.samplerate}}</span>
+          <span class="np-arrow">&rarr;</span>
+          <span>NO RESAMPLE</span>
+          <span class="np-arrow">&rarr;</span>
+          <span class="np-node-final">DAC</span>
+        </div>
+      </div>
     </div>
   </div>
 

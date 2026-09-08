@@ -230,3 +230,43 @@ div#goBackPanelWrapper {
   #np-seek { margin-bottom: 18px; }
   #np-transport { display: flex; }
 }
+
+/* hi-res chip + bit-perfect badge + signal path (spec §5.4–5.6) */
+#np {
+  .np-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 36px; padding: 0 14px; border-radius: var(--r-pill);
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    color: var(--ink-1); font-size: 11px; letter-spacing: .14em;
+  }
+  .np-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+
+  .np-quality { display: flex; align-items: center; gap: 12px; }
+  .np-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 38px; padding: 0 15px; border-radius: var(--r-pill);
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+  }
+  .np-chip-val { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .np-format { font-size: 11px; letter-spacing: .14em; color: var(--ink-muted); text-transform: uppercase; }
+
+  .np-signalpath { margin-top: 16px; display: flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: .14em; color: var(--ink-3); }
+  .np-arrow { color: rgba(255,255,255,.28); }
+  .np-node-final { color: var(--ink); }
+
+  /* transport (spec §5.8) — big white play button */
+  #np-transport {
+    align-items: center; gap: 34px;
+    #playerButtons { display: flex; align-items: center; gap: 34px; }
+    .btn-link { color: var(--ink-2); border: 0; background: none;
+      .material-symbols-rounded { font-size: 30px; }
+      &:hover { color: var(--ink); } }
+    .playPause {
+      width: 76px; height: 76px; border-radius: var(--r-pill);
+      background: var(--ink); color: var(--ground);
+      display: grid; place-items: center;
+      .material-symbols-rounded { font-size: 42px; }
+      &:hover { color: var(--ground); } }
+  }
+}
