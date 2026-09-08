@@ -1,98 +1,44 @@
-#main-menu{
-
-  /*background-image: linear-gradient($theme-dark-color, $theme-primary-color);*/
-  background-color: $theme-sidebar-background-color;
-  padding-top: 20px;
-  padding-left: $main-menu-padding-left;
-  padding-right: $main-menu-padding-right;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  .main-menu-list-container ul.main-menu-list {
-    $main-menu-text-color: false !default;
-    $main-menu-static-button-color: false !default;
-    @if $main-menu-text-color {
-      color: $main-menu-text-color;
-    }
-    a {
-      @if $main-menu-static-button-color {
-        color: $main-menu-static-button-color;
-      }
-    }
-  }
+/* Artwork icon rail (spec §5.1) */
+#main-menu {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--rail-w);
+  z-index: 3;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 0;
+  background: var(--glass-1-fill);
+  backdrop-filter: blur(var(--glass-1-blur));
+  -webkit-backdrop-filter: blur(var(--glass-1-blur));
+  border-right: 1px solid var(--glass-1-border);
 
   .logo {
-    img {
-      cursor: pointer;
-      width: $main-menu-logo-width;
-      margin: 0 auto;
-    }
+    width: 34px; height: 34px; margin-bottom: 18px; flex: none;
+    img { width: 34px; height: 34px; border-radius: 9px;
+      border: 1.5px solid var(--ink-1); object-fit: cover; cursor: pointer; }
   }
 
-  .myvolumio-card-container{
-    margin-top: 46px;
+  .main-menu-list,
+  .main-menu-bottom {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%;
   }
+  .main-menu-list { flex: 1 1 auto; }
+  .main-menu-bottom { flex: none; margin-top: auto; padding-top: 6px; }
 
-  .main-menu-list-container{
+  li { width: 100%; display: flex; justify-content: center; }
 
-    margin-top: 64px;
-    margin-bottom: 64px;
-
-    ul.main-menu-list{
-
-      width: 100%;
-      margin-bottom: 32px;
-      list-style: none;
-      padding: 0;
-
-      li:first-child{
-        padding-top: 0;
-      }
-
-      li{
-
-        padding: 0;
-        padding-top: 4px;
-
-        a {
-          font-size: 20px;
-          font-weight: 300;
-          cursor: pointer;
-        }
-
-      }
-
-      .spacer{
-        height: 0;
-        padding-top: 40px;
-      }
-
-    }
-
+  a {
+    display: grid; place-items: center;
+    width: var(--rail-item); height: var(--rail-item);
+    border-radius: var(--r-control);
+    color: var(--ink-dim); text-decoration: none;
+    transition: background .18s, color .18s;
+    i { font-size: 24px; line-height: 1; }
+    &:hover { background: rgba(255, 255, 255, .08); color: var(--ink-2); }
+    &.active { background: rgba(255, 255, 255, .14); color: var(--ink-1); }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
   }
-
 }
 
-#main-menu::-webkit-scrollbar {
-  width: 3px;
-}
-#main-menu::-webkit-scrollbar-track {
-  background: $theme-accent-color;
-  border-radius: 0px;
-}
-#main-menu::-webkit-scrollbar-thumb {
-  background: $theme-light-color;
-  border-radius: 0px;
-}
-#main-menu::-webkit-scrollbar-thumb:hover {
-  background: $theme-primary-color;
-}
-
-span.static-source-icon.ng-scope {
-    vertical-align: middle;
-    left: 2px;
-    float: right;
-}
+/* content clears the fixed rail (this theme only) */
+body#artwork #contentWrapper,
+body#artwork #content { padding-left: var(--rail-w); }
