@@ -2,7 +2,7 @@
    elapsed + fixed-width waveform (104 bars x 4px) on the left, duration far right */
 .artwork-seek { display: flex; align-items: center; gap: 14px; width: 100%; }
 .artwork-seek .seek-time {
-  flex: none; font-size: 11px; letter-spacing: .04em; color: var(--ink-muted);
+  flex: none; font-size: 11px; letter-spacing: .14em; color: var(--ink-muted); /* mono: timecodes .14em */
 }
 .artwork-seek .seek-time:last-child { margin-left: auto; }
 
@@ -24,7 +24,7 @@
   .artwork-seek { gap: 12px; }
   .artwork-wave { flex: 1 1 auto; height: 16px; gap: 2px; }
   .wave-bar { flex: 1 1 0; width: auto; min-width: 0; }
-  .seek-time { font-size: 10px; }
+  .seek-time { font-size: 11px; } /* spec §3.5: nothing below 11px */
   .seek-time:last-child { margin-left: 0; }
 }
 

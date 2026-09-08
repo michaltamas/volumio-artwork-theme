@@ -126,3 +126,44 @@ volume-manager{
 }
 
 /* ---- ~ ------ */
+
+/* ============ Artwork mini-player volume (mockup §5.10 right group) ============
+   speaker icon + a thin 64px horizontal track with an ink fill. No numeric readout,
+   no green, no 20px knob — the handle only appears on hover / keyboard focus. */
+#footer-content .volume-slider {
+  display: flex; align-items: center; gap: 8px; float: none;
+
+  .button-mute {
+    float: none; width: 32px; height: 32px; padding: 0; margin: 0; border: 0; background: none;
+    display: grid; place-items: center; color: var(--ink-2); border-radius: var(--r-control);
+    .fa { font-size: 15px; }
+    &:hover { color: var(--ink-1); background: rgba(255, 255, 255, .08); }
+    &.selected { color: var(--ink-muted); } /* muted */
+  }
+
+  .volumeSlider { margin: 0; padding: 0; width: 64px; flex: none; }
+  .volume-text { display: none; }
+
+  /* bootstrap-slider internals */
+  .slider.slider-horizontal { width: 64px; height: 20px; margin: 0; }
+  .slider.slider-horizontal .slider-track {
+    height: 2px; top: 50%; margin-top: -1px; border-radius: 1px;
+    background: rgba(255, 255, 255, .22) !important; background-image: none !important; box-shadow: none;
+  }
+  .slider-track-low, .slider-track-high {
+    background: transparent !important; background-image: none !important; box-shadow: none;
+  }
+  .slider-selection {
+    background: var(--ink-1) !important; background-image: none !important;
+    box-shadow: none; border-radius: 1px;
+  }
+  .slider-handle {
+    width: 10px; height: 10px; margin-left: -5px; top: 50%; margin-top: -5px;
+    background: var(--ink) !important; background-image: none !important; border: 0; box-shadow: none;
+    opacity: 0; transition: opacity .15s ease;
+  }
+  &:hover .slider-handle, .slider-handle:focus, .slider-handle:active { opacity: 1; }
+  .volumeSlider.disabled .slider-selection, .slider.disabled .slider-selection {
+    background: var(--ink-faint) !important;
+  }
+}
