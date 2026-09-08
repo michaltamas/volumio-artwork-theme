@@ -273,3 +273,10 @@ div#goBackPanelWrapper {
 
 /* playback screen has its own transport; drop the mini-player gap */
 body#artwork .with-playback-bar #content { padding-bottom: 0; }
+
+/* topbar zone · output readout (spec §6.1) */
+#np .np-zone {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 50%; text-align: center;
+}

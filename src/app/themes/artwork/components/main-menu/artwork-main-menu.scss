@@ -44,6 +44,11 @@
   }
 }
 
-/* content clears the fixed rail (this theme only) */
-body#artwork #contentWrapper,
+/* The rail is position:fixed (76px). Its Bootstrap placeholder column
+   (#main-menu-container, col-md-4) must NOT reserve grid width, and the
+   content column must span full width offset only by the rail. */
+body#artwork #main-menu-container { width: 0; min-width: 0; padding: 0; }
+body#artwork #contentWrapper { width: 100%; float: none; }
+/* #content is position:absolute on some screens (ignores parent padding),
+   so the rail offset must live on it directly. */
 body#artwork #content { padding-left: var(--rail-w); }
