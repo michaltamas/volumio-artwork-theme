@@ -12,12 +12,13 @@ export default class AwSettingsNavDirective {
   }
 }
 
-const ICONS = [
-  ['playback', 'graphic_eq'], ['source', 'library_music'], ['appearance', 'palette'],
-  ['network', 'wifi'], ['system', 'memory'], ['plugin', 'extension'], ['alarm', 'alarm'],
-  ['sleep', 'bedtime'], ['shutdown', 'power_settings_new'], ['help', 'help'], ['shop', 'storefront'],
-  ['zone', 'speaker'], ['equal', 'tune']
-];
+// icons by the item's stable key (awSettingsService.itemKey), never by its translated name
+const ICONS = {
+  playback: 'graphic_eq', sources: 'library_music', appearance: 'palette', network: 'wifi',
+  system: 'memory', plugins: 'extension', alarm: 'alarm', sleep: 'bedtime',
+  shutdown: 'power_settings_new', help: 'help', shop: 'storefront', zones: 'speaker',
+  equalizer: 'tune', myvolumio: 'person', link: 'open_in_new'
+};
 
 class AwSettingsNavController {
   constructor(awSettingsService) {
@@ -29,8 +30,8 @@ class AwSettingsNavController {
   isActive(item) { return this.svc.isActive(item); }
 
   icon(item) {
-    const n = String((item && item.name) || '').toLowerCase();
-    const hit = ICONS.find(([k]) => n.indexOf(k) > -1);
-    return hit ? hit[1] : 'settings';
+    const k = this.svc.itemKey(item);
+    if (ICONS[k]) { return ICONS[k]; }
+    return k && k.indexOf('plugin:') === 0 ? 'extension' : 'settings';
   }
 }

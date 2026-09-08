@@ -119,16 +119,43 @@ class AwSettingsService {
     return this.menu.find(i => this.isActive(i)) || null;
   }
 
-  // which right-column widget applies to the open page (by the real item name)
+  // Stable key for a menu item. Never derived from item.name — Volumio translates it and the
+  // icons/widgets would change with the UI language. Keys come from the backend's untranslated
+  // fields: params.pluginName, params.modalName, params.url, id.
+  itemKey(item) {
+    if (!item) { return null; }
+    const p = item.params || {};
+    const plugin = String(p.pluginName || '');
+    if (plugin) {
+      const byPlugin = {
+        'audio_interface/alsa_controller': 'playback',
+        'miscellanea/my_music': 'sources',
+        'miscellanea/appearance': 'appearance',
+        'system_controller/network': 'network',
+        'system_controller/system': 'system',
+        'audio_interface/fusiondsp': 'equalizer'
+      };
+      return byPlugin[plugin] || ('plugin:' + plugin);
+    }
+    const modal = String(p.modalName || '');
+    if (modal) {
+      const byModal = { 'modal-alarm-clock': 'alarm', 'modal-sleep': 'sleep', 'modal-power-off': 'shutdown' };
+      return byModal[modal] || ('modal:' + modal);
+    }
+    const url = String(p.url || '');
+    if (url) {
+      if (url.indexOf('help.') > -1) { return 'help'; }
+      if (url.indexOf('/shop') > -1) { return 'shop'; }
+      return 'link';
+    }
+    const byId = { 'plugin-manager': 'plugins', shutdown: 'shutdown', 'my-volumio': 'myvolumio', multiroom: 'zones' };
+    return byId[item.id] || item.id || null;
+  }
+
+  // which right-column widget applies to the open page
   get pageKey() {
-    const a = this.activeItem;
-    if (!a) { return null; }
-    const n = String(a.name || '').toLowerCase();
-    if (n.indexOf('playback') > -1) { return 'playback'; }
-    if (n.indexOf('system') > -1) { return 'system'; }
-    if (n.indexOf('network') > -1) { return 'network'; }
-    if (n.indexOf('source') > -1) { return 'sources'; }
-    return null;
+    const k = this.itemKey(this.activeItem);
+    return ['playback', 'system', 'network', 'sources'].indexOf(k) > -1 ? k : null;
   }
 
   get hasSide() { return !!this.pageKey; }
