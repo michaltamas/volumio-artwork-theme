@@ -29,7 +29,7 @@
     
           <div id="contentWrapper" 
             class="col-xs-24 col-md-20"
-            ng-class="[ layout.wrapperColumnClass, state.current.url ]" 
+            ng-class="[ layout.wrapperColumnClass, state.current.url, layout.isSettingsShell ? 'aw-settings-shell' : '', (layout.isSettingsShell && !layout.awSettings.hasSide) ? 'aw-settings-shell--noside' : '' ]"
             hm-swipeleft="layout.swipeLeft()"
             hm-swiperight="layout.swipeRight()"
             hm-recognizer-options='[{"directions":"DIRECTION_LEFT|DIRECTION_RIGHT", "threshold": 50}]'
@@ -41,10 +41,15 @@
             </div>
             -->
     
-            <div id="content" 
-                ng-class="state.current.url" 
+            <!-- Artwork settings shell: real menu on the left, data widgets on the right -->
+            <aw-settings-nav ng-if="layout.isSettingsShell"></aw-settings-nav>
+
+            <div id="content"
+                ng-class="state.current.url"
                 ui-view="content">
             </div>
+
+            <aw-settings-side ng-if="layout.isSettingsShell"></aw-settings-side>
 
           </div>
 

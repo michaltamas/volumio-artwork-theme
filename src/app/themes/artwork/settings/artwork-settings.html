@@ -20,19 +20,8 @@
     <div class='row'>
       <div class="col-xs-24">
 
-        <ul class="nav nav-pills nav-stacked settings-nav">
-
-          <li>
-              <a
-                ng-repeat="item in settings.menuItems track by $index"
-                ng-click="settings.itemClick(item)"
-                ng-if="item.id !== 'my-volumio'"
-              >
-                {{item.name}}
-              </a>
-          </li>
-
-        </ul>
+        <!-- the section list lives in the shell's left nav (aw-settings-nav) -->
+        <p class="aw-settings-hint mono">CHOOSE A SECTION</p>
 
           <div class="hardwareToggleCheckbox"
               ng-if="::settings.uiSettingsService.uiSettings.settings.checkboxes.analogInput">

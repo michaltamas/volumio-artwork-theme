@@ -1,7 +1,9 @@
 class LayoutController {
-  constructor($state, $scope, themeManager, $log, matchmediaService, playerService) {
+  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService) {
     'ngInject';
     this.$state = $state;
+    // artwork settings shell (nav + side widgets around the settings/plugin pages)
+    this.awSettings = awSettingsService;
     this.$scope = $scope;
     this.themeManager = themeManager;
     this.$log = $log;
@@ -22,6 +24,13 @@ class LayoutController {
     if (this.themeManager.theme === 'artwork') {
       this.initArtworkPalette();
     }
+  }
+
+  // Artwork theme: settings pages render inside a 3-pane shell (desktop only)
+  get isSettingsShell() {
+    if (this.themeManager.theme !== 'artwork' || this.matchmediaService.isPhone) { return false; }
+    const n = this.$state.current.name;
+    return n === 'volumio.settings' || n === 'volumio.plugin' || n === 'volumio.plugin-manager';
   }
 
   // Artwork theme: the UI ground colour is sampled from the current cover and

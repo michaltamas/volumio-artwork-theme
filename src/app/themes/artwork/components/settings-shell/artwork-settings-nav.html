@@ -1,0 +1,16 @@
+<!-- Artwork settings nav (mockup: 216px column). Items are the real Volumio
+     settings menu; clicks go through the same logic as the core settings page. -->
+<nav class="aw-snav" aria-label="Settings">
+  <div class="aw-snav__eyebrow mono">SETTINGS</div>
+
+  <a class="aw-snav__item" ng-repeat="item in nav.svc.menu track by $index"
+     ng-class="{active: nav.isActive(item)}" ng-click="nav.svc.itemClick(item)"
+     role="button" tabindex="0" ng-keydown="$event.key === 'Enter' && nav.svc.itemClick(item)">
+    <span class="material-symbols-rounded">{{nav.icon(item)}}</span>
+    <span class="aw-snav__label">{{item.name}}</span>
+  </a>
+
+  <div class="aw-snav__foot mono" ng-if="nav.svc.systemInfo">
+    OS {{nav.svc.systemInfo.systemversion}} · {{nav.svc.systemInfo.hardware | uppercase}}
+  </div>
+</nav>

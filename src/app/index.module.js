@@ -66,6 +66,9 @@ import ModalController  from './components/modals/modal.controller';
 import MainMenuDirective from './components/main-menu/main-menu.directive';
 import OnCloudActionsDirective from './components/on-cloud-actions/on-cloud-actions.directive';
 import PlayerSeekbarDirective from './components/player-seekbar/player-seekbar.directive';
+import AwSettingsService from './components/aw-settings-shell/aw-settings.service';
+import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
+import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
 // Track buttons
 import FavouriteTrackBtnDirective from './components/favourite-track-btn/favourite-track-btn.directive';
 import AddTrackToPlaylistBtnDirective from './components/add-track-to-playlist-btn/add-track-to-playlist-btn.directive';
@@ -282,6 +285,9 @@ angular.module('volumio', [
   .directive('mainMenu', (themeManager) => new MainMenuDirective(themeManager))
   .directive('onCloudActions', (themeManager) => new OnCloudActionsDirective(themeManager))
   .directive('playerSeekbar', (themeManager) => new PlayerSeekbarDirective(themeManager))
+  .service('awSettingsService', AwSettingsService)
+  .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
+  .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
 
   //MyVolumio Directives
   .directive('stripePayButton', () => new StripePayButtonDirective())

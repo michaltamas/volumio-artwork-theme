@@ -55,3 +55,97 @@
     text-transform: capitalize;
   }
 }
+
+/* ============================================================
+   Artwork plugin/config pages (centre column of the settings shell).
+   Volumio's plugin-component markup, restyled to the mockup rows.
+   ============================================================ */
+body#artwork #pluginWrapper {
+  padding: 40px 34px 60px;
+  .box { background: transparent; border: 0; box-shadow: none; padding: 0; }
+  .boxHeader { background: transparent; border: 0; padding: 0;
+    .title h2 { margin: 0; font-family: var(--font-ui); font-size: 34px; font-weight: 800; letter-spacing: -.025em; color: var(--ink);
+      background: transparent; padding: 0;
+      a.btn { display: none; } /* the shell's nav replaces the back button */ } }
+  .pluginDescription { margin: 10px 0 0; font-size: 13px; color: #8c9298; text-wrap: pretty; }
+
+  /* sections */
+  .panel.panel-default { background: transparent; border: 0; box-shadow: none; margin: 0; }
+  .panel-heading { background: transparent; border: 0; padding: 0; margin-top: 34px; padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1); }
+  .panel-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #cfd4d8; font-weight: 400;
+    .fa { display: none; } .section-image { height: 16px; margin-right: 8px; } }
+  .panel-body { padding: 0; }
+  .sectionDescription { margin: 14px 0 0; font-size: 13px; color: #8c9298; }
+
+  /* rows */
+  .form-group {
+    display: grid; grid-template-columns: 1fr 300px; align-items: center; column-gap: 24px; row-gap: 0; /* no row gap: the trailing empty div is a 0px track */
+    margin: 0; padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, .05);
+  }
+  .form-group > label.plugin-label { font-size: 16px; font-weight: 600; color: var(--ink-1); margin: 0; padding: 0; }
+  .form-group .control-item { display: flex; align-items: center; justify-content: flex-end; }
+  .form-group .fa-info-circle, .form-group .plugin-doc { color: #8c9298; }
+
+  /* select (ui-select) */
+  .ui-select-container.ui-select-bootstrap {
+    width: 100%; height: 42px; border-radius: 11px;
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
+    .ui-select-match, .ui-select-toggle, .btn-default {
+      height: 40px; line-height: 40px; padding: 0 14px; background: transparent !important; border: 0 !important; box-shadow: none !important;
+      color: #fff; font-size: 15px; font-weight: 500; text-align: left; }
+    .ui-select-placeholder { display: none !important; }
+    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      &::before { content: 'expand_more'; font-family: 'Material Symbols Rounded'; font-size: 20px; color: #a7adb3; line-height: 1; } }
+  }
+  .ui-select-choices.dropdown-menu { background: #141618; border: 1px solid rgba(255, 255, 255, .13); border-radius: 11px; color: var(--ink-1);
+    .ui-select-choices-row > span { color: var(--ink-1); }
+    .ui-select-choices-row.active > span { background: rgba(255, 255, 255, .1); } }
+
+  /* switch (bootstrap-switch) → 44×26 pill, dark knob, On/Off label beside */
+  .bootstrap-switch {
+    position: relative; width: 44px !important; height: 26px; border-radius: 13px; border: 0;
+    background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
+    .bootstrap-switch-container { display: none; }
+    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
+    &::after { content: 'Off'; position: absolute; left: 56px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; }
+    &.bootstrap-switch-on { background: #fff;
+      &::before { left: 21px; }
+      &::after { content: 'On'; color: var(--ink-1); } }
+    &.bootstrap-switch-focused { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+  }
+
+  /* text inputs */
+  input.form-control { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
+    color: #fff; font-size: 15px; box-shadow: none; padding: 0 14px;
+    &:focus { border-color: rgba(255, 255, 255, .3); box-shadow: none; } }
+
+  /* buttons: section Save = white pill; item buttons = outline pill */
+  button.btn.btn-info, button.btn.btn-primary {
+    height: 42px; padding: 0 22px; border-radius: 21px; border: 1px solid rgba(255, 255, 255, .18);
+    background: transparent; color: #e4e7ea; font-size: 15px; font-weight: 600; box-shadow: none;
+    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+  }
+  button.btn.btn-info:not([plugin-attributes]) { background: #fff; color: #0d0e10; border-color: #fff; font-weight: 700;
+    &:hover { background: #f2f3f5; color: #0d0e10; } }
+  .row .col-xs-24 > button, .text-right > button { margin-top: 18px; }
+}
+
+/* row placement: Volumio emits label, control, doc-icon (+ an empty div) as
+   siblings — seat the doc icon inline after the label instead of on its own row,
+   and let the control fill its 300px column (ui-select wrappers are auto-width) */
+body#artwork #pluginWrapper .form-group {
+  grid-template-columns: auto 1fr 300px;
+  > label.plugin-label { grid-column: 1; grid-row: 1; }
+  > .control-doc { grid-column: 2; grid-row: 1; justify-self: start; align-self: center; margin: 0; width: auto; height: auto; }
+  > .control-item { grid-column: 3; grid-row: 1; }
+  > div:not(.control-item):not(.control-doc) { grid-column: 1 / -1; }
+  .control-item { display: block; }
+  .control-item > div, .control-item > div > div { width: 100%; }
+  .ui-select-match > .btn { width: 100%; display: flex; align-items: center; padding-right: 40px; }
+}
+
+/* core sections (My Music, drives…) inherit green row underlines and a green
+   select colour from the base theme — decoration, not status (spec §3.3) */
+body#artwork #pluginWrapper [ng-include*="core-plugin"] div { border-bottom-color: rgba(255, 255, 255, .06); border-top-color: rgba(255, 255, 255, .06); }
+body#artwork #pluginWrapper .ui-select-container { color: var(--ink-1); }

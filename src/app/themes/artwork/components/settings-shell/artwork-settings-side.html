@@ -1,0 +1,74 @@
+<!-- Artwork settings side column (mockup: 340px glass-3). Only widgets backed by
+     real device data are rendered; a page without data shows no column at all. -->
+<aside class="aw-sside" ng-if="side.key">
+
+  <!-- Playback: live signal path -->
+  <div ng-if="side.key === 'playback'">
+    <div class="aw-sside__eyebrow mono">LIVE SIGNAL PATH</div>
+    <div class="aw-badge" ng-if="side.resampling !== null">
+      <span class="aw-badge__dot" ng-class="{'aw-badge__dot--warn': side.resampling}"></span>
+      <span class="mono">{{side.resampling ? 'RESAMPLING' : 'BIT PERFECT'}}</span>
+    </div>
+    <ol class="aw-path">
+      <li ng-if="side.source">
+        <div class="aw-path__name">Source</div>
+        <div class="aw-path__val mono">{{side.source}}</div>
+      </li>
+      <li ng-if="side.resampling !== null">
+        <div class="aw-path__name">Resampling</div>
+        <div class="aw-path__val mono">{{side.resampling ? side.resamplingTarget : 'NONE · PASSTHROUGH'}}</div>
+      </li>
+      <li ng-if="side.mixer">
+        <div class="aw-path__name">Volume</div>
+        <div class="aw-path__val mono">{{side.mixer}}</div>
+      </li>
+      <li ng-if="side.output">
+        <div class="aw-path__name">Output</div>
+        <div class="aw-path__val mono">{{side.output}}</div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- System: hardware / software facts -->
+  <div ng-if="side.key === 'system' && side.svc.systemInfo">
+    <div class="aw-sside__eyebrow mono">THIS PLAYER</div>
+    <div class="aw-kv">
+      <div class="aw-kv__title mono">HARDWARE</div>
+      <div class="aw-kv__row"><span>Board</span><span class="mono">{{side.svc.systemInfo.hardware}}</span></div>
+      <div class="aw-kv__row" ng-if="side.svc.systemInfo.os"><span>OS</span><span class="mono">{{side.svc.systemInfo.os}}</span></div>
+      <div class="aw-kv__row"><span>Version</span><span class="mono">{{side.svc.systemInfo.systemversion}}</span></div>
+      <div class="aw-kv__row" ng-if="side.svc.systemInfo.builddate"><span>Built</span><span class="mono">{{side.svc.systemInfo.builddate}}</span></div>
+      <div class="aw-kv__row"><span>Name</span><span class="mono">{{side.svc.systemInfo.name}}</span></div>
+    </div>
+  </div>
+
+  <!-- Network: interfaces -->
+  <div ng-if="side.key === 'network'">
+    <div class="aw-sside__eyebrow mono">INTERFACE</div>
+    <div class="aw-kv" ng-repeat="n in side.svc.network track by $index">
+      <div class="aw-kv__title mono">{{n.type | uppercase}}</div>
+      <div class="aw-kv__row" ng-if="$first && side.svc.systemInfo"><span>Hostname</span><span class="mono">{{side.svc.systemInfo.name}}</span></div>
+      <div class="aw-kv__row" ng-if="n.ssid"><span>SSID</span><span class="mono">{{n.ssid}}</span></div>
+      <div class="aw-kv__row" ng-if="n.ip"><span>IP</span><span class="mono">{{n.ip}}</span></div>
+      <div class="aw-kv__row" ng-if="n.speed"><span>Speed</span><span class="mono">{{n.speed}}</span></div>
+      <div class="aw-kv__row" ng-if="n.status"><span>Status</span><span class="mono">{{n.status}}</span></div>
+    </div>
+  </div>
+
+  <!-- Sources: library -->
+  <div ng-if="side.key === 'sources'">
+    <div class="aw-sside__eyebrow mono">LIBRARY</div>
+    <div class="aw-badge">
+      <span class="aw-badge__dot" ng-class="{'aw-badge__dot--idle': !side.scanning}"></span>
+      <span class="mono">{{side.scanning ? 'SCANNING' : 'IDLE'}}</span>
+    </div>
+    <div class="aw-kv" ng-if="side.svc.stats">
+      <div class="aw-kv__title mono">COLLECTION</div>
+      <div class="aw-kv__row"><span>Artists</span><span class="mono">{{side.svc.stats.artists}}</span></div>
+      <div class="aw-kv__row"><span>Albums</span><span class="mono">{{side.svc.stats.albums}}</span></div>
+      <div class="aw-kv__row"><span>Tracks</span><span class="mono">{{side.svc.stats.songs}}</span></div>
+      <div class="aw-kv__row"><span>Playtime</span><span class="mono">{{side.svc.stats.playtime}}</span></div>
+    </div>
+  </div>
+
+</aside>
