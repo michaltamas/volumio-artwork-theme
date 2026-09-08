@@ -213,7 +213,7 @@ body#artwork .aw-state-myvolumio-profile .box {
   }
   /* the same 44×26 switch as the settings rows */
   #device-selector-container .bootstrap-switch {
-    position: relative; width: 50px !important; height: 32px; border-radius: 16px; /* mockup: 44×26 + 3px padding, content-box → 50×32 */ border: 0; background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
+    position: relative; width: 50px !important; height: 32px; border-radius: 13px; /* mockup: 44×26 + 3px padding, content-box → 50×32; radius stays 13 (not a full pill) */ border: 0; background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
     /* the plugin binds its click/keyboard handlers on the inner label: keep it as an
        invisible full-size hit layer; the pill itself is painted by ::before/::after */
     .bootstrap-switch-container { position: absolute; inset: 0; width: 100% !important; margin: 0 !important; z-index: 1; overflow: visible; background: transparent; } /* visible: the focus ring sits 2px outside */

@@ -85,7 +85,7 @@
 
   /* switch (bootstrap-switch) → 44×26 pill, dark knob, On/Off label beside */
   .bootstrap-switch {
-    position: relative; width: 50px !important; height: 32px; border-radius: 16px; /* mockup: 44×26 + 3px padding, content-box → 50×32 */ border: 0;
+    position: relative; width: 50px !important; height: 32px; border-radius: 13px; /* mockup: 44×26 + 3px padding, content-box → 50×32; radius stays 13 (not a full pill) */ border: 0;
     background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
     /* the plugin binds its click/keyboard handlers on the inner label: keep it as an
        invisible full-size hit layer; the pill itself is painted by ::before/::after */
@@ -106,7 +106,7 @@
   }
   /* native checkbox (wifi "hidden network" etc.) → the same pill */
   input[type="checkbox"].custom-checkbox, input[type="checkbox"]:not([bs-switch]) {
-    appearance: none; -webkit-appearance: none; position: relative; width: 50px; height: 32px; border-radius: 16px; border: 0; margin: 0;
+    appearance: none; -webkit-appearance: none; position: relative; width: 50px; height: 32px; border-radius: 13px; border: 0; margin: 0;
     background: rgba(255, 255, 255, .16); cursor: pointer; vertical-align: middle;
     &::before { content: ''; position: absolute; top: 6px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
     &:checked { background: #fff; &::before { left: 27px; } }
