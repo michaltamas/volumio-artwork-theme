@@ -247,7 +247,7 @@ body#artwork .aw-state-myvolumio-profile .box {
    table gives .the-price a fixed 364px box */
 body#artwork .aw-state-myvolumio-profile .box {
   .my-profile > div > .row { .user-data, .plans-table { grid-row: 1; } }
-  .myvolumio-current-plan-card .the-price { height: auto; min-height: 0; padding: 0; margin: 0; line-height: 1; font-size: inherit; background: transparent; border: 0; }
+  .myvolumio-current-plan-card .the-price { height: auto; min-height: 0; padding: 0; margin: 0; line-height: 1; font-size: inherit; background: transparent; box-shadow: none; /* core pricing css draws a grey frame with box-shadow */ border: 0; }
 }
 /* avatar initial: ng-letter-avatar draws a 50px canvas image; render the real
    initial (data-initial, additive attribute on the core template) crisply instead */
