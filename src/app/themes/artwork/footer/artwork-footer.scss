@@ -41,4 +41,4 @@
 /* leave room so page content isn't hidden behind the fixed mini player */
 body#artwork #content { padding-bottom: 98px; }
 /* on the full Now Playing screen the mini player yields to the playback bar */
-body#artwork .with-playback-bar #footer-content { display: none; }
+body#artwork .main-container.with-playback-bar ~ #footer-container { display: none; }

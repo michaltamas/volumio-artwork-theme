@@ -207,7 +207,7 @@ div#goBackPanelWrapper {
   }
 
   #np-hero {
-    display: flex; align-items: flex-end; gap: 56px; margin-top: 36px; flex: 1 1 auto;
+    display: flex; align-items: flex-start; gap: 56px; margin-top: 36px; flex: 1 1 auto;
   }
   #np-cover {
     flex: none; width: 410px; height: 410px;
@@ -215,7 +215,7 @@ div#goBackPanelWrapper {
       border-radius: var(--r-cover);
       box-shadow: 0 44px 90px -24px rgba(0,0,0,.85); }
   }
-  #np-meta { min-width: 0; padding-bottom: 8px; }
+  #np-meta { min-width: 0; padding-top: 14px; flex: 1; }
   .np-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--ink-3); margin-bottom: 14px; }
   .np-title {
     font-family: var(--font-ui);
@@ -270,3 +270,6 @@ div#goBackPanelWrapper {
       &:hover { color: var(--ground); } }
   }
 }
+
+/* playback screen has its own transport; drop the mini-player gap */
+body#artwork .with-playback-bar #content { padding-bottom: 0; }
