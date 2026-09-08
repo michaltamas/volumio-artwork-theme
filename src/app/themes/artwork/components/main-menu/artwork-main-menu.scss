@@ -4,7 +4,7 @@
   width: var(--rail-w);
   z-index: 3;
   display: flex; flex-direction: column; align-items: center;
-  padding: 14px 0;
+  padding: 22px 0; /* mockup rail: padding:22px 0; gap:6px; bottom group margin-top:auto */
   background: var(--glass-1-fill);
   backdrop-filter: blur(var(--glass-1-blur));
   -webkit-backdrop-filter: blur(var(--glass-1-blur));
@@ -27,7 +27,7 @@
     display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%;
   }
   .main-menu-list { flex: 1 1 auto; }
-  .main-menu-bottom { flex: none; margin-top: auto; padding-top: 6px; }
+  .main-menu-bottom { flex: none; margin-top: auto; }
 
   li { width: 100%; display: flex; justify-content: center; }
 
@@ -47,7 +47,12 @@
 /* The rail is position:fixed (76px). Its Bootstrap placeholder column
    (#main-menu-container, col-md-4) must NOT reserve grid width, and the
    content column must span full width offset only by the rail. */
-body#artwork #main-menu-container { width: 0; min-width: 0; padding: 0; }
+/* selector mirrors the core rule (#layout-container .main-container #main-menu-container) to outrank it */
+body#artwork #layout-container .main-container #main-menu-container { width: 0; min-width: 0; padding: 0;
+  /* the inherited theme blurs this wrapper; backdrop-filter makes it the containing block of the
+     fixed rail, which then stops at the wrapper's height (viewport minus the footer). The rail
+     carries its own blur, so the wrapper must not. */
+  backdrop-filter: none; -webkit-backdrop-filter: none; }
 /* Offset the whole content column past the fixed 76px rail via the wrapper's
    BOX (margin) — not padding. #content and #browse are position:absolute and
    ignore parent padding, so a padding offset let cards overlap the rail and
