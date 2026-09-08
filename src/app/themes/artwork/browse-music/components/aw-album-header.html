@@ -1,0 +1,47 @@
+<!-- Artwork album/playlist header (clean bespoke markup, no inherited styles) -->
+<div class="aw-albumhead" ng-class="{'aw-albumhead--playlist': browse.browseService.info.type === 'playlist'}">
+
+  <!-- blurred backdrop of this item's cover -->
+  <div class="aw-albumhead__bg" aria-hidden="true">
+    <img ng-if="browse.browseService.info.albumart"
+         ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">
+  </div>
+
+  <div class="aw-albumhead__cover">
+    <img ng-if="browse.browseService.info.albumart"
+         ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}"
+         alt="{{browse.browseService.info.album}}">
+  </div>
+
+  <div class="aw-albumhead__eyebrow mono">{{ browse.browseService.info.type === 'playlist' ? 'PLAYLIST' : 'ALBUM' }}</div>
+
+  <h1 class="aw-albumhead__title">{{ browse.browseService.info.title || browse.browseService.info.album }}</h1>
+
+  <div class="aw-albumhead__artist" ng-if="browse.browseService.info.artist">{{ browse.browseService.info.artist }}</div>
+
+  <div class="aw-albumhead__meta mono">
+    <span ng-if="browse.browseService.info.year">{{browse.browseService.info.year}}</span>
+    <span ng-if="browse.browseService.info.year && browse.browseService.info.genre"> · </span>
+    <span ng-if="browse.browseService.info.genre">{{browse.browseService.info.genre}}</span>
+    <span ng-if="(browse.browseService.info.year || browse.browseService.info.genre) && browse.browseService.info.trackType"> · </span>
+    <span ng-if="browse.browseService.info.trackType">{{browse.browseService.info.trackType}}</span>
+    <span ng-if="browse.browseService.info.duration"> · {{browse.browseService.info.duration}}</span>
+  </div>
+
+  <div class="aw-albumhead__actions">
+    <button class="aw-btn aw-btn--primary" ng-click="browse.playItemsList(browse.browseService.info)">
+      <span class="material-symbols-rounded">play_arrow</span>
+      <span>{{ browse.browseService.info.type === 'playlist' ? 'Play' : 'Play album' }}</span>
+    </button>
+    <button class="aw-iconbtn" ng-click="browse.addToFavorites($event, browse.browseService.info)" title="Favourite">
+      <span class="material-symbols-rounded">favorite</span>
+    </button>
+    <button class="aw-iconbtn" ng-click="browse.addToPlaylist(browse.browseService.info)" title="Add to playlist">
+      <span class="material-symbols-rounded">playlist_add</span>
+    </button>
+    <button class="aw-iconbtn" ng-click="browse.addToQueue(browse.browseService.info)" title="Add to queue">
+      <span class="material-symbols-rounded">queue_music</span>
+    </button>
+  </div>
+
+</div>
