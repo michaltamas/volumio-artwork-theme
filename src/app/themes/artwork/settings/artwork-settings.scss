@@ -23,7 +23,10 @@
 
 /* ============ Artwork settings + plugin-config reskin (token-level) ============ */
 body#artwork {
-  .setting-container, .panel, .panel-default, .panel-body, .panel-heading { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+  /* flatten Volumio's panel chrome only where the page is a flat form: settings landing tiles and
+     plugin/config pages. Elsewhere (plugin-manager cards, browse) panels carry their own surface. */
+  .setting-container, .setting-container .panel, .setting-container .panel-body, .setting-container .panel-heading,
+  #pluginWrapper .panel, #pluginWrapper .panel-default, #pluginWrapper .panel-body, #pluginWrapper .panel-heading { background: transparent !important; border: 0 !important; box-shadow: none !important; }
   .panel-title, .setting-container h2, .config-section-title, .section-label {
     font-family: var(--font-ui); font-weight: 700; color: var(--ink-1);
   }
@@ -208,11 +211,20 @@ body#artwork .aw-state-myvolumio-profile .box {
   }
   /* the same 44×26 switch as the settings rows */
   #device-selector-container .bootstrap-switch {
-    position: relative; width: 44px !important; height: 26px; border-radius: 13px; border: 0; background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
-    .bootstrap-switch-container { display: none; }
-    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
-    &::after { content: 'Off'; position: absolute; left: 56px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; }
-    &.bootstrap-switch-on { background: #fff; &::before { left: 21px; } &::after { content: 'On'; color: var(--ink-1); } }
+    position: relative; width: 50px !important; height: 32px; border-radius: 16px; /* mockup: 44×26 + 3px padding, content-box → 50×32 */ border: 0; background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
+    /* the plugin binds its click/keyboard handlers on the inner label: keep it as an
+       invisible full-size hit layer; the pill itself is painted by ::before/::after */
+    .bootstrap-switch-container { position: absolute; inset: 0; width: 100% !important; margin: 0 !important; z-index: 1; overflow: visible; background: transparent; } /* visible: the focus ring sits 2px outside */
+    .bootstrap-switch-handle-on, .bootstrap-switch-handle-off { display: none !important; } /* vendor css: inline-block !important */
+    .bootstrap-switch-label { display: block; width: 100% !important; height: 100%; padding: 0; margin: 0; cursor: pointer;
+      background: transparent !important; border: 0; box-shadow: none; color: transparent; }
+    /* the real checkbox carries keyboard focus: show the ring only for :focus-visible */
+    input[type="checkbox"] { position: absolute !important; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 1; visibility: visible; z-index: 2;
+      appearance: none; -webkit-appearance: none; background: transparent; border: 0; border-radius: 16px; pointer-events: none;
+      &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+    &::before { content: ''; position: absolute; top: 6px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
+    &::after { content: 'Off'; position: absolute; left: 62px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; }
+    &.bootstrap-switch-on { background: #fff; &::before { left: 27px; } &::after { content: 'On'; color: var(--ink-1); } }
   }
 }
 

@@ -571,7 +571,8 @@ img.filetype-description {
 /* ============ Artwork browse / library reskin (spec §5.3, §6.2) ============ */
 body#artwork {
   /* let the artwork background show through the library */
-  #browse, .panel, .panel-default, .panel-body, .body-content { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+  /* browse chrome only — an app-wide .panel reset would flatten plugin/account cards */
+  #browse, #browse .panel, #browse .panel-default, #browse .panel-body, #browse .body-content { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
   /* album / source shelf — responsive 6-ish column grid */
   .main__row {
