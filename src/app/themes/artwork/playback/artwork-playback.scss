@@ -187,3 +187,46 @@ div#goBackPanelWrapper {
     max-height: 30px;
     z-index: 4;
 }
+
+/* ============ Artwork desktop Now Playing (spec §6.1) ============ */
+#np {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 44px 52px 38px;
+  color: var(--ink-1);
+
+  #np-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 40px;
+    .np-chevron { color: var(--ink-2); cursor: pointer; display: inline-grid; place-items: center;
+      width: 40px; height: 40px; border-radius: var(--r-control);
+      .material-symbols-rounded { font-size: 26px; }
+      &:hover { background: rgba(255,255,255,.08); color: var(--ink-1); } }
+  }
+
+  #np-hero {
+    display: flex; align-items: flex-end; gap: 56px; margin-top: 36px; flex: 1 1 auto;
+  }
+  #np-cover {
+    flex: none; width: 410px; height: 410px;
+    img { width: 410px; height: 410px; object-fit: cover;
+      border-radius: var(--r-cover);
+      box-shadow: 0 44px 90px -24px rgba(0,0,0,.85); }
+  }
+  #np-meta { min-width: 0; padding-bottom: 8px; }
+  .np-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--ink-3); margin-bottom: 14px; }
+  .np-title {
+    font-family: var(--font-ui);
+    font-size: 72px; line-height: .98; letter-spacing: -.035em; font-weight: 800;
+    color: var(--ink); margin: 0 0 14px; text-wrap: pretty;
+  }
+  .np-artist { font-size: 23px; font-weight: 600; color: var(--ink-2); }
+  .np-album  { font-size: 19px; font-weight: 400; color: var(--ink-muted); margin-top: 4px; }
+  #np-chip-slot { margin-top: 22px; }
+
+  #np-footer { margin-top: auto; padding-top: 28px; }
+  #np-seek { margin-bottom: 18px; }
+  #np-transport { display: flex; }
+}

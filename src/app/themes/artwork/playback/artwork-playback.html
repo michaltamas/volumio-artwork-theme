@@ -1,13 +1,33 @@
-<div id="playbackPanelWrapper" class="row hidden-xs hidden-sm">
-  <div id="leftPanel">
-    <track-manager type="knob"></track-manager>
+<!-- Artwork desktop Now Playing (spec §6.1) -->
+<div id="np" class="hidden-xs hidden-sm">
+
+  <div id="np-topbar">
+    <a class="np-chevron" ng-click="playback.goBack()" aria-label="Back" title="Back">
+      <span class="material-symbols-rounded">expand_more</span>
+    </a>
+    <div id="np-badge-slot"><!-- bit-perfect badge (Task 3) --></div>
   </div>
-  <div ng-if="!playback.matchmediaService.isPhone" id="centerPanel">
-    <track-info></track-info>
+
+  <div id="np-hero">
+    <div id="np-cover">
+      <img ng-if="playback.playerService.state.albumart"
+           ng-src="{{playback.playerService.albumart}}"
+           alt="{{playback.playerService.state.album}}"/>
+    </div>
+    <div id="np-meta">
+      <div class="np-eyebrow mono">NOW PLAYING</div>
+      <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
+      <div class="np-artist">{{playback.playerService.state.artist}}</div>
+      <div class="np-album">{{playback.playerService.state.album}}</div>
+      <div id="np-chip-slot"><!-- hi-res chip + signal path (Task 3) --></div>
+    </div>
   </div>
-  <div ng-if="!playback.matchmediaService.isPhone" id="rightPanel">
-    <volume-manager type="knob"></volume-manager>
+
+  <div id="np-footer">
+    <div id="np-seek"><player-seekbar></player-seekbar></div>
+    <div id="np-transport"><player-buttons></player-buttons></div>
   </div>
+
 </div>
 
 <div id="playbackPanelWrapper" class="row mobile hidden-md hidden-lg hidden-xl" style="display: flex; flex-direction: column;">
