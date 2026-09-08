@@ -55,7 +55,17 @@
                              switch-on-text="On" switch-off-text="Off" ng-true-value="true" ng-false-value="false">
 
                       <div ng-switch-when="select">
-                        <ui-select id="{{item.id}}" ng-model="item.value" search-enabled="false" ng-readonly="true" append-to-body="true" theme="bootstrap">
+                        <!-- artwork theme: small option sets render as a segmented control (same model as the select) -->
+                        <div class="aw-segment" role="radiogroup" aria-label="{{item.label}}"
+                             ng-if="pluginComponent.themeManager.theme === 'artwork' && item.options && item.options.length > 1 && item.options.length <= 3">
+                          <button type="button" class="aw-segment__opt" role="radio"
+                                  ng-repeat="option in item.options track by $index"
+                                  ng-class="{active: item.value === option || (item.value && item.value.value !== undefined && item.value.value === option.value)}"
+                                  aria-checked="{{item.value === option || (item.value && item.value.value === option.value)}}"
+                                  ng-click="item.value = option">{{option.label}}</button>
+                        </div>
+                        <ui-select ng-if="!(pluginComponent.themeManager.theme === 'artwork' && item.options && item.options.length > 1 && item.options.length <= 3)"
+                                   id="{{item.id}}" ng-model="item.value" search-enabled="false" ng-readonly="true" append-to-body="true" theme="bootstrap">
                           <ui-select-match class="ui-select-match" placeholder="Enter an address...">
                             {{$select.selected.label}}
                           </ui-select-match>
@@ -97,7 +107,8 @@
                     </a>
                   </div>
 
-                  <div ng-if="pluginComponent.uiSettingsService.uiSettings.pluginsDoc.showDescription && item.description" class="control-description">
+                  <!-- artwork theme always shows the row description under the label (design rows) -->
+                  <div ng-if="(pluginComponent.uiSettingsService.uiSettings.pluginsDoc.showDescription || pluginComponent.themeManager.theme === 'artwork') && item.description" class="control-description">
                     {{item.description}}
                   </div>
 

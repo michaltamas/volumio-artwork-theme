@@ -57,10 +57,99 @@
 }
 
 /* ============================================================
-   Artwork plugin/config pages (centre column of the settings shell).
-   Volumio's plugin-component markup, restyled to the mockup rows.
+/* ============================================================
+   Artwork form controls — ONE definition (mixin), applied to the settings/plugin
+   pages (#pluginWrapper), every modal (.modal-content) and the MyVolumio device
+   table. Values are the mockup's inline CSS (select 42/r11/.08/.13, switch 44×26
+   r13 .16 with a 20px dark knob, segmented 42/r11/.06, white pill h40 13/700).
+   ============================================================ */
+@mixin aw-form-controls {
+  /* select (ui-select) */
+  .ui-select-container.ui-select-bootstrap {
+    width: 100%; height: 42px; border-radius: 11px; color: var(--ink-1);
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
+    box-shadow: none !important;
+    &:focus-within { box-shadow: none !important; border-color: rgba(255, 255, 255, .3); }
+    .ui-select-match, .ui-select-toggle, .btn-default {
+      height: 40px; line-height: 40px; padding: 0 14px; background: transparent !important; border: 0 !important; box-shadow: none !important;
+      color: #fff; font-size: 15px; font-weight: 500; text-align: left; }
+    .ui-select-match > .btn { width: 100%; display: flex; align-items: center; padding-right: 40px; }
+    .ui-select-placeholder { display: none !important; }
+    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      &::before { content: 'expand_more'; font-family: 'Material Symbols Rounded'; font-size: 20px; color: #a7adb3; line-height: 1; } }
+  }
+
+  /* switch (bootstrap-switch) → 44×26 pill, dark knob, On/Off label beside */
+  .bootstrap-switch {
+    position: relative; width: 44px !important; height: 26px; border-radius: 13px; border: 0;
+    background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
+    .bootstrap-switch-container { display: none; }
+    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
+    &::after { content: 'Off'; position: absolute; left: 56px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; white-space: nowrap; }
+    &.bootstrap-switch-on { background: #fff;
+      &::before { left: 21px; }
+      &::after { content: 'On'; color: #e4e7ea; } }
+    &.bootstrap-switch-focused { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+  }
+  /* native checkbox (wifi "hidden network" etc.) → the same pill */
+  input[type="checkbox"].custom-checkbox, input[type="checkbox"]:not([bs-switch]) {
+    appearance: none; -webkit-appearance: none; position: relative; width: 44px; height: 26px; border-radius: 13px; border: 0; margin: 0;
+    background: rgba(255, 255, 255, .16); cursor: pointer; vertical-align: middle;
+    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
+    &:checked { background: #fff; &::before { left: 21px; } }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+  }
+
+  /* segmented control */
+  .aw-segment {
+    display: flex; align-items: center; gap: 6px; height: 42px; padding: 4px; border-radius: 11px;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1);
+    &__opt { flex: 1; height: 100%; border-radius: 8px; display: grid; place-items: center; font-size: 14px; color: #a7adb3;
+      background: transparent; border: 0; padding: 0 10px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      &:hover { color: var(--ink-1); } &.active { background: #fff; color: #0d0e10; font-weight: 700; }
+      &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  }
+
+  /* text inputs */
+  input.form-control, textarea.form-control {
+    height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
+    color: #fff; font-size: 15px; box-shadow: none; padding: 0 14px;
+    &:focus { border-color: rgba(255, 255, 255, .3); box-shadow: none; } }
+  textarea.form-control { height: auto; padding: 10px 14px; }
+
+  /* time picker (uib-timepicker) */
+  .uib-timepicker, [uib-timepicker] {
+    td { padding: 2px 4px; border: 0; }
+    .btn-link { color: #a7adb3; padding: 2px 8px; &:hover { color: #fff; } .glyphicon { font-size: 12px; } }
+    input.form-control { width: 54px; text-align: center; padding: 0; font-family: var(--font-mono); }
+    .uib-separator { color: #8c9298; }
+  }
+
+  /* buttons: primary = white pill (h40, 13/700), everything else = outline pill */
+  .btn { height: 40px; padding: 0 20px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, .18);
+    background: transparent; color: #e4e7ea; font-size: 13px; font-weight: 500; box-shadow: none; line-height: 38px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+    .fa, .glyphicon { top: 0; } }
+  .btn.btn-info:not([plugin-attributes]), .btn.btn-primary, .btn.btn-success {
+    background: #fff; color: #0d0e10; border-color: #fff; font-weight: 700;
+    &:hover { background: #f2f3f5; color: #0d0e10; } }
+  .btn.btn-danger { color: var(--err); border-color: rgba(224, 69, 58, .45); background: transparent;
+    &:hover { background: rgba(224, 69, 58, .12); color: var(--err); } }
+}
+
+/* the ui-select list is appended to <body>, outside any page scope */
+body#artwork .ui-select-choices.dropdown-menu {
+  background: #141618; border: 1px solid rgba(255, 255, 255, .13); border-radius: 11px; color: var(--ink-1); padding: 6px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.8);
+  .ui-select-choices-row > span, .ui-select-choices-row > a { color: var(--ink-1); border-radius: 7px; padding: 8px 10px; }
+  .ui-select-choices-row.active > span, .ui-select-choices-row.active > a { background: rgba(255, 255, 255, .1); color: #fff; }
+}
+
+/* ============================================================
+   Settings / plugin config pages (centre column of the settings shell)
    ============================================================ */
 body#artwork #pluginWrapper {
+  @include aw-form-controls;
   padding: 40px 34px 60px;
   .box { background: transparent; border: 0; box-shadow: none; padding: 0; }
   .boxHeader { background: transparent; border: 0; padding: 0;
@@ -78,76 +167,60 @@ body#artwork #pluginWrapper {
   .panel-body { padding: 0; }
   .sectionDescription { margin: 14px 0 0; font-size: 13px; color: #8c9298; }
 
-  /* rows */
+  /* rows: label · doc icon · control, description under the label
+     (Volumio emits label, control, doc, description (+ an empty div) as siblings) */
   .form-group {
-    display: grid; grid-template-columns: 1fr 300px; align-items: center; column-gap: 24px; row-gap: 0; /* no row gap: the trailing empty div is a 0px track */
+    display: grid; grid-template-columns: auto 1fr 300px; align-items: center; column-gap: 24px; row-gap: 0;
     margin: 0; padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, .05);
+    > label.plugin-label { grid-column: 1; grid-row: 1; font-size: 16px; font-weight: 600; color: var(--ink-1); margin: 0; padding: 0; }
+    > .control-doc { grid-column: 2; grid-row: 1; justify-self: start; align-self: center; margin: 0; width: auto; height: auto;
+      .fa { font-size: 14px; color: #71777d; } a:hover .fa { color: #c2c8cd; } }
+    > .control-item { grid-column: 3; grid-row: 1 / 3; display: block; }
+    > .control-description { grid-column: 1 / 3; grid-row: 2; margin: 4px 0 0; font-size: 13px; color: #8c9298; text-wrap: pretty; }
+    > div:not(.control-item):not(.control-doc):not(.control-description) { grid-column: 1 / -1; }
+    .control-item > div, .control-item > div > div { width: 100%; }
   }
-  .form-group > label.plugin-label { font-size: 16px; font-weight: 600; color: var(--ink-1); margin: 0; padding: 0; }
-  .form-group .control-item { display: flex; align-items: center; justify-content: flex-end; }
-  .form-group .fa-info-circle, .form-group .plugin-doc { color: #8c9298; }
-
-  /* select (ui-select) */
-  .ui-select-container.ui-select-bootstrap {
-    width: 100%; height: 42px; border-radius: 11px;
-    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
-    .ui-select-match, .ui-select-toggle, .btn-default {
-      height: 40px; line-height: 40px; padding: 0 14px; background: transparent !important; border: 0 !important; box-shadow: none !important;
-      color: #fff; font-size: 15px; font-weight: 500; text-align: left; }
-    .ui-select-placeholder { display: none !important; }
-    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      &::before { content: 'expand_more'; font-family: 'Material Symbols Rounded'; font-size: 20px; color: #a7adb3; line-height: 1; } }
-  }
-  .ui-select-choices.dropdown-menu { background: #141618; border: 1px solid rgba(255, 255, 255, .13); border-radius: 11px; color: var(--ink-1);
-    .ui-select-choices-row > span { color: var(--ink-1); }
-    .ui-select-choices-row.active > span { background: rgba(255, 255, 255, .1); } }
-
-  /* switch (bootstrap-switch) → 44×26 pill, dark knob, On/Off label beside */
-  .bootstrap-switch {
-    position: relative; width: 44px !important; height: 26px; border-radius: 13px; border: 0;
-    background: rgba(255, 255, 255, .16); overflow: visible; box-shadow: none; margin-right: 44px;
-    .bootstrap-switch-container { display: none; }
-    &::before { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #0a0c0e; transition: left .15s ease; }
-    &::after { content: 'Off'; position: absolute; left: 56px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #8c9298; }
-    &.bootstrap-switch-on { background: #fff;
-      &::before { left: 21px; }
-      &::after { content: 'On'; color: var(--ink-1); } }
-    &.bootstrap-switch-focused { outline: 2px solid var(--ink-1); outline-offset: 2px; }
-  }
-
-  /* text inputs */
-  input.form-control { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
-    color: #fff; font-size: 15px; box-shadow: none; padding: 0 14px;
-    &:focus { border-color: rgba(255, 255, 255, .3); box-shadow: none; } }
-
-  /* buttons: section Save = white pill; item buttons = outline pill */
-  button.btn.btn-info, button.btn.btn-primary {
-    height: 42px; padding: 0 22px; border-radius: 21px; border: 1px solid rgba(255, 255, 255, .18);
-    background: transparent; color: #e4e7ea; font-size: 15px; font-weight: 600; box-shadow: none;
-    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
-  }
-  button.btn.btn-info:not([plugin-attributes]) { background: #fff; color: #0d0e10; border-color: #fff; font-weight: 700;
-    &:hover { background: #f2f3f5; color: #0d0e10; } }
   .row .col-xs-24 > button, .text-right > button { margin-top: 18px; }
+
+  /* core sections (My Music, drives…) inherit green decoration from the base theme */
+  [ng-include*="core-plugin"] div { border-bottom-color: rgba(255, 255, 255, .06); border-top-color: rgba(255, 255, 255, .06); }
 }
 
-/* row placement: Volumio emits label, control, doc-icon (+ an empty div) as
-   siblings — seat the doc icon inline after the label instead of on its own row,
-   and let the control fill its 300px column (ui-select wrappers are auto-width) */
-body#artwork #pluginWrapper .form-group {
-  grid-template-columns: auto 1fr 300px;
-  > label.plugin-label { grid-column: 1; grid-row: 1; }
-  > .control-doc { grid-column: 2; grid-row: 1; justify-self: start; align-self: center; margin: 0; width: auto; height: auto; }
-  > .control-item { grid-column: 3; grid-row: 1; }
-  > div:not(.control-item):not(.control-doc) { grid-column: 1 / -1; }
-  .control-item { display: block; }
-  .control-item > div, .control-item > div > div { width: 100%; }
-  .ui-select-match > .btn { width: 100%; display: flex; align-items: center; padding-right: 40px; }
+/* ============================================================
+   Modals (alarm, sleep, shutdown, add-to-playlist, track actions…): glass panel
+   ============================================================ */
+body#artwork .modal-backdrop.in { background: #000; opacity: .62; }
+body#artwork .modal-dialog { width: 640px; max-width: calc(100vw - 32px); margin: 8vh auto; }
+body#artwork .modal-content {
+  @include aw-form-controls;
+  background: rgba(12, 14, 17, .94); border: 1px solid rgba(255, 255, 255, .14); border-radius: 16px;
+  box-shadow: 0 40px 80px -24px rgba(0, 0, 0, .85); color: var(--ink-1);
+  backdrop-filter: blur(34px); -webkit-backdrop-filter: blur(34px);
+  .modal-header { padding: 24px 26px 14px; border: 0; background: transparent;
+    .modal-title { font-family: var(--font-ui); font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); .fa, .glyphicon { display: none; } }
+    .close { color: #a7adb3; opacity: 1; text-shadow: none; &:hover { color: #fff; } } }
+  .modal-body { padding: 8px 26px 20px; font-size: 15px; color: #e4e7ea; background: transparent; border: 0;
+    label { font-size: 15px; font-weight: 600; color: var(--ink-1); }
+    .form-group { margin-bottom: 16px; }
+    hr { border-color: rgba(255, 255, 255, .08); }
+    table { color: var(--ink-1); } }
+  .modal-footer { padding: 14px 26px 24px; border: 0; background: transparent; display: flex; justify-content: flex-end; gap: 10px;
+    .btn + .btn { margin-left: 0; } }
 }
 
-/* core sections (My Music, drives…) inherit green row underlines and a green
-   select colour from the base theme — decoration, not status (spec §3.3) */
-body#artwork #pluginWrapper [ng-include*="core-plugin"] div { border-bottom-color: rgba(255, 255, 255, .06); border-top-color: rgba(255, 255, 255, .06); }
-body#artwork #pluginWrapper .ui-select-container { color: var(--ink-1); }
-/* base theme paints a green inset box-shadow on ui-select containers */
-body#artwork #pluginWrapper .ui-select-container, body#artwork #pluginWrapper .ui-select-container:focus-within { box-shadow: none !important; }
+/* modal sizing + inherited colours (measured on the Sleep modal): Volumio opens
+   sleep/alarm as modal-lg (its layout assumes ~900px — the timepicker table spilled
+   out of a 640px dialog); labels/headings and timepicker chevrons were theme green */
+body#artwork .modal-dialog { width: 600px; }
+body#artwork .modal-dialog.modal-lg { width: 900px; max-width: calc(100vw - 32px); }
+body#artwork .modal-dialog.modal-sm { width: 420px; }
+body#artwork .modal-content {
+  h1, h2, h3, h4, h5, label, .green, .headerText { color: var(--ink-1); }
+  .modal-body h4 { font-size: 15px; font-weight: 600; margin: 0 0 8px; }
+  .uib-timepicker { width: auto; margin: 0;
+    .btn-link, .btn-link .glyphicon { color: #a7adb3 !important; }
+    .btn-link:hover, .btn-link:hover .glyphicon { color: #fff !important; }
+    td { padding: 2px 4px; } }
+  .modal-body .row { margin: 0; }
+  .modal-body [class*="col-"] { padding-left: 0; padding-right: 14px; }
+}

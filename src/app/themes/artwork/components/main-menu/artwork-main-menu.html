@@ -4,7 +4,9 @@
      Music sources live in the Library screen; reachable via the "browse" icon. -->
 <div id="main-menu">
 
-  <div class="brand" ng-click="mainMenu.$state.go('redirect')" role="link" tabindex="0" aria-label="Volumio">V</div>
+  <!-- brand → Library. ('redirect' is the app's entry route: it re-runs the boot
+       path — splash with the record image, then a bounce — hence the flicker) -->
+  <div class="brand" ng-click="mainMenu.$state.go('volumio.home')" role="link" tabindex="0" aria-label="Volumio">V</div>
 
   <ul class="main-menu-list">
     <li>
