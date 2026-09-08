@@ -10,10 +10,15 @@
   -webkit-backdrop-filter: blur(var(--glass-1-blur));
   border-right: 1px solid var(--glass-1-border);
 
-  .logo {
-    width: 34px; height: 34px; margin-bottom: 18px; flex: none;
-    img { width: 34px; height: 34px; border-radius: 9px;
-      border: 1.5px solid var(--ink-1); object-fit: cover; cursor: pointer; }
+  /* brand mark — text "V" in a rounded square (matches mockup / spec §5.1, §11) */
+  .brand {
+    width: 34px; height: 34px; flex: none; margin-bottom: 18px;
+    border-radius: 9px; border: 1.5px solid var(--ink-1);
+    display: grid; place-items: center;
+    font-family: 'Figtree', 'Lato', sans-serif;
+    font-size: 15px; font-weight: 800; color: var(--ink-1);
+    cursor: pointer;
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
   }
 
   .main-menu-list,
@@ -29,10 +34,10 @@
   a {
     display: grid; place-items: center;
     width: var(--rail-item); height: var(--rail-item);
-    border-radius: var(--r-control);
+    border-radius: 13px;
     color: var(--ink-dim); text-decoration: none;
     transition: background .18s, color .18s;
-    i { font-size: 24px; line-height: 1; }
+    .material-symbols-rounded { font-size: 23px; }
     &:hover { background: rgba(255, 255, 255, .08); color: var(--ink-2); }
     &.active { background: rgba(255, 255, 255, .14); color: var(--ink-1); }
     &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }

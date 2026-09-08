@@ -1,38 +1,34 @@
 <!-- Artwork icon rail (spec §5.1). Fixed 76px labelless nav.
+     Icons use Material Symbols Rounded, matching the design mockup.
      Music sources (Qobuz/Tidal/library) live in the Library screen tabs (§6.2);
      they remain reachable here via the "browse" icon until then. -->
 <div id="main-menu">
 
-  <div class="logo">
-    <img
-        ng-src="{{mainMenu.variantAssetsUrl}}/graphics/{{mainMenu.variant}}-logo.png"
-        alt="Volumio"
-        ui-sref="redirect"/>
-  </div>
+  <div class="brand" ui-sref="redirect" role="link" tabindex="0" aria-label="Volumio">V</div>
 
   <ul class="main-menu-list">
     <li>
       <a ui-sref="volumio.search" aria-label="Search" title="Search"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.search'}">
-        <i class="material-icons">search</i>
+        <span class="material-symbols-rounded">search</span>
       </a>
     </li>
     <li>
       <a ui-sref="volumio.home" aria-label="Home" title="Home"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.home'}">
-        <i class="material-icons">home</i>
+        <span class="material-symbols-rounded">home</span>
       </a>
     </li>
     <li>
       <a ui-sref="volumio.browse" aria-label="Music" title="Music"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.browse'}">
-        <i class="material-icons">library_music</i>
+        <span class="material-symbols-rounded">album</span>
       </a>
     </li>
     <li>
       <a ui-sref="volumio.play-queue" aria-label="Queue" title="Queue"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.play-queue'}">
-        <i class="material-icons">queue_music</i>
+        <span class="material-symbols-rounded">queue_music</span>
       </a>
     </li>
   </ul>
@@ -41,19 +37,19 @@
     <li ng-if="mainMenu.isAuthActive()">
       <a ui-sref="myvolumio" aria-label="MyVolumio" title="MyVolumio"
          ng-class="{active: mainMenu.$state.current.name.indexOf('myvolumio') === 0}">
-        <i class="material-icons">account_circle</i>
+        <span class="material-symbols-rounded">person</span>
       </a>
     </li>
     <li>
       <a ui-sref="volumio.multi-room" aria-label="Zones" title="Zones"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.multi-room'}">
-        <i class="material-icons">speaker_group</i>
+        <span class="material-symbols-rounded">speaker</span>
       </a>
     </li>
     <li>
       <a ui-sref="volumio.settings" aria-label="Settings" title="Settings"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.settings'}">
-        <i class="material-icons">settings</i>
+        <span class="material-symbols-rounded">tune</span>
       </a>
     </li>
   </ul>
