@@ -717,3 +717,19 @@ body#artwork {
   /* search results grid/list spacing */
   .dedicated-search-container-flow-space { height: 8px; }
 }
+
+/* ============ Artwork header legibility on light covers (spec §13) ============ */
+body#artwork {
+  .album__header { position: relative; z-index: 1; }
+  .album__header::after {
+    content: ''; position: absolute; inset: -50px -80px -10px; z-index: -1;
+    background: linear-gradient(180deg, rgba(8,10,12,.42) 0%, rgba(8,10,12,.66) 100%);
+    pointer-events: none; border-radius: 20px;
+  }
+  /* stronger contrast for the meta line + action links */
+  .header__meta { color: var(--ink-2); }
+  .artist-description__read-more-btn, .browse-actions a, .info-actions a { color: var(--ink-2) !important; }
+  /* browse top bar: lighter, glassy instead of solid black */
+  #browsePanelHeading, .browse-header { background: rgba(8,10,12,.35) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .navButtons .btn-link .fa { color: var(--ink-1); }
+}
