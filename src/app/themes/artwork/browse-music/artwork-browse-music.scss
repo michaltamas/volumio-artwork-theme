@@ -696,3 +696,24 @@ body#artwork {
     .item__title { color: var(--ok); }
   }
 }
+
+/* ============ Artwork search (results reuse the library cards) ============ */
+body#artwork {
+  .dedicated-search { padding: 34px 52px 6px; }
+  .dedicated-search .search-container { max-width: 720px; margin: 0 auto; position: relative; }
+  .dedicated-search form { margin: 0; }
+  .dedicated-search input.form-control {
+    height: 52px; font-size: 17px; padding: 0 20px 0 52px; width: 100%;
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    color: var(--ink-1); border-radius: var(--r-pill); box-shadow: none;
+    &::placeholder { color: var(--ink-dim); }
+    &:focus { outline: none; border-color: var(--hairline); background: var(--glass-2-hover); }
+  }
+  .dedicated-search .search-icon {
+    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    background: none; border: 0; padding: 0; z-index: 2;
+    .fa { color: var(--ink-muted); font-size: 19px; }
+  }
+  /* search results grid/list spacing */
+  .dedicated-search-container-flow-space { height: 8px; }
+}
