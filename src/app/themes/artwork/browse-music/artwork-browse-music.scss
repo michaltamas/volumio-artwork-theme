@@ -733,3 +733,43 @@ body#artwork {
   #browsePanelHeading, .browse-header { background: rgba(8,10,12,.35) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .navButtons .btn-link .fa { color: var(--ink-1); }
 }
+
+/* ============ Album detail: two-column layout (mockup §6.3) ============ */
+body#artwork {
+  #browseTablesWrapper:has(#artist-page) {
+    display: grid;
+    grid-template-columns: minmax(340px, 38%) 1fr;
+    gap: 52px; align-items: start; padding: 10px 0 48px;
+  }
+  #browseTablesWrapper:has(#artist-page) #browse-page { min-width: 0; grid-column: 2; }
+
+  /* header = left column, vertical */
+  #artist-page { position: relative; }
+  #artist-page .header__main { display: flex; flex-direction: column; align-items: flex-start; }
+  #artist-page .header__image { width: 100%; }
+  #artist-page .header__image__img {
+    width: 100%; max-width: 400px; height: auto; aspect-ratio: 1;
+    border-radius: var(--r-cover); box-shadow: 0 40px 80px -24px rgba(0,0,0,.82);
+  }
+  #artist-page .header__info { padding: 26px 0 0; width: 100%; }
+  #artist-page .header__play { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  #artist-page .header__play-btn { order: 3; margin-top: 18px; }
+  #artist-page .header__artist { order: 1; font-size: 46px; }
+  #artist-page .header__actions {
+    display: flex; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap;
+    .header__action-btn {
+      display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px;
+      border-radius: var(--r-pill); background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+      color: var(--ink-1); font-size: 14px;
+    }
+  }
+
+  /* darken the album backdrop for contrast */
+  #artist-page .header__backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+  #artist-page .header__backdrop::after { content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,10,12,.55), rgba(8,10,12,.86)); }
+  #artist-page .header__backdrop img { width: 100%; height: 100%; object-fit: cover; filter: blur(60px); opacity: .5; }
+
+  /* right column track table */
+  .album__tracks { display: flex; flex-direction: column; gap: 2px; }
+}
