@@ -122,3 +122,33 @@ $trackInfoBarButtonsHeight: 35px;
     }
   }
 }
+
+/* ============ Artwork play queue (spec §5.9) ============ */
+body#artwork {
+  #playQueue { background: transparent; padding: 8px 0; }
+  #playQueueList { background: transparent; }
+  #playQueueList ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  #playQueueList li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 14px; border-radius: var(--r-panel);
+    background: transparent; border: 0; cursor: pointer; transition: background .15s;
+    &:hover { background: rgba(255,255,255,.06); }
+  }
+  #playQueueList .image { position: relative; width: 48px; height: 48px; flex: none; }
+  #playQueueList .image img { width: 48px; height: 48px; object-fit: cover; border-radius: 7px; display: block; }
+  #playQueueList .rollover { position: absolute; inset: 0; display: grid; place-items: center;
+    background: rgba(6,9,12,.45); opacity: 0; border-radius: 7px; transition: opacity .2s; color: var(--ink-1); }
+  #playQueueList li:hover .rollover { opacity: 1; }
+  #playQueueList .titleArtist { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+  #playQueueList .title { font-size: 15px; font-weight: 500; color: var(--ink-1);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #playQueueList .titleArtist > div:not(.title), #playQueueList .artist {
+    font-size: 13px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #playQueueList .commandButtons { flex: none; display: flex; align-items: center; gap: 6px;
+    .fa { color: var(--ink-muted); } }
+  /* currently playing row */
+  #playQueueList li.playing, #playQueueList li.active {
+    background: rgba(255,255,255,.10);
+    .title { color: var(--ok); }
+  }
+}
