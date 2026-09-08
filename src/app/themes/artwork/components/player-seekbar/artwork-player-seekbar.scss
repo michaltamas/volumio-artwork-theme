@@ -27,3 +27,16 @@
   .seek-time { font-size: 10px; }
   .seek-time:last-child { margin-left: 0; }
 }
+
+/* desktop Now Playing (mockup): three rows — waveform, then timecodes UNDER it
+   (elapsed far-left, duration far-right), waveform flush with the cover's left
+   edge. Same DOM as the mini player; grid areas re-place it. */
+#np-seek .artwork-seek {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "wave wave" "elapsed duration";
+  row-gap: 12px; column-gap: 0;
+}
+#np-seek .artwork-wave   { grid-area: wave; justify-self: start; }
+#np-seek .seek-elapsed   { grid-area: elapsed; justify-self: start; }
+#np-seek .seek-duration  { grid-area: duration; justify-self: end; margin-left: 0; }

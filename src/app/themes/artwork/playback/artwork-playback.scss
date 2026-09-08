@@ -295,12 +295,13 @@ body#artwork .with-playback-bar #content { padding-bottom: 0; }
 #np #np-transport { justify-content: flex-start; }
 #np #np-upnext { display: flex; align-items: center; gap: 16px; flex: none; }
 #np .np-upnext-label { font-size: 11px; letter-spacing: .14em; color: var(--ink-dim); white-space: nowrap; }
-#np .np-upnext-films { display: flex; }
+/* mockup: three separate 44px covers with a gap, fading 1 / .6 / .34 — never overlapping */
+#np .np-upnext-films { display: flex; gap: 12px; }
 #np .np-upnext-films img {
   width: 44px; height: 44px; border-radius: 6px; object-fit: cover;
-  margin-left: -8px; box-shadow: 0 6px 16px -6px rgba(0,0,0,.7);
+  box-shadow: 0 6px 16px -6px rgba(0,0,0,.7);
 }
-#np .np-upnext-films img:nth-child(1) { margin-left: 0; opacity: 1; }
+#np .np-upnext-films img:nth-child(1) { opacity: 1; }
 #np .np-upnext-films img:nth-child(2) { opacity: .6; }
 #np .np-upnext-films img:nth-child(3) { opacity: .34; }
 #np .np-queue {

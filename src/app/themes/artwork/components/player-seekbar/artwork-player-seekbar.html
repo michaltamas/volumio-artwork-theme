@@ -1,6 +1,6 @@
 <!-- Artwork waveform scrubber (spec §5.7). elapsed | waveform | duration -->
 <div class="artwork-seek" ng-if="playerSeekBar.getDuration() != null">
-  <span class="seek-time mono">{{playerSeekBar.getElapsed()}}</span>
+  <span class="seek-time seek-elapsed mono">{{playerSeekBar.getElapsed()}}</span>
   <div class="artwork-wave" role="slider" tabindex="0" aria-label="Seek"
        aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{playerSeekBar.ariaNow()}}"
        ng-keydown="playerSeekBar.onKey($event)">
@@ -10,5 +10,5 @@
          ng-style="{height: (h / 46 * 100) + '%'}"
          ng-click="playerSeekBar.seekToBar($index)"></div>
   </div>
-  <span class="seek-time mono">{{playerSeekBar.getDuration()}}</span>
+  <span class="seek-time seek-duration mono">{{playerSeekBar.getDuration()}}</span>
 </div>
