@@ -20,3 +20,46 @@
 
 }
 }
+
+/* ============ Artwork settings + plugin-config reskin (token-level) ============ */
+body#artwork {
+  .setting-container, .panel, .panel-default, .panel-body, .panel-heading { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+  .panel-title, .setting-container h2, .config-section-title, .section-label {
+    font-family: var(--font-ui); font-weight: 700; color: var(--ink-1);
+  }
+  .panel-title .fa { color: var(--ink-dim); }
+
+  /* settings menu list */
+  .settings-nav { list-style: none; margin: 0; padding: 0; }
+  .settings-nav a {
+    display: block; padding: 12px 16px; margin-bottom: 4px;
+    border-radius: var(--r-control); color: var(--ink-2); text-decoration: none;
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    transition: background .15s, color .15s; cursor: pointer;
+    &:hover { background: var(--glass-2-hover); color: var(--ink-1); }
+  }
+
+  /* form controls (also covers plugin config pages) */
+  input[type="text"], input[type="number"], input[type="password"], input[type="email"], select, textarea {
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    color: var(--ink-1); border-radius: var(--r-control); padding: 8px 12px;
+    &::placeholder { color: var(--ink-dim); }
+    &:focus { outline: 2px solid var(--ink-1); outline-offset: 1px; }
+  }
+  label, .control-label { color: var(--ink-2); }
+  .config-section, .setting-item, .list-group-item { background: transparent; border-color: var(--hairline-soft); color: var(--ink-2); }
+
+  .btn:not(.btn-link), button.btn:not(.btn-link) {
+    border-radius: var(--r-pill); border: 1px solid var(--glass-2-border);
+    background: var(--glass-2-fill); color: var(--ink-1);
+    &:hover { background: var(--glass-2-hover); }
+  }
+  .btn-primary, .btn-info, .saveButton, button.btn-primary {
+    background: var(--ink); color: var(--ground); border: 0;
+    &:hover { background: var(--ink-1); color: var(--ground); }
+  }
+  .btn-danger { background: var(--err); color: #fff; border: 0; }
+
+  /* section eyebrows / helper text */
+  .help-block, .setting-description, small { color: var(--ink-muted); }
+}
