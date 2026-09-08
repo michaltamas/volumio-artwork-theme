@@ -63,3 +63,50 @@ body#artwork {
   /* section eyebrows / helper text */
   .help-block, .setting-description, small { color: var(--ink-muted); }
 }
+
+/* ============ Artwork plugin/settings config layout (per mockup) ============ */
+body#artwork {
+  /* config page container over the artwork background */
+  .plugin-serve, .plugin-body, .plugin-content { background: transparent !important; }
+
+  /* each setting row: label + description on the left, control on the right */
+  .form-group {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    grid-template-areas: "label control" "doc control";
+    align-items: center; column-gap: 24px; row-gap: 4px;
+    padding: 18px 2px; margin: 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .form-group > .plugin-label,
+  .form-group > .control-label {
+    grid-area: label; margin: 0; padding: 0; text-align: left;
+    font-size: 16px; font-weight: 600; color: var(--ink-1); float: none; width: auto;
+  }
+  .form-group > .control-doc {
+    grid-area: doc; margin: 0; font-size: 13px; color: var(--ink-dim); text-wrap: pretty;
+  }
+  .form-group > .control-item { grid-area: control; margin: 0; padding: 0; width: 100%; }
+
+  /* control surfaces (dropdown buttons, selects, inputs) as glass pills */
+  .control-item > .btn,
+  .control-item select,
+  .control-item .dropdown-toggle {
+    width: 100%; min-height: 42px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 14px; border-radius: 11px;
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border); color: var(--ink-1);
+    text-align: left; box-shadow: none;
+    &:hover { background: var(--glass-2-hover); }
+  }
+  .control-item .caret { color: var(--ink-muted); }
+
+  /* section title inside a config page */
+  .plugin-section-title, .config-section-title, .plugin-title {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-3); padding: 26px 0 12px; border-bottom: 1px solid var(--hairline-soft); margin-bottom: 6px;
+  }
+
+  @media (max-width: 760px) {
+    .form-group { grid-template-columns: 1fr; grid-template-areas: "label" "doc" "control"; row-gap: 10px; }
+  }
+}
