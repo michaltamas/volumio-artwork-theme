@@ -1,4 +1,4 @@
-<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.isPlaylistInfo,'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-artists': browse.currentUri === 'artists://'}" browse-scroll-manager>
+<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.isPlaylistInfo,'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-artists': browse.currentUri === 'artists://', 'browsing-list': browse.isPlainList}" browse-scroll-manager>
 
     <div class="panel panel-default">
 
@@ -65,11 +65,47 @@
 
           <!-- Content -->
 
-          <!-- Artwork title row for plain lists (Artists, Albums, Genres…): real name + count -->
-          <div class="aw-listhead"
-               ng-if="browse.browseService.isBrowsing && !browse.browseService.isSearching && !browse.browseService.info && browse.currentListTitle">
+          <!-- Artwork list pages (mockup 2e Artists): back + breadcrumb, local filter, grid/list toggle -->
+          <div class="aw-listbar" ng-if="browse.isPlainList">
+            <button type="button" class="aw-listbar__back" ng-click="browse.goBack()" aria-label="Back" title="Back">
+              <span class="material-symbols-rounded">arrow_back</span>
+            </button>
+            <nav class="aw-crumbs" aria-label="Breadcrumb">
+              <a href ng-click="browse.backHome()">Library</a>
+              <span class="aw-crumbs__sep" ng-repeat-start="c in browse.awCrumbs track by $index">/</span>
+              <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title}}</a>
+              <span class="aw-crumbs__sep">/</span>
+              <span class="aw-crumbs__cur">{{browse.currentListTitle}}</span>
+            </nav>
+            <label class="aw-filter">
+              <span class="material-symbols-rounded">search</span>
+              <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
+                     placeholder="Filter {{browse.currentListTitle | lowercase}}" aria-label="Filter {{browse.currentListTitle | lowercase}}">
+            </label>
+            <div class="aw-viewtoggle" ng-if="browse.browseService.showGridViewSelector" role="group" aria-label="View">
+              <button type="button" ng-class="{active: browse.browseService.showGridView}" ng-click="browse.setGridView(true)" aria-label="Grid" title="Grid">
+                <span class="material-symbols-rounded">grid_view</span>
+              </button>
+              <button type="button" ng-class="{active: !browse.browseService.showGridView}" ng-click="browse.setGridView(false)" aria-label="List" title="List">
+                <span class="material-symbols-rounded">list</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- title row: real name + count (filtered count while filtering) + sort order -->
+          <div class="aw-listhead" ng-if="browse.isPlainList">
             <h1 class="aw-listhead__title">{{browse.currentListTitle}}</h1>
-            <span class="aw-listhead__count mono" ng-if="browse.currentListCount">{{browse.currentListCount}}</span>
+            <span class="aw-listhead__count mono" ng-if="browse.currentListCount">{{browse.awVisibleCount !== null ? browse.awVisibleCount + ' / ' : ''}}{{browse.currentListCount}}</span>
+            <button type="button" class="aw-sort" ng-click="browse.toggleAwSort()" title="Sort order">
+              <span class="aw-sort__k">Sort</span>
+              <span class="aw-sort__v">{{browse.awSortDesc ? 'Z–A' : 'A–Z'}}</span>
+              <span class="material-symbols-rounded">expand_more</span>
+            </button>
+          </div>
+
+          <!-- artists list view: column header on the row grid (only the column we have data for) -->
+          <div class="aw-cols aw-cols--artists mono" ng-if="browse.isPlainList && browse.currentUri === 'artists://' && !browse.browseService.showGridView" aria-hidden="true">
+            <span></span><span>ARTIST</span><span></span>
           </div>
 
           <!-- Playlist: real column headers on the same grid as the rows (mockup 2d) -->
@@ -80,6 +116,12 @@
           </div>
 
           <div id="browse-page"></div>
+
+          <!-- alphabet rail: first letters of the real items; click scrolls to the first match -->
+          <nav class="aw-alpha mono" ng-if="browse.isPlainList && browse.awLetters.length > 1" aria-label="Jump to letter">
+            <button type="button" ng-repeat="l in browse.awLetters track by l" ng-click="browse.awJumpTo(l)"
+                    ng-class="{active: l === browse.awActiveLetter}">{{l}}</button>
+          </nav>
 
         </div>
       </div> <!-- /.body-content -->

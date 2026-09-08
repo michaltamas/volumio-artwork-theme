@@ -59,6 +59,11 @@ class BrowseMusicController {
 
   initController() {
     if (this.$document[0].body.id === 'artwork') { this.loadArtworkLibraryHome(); }
+    // Artwork list pages (Artists, Albums, Genres…): local filter / sort / alphabet rail
+    this.awFilter = ''; this.awSortDesc = false; this.awVisibleCount = null; this.awActiveLetter = '';
+    if (this.$document[0].body.id === 'artwork') {
+      this.$rootScope.$on('browseController:listRendered', () => this.awAfterRender());
+    }
 
     this.socketService.on('pushBrowseLibrary', (data) => {
       this.fetchAdditionalMetas();
@@ -1007,6 +1012,78 @@ class BrowseMusicController {
       });
       return html.join('');
     }
+  }
+
+  /* ===== Artwork list pages: breadcrumb, local filter, sort order, alphabet rail.
+     renderBrowsePage() emits plain HTML, so filter/sort act on the rendered nodes
+     (hidden class / CSS order) and never touch the indices the click handlers use. ===== */
+  get isPlainList() {
+    return !!(this.browseService.isBrowsing && !this.browseService.isSearching &&
+      !this.browseService.info && this.currentListTitle);
+  }
+  // ancestors between "Library" (the landing) and the current list — the real navigation stack
+  get awCrumbs() {
+    const stack = this.browseService.navigationStack || [];
+    return stack.slice(0, -1).filter(s => s.title);
+  }
+  awGoCrumb(item) {
+    this.fetchLibrary({ uri: item.uri, title: item.title, name: item.title, service: item.service,
+      type: item.type, plugin_name: item.plugin_name, plugin_type: item.plugin_type });
+  }
+  setGridView(on) {
+    if (Boolean(this.browseService.showGridView) === Boolean(on)) { return; }
+    // re-render only when a list is loaded (toggleGridView() renders browseService.lists)
+    if (this.browseService.lists) { this.toggleGridView(); } else { this.browseService.toggleGridView(); }
+  }
+  awNorm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  awNodes() {
+    return Array.prototype.slice.call(document.querySelectorAll(
+      '#browse-page .music-card__wrapper:not(.placeholder-wrapper), #browse-page .album__tracks'));
+  }
+  awTitleOf(el) {
+    const t = el.querySelector('.music-card__label, .item__title');
+    return t ? t.textContent.trim() : '';
+  }
+  applyAwFilter() {
+    const q = this.awNorm(this.awFilter).trim();
+    let visible = 0;
+    this.awNodes().forEach(el => {
+      const hide = !!q && this.awNorm(this.awTitleOf(el)).indexOf(q) === -1;
+      el.classList.toggle('aw-hidden', hide);
+      if (!hide) { visible++; }
+    });
+    this.awVisibleCount = q ? visible : null;
+  }
+  toggleAwSort() { this.awSortDesc = !this.awSortDesc; this.applyAwSort(); }
+  applyAwSort() {
+    const nodes = this.awNodes();
+    if (!this.awSortDesc) { nodes.forEach(el => { el.style.order = ''; }); return; }
+    // Z–A by the normalised title (the backend order is case-sensitive)
+    const ranked = nodes.slice().sort((a, b) => this.awNorm(this.awTitleOf(b)).localeCompare(this.awNorm(this.awTitleOf(a))));
+    ranked.forEach((el, i) => { el.style.order = String(i + 1); });
+  }
+  get awLetters() {
+    let items = [];
+    try { items = this.browseService.lists[0].items || []; } catch (e) { return []; }
+    const seen = {};
+    items.forEach(it => {
+      const c = this.awNorm(it.title || it.name).charAt(0).toUpperCase();
+      if (/[A-Z0-9]/.test(c)) { seen[c] = true; }
+    });
+    const letters = Object.keys(seen).sort();
+    return this.awSortDesc ? letters.reverse() : letters;
+  }
+  awJumpTo(letter) {
+    const nodes = this.awNodes().filter(el => !el.classList.contains('aw-hidden'));
+    const target = nodes.find(el => this.awNorm(this.awTitleOf(el)).charAt(0).toUpperCase() === letter);
+    if (target) { this.awActiveLetter = letter; target.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+  }
+  awAfterRender() {
+    if (this._awListUri !== this.currentUri) {
+      this._awListUri = this.currentUri;
+      this.awFilter = ''; this.awSortDesc = false; this.awActiveLetter = ''; this.awVisibleCount = null;
+    }
+    this.applyAwFilter(); this.applyAwSort();
   }
 
   toggleGridView() {

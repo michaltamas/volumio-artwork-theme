@@ -968,3 +968,97 @@ body#artwork #browse.browsing-playlist .main__list { counter-reset: aw-row; } /*
 body#artwork #browse.browsing-playlist .music-item { counter-increment: aw-row; }
 body#artwork #browse.browsing-playlist .music-item .item__image { display: grid; place-items: center;
   &::before { content: counter(aw-row); font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim); } }
+
+/* ============================================================
+   List pages (mockup 2e Artists — values from its inline CSS): the core browse
+   top bar is replaced by back + breadcrumb, a local filter pill and the view
+   toggle; title row carries the count and the sort pill; alphabet rail on the
+   right is built from the real first letters.
+   ============================================================ */
+body#artwork #browse.browsing-list .browse-header-container { display: none; }
+body#artwork #browse.browsing-list .panel .body-content.new-browse { top: 0; height: 100%; }
+body#artwork #browse.browsing-list #browseTablesWrapper { position: relative; padding-top: 34px; }
+body#artwork .aw-hidden { display: none !important; }
+/* rows are re-ordered with CSS order (Z–A), so the list must be a flex column */
+body#artwork #browse.browsing-list .main__list { display: flex; flex-direction: column; }
+
+.aw-listbar { display: flex; align-items: center; gap: 16px; }
+.aw-listbar__back {
+  background: transparent; border: 0; padding: 0; margin: 0; display: grid; place-items: center; cursor: pointer;
+  .material-symbols-rounded { font-size: 22px; color: #c2c8cd; }
+  &:hover .material-symbols-rounded { color: #fff; }
+  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; border-radius: 6px; }
+}
+.aw-crumbs { font-size: 15px; color: #8c9298; display: flex; align-items: center; gap: 5px; min-width: 0;
+  a { color: #8c9298; text-decoration: none; &:hover { color: #c2c8cd; text-decoration: none; } }
+  .aw-crumbs__sep { color: #5f6669; }
+  .aw-crumbs__cur { color: #fff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+.aw-filter {
+  margin-left: auto; display: flex; align-items: center; gap: 11px; height: 38px; padding: 0 16px; border-radius: 19px; width: 290px; margin-bottom: 0; font-weight: 400;
+  background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .11); cursor: text;
+  .material-symbols-rounded { font-size: 20px; color: #a7adb3; flex: none; }
+  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none;
+    &::placeholder { color: #a7adb3; }
+    &::-webkit-search-cancel-button { -webkit-appearance: none; } }
+  &:focus-within { border-color: rgba(255, 255, 255, .3); }
+}
+.aw-viewtoggle {
+  display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .11);
+  button { width: 34px; height: 30px; border-radius: 8px; border: 0; padding: 0; background: transparent; display: grid; place-items: center; cursor: pointer;
+    .material-symbols-rounded { font-size: 19px; color: #a7adb3; }
+    &.active { background: #fff; .material-symbols-rounded { color: #0d0e10; } }
+    &:hover:not(.active) .material-symbols-rounded { color: #fff; }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+}
+/* title row: 46/800 + mono 13 count, sort pill on the right (h34, pad 15, r17, border .16) */
+body#artwork #browse.browsing-list .aw-listhead { gap: 16px; margin: 26px 0 0; }
+.aw-sort {
+  margin-left: auto; display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 15px; border-radius: 17px;
+  border: 1px solid rgba(255, 255, 255, .16); background: transparent; cursor: pointer; align-self: center;
+  .aw-sort__k { font-size: 13px; color: #a7adb3; }
+  .aw-sort__v { font-size: 13px; font-weight: 500; color: #e4e7ea; }
+  .material-symbols-rounded { font-size: 17px; color: #a7adb3; }
+  &:hover { background: rgba(255, 255, 255, .06); }
+  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+}
+/* grid: 6 tiles, gap 24, 28px under the title row; tile label 15/600 centred, gap 12 */
+body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(6, 1fr); gap: 24px; padding: 28px 0 40px; }
+@media (max-width: 1400px) { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 1100px) { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 800px)  { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(3, 1fr); } }
+body#artwork #browse.browsing-artists .music-card__info { margin-top: 12px; justify-content: center; } /* .music-card__info is a flex row: text-align alone does not centre the label */
+body#artwork #browse.browsing-artists .music-card__label { max-width: 100%; }
+body#artwork #browse.browsing-artists .music-card__label { font-size: 15px; font-weight: 600; margin-top: 0; }
+body#artwork #browse.browsing-artists .music-card__meta { font-size: 12px; color: #8c9298; margin-top: 4px; }
+body#artwork #browse.browsing-artists .music-card .play-btn { width: 52px; height: 52px;
+  .play-btn__icon, .fa { font-size: 22px; } }
+/* missing artwork: flat dark disc with a person glyph (mockup) */
+body#artwork #browse.browsing-artists .music-card__header { background: rgba(255, 255, 255, .06); box-shadow: none; }
+body#artwork #browse.browsing-artists .music-card__img-icon { position: absolute; inset: 0; display: grid; place-items: center;
+  .fa { font-size: 40px; color: #6f757b; } }
+
+/* list view: column header + rows on one grid (52px avatar · name · ⋯) */
+.aw-cols--artists {
+  display: grid; grid-template-columns: 52px 1fr 24px; align-items: center; gap: 20px;
+  padding: 22px 12px 11px; margin-top: 14px; border-bottom: 1px solid rgba(255, 255, 255, .1);
+  font-size: 10px; letter-spacing: .16em; color: #8c9298;
+}
+body#artwork #browse.browsing-artists .main__list { padding-top: 0; }
+body#artwork #browse.browsing-artists .album__tracks + .album__tracks .music-item { border-top: 1px solid rgba(255, 255, 255, .05); }
+body#artwork #browse.browsing-artists .music-item:hover { background: rgba(255, 255, 255, .1); }
+body#artwork #browse.browsing-artists .music-item .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
+body#artwork #browse.browsing-artists .music-item:hover .item__title { font-weight: 700; color: #fff; }
+
+/* alphabet rail (design screenshot: mono letters down the right edge, active white) */
+.aw-alpha {
+  /* fixed: #browseTablesWrapper is the scroller; centred on the content area above the 98px mini-player */
+  position: fixed; right: 14px; top: calc(50% - 49px); transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 1px; z-index: 2;
+  button { background: transparent; border: 0; padding: 1px 5px; font: inherit; font-size: 10px; line-height: 1.35; letter-spacing: .04em; color: #8c9298; cursor: pointer;
+    &:hover, &.active { color: #fff; }
+    &.active { font-weight: 700; }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 1px; border-radius: 4px; } }
+}
+/* row menu: the mockup shows horizontal dots */
+body#artwork #browse.browsing-artists .music-item .item__actions .fa-ellipsis-v::before { content: "\f141"; }
