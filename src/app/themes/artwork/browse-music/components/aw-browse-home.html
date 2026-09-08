@@ -1,0 +1,125 @@
+<!-- Artwork "Browse" landing (mockup 2b-browse). Every card is a real Volumio
+     browse source; counts/stats/tile artwork come from the same-origin REST API.
+     Lines the device has no data for (hi-res counts, "last added") are omitted. -->
+<div class="aw-browse">
+
+  <div class="aw-tabs">
+    <div class="aw-tab active">Library</div>
+    <div class="aw-tab" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">{{s.name}}</div>
+    <div class="aw-tab" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">Radio</div>
+    <div class="aw-search" ui-sref="volumio.search" role="button" tabindex="0">
+      <span class="material-symbols-rounded">search</span>
+      <span class="aw-search-label" ng-if="browse.libraryHome.stats">Search {{browse.libraryHome.stats.songs}} tracks</span>
+      <span class="aw-search-label" ng-if="!browse.libraryHome.stats">Search everything</span>
+      <span class="aw-search-key mono">⌘K</span>
+    </div>
+    <div class="aw-avatar" ui-sref="myvolumio" role="button" tabindex="0" aria-label="MyVolumio">
+      <span class="material-symbols-rounded">person</span>
+    </div>
+  </div>
+
+  <div class="aw-browse-head">
+    <h1 class="aw-browse-title">Browse</h1>
+    <div class="aw-browse-stats mono" ng-if="browse.libraryStatsLine">{{browse.libraryStatsLine}}</div>
+  </div>
+
+  <div class="aw-cards">
+
+    <div class="aw-card" ng-if="browse.sourceByUri('albums://')" ng-click="browse.fetchLibrary(browse.sourceByUri('albums://'))">
+      <div class="aw-tile aw-tile--mosaic">
+        <img ng-repeat="a in browse.libraryHome.albumsArt track by $index" ng-src="{{a}}" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Albums</div>
+        <div class="aw-card-sub" ng-if="browse.libraryHome.stats">{{browse.libraryHome.stats.albums}} albums</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+    <div class="aw-card" ng-if="browse.sourceByUri('artists://')" ng-click="browse.fetchLibrary(browse.sourceByUri('artists://'))">
+      <div class="aw-tile aw-tile--avatars">
+        <img ng-repeat="a in browse.libraryHome.artistsArt track by $index" ng-src="{{a}}" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Artists</div>
+        <div class="aw-card-sub" ng-if="browse.libraryHome.stats">{{browse.libraryHome.stats.artists}} artists</div>
+        <div class="aw-card-meta mono">GRID OR LIST</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+    <div class="aw-card" ng-if="browse.sourceByUri('favourites')" ng-click="browse.fetchLibrary(browse.sourceByUri('favourites'))">
+      <div class="aw-tile aw-tile--icon"><span class="material-symbols-rounded">favorite</span></div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Favourites</div>
+        <div class="aw-card-sub" ng-if="browse.libraryHome.counts.favourites !== undefined">{{browse.libraryHome.counts.favourites}} tracks</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+    <div class="aw-card" ng-if="browse.sourceByUri('playlists')" ng-click="browse.fetchLibrary(browse.sourceByUri('playlists'))">
+      <div class="aw-tile aw-tile--stack" ng-if="browse.libraryHome.playlistArt"><img ng-src="{{browse.libraryHome.playlistArt}}" alt="" onerror="this.style.display='none'"></div>
+      <div class="aw-tile aw-tile--icon" ng-if="!browse.libraryHome.playlistArt"><span class="material-symbols-rounded">queue_music</span></div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Playlists</div>
+        <div class="aw-card-sub" ng-if="browse.libraryHome.counts.playlists !== undefined">{{browse.libraryHome.counts.playlists}} playlists</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+    <div class="aw-card" ng-if="browse.sourceByUri('genres://')" ng-click="browse.fetchLibrary(browse.sourceByUri('genres://'))">
+      <div class="aw-tile aw-tile--icon aw-tile--lines" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Genres</div>
+        <div class="aw-card-sub" ng-if="browse.libraryHome.counts.genres !== undefined">{{browse.libraryHome.counts.genres}} genres</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+    <div class="aw-card" ng-if="browse.sourceByUri('Last_100')" ng-click="browse.fetchLibrary(browse.sourceByUri('Last_100'))">
+      <div class="aw-tile aw-tile--icon"><span class="material-symbols-rounded">history</span></div>
+      <div class="aw-card-body">
+        <div class="aw-card-title">Last 100</div>
+        <div class="aw-card-sub">Recently played</div>
+      </div>
+      <span class="material-symbols-rounded aw-card-chev">chevron_right</span>
+    </div>
+
+  </div>
+
+  <div class="aw-sources-head">
+    <span class="mono">SOURCES</span>
+    <a class="aw-sources-manage" ui-sref="volumio.settings">Manage</a>
+  </div>
+
+  <div class="aw-sources">
+    <div class="aw-source" ng-if="browse.sourceByUri('music-library')" ng-click="browse.fetchLibrary(browse.sourceByUri('music-library'))">
+      <span class="material-symbols-rounded">folder_open</span>
+      <div class="aw-source-body"><div class="aw-source-name">{{browse.sourceByUri('music-library').name}}</div></div>
+      <span class="material-symbols-rounded aw-source-chev">chevron_right</span>
+    </div>
+    <div class="aw-source" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">
+      <span class="material-symbols-rounded">radio</span>
+      <div class="aw-source-body"><div class="aw-source-name">{{browse.sourceByUri('radio').name}}</div></div>
+      <span class="material-symbols-rounded aw-source-chev">chevron_right</span>
+    </div>
+    <div class="aw-source" ng-if="browse.sourceByUri('upnp')" ng-click="browse.fetchLibrary(browse.sourceByUri('upnp'))">
+      <span class="material-symbols-rounded">dns</span>
+      <div class="aw-source-body"><div class="aw-source-name">{{browse.sourceByUri('upnp').name}}</div></div>
+      <span class="material-symbols-rounded aw-source-chev">chevron_right</span>
+    </div>
+    <div class="aw-source" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">
+      <span class="material-symbols-rounded">cloud</span>
+      <div class="aw-source-body"><div class="aw-source-name">{{s.name}}</div></div>
+      <span class="material-symbols-rounded aw-source-chev">chevron_right</span>
+    </div>
+    <div class="aw-source aw-source--add" ui-sref="volumio.settings">
+      <span class="material-symbols-rounded">add</span>
+      <div class="aw-source-body">
+        <div class="aw-source-name">Add a source</div>
+        <div class="aw-source-sub">Settings</div>
+      </div>
+    </div>
+  </div>
+
+</div>

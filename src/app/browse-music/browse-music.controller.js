@@ -58,6 +58,7 @@ class BrowseMusicController {
   }
 
   initController() {
+    if (this.$document[0].body.id === 'artwork') { this.loadArtworkLibraryHome(); }
 
     this.socketService.on('pushBrowseLibrary', (data) => {
       this.fetchAdditionalMetas();
@@ -144,6 +145,58 @@ class BrowseMusicController {
     }
   }
 
+
+  // Artwork "Browse" landing: real library stats / counts / tile artwork read over
+  // the same-origin REST API, so the browse view's socket state is never touched.
+  loadArtworkLibraryHome() {
+    if (this.libraryHome) { return; }
+    const home = this.libraryHome = { stats: null, albumsArt: [], artistsArt: [], playlistArt: null, counts: {} };
+    const get = (url) => this.$http.get(url).then(r => r.data).catch(() => null);
+    const items = (j) => { try { return j.navigation.lists[0].items || []; } catch (e) { return []; } };
+    const art = (i) => this.playerService.getAlbumart(i.albumart);
+    get('/api/v1/collectionstats').then(s => { if (s && s.albums !== undefined) { home.stats = s; } });
+    get('/api/v1/browse?uri=albums://').then(j => { home.albumsArt = items(j).slice(0, 4).map(art); });
+    get('/api/v1/browse?uri=artists://').then(j => { home.artistsArt = items(j).slice(0, 2).map(art); });
+    get('/api/v1/browse?uri=favourites').then(j => { home.counts.favourites = items(j).length; });
+    get('/api/v1/browse?uri=playlists').then(j => {
+      const it = items(j); home.counts.playlists = it.length;
+      if (it[0] && it[0].albumart) { home.playlistArt = art(it[0]); }
+    });
+    get('/api/v1/browse?uri=genres://').then(j => { home.counts.genres = items(j).length; });
+  }
+
+  sourceByUri(uri) {
+    return (this.browseService.sources || []).find(s => s.uri === uri) || null;
+  }
+
+  // real music-service plugins beyond the built-in library sources (Qobuz, Tidal, Spotify…)
+  get streamingSources() {
+    const builtIn = ['favourites', 'playlists', 'music-library', 'artists://', 'albums://', 'genres://', 'upnp', 'Last_100', 'radio'];
+    return (this.browseService.sources || []).filter(s => builtIn.indexOf(s.uri) === -1);
+  }
+
+  // "31 ARTISTS · 50 ALBUMS · 117 H" — one expression, so template minification
+  // cannot swallow the spaces between bindings
+  get libraryStatsLine() {
+    const s = this.libraryHome && this.libraryHome.stats;
+    if (!s) { return ''; }
+    const h = parseInt(String(s.playtime || '').split(':')[0], 10);
+    return `${s.artists} ARTISTS · ${s.albums} ALBUMS` + (isNaN(h) ? '' : ` · ${h} H`);
+  }
+
+  // current list (artists://, albums://, genres://…) for the Artwork title row —
+  // browseService keeps the fetched item in currentFetchRequest
+  get currentUri() {
+    const r = this.browseService.currentFetchRequest;
+    return r ? String(r.uri || '') : '';
+  }
+  get currentListTitle() {
+    const r = this.browseService.currentFetchRequest;
+    return r ? (r.name || r.title || '') : '';
+  }
+  get currentListCount() {
+    try { return this.browseService.lists[0].items.length; } catch (e) { return 0; }
+  }
 
   fetchLibrary(item, back = false) {
     this.$log.debug(item);

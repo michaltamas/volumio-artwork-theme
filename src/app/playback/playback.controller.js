@@ -62,6 +62,38 @@ class PlaybackController {
     } catch (e) { return []; }
   }
 
+  // --- Now Playing readouts derived from real player state (spec §5.4–5.6) ---
+  // "24 bit" -> {n:"24", u:"bit"}, "48 kHz" -> {n:"48", u:"kHz"}
+  splitVal(s) {
+    const m = String(s || '').trim().match(/^([\d.]+)\s*(.*)$/);
+    return m ? { n: m[1], u: m[2] } : { n: '', u: String(s || '') };
+  }
+  get npBit()  { return this.splitVal(this.playerService.state && this.playerService.state.bitdepth); }
+  get npRate() { return this.splitVal(this.playerService.state && this.playerService.state.samplerate); }
+
+  // "FLAC · QOBUZ": format, plus the service when it is a streaming source
+  get npFormat() {
+    const st = this.playerService.state || {};
+    const fmt = String(st.trackType || st.stream || '').toUpperCase();
+    const svc = String(st.service || '');
+    return svc && svc !== 'mpd' ? `${fmt} · ${svc.toUpperCase()}` : fmt;
+  }
+
+  // "24/48" for the signal path
+  get npSignal() {
+    const b = this.npBit.n, r = this.npRate.n;
+    return b && r ? `${b}/${r}` : (b || r || '');
+  }
+
+  get npQueueLen() {
+    const q = (this.playQueueService && this.playQueueService.queue) || [];
+    return q.length;
+  }
+  get npTrackPos() {
+    const st = this.playerService.state || {};
+    return (typeof st.position === 'number' ? st.position : 0) + 1;
+  }
+
   goBack() {
     this.$state.go(this.previousState);
   }

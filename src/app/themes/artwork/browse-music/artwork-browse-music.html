@@ -1,4 +1,4 @@
-<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.browseService.info.type === 'playlist'}" browse-scroll-manager>
+<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.browseService.info.type === 'playlist', 'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-artists': browse.currentUri === 'artists://'}" browse-scroll-manager>
 
     <div class="panel panel-default">
 
@@ -35,7 +35,7 @@
           <div
               ng-if="!browse.browseService.isBrowsing && !browse.browseService.isSearching"
               ng-include
-              src="'app/browse-music/components/browse-sources.html'">
+              src="'app/themes/artwork/browse-music/components/aw-browse-home.html'">
           </div> <!-- /SOURCES PAGE -->
 
 
@@ -64,6 +64,13 @@
           <!-- </div> --> <!-- /BROWSE -->
 
           <!-- Content -->
+
+          <!-- Artwork title row for plain lists (Artists, Albums, Genres…): real name + count -->
+          <div class="aw-listhead"
+               ng-if="browse.browseService.isBrowsing && !browse.browseService.isSearching && !browse.browseService.info && browse.currentListTitle">
+            <h1 class="aw-listhead__title">{{browse.currentListTitle}}</h1>
+            <span class="aw-listhead__count mono" ng-if="browse.currentListCount">{{browse.currentListCount}}</span>
+          </div>
 
           <div id="browse-page"></div>
 

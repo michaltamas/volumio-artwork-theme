@@ -252,10 +252,15 @@ div#goBackPanelWrapper {
     height: 38px; padding: 0 15px; border-radius: var(--r-pill);
     background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
   }
-  .np-chip-val { font-size: 13px; font-weight: 700; color: var(--ink); }
+  /* numerals mono-m --ink, units mono --ink-3 (spec §5.4: "24 BIT 192 kHz") */
+  .np-chip { gap: 7px; }
+  .np-chip-num  { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--ink); }
+  .np-chip-num--rate { margin-left: 6px; }
+  .np-chip-unit { font-size: 11px; letter-spacing: .14em; color: var(--ink-3); }
+  .np-chip-unit--bit { text-transform: uppercase; }
   .np-format { font-size: 11px; letter-spacing: .14em; color: var(--ink-muted); text-transform: uppercase; }
 
-  .np-signalpath { margin-top: 16px; display: flex; align-items: center; gap: 10px;
+  .np-signalpath { margin-top: 16px; display: flex; align-items: center; gap: 10px; text-transform: uppercase;
     font-size: 11px; letter-spacing: .14em; color: var(--ink-3); }
   .np-arrow { color: rgba(255,255,255,.28); }
   .np-node-final { color: var(--ink); }

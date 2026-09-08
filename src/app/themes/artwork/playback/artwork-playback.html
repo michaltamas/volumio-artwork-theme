@@ -25,28 +25,33 @@
            alt="{{playback.playerService.state.album}}"/>
     </div>
     <div id="np-meta">
-      <div class="np-eyebrow mono">NOW PLAYING</div>
+      <div class="np-eyebrow mono">
+        <span ng-if="playback.npQueueLen">TRACK {{playback.npTrackPos}} OF {{playback.npQueueLen}}</span>
+        <span ng-if="!playback.npQueueLen">NOW PLAYING</span>
+      </div>
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
       <div class="np-artist">{{playback.playerService.state.artist}}</div>
       <div class="np-album">{{playback.playerService.state.album}}</div>
       <div id="np-chip-slot">
         <div class="np-quality">
           <div class="np-chip mono" ng-if="playback.playerService.state.bitdepth || playback.playerService.state.samplerate">
-            <span class="np-chip-val" ng-if="playback.playerService.state.bitdepth">{{playback.playerService.state.bitdepth}}</span>
-            <span class="np-chip-val" ng-if="playback.playerService.state.samplerate">{{playback.playerService.state.samplerate}}</span>
+            <span class="np-chip-num" ng-if="playback.npBit.n">{{playback.npBit.n}}</span>
+            <span class="np-chip-unit np-chip-unit--bit" ng-if="playback.npBit.u">{{playback.npBit.u}}</span>
+            <span class="np-chip-num np-chip-num--rate" ng-if="playback.npRate.n">{{playback.npRate.n}}</span>
+            <span class="np-chip-unit" ng-if="playback.npRate.u">{{playback.npRate.u}}</span>
           </div>
           <div class="np-chip mono" ng-if="!playback.playerService.state.bitdepth && !playback.playerService.state.samplerate && playback.playerService.state.bitrate">
             <span class="np-chip-val">{{playback.playerService.state.bitrate}}</span>
           </div>
-          <span class="np-format mono" ng-if="playback.playerService.state.trackType">{{playback.playerService.state.trackType}}</span>
+          <span class="np-format mono" ng-if="playback.npFormat">{{playback.npFormat}}</span>
         </div>
         <!-- signal path (§5.6) — static nodes where live data is unavailable; refine later -->
         <div class="np-signalpath mono" ng-if="playback.playerService.state.samplerate">
-          <span>SOURCE {{playback.playerService.state.bitdepth}} {{playback.playerService.state.samplerate}}</span>
+          <span>SOURCE {{playback.npSignal}}</span>
           <span class="np-arrow">&rarr;</span>
           <span>NO RESAMPLE</span>
           <span class="np-arrow">&rarr;</span>
-          <span class="np-node-final">DAC</span>
+          <span class="np-node-final">{{playback.npOutput || 'DAC'}}</span>
         </div>
       </div>
     </div>
