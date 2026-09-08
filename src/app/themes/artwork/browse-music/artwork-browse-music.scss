@@ -941,11 +941,16 @@ body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 34px;
   .aw-albumhead__top { grid-column: 1 / -1; }
   .aw-albumhead__cover { max-width: 260px; grid-row: 2; }
   .aw-albumhead__title, .aw-albumhead__artist, .aw-albumhead__meta, .aw-albumhead__actions { grid-column: 2; }
-  .aw-albumhead__title { grid-row: 2; align-self: end; font-size: 64px; letter-spacing: -.035em; line-height: 1; margin: 0; }
-  .aw-albumhead__meta { grid-row: 3; margin-top: 14px; }
-  .aw-albumhead__actions { grid-row: 4; margin-top: 26px; }
+  /* mockup: <img 260> + a flex column (title, description, meta, actions; padding-bottom 6) with
+     align-items:flex-end — the column's bottom sits on the cover's bottom */
+  .aw-albumhead__body { grid-column: 2; grid-row: 2; align-self: end; display: flex; flex-direction: column; min-width: 0; padding-bottom: 6px; }
+  .aw-albumhead__title { font-size: 64px; letter-spacing: -.035em; line-height: 1; margin: 0; }
+  .aw-albumhead__meta { margin-top: 14px; }
+  .aw-albumhead__actions { margin-top: 26px; }
   .aw-albumhead__artist { display: none; } /* playlists have no single artist */
 }
+/* album page keeps its flat flex column: the body wrapper is transparent to layout there */
+.aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__body { display: contents; }
 /* column headers (theme markup above #browse-page) aligned to the row grid */
 .aw-cols {
   display: grid; grid-template-columns: 48px 44px 1fr 30px 27px; align-items: center; gap: 14px;

@@ -12,7 +12,7 @@
 
   /* brand mark — text "V" in a rounded square (matches mockup / spec §5.1, §11) */
   .brand {
-    width: 34px; height: 34px; flex: none; margin-bottom: 18px;
+    width: 36px; height: 36px; flex: none; margin-bottom: 18px; /* mockup: 34px + 1.5px border, content-box → 36 */
     border-radius: 9px; border: 1.5px solid var(--ink-1);
     display: grid; place-items: center;
     font-family: 'Figtree', 'Lato', sans-serif;
@@ -35,7 +35,7 @@
     display: grid; place-items: center;
     width: var(--rail-item); height: var(--rail-item);
     border-radius: 13px; cursor: pointer;
-    color: var(--ink-dim); text-decoration: none;
+    color: #9aa0a8; text-decoration: none; /* mockup icon colour */
     transition: background .18s, color .18s;
     .material-symbols-rounded { font-size: 23px; }
     &:hover { background: rgba(255, 255, 255, .08); color: var(--ink-2); }

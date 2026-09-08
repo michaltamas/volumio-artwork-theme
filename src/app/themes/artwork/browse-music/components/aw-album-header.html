@@ -21,6 +21,8 @@
          alt="{{browse.browseService.info.album}}">
   </div>
 
+  <!-- title / artist / meta / actions: one column (mockup playlist: bottom-aligned to the cover) -->
+  <div class="aw-albumhead__body">
   <h1 class="aw-albumhead__title">{{ browse.browseService.info.title || browse.browseService.info.album }}</h1>
 
   <div class="aw-albumhead__artist" ng-if="browse.browseService.info.artist">{{ browse.browseService.info.artist }}</div>
@@ -49,6 +51,7 @@
     <button class="aw-iconbtn" ng-click="browse.addToQueue(browse.browseService.info)" title="Add to queue">
       <span class="material-symbols-rounded">queue_music</span>
     </button>
+  </div>
   </div>
 
 </div>

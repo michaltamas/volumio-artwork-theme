@@ -4,9 +4,8 @@
   <!-- tabs row -->
   <div class="home-tabs">
     <div class="home-tab active">Library</div>
-    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Qobuz</div>
-    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Tidal</div>
-    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Radio</div>
+    <!-- the other tabs are the real browse sources (streaming services, web radio) -->
+    <div class="home-tab" ng-repeat="s in home.sources track by s.uri" ng-click="home.openSource(s)">{{s.name}}</div>
     <div class="home-search" ng-click="home.goTo('volumio.search')">
       <span class="material-symbols-rounded">search</span>
       <span class="home-search-label">Search everything</span>
@@ -39,13 +38,17 @@
   <div class="home-shelf" ng-if="home.recentAlbums.length">
     <div class="home-shelf-head">
       <span class="mono home-shelf-title">RECENT ALBUMS</span>
-      <span class="mono home-shelf-tag">HI-RES</span>
+      <!-- mockup: two 30px round arrows on the right; here they page through the real list -->
+      <div class="home-shelf-nav" ng-if="home.shelfPages > 1">
+        <button type="button" ng-click="home.shelfPrev()" ng-disabled="!home.canShelfPrev" aria-label="Previous"><span class="material-symbols-rounded">chevron_left</span></button>
+        <button type="button" ng-click="home.shelfNext()" ng-disabled="!home.canShelfNext" aria-label="Next"><span class="material-symbols-rounded">chevron_right</span></button>
+      </div>
     </div>
     <div class="main__row">
-      <div class="music-card__wrapper" ng-repeat="album in home.recentAlbums track by $index">
+      <div class="music-card__wrapper" ng-repeat="album in home.shelfItems track by album.uri">
         <div class="music-card" ng-click="home.openAlbum(album)">
           <div class="music-card__header">
-            <img class="music-card__img" ng-src="{{home.playerService.getAlbumart(album.albumart)}}" alt="">
+            <img class="music-card__img" ng-src="{{home.playerService.getAlbumart(album.albumart)}}" alt="" onerror="this.style.display='none'">
             <div class="music-card__overlay">
               <div class="meta__play">
                 <button class="ghost-btn play-btn"><i class="fa fa-play play-btn__icon"></i></button>

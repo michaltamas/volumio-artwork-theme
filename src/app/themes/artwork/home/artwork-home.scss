@@ -52,6 +52,13 @@ body#artwork #artwork-home {
   .home-shelf { margin-top: 44px; }
   .home-shelf-head { display: flex; align-items: center; gap: 14px; }
   .home-shelf-title { font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
-  .home-shelf-tag { font-size: 11px; color: var(--ink-faint); }
-  .main__row { margin-top: 20px; }
+  .home-shelf-nav { margin-left: auto; display: flex; gap: 8px;
+    button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .16); background: transparent; padding: 0;
+      display: grid; place-items: center; cursor: pointer; color: #e4e7ea;
+      .material-symbols-rounded { font-size: 18px; }
+      &:disabled { color: #a7adb3; cursor: default; opacity: .6; }
+      &:hover:not(:disabled) { background: rgba(255, 255, 255, .08); } } }
+  /* mockup: one row of 6, gap 22, 20px under the head; a missing cover is a flat dark cell */
+  .main__row { grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 20px; padding-bottom: 0; }
+  .music-card__header { background: var(--card-flat); }
 }

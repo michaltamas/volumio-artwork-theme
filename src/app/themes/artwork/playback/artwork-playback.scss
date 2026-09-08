@@ -202,10 +202,11 @@ div#goBackPanelWrapper {
   #np-topbar {
     display: flex; align-items: center; justify-content: space-between;
     min-height: 40px;
-    .np-chevron { color: var(--ink-2); cursor: pointer; display: inline-grid; place-items: center;
-      width: 40px; height: 40px; border-radius: var(--r-control);
-      .material-symbols-rounded { font-size: 26px; }
-      &:hover { background: rgba(255,255,255,.08); color: var(--ink-1); } }
+    /* mockup: 38px box, r11, rgba(255,255,255,.12), glyph 21 */
+    .np-chevron { color: var(--ink-1); cursor: pointer; display: inline-grid; place-items: center;
+      width: 38px; height: 38px; border-radius: 11px; background: rgba(255,255,255,.12);
+      .material-symbols-rounded { font-size: 21px; }
+      &:hover { background: rgba(255,255,255,.18); } }
   }
 
   #np-hero {
@@ -221,15 +222,17 @@ div#goBackPanelWrapper {
       box-shadow: 0 44px 90px -24px rgba(0,0,0,.85); }
   }
   #np-meta { min-width: 0; padding-top: 14px; flex: 1; }
-  .np-eyebrow { font-size: 11px; letter-spacing: .14em; color: var(--ink-3); margin-bottom: 14px; }
+  /* mockup: eyebrow 11/.2em #cfd4d8; title 70/800 -.035em lh .98 mt16; artist 23 #e4e7ea mt22;
+     album 18 #a7adb3 mt5; chip row mt32 */
+  .np-eyebrow { font-size: 11px; letter-spacing: .2em; color: #cfd4d8; margin-bottom: 16px; }
   .np-title {
     font-family: var(--font-ui);
-    font-size: 72px; line-height: .98; letter-spacing: -.035em; font-weight: 800;
-    color: var(--ink); margin: 0 0 14px; text-wrap: pretty;
+    font-size: 70px; line-height: .98; letter-spacing: -.035em; font-weight: 800;
+    color: var(--ink); margin: 0; text-wrap: pretty;
   }
-  .np-artist { font-size: 23px; font-weight: 600; color: var(--ink-2); }
-  .np-album  { font-size: 19px; font-weight: 400; color: var(--ink-muted); margin-top: 4px; }
-  #np-chip-slot { margin-top: 22px; }
+  .np-artist { font-size: 23px; font-weight: 400; color: #e4e7ea; margin-top: 22px; }
+  .np-album  { font-size: 18px; font-weight: 400; color: #a7adb3; margin-top: 5px; }
+  #np-chip-slot { margin-top: 32px; }
 
   #np-footer { margin-top: auto; padding-top: 28px; }
   #np-seek { margin-bottom: 18px; }
@@ -238,13 +241,14 @@ div#goBackPanelWrapper {
 
 /* hi-res chip + bit-perfect badge + signal path (spec §5.4–5.6) */
 #np {
+  /* mockup: h36 pad 0 14 r18 bg .1 border .13; dot 7 #7de3b4; text 11/.08em #eef1f3 */
   .np-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    height: 36px; padding: 0 14px; border-radius: var(--r-pill);
-    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
-    color: var(--ink-1); font-size: 11px; letter-spacing: .14em;
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 36px; padding: 0 14px; border-radius: 18px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.13);
+    color: #eef1f3; font-size: 11px; letter-spacing: .08em;
   }
-  .np-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+  .np-dot { width: 7px; height: 7px; border-radius: 50%; background: #7de3b4; }
 
   .np-quality { display: flex; align-items: center; gap: 12px; }
   .np-chip {
@@ -266,12 +270,15 @@ div#goBackPanelWrapper {
   .np-node-final { color: var(--ink); }
 
   /* transport (spec §5.8) — big white play button */
+  /* mockup: gap 36; heart/shuffle 28 #e4e7ea; prev/next 36 #fff; play 76 white, glyph 42 */
   #np-transport {
-    align-items: center; gap: 34px;
-    #playerButtons { display: flex; align-items: center; gap: 34px; }
-    .btn-link { color: var(--ink-2); border: 0; background: none;
-      .material-symbols-rounded { font-size: 30px; }
+    align-items: center; gap: 36px;
+    #playerButtons { display: flex; align-items: center; gap: 36px; }
+    .btn-link { color: #e4e7ea; border: 0; background: none; padding: 0;
+      .material-symbols-rounded { font-size: 28px; }
+      &#prev-button .material-symbols-rounded, &#next-button .material-symbols-rounded { font-size: 36px; color: #fff; }
       &:hover { color: var(--ink); } }
+    .np-fav .btn-link { .material-symbols-rounded { font-size: 28px; } &.active { color: #fff; } }
     .playPause {
       width: 76px; height: 76px; border-radius: var(--r-pill);
       background: var(--ink); color: var(--ground);
@@ -291,27 +298,27 @@ body#artwork .with-playback-bar #content { padding-bottom: 0; }
 /* topbar zone · output readout (spec §6.1) */
 #np .np-topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
 #np .np-zone {
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: #d6dade; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  .np-zone-out { color: #8c9298; }
 }
 
 /* Now Playing footer: transport left + UP NEXT filmstrip right (mockup) */
 #np #np-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 4px; }
 #np #np-transport { justify-content: flex-start; }
-#np #np-upnext { display: flex; align-items: center; gap: 16px; flex: none; }
-#np .np-upnext-label { font-size: 11px; letter-spacing: .14em; color: var(--ink-dim); white-space: nowrap; }
-/* mockup: three separate 44px covers with a gap, fading 1 / .6 / .34 — never overlapping */
-#np .np-upnext-films { display: flex; gap: 12px; }
+#np #np-upnext { display: flex; align-items: center; gap: 13px; flex: none; }
+#np .np-upnext-label { font-size: 11px; letter-spacing: .16em; color: #a7adb3; white-space: nowrap; }
+/* mockup: three separate 44px covers r5 with a 13px gap, fading 1 / .6 / .34 — never overlapping */
+#np .np-upnext-films { display: flex; gap: 13px; }
 #np .np-upnext-films img {
-  width: 44px; height: 44px; border-radius: 6px; object-fit: cover;
-  box-shadow: 0 6px 16px -6px rgba(0,0,0,.7);
+  width: 44px; height: 44px; border-radius: 5px; object-fit: cover;
 }
 #np .np-upnext-films img:nth-child(1) { opacity: 1; }
 #np .np-upnext-films img:nth-child(2) { opacity: .6; }
 #np .np-upnext-films img:nth-child(3) { opacity: .34; }
 #np .np-queue {
-  width: 44px; height: 44px; border-radius: var(--r-control);
-  background: var(--glass-2-fill); border: 1px solid var(--glass-2-border); color: var(--ink-1);
+  width: 44px; height: 44px; border-radius: 12px; /* mockup: r12, rgba(255,255,255,.12), no border */
+  background: rgba(255,255,255,.12); border: 0; color: var(--ink-1);
   display: grid; place-items: center; cursor: pointer;
   .material-symbols-rounded { font-size: 22px; }
   &:hover { background: var(--glass-2-hover); }
