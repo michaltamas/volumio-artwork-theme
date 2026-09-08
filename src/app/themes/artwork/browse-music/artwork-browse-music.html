@@ -1,4 +1,4 @@
-<div id="browse" class="boxTable" browse-scroll-manager>
+<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.browseService.info.type === 'playlist'}" browse-scroll-manager>
 
     <div class="panel panel-default">
 

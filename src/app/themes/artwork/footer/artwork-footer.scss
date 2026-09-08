@@ -71,3 +71,38 @@ body#artwork .main-container.with-playback-bar ~ #footer-container { display: no
   #footer-content .artwork-mini { display: none; }
   #footer-content .artwork-mini-mobile { display: block; }
 }
+
+/* ---- mini-player identity + transport polish (match mockup) ---- */
+#footer-content {
+  .mini-identity #trackInfo-compact {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    grid-template-areas: "cover title" "cover artist" "cover rates";
+    align-items: center; column-gap: 12px;
+  }
+  .mini-identity .trackInfo-album-art-wrapper {
+    grid-area: cover; width: 52px; height: 52px; align-self: center;
+  }
+  .mini-identity img.album-art {
+    width: 52px; height: 52px; border-radius: 8px; object-fit: cover; cursor: pointer;
+  }
+  .mini-identity #trackInfo-title {
+    grid-area: title; font-size: 15px; font-weight: 600; color: var(--ink-1);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+  }
+  .mini-identity #trackInfo-artist-album {
+    grid-area: artist; font-size: 13px; color: var(--ink-muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    #trackInfo-album { display: none; } /* artist only, quality shows below */
+  }
+  .mini-identity .track-info-actions-n-rates { grid-area: rates; }
+  .mini-identity .track-user-actions { display: none; }
+  .mini-identity .track-info-rates {
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-dim);
+    display: flex; align-items: center; gap: 6px;
+    img { height: 12px; width: auto; }
+  }
+
+  /* transport icon centering */
+  .mini-transport .btn-link { display: inline-grid; place-items: center; padding: 6px; }
+}

@@ -736,12 +736,12 @@ body#artwork {
 
 /* ============ Album detail: two-column layout (mockup §6.3) ============ */
 body#artwork {
-  #browseTablesWrapper:has(#artist-page) {
+  #browse.browsing-album #browseTablesWrapper {
     display: grid;
     grid-template-columns: minmax(340px, 38%) 1fr;
     gap: 52px; align-items: start; padding: 10px 0 48px;
   }
-  #browseTablesWrapper:has(#artist-page) #browse-page { min-width: 0; grid-column: 2; }
+  #browse.browsing-album #browseTablesWrapper #browse-page { min-width: 0; grid-column: 2; }
 
   /* header = left column, vertical */
   #artist-page { position: relative; }
@@ -773,3 +773,14 @@ body#artwork {
   /* right column track table */
   .album__tracks { display: flex; flex-direction: column; gap: 2px; }
 }
+
+/* ============ Artists = round avatars (mockup) ============ */
+body#artwork {
+  .music-card.is-artist .music-card__header { border-radius: 50%; }
+  .music-card.is-artist .music-card__img { border-radius: 50%; }
+  .music-card.is-artist .music-card__overlay { border-radius: 50%; }
+  .music-card.is-artist .music-card__info,
+  .music-card.is-artist .music-card__meta { text-align: center; }
+  .music-card.is-artist .music-card__label { text-align: center; }
+}
+

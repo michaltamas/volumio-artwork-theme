@@ -1,4 +1,4 @@
-<div id="artist-page" class="browse__album-page">
+<div id="artist-page" class="browse__album-page" ng-class="{'is-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'is-playlist': browse.browseService.info.type === 'playlist'}">
     <div class="album__header">
         <div class="header__content">
             <div class="header__content__inner">
