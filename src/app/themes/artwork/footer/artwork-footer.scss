@@ -92,6 +92,7 @@ body#artwork .main-container.with-playback-bar ~ #footer-container { display: no
   }
   .mini-identity #trackInfo-artist-album {
     grid-area: artist; font-size: 13px; color: var(--ink-muted);
+    #trackInfo-artist, #trackInfo-artist a, a { color: var(--ink-muted) !important; }
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     #trackInfo-album { display: none; } /* artist only, quality shows below */
   }
