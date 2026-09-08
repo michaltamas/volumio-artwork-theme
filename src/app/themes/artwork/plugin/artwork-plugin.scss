@@ -76,7 +76,10 @@
     .ui-select-match { display: block; padding: 0; } /* only the inner button carries the 14px inset (mockup: 1px border + 14px) */
     .ui-select-match > .btn { width: 100%; display: flex; align-items: center; justify-content: flex-start; padding-right: 40px; }
     .ui-select-placeholder { display: none !important; }
-    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    /* chevron: centred on the box (the span spans the full row height, so centre the glyph in a grid);
+       right 17px puts the glyph ink 20.5px from the edge like the design screenshot */
+    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 17px; top: 0; bottom: 0; transform: none;
+      display: grid; place-items: center; line-height: 1;
       &::before { content: 'expand_more'; font-family: 'Material Symbols Rounded'; font-weight: 400; font-size: 20px; color: #a7adb3; line-height: 1; } }
   }
 
