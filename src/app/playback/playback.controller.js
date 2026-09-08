@@ -1,11 +1,12 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService) {
     'ngInject';
     this.playerService = playerService;
     this.matchmediaService = matchmediaService;
     this.$state = $state;
     this.multiRoomService = multiRoomService;
     this.socketService = socketService;
+    this.playQueueService = playQueueService;
     this.previousState = 'volumio.browse';
     this.npOutput = '';
 
@@ -50,6 +51,15 @@ class PlaybackController {
     };
     this.socketService.on('pushUiConfig', handler);
     this.socketService.emit('getUiConfig', { page: 'audio_interface/alsa_controller' });
+  }
+
+  // next few tracks in the queue, for the Now Playing "UP NEXT" filmstrip
+  get upNext() {
+    try {
+      const q = (this.playQueueService && this.playQueueService.queue) || [];
+      const pos = (this.playerService.state && this.playerService.state.position) || 0;
+      return q.slice(pos + 1, pos + 4);
+    } catch (e) { return []; }
   }
 
   goBack() {

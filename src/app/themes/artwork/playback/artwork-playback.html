@@ -54,7 +54,22 @@
 
   <div id="np-footer">
     <div id="np-seek"><player-seekbar></player-seekbar></div>
-    <div id="np-transport"><player-buttons></player-buttons></div>
+    <div id="np-footer-row">
+      <div id="np-transport">
+        <player-buttons></player-buttons>
+      </div>
+      <div id="np-upnext" ng-if="playback.upNext.length">
+        <span class="np-upnext-label mono">UP NEXT</span>
+        <div class="np-upnext-films">
+          <img ng-repeat="t in playback.upNext track by $index"
+               ng-src="{{playback.playerService.getAlbumart(t.albumart)}}"
+               alt="{{t.title}}" title="{{t.title}}"/>
+        </div>
+        <button class="np-queue" ui-sref="volumio.play-queue" title="{{'COMMON.TAB_QUEUE' | translate}}">
+          <span class="material-symbols-rounded">queue_music</span>
+        </button>
+      </div>
+    </div>
   </div>
 
 </div>
