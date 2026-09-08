@@ -639,7 +639,19 @@ body#artwork {
   }
 
   /* browse header + search */
-  .browse-header, #browsePanelHeading { border: 0; background: transparent; }
+  /* browse top bar: the artwork background must show through — no black slab.
+     Home/back become glass icon buttons; the search input is already a glass pill. */
+  .browse-header-container, .browse-header, #browsePanelHeading {
+    border: 0 !important; background: transparent !important; box-shadow: none !important;
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  }
+  .browse-header-container .navButtons button {
+    width: 40px; height: 40px; border-radius: var(--r-control);
+    color: var(--ink-2); background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    display: inline-grid; place-items: center; margin-right: 8px; padding: 0;
+    .fa { font-size: 17px; }
+    &:hover { background: var(--glass-2-hover); color: var(--ink-1); }
+  }
   .searchBox input, .dedicated-search input {
     background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
     color: var(--ink-1); border-radius: var(--r-pill); height: 40px; padding: 0 16px;
@@ -741,3 +753,30 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
 
 /* --- track rows in the right column --- */
 body#artwork .album__tracks { display: flex; flex-direction: column; gap: 2px; grid-column: 2; }
+
+/* ============ Track rows (.music-item) — clean, readable (spec §6.3) ============ */
+body#artwork {
+  .music-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 8px 14px; border-radius: var(--r-panel); min-height: 52px;
+    transition: background .15s ease;
+    &:hover { background: rgba(255, 255, 255, .06); }
+  }
+  .music-item .item__number { color: var(--ink-dim); font-family: var(--font-mono); font-size: 13px; }
+  .music-item .item__info { gap: 18px; min-width: 0; }
+  .music-item .item__title {
+    color: var(--ink-1); font-size: 16px; font-weight: 500; flex: 1 1 auto; min-width: 0;
+  }
+  .music-item .item__album,
+  .music-item .item__artist { color: var(--ink-dim); font-size: 14px; }
+  .music-item .item__duration { color: var(--ink-dim); font-family: var(--font-mono); font-size: 13px; }
+  .music-item .item__favorite .fa,
+  .music-item .item__actions .fa { color: var(--ink-3); font-size: 15px; }
+  .music-item .item__favorite .fa:hover,
+  .music-item .item__actions .fa:hover { color: var(--ink-1); }
+
+  /* on an ALBUM page the album + artist columns just repeat the header —
+     hide them so the title reads clean (design §6.3). Playlists/search keep them. */
+  #browse.browsing-album .album__tracks .item__album,
+  #browse.browsing-album .album__tracks .item__artist { display: none; }
+}

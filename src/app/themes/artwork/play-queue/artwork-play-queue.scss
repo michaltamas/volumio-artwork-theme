@@ -130,6 +130,7 @@ body#artwork {
   #playQueueList ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
   #playQueueList li {
     display: flex; align-items: center; gap: 14px;
+    scroll-margin-top: 56px; /* scrollIntoView on the current row must clear the sticky toolbar */
     padding: 10px 14px; border-radius: var(--r-panel);
     background: transparent; border: 0; cursor: pointer; transition: background .15s;
     &:hover { background: rgba(255,255,255,.06); }
@@ -146,9 +147,28 @@ body#artwork {
     font-size: 13px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #playQueueList .commandButtons { flex: none; display: flex; align-items: center; gap: 6px;
     .fa { color: var(--ink-muted); } }
-  /* currently playing row */
-  #playQueueList li.playing, #playQueueList li.active {
+  /* currently playing row — Volumio marks it with .isPlaying (spec §5.9) */
+  #playQueueList li.isPlaying, #playQueueList li.playing, #playQueueList li.active {
     background: rgba(255,255,255,.10);
     .title { color: var(--ok); }
+    .rollover { opacity: 1; background: transparent; }
   }
+
+  /* queue toolbar (shuffle / repeat / save / clear): no black slab — sits as a
+     glass row over the artwork, buttons pushed right */
+  #playQueue .trackInfoBarButtons {
+    position: sticky; top: 0; z-index: 5; width: 100%;
+    height: 48px; display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+    padding: 0 14px; text-align: right;
+    background: rgba(8, 10, 13, .45);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--hairline-soft);
+    button.btn-link {
+      width: 40px; height: 40px; padding: 0; border-radius: var(--r-control);
+      display: inline-grid; place-items: center; color: var(--ink-2);
+      .fa { font-size: 16px; }
+      &:hover { background: rgba(255,255,255,.08); color: var(--ink-1); }
+    }
+  }
+  #playQueueList { padding-top: 8px; }
 }

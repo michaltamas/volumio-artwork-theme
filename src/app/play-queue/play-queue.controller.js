@@ -102,7 +102,9 @@ class PlayQueueController {
       oldPlayingTrack.classList.remove('isPlaying');
     }
     let currentPlayingSong = this.$document[0].getElementById(`itemQueue-${position}`);
-    if (currentPlayingSong && this.playerService.state.status === 'play') {
+    // keep the current row marked while paused too (only clear it on stop),
+    // so the user can always see which queue entry is current
+    if (currentPlayingSong && this.playerService.state.status !== 'stop') {
       currentPlayingSong.classList.add('isPlaying');
       if (firstRender) {
         currentPlayingSong.scrollIntoView();

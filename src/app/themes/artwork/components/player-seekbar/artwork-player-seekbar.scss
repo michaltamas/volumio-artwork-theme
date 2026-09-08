@@ -1,24 +1,29 @@
-/* Artwork waveform scrubber (spec §5.7) — elapsed | waveform | duration */
+/* Artwork waveform scrubber (spec §5.7):
+   elapsed + fixed-width waveform (104 bars x 4px) on the left, duration far right */
 .artwork-seek { display: flex; align-items: center; gap: 14px; width: 100%; }
 .artwork-seek .seek-time {
-  flex: none; min-width: 40px; font-size: 11px; letter-spacing: .04em; color: var(--ink-muted);
-  &:last-child { text-align: right; }
+  flex: none; font-size: 11px; letter-spacing: .04em; color: var(--ink-muted);
 }
+.artwork-seek .seek-time:last-child { margin-left: auto; }
+
 .artwork-wave {
-  flex: 1 1 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 0;
+  flex: 0 0 auto; display: flex; align-items: flex-end; gap: 2px;
   height: 50px; cursor: pointer;
   &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 4px; border-radius: 2px; }
 }
 .wave-bar {
-  flex: 1 1 auto; max-width: 4px; min-height: 2px; border-radius: 2px;
+  width: 4px; flex: 0 0 4px; min-height: 2px; border-radius: 1px;
   background: rgba(255, 255, 255, .26);
   transition: background .12s ease;
 }
 .wave-bar.played { background: var(--ink-1); }
 
-/* mini-player waveform: short, thin bars spread evenly across the full width */
+/* mini-player: waveform STRETCHES to fill the strip (spec §5.7 — mini bars
+   are flex:1, unlike the fixed-width desktop Now Playing waveform) */
 #footer-content {
-  .artwork-wave { height: 22px; gap: 0; justify-content: space-between; }
-  .wave-bar { flex: 1 1 auto; width: auto; max-width: 3px; }
-  .seek-time { font-size: 10px; min-width: 34px; }
+  .artwork-seek { gap: 12px; }
+  .artwork-wave { flex: 1 1 auto; height: 16px; gap: 2px; }
+  .wave-bar { flex: 1 1 0; width: auto; min-width: 0; }
+  .seek-time { font-size: 10px; }
+  .seek-time:last-child { margin-left: 0; }
 }

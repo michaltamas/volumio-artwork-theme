@@ -30,7 +30,7 @@ class playerSeekBarController {
     // Artwork theme waveform scrubber (spec §5.7). Volumio doesn't provide peak
     // data, so heights come from a deterministic seeded envelope (LCG x sine
     // window). Other themes' seekbar templates simply don't render these.
-    this.WAVE_N = 120;
+    this.WAVE_N = 104;
     this.bars = this.buildWave(this.WAVE_N);
   }
 

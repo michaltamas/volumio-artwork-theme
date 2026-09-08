@@ -192,7 +192,9 @@ div#goBackPanelWrapper {
 #np {
   position: relative; z-index: 1;
   display: flex; flex-direction: column;
-  min-height: 100vh;
+  /* fill the actual content container (which sits below the top nav), not the
+     whole viewport — 100vh overflowed the parent and clipped the transport */
+  height: 100%; min-height: 100%; overflow: hidden;
   box-sizing: border-box;
   padding: 44px 52px 38px;
   color: var(--ink-1);
@@ -207,11 +209,14 @@ div#goBackPanelWrapper {
   }
 
   #np-hero {
-    display: flex; align-items: flex-start; gap: 56px; margin-top: 36px; flex: 1 1 auto;
+    display: flex; align-items: flex-start; gap: 56px; margin-top: 36px;
+    flex: 1 1 auto; min-height: 0;
   }
+  /* cover is 410px per spec, but clamps to viewport height on short displays
+     (Volumio touch panel is ~800px tall) so the footer transport never clips */
   #np-cover {
-    flex: none; width: 410px; height: 410px;
-    img { width: 410px; height: 410px; object-fit: cover;
+    flex: none; width: unquote("min(410px, 44vh)"); height: unquote("min(410px, 44vh)");
+    img { width: 100%; height: 100%; object-fit: cover;
       border-radius: var(--r-cover);
       box-shadow: 0 44px 90px -24px rgba(0,0,0,.85); }
   }
@@ -265,6 +270,10 @@ div#goBackPanelWrapper {
     .playPause {
       width: 76px; height: 76px; border-radius: var(--r-pill);
       background: var(--ink); color: var(--ground);
+      /* base theme paints a green .active ring while playing — spec §5.8: plain white only */
+      border: 0 !important; box-shadow: none !important;
+      /* .active (playing) also re-paints bg/colour in the base theme — pin white in every state */
+      &.active, &.active:hover, &:focus, &:active { background: var(--ink) !important; color: var(--ground) !important; }
       display: grid; place-items: center;
       .material-symbols-rounded { font-size: 42px; }
       &:hover { color: var(--ground); } }
