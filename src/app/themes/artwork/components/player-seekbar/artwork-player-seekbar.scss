@@ -1,95 +1,25 @@
-.player-seekbar{
-
-  .time-label{
-    font-size: 14px;
-  }
-
-  .time-label.pull-left{
-    padding-left: 8px;
-  }
-
-  .time-label.pull-right{
-    padding-right: 8px;
-  }
-
-  .time-label.pull-left,.time-label.pull-right{
-    padding-right: 8px;
-    $timer-number-color: false !default;
-    @if $timer-number-color {
-      color: $timer-number-color;
-    }
-  }
-
-  .seekbar-container{
-
-    line-height: 0px;
-    padding-top: 6px;
-
-    slider{
-
-    }
-
-    .slider-track{
-      height: 10px;
-      background: transparent !important;
-      border-radius: 0px !important;
-      border: 0px !important;
-    }
-
-    .slider-selection{
-      background-image: $theme-slider-bar-full-gradient;
-      border-radius: 0px !important;
-      border: 0px !important;
-    }
-
-    .slider-track-high{
-      background-color: $theme-dark-grey;
-      background-image: none;
-      border-radius: 0px !important;
-    }
-
-    .slider-handle{
-        background-color: $theme-primary-color !important;
-        background-image: none !important;
-        border: none !important;
-        height: 16px !important;
-        width: 8px !important;
-        margin-left: -3px !important;
-        margin-top: -6px !important;
-    }
-
-    .slider-handle.round{
-      border-radius: initial !important;
-    }
-
-    .time-left, .time-right{
-      line-height: initial;
-    }
-
-    .time-left{
-      @media all and (max-width: 720px){
-          $timer-number-color-mobile: false !default;
-          padding-right: 15px;
-          @if $timer-number-color-mobile {
-            color: $timer-number-color-mobile;
-          }
-      }
-    }
-
-    .time-right{
-      @media all and (max-width: 720px){
-        $timer-number-color-mobile: false !default;
-        padding-left: 15px;
-        @if $timer-number-color-mobile {
-          color: $timer-number-color-mobile;
-        }
-      }
-    }
-
-  }
-
+/* Artwork waveform scrubber (spec §5.7) */
+.artwork-seek { width: 100%; }
+.artwork-seek-times {
+  display: flex; justify-content: space-between;
+  font-size: 11px; letter-spacing: .04em; color: var(--ink-muted);
+  margin-bottom: 10px;
 }
+.artwork-wave {
+  display: flex; align-items: flex-end; gap: 2px;
+  height: 50px; width: 100%; cursor: pointer;
+  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 4px; border-radius: 2px; }
+}
+.wave-bar {
+  width: 4px; flex: 0 0 4px; min-height: 2px; border-radius: 1px;
+  background: rgba(255, 255, 255, .26);
+  transition: background .12s ease;
+}
+.wave-bar.played { background: var(--ink-1); }
 
-.seekbar-times{
-  font-size: smaller;
+/* mini-player: shorter, bars stretch to fill the available width */
+#footer-content {
+  .artwork-seek-times { display: none; }
+  .artwork-wave { height: 16px; gap: 2px; }
+  .wave-bar { flex: 1 1 auto; width: auto; }
 }
