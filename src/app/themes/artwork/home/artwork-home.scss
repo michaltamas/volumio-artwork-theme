@@ -1,0 +1,57 @@
+/* Artwork My Music / Library home (spec §6.2 + updated mockup) */
+body#artwork #artwork-home {
+  position: relative; z-index: 1;
+  padding: 38px 52px 60px;
+  color: var(--ink-1);
+  min-height: 100vh; box-sizing: border-box;
+
+  /* tabs row */
+  .home-tabs { display: flex; align-items: center; gap: 26px; }
+  .home-tab {
+    font-size: 15px; color: var(--ink-dim); cursor: pointer; transition: color .15s;
+    &:hover { color: var(--ink-2); }
+    &.active { color: var(--ink); font-weight: 600; }
+  }
+  .home-search {
+    margin-left: auto; display: flex; align-items: center; gap: 11px;
+    height: 38px; padding: 0 16px; width: 290px; border-radius: 19px;
+    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border); cursor: pointer;
+    .material-symbols-rounded { font-size: 20px; color: var(--ink-muted); }
+    .home-search-label { font-size: 14px; color: var(--ink-muted); }
+    .home-search-key { margin-left: auto; font-size: 11px; color: var(--ink-faint); }
+  }
+  .home-avatar {
+    width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+    background: rgba(255,255,255,.14);
+    .material-symbols-rounded { font-size: 21px; color: var(--ink-2); }
+  }
+
+  /* continue hero */
+  .home-hero { display: flex; gap: 36px; margin-top: 34px; align-items: flex-end; }
+  .home-hero-cover img {
+    width: 224px; height: 224px; object-fit: cover; border-radius: var(--r-cover);
+    box-shadow: 0 34px 70px -22px rgba(0,0,0,.8); display: block;
+  }
+  .home-hero-meta { display: flex; flex-direction: column; padding-bottom: 6px; min-width: 0; }
+  .home-eyebrow { font-size: 11px; letter-spacing: .2em; color: var(--ink-3); }
+  .home-hero-title {
+    font-family: var(--font-ui); font-size: 54px; font-weight: 800; letter-spacing: -.03em;
+    line-height: 1.02; margin-top: 12px; color: var(--ink); text-wrap: pretty;
+  }
+  .home-hero-actions { display: flex; align-items: center; gap: 16px; margin-top: 22px; }
+  .home-resume {
+    display: flex; align-items: center; gap: 9px; height: 46px; padding: 0 24px 0 19px;
+    border-radius: var(--r-pill); background: var(--ink); color: var(--ground); border: 0; cursor: pointer;
+    .material-symbols-rounded { font-size: 23px; }
+    span:last-child { font-size: 15px; font-weight: 700; }
+    &:hover { background: var(--ink-1); }
+  }
+  .home-hero-sub { font-size: 15px; color: var(--ink-muted); }
+
+  /* recent albums shelf */
+  .home-shelf { margin-top: 44px; }
+  .home-shelf-head { display: flex; align-items: center; gap: 14px; }
+  .home-shelf-title { font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
+  .home-shelf-tag { font-size: 11px; color: var(--ink-faint); }
+  .main__row { margin-top: 20px; }
+}

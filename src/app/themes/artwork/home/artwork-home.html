@@ -1,22 +1,64 @@
-<div class="box">
-  <div class="boxHeader">
-    <div class="title">
-      <h2 translate="HOME"></h2>
-      <a href="https://volumio.org/" target="_blank" class="btn btn-outline pull-right" id="myvolumio-info">
-        <i class="fa fa-question"></i> 
-        <span class="hidden-xs" translate="VOLUMIO" class="ng-scope"></span>
-      </a>
+<!-- Artwork My Music / Library home (spec §6.2 + updated mockup) -->
+<div id="artwork-home">
+
+  <!-- tabs row -->
+  <div class="home-tabs">
+    <div class="home-tab active">Library</div>
+    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Qobuz</div>
+    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Tidal</div>
+    <div class="home-tab" ng-click="home.goTo('volumio.browse')">Radio</div>
+    <div class="home-search" ng-click="home.goTo('volumio.search')">
+      <span class="material-symbols-rounded">search</span>
+      <span class="home-search-label">Search everything</span>
+      <span class="home-search-key mono">⌘K</span>
+    </div>
+    <div class="home-avatar" ng-click="home.goTo('myvolumio')">
+      <span class="material-symbols-rounded">person</span>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-home"></i> <span translate="HOME"></span></h3>
+
+  <!-- continue / pick up where you left off -->
+  <div class="home-hero" ng-if="home.hasContinue">
+    <div class="home-hero-cover">
+      <img ng-src="{{home.continueArt}}" alt="{{home.continueTitle}}">
     </div>
-
-    <div class="panel-body">
-
-      <h4>Discover all your best music and streams</h4>
-
+    <div class="home-hero-meta">
+      <div class="home-eyebrow mono">PICK UP WHERE YOU LEFT OFF</div>
+      <div class="home-hero-title">{{home.continueTitle}}</div>
+      <div class="home-hero-actions">
+        <button class="home-resume" ng-click="home.resume()">
+          <span class="material-symbols-rounded">play_arrow</span>
+          <span>Resume</span>
+        </button>
+        <span class="home-hero-sub" ng-if="home.continueArtist">{{home.continueArtist}}</span>
+      </div>
     </div>
   </div>
+
+  <!-- recent albums shelf -->
+  <div class="home-shelf" ng-if="home.recentAlbums.length">
+    <div class="home-shelf-head">
+      <span class="mono home-shelf-title">RECENT ALBUMS</span>
+      <span class="mono home-shelf-tag">HI-RES</span>
+    </div>
+    <div class="main__row">
+      <div class="music-card__wrapper" ng-repeat="album in home.recentAlbums track by $index">
+        <div class="music-card" ng-click="home.openAlbum(album)">
+          <div class="music-card__header">
+            <img class="music-card__img" ng-src="{{home.playerService.getAlbumart(album.albumart)}}" alt="">
+            <div class="music-card__overlay">
+              <div class="meta__play">
+                <button class="ghost-btn play-btn"><i class="fa fa-play play-btn__icon"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="music-card__info">
+            <div class="music-card__label" title="{{album.title || album.album}}">{{album.title || album.album}}</div>
+          </div>
+          <p class="music-card__meta">{{album.artist || ''}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
