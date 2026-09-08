@@ -2,7 +2,7 @@
 #footer-content {
   position: fixed; left: var(--rail-w); right: 0; bottom: 0;
   height: 98px; z-index: 3;
-  padding: 0 22px 8px;
+  padding: 11px 22px 13px; /* measured: 1px border-top + 11 = play 13px from the top; waveform 13px from the bottom (mockup 13/13) */
   background: rgba(8, 10, 13, 0.55);
   backdrop-filter: blur(34px);
   -webkit-backdrop-filter: blur(34px);
@@ -15,7 +15,8 @@
     height: 100%;
     display: grid;
     grid-template-columns: 300px 1fr 280px;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto auto;      /* transport row, waveform row */
+    align-content: space-between;       /* rows pinned to the padding edges */
     align-items: center;
     column-gap: 20px;
   }
@@ -27,7 +28,16 @@
   .mini-transport {
     grid-column: 2; grid-row: 1;
     display: flex; align-items: center; justify-content: center;
-    #playerButtons { display: flex; align-items: center; gap: 26px; }
+    #playerButtons { display: flex; align-items: center; gap: 26px; height: auto; padding: 0; margin: 0; }
+    /* Volumio wraps play in a 0-height anchor + an absolutely lifted "grey" wrapper
+       (top:-35px) so it pops out of the bar in Contemporary. Artwork keeps play in
+       the row like its siblings — make both wrappers plain in-flow boxes. */
+    .playPauseBtnWrapper, .playPauseBtnGreyWrapper {
+      position: static !important; top: auto !important;
+      width: auto; height: auto; margin: 0; padding: 0;
+      background: none; border: 0; box-shadow: none;
+      display: flex; align-items: center;
+    }
     .btn-link { color: var(--ink-2); border: 0; background: none;
       .material-symbols-rounded { font-size: 28px; } /* spec §5.8 mini: 28px skips */
       &:hover { color: var(--ink-1); } &.active { color: var(--ink); } }
@@ -36,6 +46,7 @@
       background: var(--ink); color: var(--ground); display: grid; place-items: center;
       /* base theme paints a green .active ring while playing — spec §5.8: plain white only */
       border: 0 !important; box-shadow: none !important;
+      position: static; top: auto; margin: 0; /* the lift lived on the wrappers (above), not here — keep the button itself in flow */
       /* .active (playing) also re-paints bg/colour in the base theme — pin white in every state */
       &.active, &.active:hover, &:focus, &:active { background: var(--ink) !important; color: var(--ground) !important; }
       .material-symbols-rounded { font-size: 26px; }
@@ -61,7 +72,7 @@
     &:hover, &.selected { color: var(--ink-1); } }
 
   /* waveform strip: centre column, directly under the transport (spec §6.2 mockup) */
-  .mini-wave { grid-column: 2; grid-row: 2; padding-top: 2px; min-width: 0; }
+  .mini-wave { grid-column: 2; grid-row: 2; padding-top: 0; min-width: 0; }
 }
 
 /* content leaves room for the mini player; hidden on the full Now Playing screen */
@@ -102,7 +113,10 @@ body#artwork .main-container.with-playback-bar ~ #footer-container { display: no
   }
   .mini-identity #trackInfo-artist-album {
     grid-area: artist; font-size: 13px; line-height: 1.4; color: var(--ink-muted); /* label */
-    #trackInfo-artist, #trackInfo-artist a, a { color: var(--ink-muted) !important; }
+    /* the text lives in the inner span/anchor, which inherits a larger size from the base theme */
+    #trackInfo-artist, #trackInfo-artist a, a {
+      color: var(--ink-muted) !important; font-size: 13px !important; font-weight: 400; line-height: 1.4;
+    }
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     #trackInfo-album { display: none; } /* artist only, quality shows below */
   }
