@@ -1,44 +1,73 @@
-/* Artwork mini player (spec §5.10) — glass bar spanning the content column */
+/* Artwork mini player (spec §5.10 / mockup) */
 #footer-content {
   position: fixed; left: var(--rail-w); right: 0; bottom: 0;
-  height: 98px; z-index: 3;
-  display: flex; align-items: center; padding: 0 22px;
+  height: 104px; z-index: 3;
+  padding: 0 22px 8px;
   background: var(--glass-1-fill);
   backdrop-filter: blur(var(--glass-1-blur));
   -webkit-backdrop-filter: blur(var(--glass-1-blur));
   border-top: 1px solid var(--hairline-soft);
   color: var(--ink-1);
 
-  #player-bar { width: 100%; }
-  #player-bar > .row {
-    display: flex; align-items: center; gap: 18px; margin: 0;
-    > [class*="col-"] { float: none; padding: 0; width: auto; }
+  #player-bar { height: 100%; }
+
+  .artwork-mini {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 300px 1fr 320px;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    column-gap: 20px;
   }
 
-  .track-info-container { flex: 0 0 300px; min-width: 0; }   /* ellipsis-friendly */
-  .controls-container   { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; gap: 16px; }
-  .volume-container     { flex: 0 0 210px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin: 0; }
-  .play-mode-container  { flex: 0 0 auto; }
+  /* identity (track-info) */
+  .mini-identity { grid-column: 1; grid-row: 1; min-width: 0; }
 
-  #queueOutputButtonsContainer { display: flex; align-items: center; gap: 6px; }
+  /* transport (player-buttons), centered */
+  .mini-transport {
+    grid-column: 2; grid-row: 1;
+    display: flex; align-items: center; justify-content: center;
+    #playerButtons { display: flex; align-items: center; gap: 22px; }
+    .btn-link { color: var(--ink-2); border: 0; background: none;
+      .material-symbols-rounded { font-size: 24px; }
+      &:hover { color: var(--ink-1); } &.active { color: var(--ink); } }
+    .playPause {
+      width: 46px; height: 46px; border-radius: var(--r-pill);
+      background: var(--ink); color: var(--ground); display: grid; place-items: center;
+      .material-symbols-rounded { font-size: 26px; }
+      &:hover { color: var(--ground); } }
+  }
 
-  /* transport / control icon buttons */
-  .btn-link { color: var(--ink-2); border: 0; background: none;
-    .material-symbols-rounded { font-size: 24px; }
-    &:hover { color: var(--ink-1); }
-    &.active { color: var(--ink); }
+  /* right cluster: volume + zone pill + queue */
+  .mini-right {
+    grid-column: 3; grid-row: 1;
+    display: flex; align-items: center; justify-content: flex-end; gap: 14px;
   }
-  /* primary play/pause — the only pure-white filled control (spec §5.8) */
-  .playPause {
-    width: 46px; height: 46px; border-radius: var(--r-pill);
-    background: var(--ink); color: var(--ground);
-    display: grid; place-items: center;
-    .material-symbols-rounded { font-size: 26px; }
-    &:hover { color: var(--ground); }
+  .mini-volume { display: flex; align-items: center; min-width: 110px; }
+  .mini-zone {
+    display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px;
+    border-radius: var(--r-pill); background: var(--glass-2-fill); border: 1px solid var(--glass-2-border);
+    color: var(--ink-1); cursor: pointer; max-width: 150px;
+    .material-symbols-rounded { font-size: 18px; color: var(--ink-2); }
+    .mini-zone-name { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    &:hover { background: var(--glass-2-hover); }
   }
+  .mini-queue { color: var(--ink-2); border: 0; background: none;
+    .material-symbols-rounded { font-size: 22px; }
+    &:hover, &.selected { color: var(--ink-1); } }
+
+  /* full-width waveform strip along the bottom */
+  .mini-wave { grid-column: 1 / -1; grid-row: 2; padding-top: 4px; }
 }
 
-/* leave room so page content isn't hidden behind the fixed mini player */
-body#artwork #content { padding-bottom: 98px; }
-/* on the full Now Playing screen the mini player yields to the playback bar */
+/* content leaves room for the mini player; hidden on the full Now Playing screen */
+body#artwork #content { padding-bottom: 104px; }
 body#artwork .main-container.with-playback-bar ~ #footer-container { display: none; }
+
+/* mobile mini */
+#footer-content .artwork-mini-mobile { display: none; }
+@media (max-width: 767px) {
+  #footer-content { height: auto; }
+  #footer-content .artwork-mini { display: none; }
+  #footer-content .artwork-mini-mobile { display: block; }
+}

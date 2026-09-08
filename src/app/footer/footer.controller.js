@@ -5,6 +5,7 @@ class FooterController {
     this.state = $state;
     this.themeManager = themeManager;
     this.$scope = $scope;
+    this.$injector = $injector;
 
     $scope.$watch(() => socketService.host, () => {
       if(socketService.host) {
@@ -23,6 +24,16 @@ class FooterController {
 
   updateTabbar(){
     this.showPlayerFooter = this.state.$current.name === 'volumio.playback' && ['volumio3', 'artwork'].indexOf(this.themeManager.theme) > -1;
+  }
+
+  // zone/room name for the mini-player pill (self device in the multiroom list)
+  get zoneName() {
+    try {
+      let list = (this.$injector.get('multiRoomService') || {}).devices || [];
+      if (list && list.list) { list = list.list; }
+      const self = Array.isArray(list) ? list.find(d => d && d.isSelf) : null;
+      return self ? self.name : '';
+    } catch (e) { return ''; }
   }
 }
 

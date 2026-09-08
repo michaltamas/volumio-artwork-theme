@@ -1,10 +1,6 @@
-<!-- Artwork waveform scrubber (spec §5.7). Same controller as the stock seekbar;
-     bars come from playerSeekBar.bars (seeded envelope), coloured by progress. -->
+<!-- Artwork waveform scrubber (spec §5.7). elapsed | waveform | duration -->
 <div class="artwork-seek" ng-if="playerSeekBar.getDuration() != null">
-  <div class="artwork-seek-times">
-    <span class="mono">{{playerSeekBar.getElapsed()}}</span>
-    <span class="mono">{{playerSeekBar.getDuration()}}</span>
-  </div>
+  <span class="seek-time mono">{{playerSeekBar.getElapsed()}}</span>
   <div class="artwork-wave" role="slider" tabindex="0" aria-label="Seek"
        aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{playerSeekBar.ariaNow()}}"
        ng-keydown="playerSeekBar.onKey($event)">
@@ -14,4 +10,5 @@
          ng-style="{height: (h / 46 * 100) + '%'}"
          ng-click="playerSeekBar.seekToBar($index)"></div>
   </div>
+  <span class="seek-time mono">{{playerSeekBar.getDuration()}}</span>
 </div>

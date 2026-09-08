@@ -1,73 +1,50 @@
 <div ng-if="footer.isSocketReady" id="footer-content">
-
   <div id="player-bar" ng-class="{'playback-bar': footer.showPlayerFooter}">
 
-    <div ng-class="{'row': true, 'hidden-xs hidden-sm': footer.showPlayerFooter}">
+    <!-- desktop mini player (spec §5.10 / mockup) -->
+    <div class="artwork-mini hidden-xs hidden-sm">
 
-      <div class="lined-seekbar col-xs-24 hidden-md hidden-lg hidden-xl">
-        <player-seekbar></player-seekbar>
-      </div>
-
-      <div class="track-info-container col-xs-16 col-md-8 col-xs-push-4 col-md-push-0">
+      <div class="mini-identity">
         <track-info is-in-footer="true"></track-info>
-        <!--
-        <player-status></player-status>
-        -->
       </div>
 
-      <div class="controls-container col-xs-4 col-md-8 col-xs-pull-16 col-md-pull-0 padding-0">
-        <!-- CONTROLS -->
+      <div class="mini-transport">
         <player-buttons is-in-footer="true"></player-buttons>
-        <player-seekbar class='hidden-xs hidden-sm'></player-seekbar>
       </div>
 
-      <div class="volume-container col-xs-4 col-md-6 row">
-        <!-- VOLUME -->
-        <volume-manager is-on-footer="true"></volume-manager>
-      </div>
-
-      <div class="play-mode-container col-md-2 hidden-xs hidden-sm">
-        <div id="queueOutputButtonsContainer">
-          <button
-            ui-sref="volumio.play-queue"
-            class="btn btn-link play-queue-button"
-            ng-mouseenter="hover = 'queue'"
-            ng-mouseleave="hover = ''"
-            ng-class="{selected: this.$state.current.name === 'volumio.play-queue'}"
-            title="{{'COMMON.TAB_QUEUE' | translate}}">
-            <span class="material-symbols-rounded">queue_music</span>
-          </button>
-          <button
-            id="openMenuBtn"
-            ng-click="audioOutputs.toggleMenu()"
-            ng-disabled="!audioOutputs.isMultiOutputsAvailable()"
-            class="btn btn-link audio-outputs-button"
-            title="{{'MULTIDEVICE.ZONES_AND_OUTPUTS' | translate}}">
-            <span ng-if="audioOutputs.menuVisible" class="material-symbols-rounded">close</span>
-            <span ng-if="!audioOutputs.menuVisible" class="material-symbols-rounded">speaker</span>
-          </button>
-          <div>
-          </div>
+      <div class="mini-right">
+        <div class="mini-volume">
+          <volume-manager is-on-footer="true"></volume-manager>
         </div>
+        <button id="openMenuBtn" class="mini-zone"
+                ng-click="audioOutputs.toggleMenu()"
+                title="{{'MULTIDEVICE.ZONES_AND_OUTPUTS' | translate}}">
+          <span class="material-symbols-rounded">speaker</span>
+          <span class="mini-zone-name">{{ footer.zoneName || 'This player' }}</span>
+        </button>
+        <button ui-sref="volumio.play-queue"
+                class="btn btn-link mini-queue"
+                ng-class="{selected: footer.state.current.name === 'volumio.play-queue'}"
+                title="{{'COMMON.TAB_QUEUE' | translate}}">
+          <span class="material-symbols-rounded">queue_music</span>
+        </button>
+      </div>
+
+      <div class="mini-wave">
+        <player-seekbar></player-seekbar>
       </div>
 
     </div>
 
-    <ng-include
-      ng-class="{'hidden-xs hidden-sm': footer.showPlayerFooter}"
-      id="tab-bar"
-      class="col-xs-24 hidden-md hidden-lg hidden-xl"
-      src="'app/themes/artwork/partials/artwork-tab-bar.html'"
-    >
-    </ng-include>
-
-    <ng-include
-      ng-class="{'hidden-md hidden-lg hidden-xl': footer.showPlayerFooter}"
-      id="playback-tab-bar"
-      class="col-xs-24 hidden-md hidden-lg hidden-xl"
-      src="'app/themes/artwork/partials/artwork-playback-tab-bar.html'"
-    >
-    </ng-include>
+    <!-- mobile -->
+    <div class="artwork-mini-mobile visible-xs visible-sm">
+      <div class="lined-seekbar"><player-seekbar></player-seekbar></div>
+      <div class="mobile-row">
+        <div class="track-info-container"><track-info is-in-footer="true"></track-info></div>
+        <div class="controls-container"><player-buttons is-in-footer="true"></player-buttons></div>
+      </div>
+      <ng-include id="tab-bar" src="'app/themes/artwork/partials/artwork-tab-bar.html'"></ng-include>
+    </div>
 
   </div>
 </div>
