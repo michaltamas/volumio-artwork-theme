@@ -5,20 +5,20 @@
   &:last-child { text-align: right; }
 }
 .artwork-wave {
-  flex: 1 1 auto; display: flex; align-items: flex-end; gap: 2px;
+  flex: 1 1 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 0;
   height: 50px; cursor: pointer;
   &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 4px; border-radius: 2px; }
 }
 .wave-bar {
-  width: 4px; flex: 0 0 4px; min-height: 2px; border-radius: 1px;
+  flex: 1 1 auto; max-width: 4px; min-height: 2px; border-radius: 2px;
   background: rgba(255, 255, 255, .26);
   transition: background .12s ease;
 }
 .wave-bar.played { background: var(--ink-1); }
 
-/* mini-player waveform: shorter, thinner bars that stretch to fill */
+/* mini-player waveform: short, thin bars spread evenly across the full width */
 #footer-content {
-  .artwork-wave { height: 20px; gap: 2px; }
-  .wave-bar { flex: 1 1 auto; width: auto; }
+  .artwork-wave { height: 22px; gap: 0; justify-content: space-between; }
+  .wave-bar { flex: 1 1 auto; width: auto; max-width: 3px; }
   .seek-time { font-size: 10px; min-width: 34px; }
 }

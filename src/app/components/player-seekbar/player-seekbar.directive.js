@@ -30,7 +30,7 @@ class playerSeekBarController {
     // Artwork theme waveform scrubber (spec §5.7). Volumio doesn't provide peak
     // data, so heights come from a deterministic seeded envelope (LCG x sine
     // window). Other themes' seekbar templates simply don't render these.
-    this.WAVE_N = 104;
+    this.WAVE_N = 120;
     this.bars = this.buildWave(this.WAVE_N);
   }
 
@@ -43,8 +43,11 @@ class playerSeekBarController {
     const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
     const out = [];
     for (let i = 0; i < n; i++) {
-      const window = Math.sin(Math.PI * i / (n - 1)); // 0..1..0 envelope
-      out.push(5 + Math.round((0.35 + 0.65 * rnd()) * window * 41)); // 5..46 px
+      // a fuller, audio-like envelope: never collapses to zero at the ends,
+      // gentle rise/fall plus per-bar variation (values 0..1 -> % of height)
+      const window = 0.45 + 0.55 * Math.sin(Math.PI * (0.12 + 0.76 * i / (n - 1)));
+      const v = (0.35 + 0.65 * rnd()) * window;   // ~0.15 .. 1.0
+      out.push(Math.max(14, Math.round(v * 46))); // 14..46 (percent of container)
     }
     return out;
   }
