@@ -42,9 +42,9 @@ class LayoutController {
       // SCSS→CSSO build cannot parse color-mix().
       st.textContent =
         '.art-scrim{background:linear-gradient(180deg,' +
-          'color-mix(in oklch,var(--art-1) 48%,transparent) 0%,' +
-          'color-mix(in oklch,var(--art-2) 82%,rgba(6,10,13,.9)) 58%,' +
-          'rgba(6,10,13,.95) 100%);' +
+          'color-mix(in oklch,var(--art-1) 58%,rgba(6,10,13,.5)) 0%,' +
+          'color-mix(in oklch,var(--art-2) 86%,rgba(6,10,13,.9)) 50%,' +
+          'rgba(6,10,13,.96) 100%);' +
           'transition:opacity .6s ease;}';
       document.head.appendChild(st);
     }
