@@ -296,6 +296,9 @@ div#goBackPanelWrapper {
 /* playback screen has its own transport; drop the mini-player gap (keyed on the page, so the
    height stays put while the mini player is already sliding back in) */
 body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
+/* the sheet fills the container and clips itself; while it slides its box overhangs the
+   container, which would otherwise grow a scrollbar for the duration */
+body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow: hidden; } /* outranks the layout's #content overflow-y rule */
 
 /* Now Playing opens as a sheet sliding up from the mini player and slides back down on the
    chevron (.aw-np-out is set by the controller before the state changes) */
