@@ -81,6 +81,22 @@ class MainMenuController {
     }
   }
 
+  // Artwork rail: open a library source (Playlists, Favourites) like a Library card would —
+  // from the top of the browse stack, so Back returns to Library
+  sourceByUri(uri) {
+    return (this.browseService.sources || []).find(s => s.uri === uri) || null;
+  }
+  isSourceActive(uri) {
+    const r = this.browseService.currentFetchRequest;
+    return this.$state.current.name === 'volumio.browse' && !!r && r.uri === uri;
+  }
+  goToSource(uri) {
+    const source = this.sourceByUri(uri);
+    if (!source) { return; }
+    this.browseService.navigationStack = [];
+    this.goTo(source);
+  }
+
   registerListner() {
     this.socketService.on('pushMenuItems', (data) => {
       this.parseMenuItems(data);

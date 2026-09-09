@@ -17,8 +17,21 @@
     </li>
     <li>
       <a ng-click="mainMenu.$state.go('volumio.browse')" aria-label="Music" title="Music"
-         ng-class="{active: mainMenu.$state.current.name === 'volumio.browse'}">
+         ng-class="{active: mainMenu.$state.current.name === 'volumio.browse' && !mainMenu.isSourceActive('playlists') && !mainMenu.isSourceActive('favourites')}">
         <span class="material-symbols-rounded">album</span>
+      </a>
+    </li>
+    <!-- library sources straight from the rail (only when the backend lists them) -->
+    <li ng-if="mainMenu.sourceByUri('playlists')">
+      <a ng-click="mainMenu.goToSource('playlists')" aria-label="Playlists" title="Playlists"
+         ng-class="{active: mainMenu.isSourceActive('playlists')}">
+        <span class="material-symbols-rounded">playlist_play</span>
+      </a>
+    </li>
+    <li ng-if="mainMenu.sourceByUri('favourites')">
+      <a ng-click="mainMenu.goToSource('favourites')" aria-label="Favourites" title="Favourites"
+         ng-class="{active: mainMenu.isSourceActive('favourites')}">
+        <span class="material-symbols-rounded">favorite</span>
       </a>
     </li>
     <li>

@@ -91,6 +91,7 @@ class BrowseService {
 
     } else {
       this.navigationStack = [];
+      this.info = null; // the landing carries no page info (the controller's backHome clears it too)
       this.backHome();
       /* window.location.hash = '';
       this.removeLocationHash(); */
