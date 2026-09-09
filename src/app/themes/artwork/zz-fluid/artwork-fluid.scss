@@ -337,8 +337,9 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .aw-menu-btn--float { display: grid; place-items: center; position: fixed; top: calc(14px + var(--sa-t)); left: 20px; z-index: 5; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-state-myvolumio-profile .box, body#artwork .aw-state-myvolumio-access .box { padding: calc(52px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-state-myvolumio-profile .box #authLoginPlugin .panel-heading .btn-danger { top: calc(48px + var(--sa-t)); right: 20px; }
-  body#artwork .aw-state-myvolumio-profile .box .my-profile { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
-  body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row { grid-template-columns: 1fr; gap: 20px; }
+  body#artwork .aw-state-myvolumio-profile .box .my-profile { grid-template-columns: 1fr !important; gap: 20px; margin-top: 20px; }
+  body#artwork .aw-state-myvolumio-profile .box .my-profile > :last-child { grid-column: 1 !important; grid-row: auto !important; } /* desktop pins it to column 2 */
+  body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row { grid-template-columns: 1fr !important; gap: 20px; }
   body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row .plans-table, body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row .user-data { grid-column: 1 !important; grid-row: auto !important; }
   body#artwork .aw-state-myvolumio-profile .box .avatar-image-box { width: 120px; height: 120px; .avatar-letter { font-size: 64px; } }
   body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card, body#artwork .aw-state-myvolumio-profile .box .plans-table, body#artwork .aw-state-myvolumio-profile .box .plans-table .panel { width: auto !important; min-width: 0 !important; max-width: 100%; }
