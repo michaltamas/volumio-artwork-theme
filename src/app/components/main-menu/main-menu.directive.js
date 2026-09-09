@@ -16,8 +16,9 @@ class MainMenuDirective {
 }
 
 class MainMenuController {
-  constructor($rootScope, $state, $scope, $location, $window, socketService, authService, browseService, themeManager, $log, modalService, playerService) {
+  constructor($rootScope, $state, $scope, $location, $window, socketService, authService, browseService, themeManager, $log, modalService, playerService, awQueuePanel) {
     'ngInject';
+    this.awQueue = awQueuePanel;
     this.$state = $state;
     this.$rootScope = $rootScope;
     this.themeManager = themeManager;

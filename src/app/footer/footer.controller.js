@@ -1,6 +1,8 @@
 class FooterController {
-  constructor(matchmediaService, socketService, $scope, $injector, $state, themeManager) {
+  constructor(matchmediaService, socketService, $scope, $injector, $state, themeManager, awQueuePanel, playQueueService) {
     'ngInject';
+    this.awQueue = awQueuePanel;
+    this.playQueueService = playQueueService;
     this.matchmediaService = matchmediaService;
     this.state = $state;
     this.themeManager = themeManager;
@@ -21,6 +23,8 @@ class FooterController {
       this.updateTabbar();
     });
   }
+
+  get queueLength() { return (this.playQueueService.queue || []).length; }
 
   updateTabbar(){
     this.showPlayerFooter = this.state.$current.name === 'volumio.playback' && ['volumio3', 'artwork'].indexOf(this.themeManager.theme) > -1;

@@ -22,11 +22,12 @@
           <span class="material-symbols-rounded">speaker</span>
           <span class="mini-zone-name">{{ footer.zoneName || 'This player' }}</span>
         </button>
-        <button ui-sref="volumio.play-queue"
+        <button type="button" ng-click="footer.awQueue.toggle()"
                 class="btn btn-link mini-queue"
-                ng-class="{selected: footer.state.current.name === 'volumio.play-queue'}"
+                ng-class="{selected: footer.awQueue.open}"
                 title="{{'COMMON.TAB_QUEUE' | translate}}">
           <span class="material-symbols-rounded">queue_music</span>
+          <span class="mini-queue__count" ng-if="footer.playerService && footer.awQueue.open">{{footer.queueLength}}</span>
         </button>
       </div>
 

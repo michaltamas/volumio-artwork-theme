@@ -35,8 +35,8 @@
       </a>
     </li>
     <li>
-      <a ng-click="mainMenu.$state.go('volumio.play-queue')" aria-label="Queue" title="Queue"
-         ng-class="{active: mainMenu.$state.current.name === 'volumio.play-queue'}">
+      <a ng-click="mainMenu.awQueue.toggle()" aria-label="Queue" title="Queue"
+         ng-class="{active: mainMenu.awQueue.open}">
         <span class="material-symbols-rounded">queue_music</span>
       </a>
     </li>

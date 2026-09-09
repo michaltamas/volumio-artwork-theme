@@ -1,6 +1,7 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel) {
     'ngInject';
+    this.awQueue = awQueuePanel;
     this.$rootScope = $rootScope;
     this.$timeout = $timeout;
     this.themeManager = themeManager;

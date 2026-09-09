@@ -68,6 +68,8 @@ import OnCloudActionsDirective from './components/on-cloud-actions/on-cloud-acti
 import PlayerSeekbarDirective from './components/player-seekbar/player-seekbar.directive';
 import AwSettingsService from './components/aw-settings-shell/aw-settings.service';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
+import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
+import AwQueuePanelService from './services/aw-queue-panel.service';
 import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
 // Track buttons
 import FavouriteTrackBtnDirective from './components/favourite-track-btn/favourite-track-btn.directive';
@@ -220,6 +222,7 @@ angular.module('volumio', [
   .service('browseService', BrowseService)
   .service('playlistService', PlaylistService)
   .service('playQueueService', PlayQueueService)
+  .service('awQueuePanel', AwQueuePanelService)
   .service('multiRoomService', MultiRoomService)
   .service('toastMessageService', ToastMessageService)
   .service('updaterService', UpdaterService)
@@ -287,6 +290,7 @@ angular.module('volumio', [
   .directive('playerSeekbar', (themeManager) => new PlayerSeekbarDirective(themeManager))
   .service('awSettingsService', AwSettingsService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
+  .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
 
   //MyVolumio Directives

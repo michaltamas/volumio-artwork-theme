@@ -1,0 +1,60 @@
+<div class="aw-queue" ng-class="{open: q.panel.open}" role="dialog" aria-label="{{'COMMON.TAB_QUEUE' | translate}}" aria-hidden="{{!q.panel.open}}">
+  <div class="aw-queue__head">
+    <div class="aw-queue__titles">
+      <div class="aw-queue__title">{{'COMMON.TAB_QUEUE' | translate}}</div>
+      <div class="aw-queue__sub mono">{{q.queue.length}} TRACKS<span ng-if="q.minutesLeft !== null">&nbsp;· {{q.minutesLeft}} MIN LEFT</span></div>
+    </div>
+    <button type="button" class="aw-queue__close" ng-click="q.panel.hide()" aria-label="Close" title="Close">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <div class="aw-queue__chips">
+    <button type="button" class="aw-queue__chip" ng-class="{active: q.state.random}" ng-click="q.shuffle()" title="{{'TRACK_INFO_BAR.RANDOM' | translate}}">
+      <span class="material-symbols-rounded">shuffle</span><span>Shuffle</span>
+    </button>
+    <button type="button" class="aw-queue__chip" ng-class="{active: q.state.repeat}" ng-click="q.cycleRepeat()" title="{{'TRACK_INFO_BAR.REPEAT' | translate}}">
+      <span class="material-symbols-rounded">{{q.repeatIcon}}</span><span>{{'TRACK_INFO_BAR.REPEAT' | translate}}</span>
+    </button>
+    <button type="button" class="aw-queue__chip" ng-click="q.saveAsPlaylist()" title="{{'TRACK_INFO_BAR.SAVE_QUEUE_AS_PLAYLIST' | translate}}">
+      <span class="material-symbols-rounded">playlist_add</span><span>Save as playlist</span>
+    </button>
+    <button type="button" class="aw-queue__chip aw-queue__chip--danger" ng-click="q.clear()" title="{{'TRACK_INFO_BAR.CLEAR_QUEUE' | translate}}">
+      <span class="material-symbols-rounded">delete_sweep</span><span>Clear</span>
+    </button>
+  </div>
+
+  <div class="aw-queue__sechead">
+    <span class="mono">NOW &amp; NEXT</span>
+    <span class="aw-queue__hint" ng-if="q.queue.length > 1">Drag to reorder</span>
+  </div>
+
+  <div class="aw-queue__scroll">
+    <div class="aw-queue__list">
+      <div class="aw-queue__row" ng-repeat="t in q.queue track by $index" ng-class="{'is-current': q.isCurrent($index)}" ng-click="q.play($index)">
+        <span class="material-symbols-rounded aw-queue__drag" aria-hidden="true">drag_indicator</span>
+        <div class="aw-queue__slot">
+          <span class="aw-queue__eq" ng-if="q.isCurrent($index)"><i></i><i></i><i></i></span>
+          <span class="aw-queue__num mono" ng-if="!q.isCurrent($index)">{{$index + 1}}</span>
+          <span class="material-symbols-rounded aw-queue__play" ng-if="!q.isCurrent($index)">play_arrow</span>
+        </div>
+        <img class="aw-queue__cover" ng-if="t.albumart" ng-src="{{q.playerService.getAlbumart(t.albumart)}}" alt="">
+        <span class="aw-queue__cover aw-queue__cover--icon" ng-if="!t.albumart && t.icon"><i class="{{t.icon}}"></i></span>
+        <div class="aw-queue__text">
+          <div class="aw-queue__name">{{t.name || t.title}}</div>
+          <div class="aw-queue__meta" ng-if="t.artist || t.album">{{t.artist}}<span ng-if="t.artist && t.album">&nbsp;·&nbsp;</span>{{t.album}}</div>
+        </div>
+        <span class="aw-queue__time mono" ng-if="t.duration">{{q.fmt(t.duration)}}</span>
+        <button type="button" class="aw-queue__remove" ng-click="q.remove($index, $event)" aria-label="Remove" title="Remove">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="aw-queue__foot">
+    <span class="material-symbols-rounded">bedtime</span>
+    <span class="aw-queue__note">{{q.endNote}}</span>
+    <span class="aw-queue__ends mono" ng-if="q.endsAt">ENDS {{q.endsAt}}</span>
+  </div>
+</div>

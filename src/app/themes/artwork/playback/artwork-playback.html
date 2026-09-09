@@ -72,7 +72,7 @@
                ng-src="{{playback.playerService.getAlbumart(t.albumart)}}"
                alt="{{t.title}}" title="{{t.title}}"/>
         </div>
-        <button class="np-queue" ui-sref="volumio.play-queue" title="{{'COMMON.TAB_QUEUE' | translate}}">
+        <button type="button" class="np-queue" ng-click="playback.awQueue.toggle()" ng-class="{active: playback.awQueue.open}" title="{{'COMMON.TAB_QUEUE' | translate}}">
           <span class="material-symbols-rounded">queue_music</span>
         </button>
       </div>
