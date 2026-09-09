@@ -29,6 +29,19 @@ class ModalPlaylistController {
     this.$uibModalInstance.close();
   }
 
+  /* ---- Artwork sheet: pick a target, then confirm with "Add" ---- */
+  select(target) { this.selected = target; }           // 'favourites' or a playlist name
+  isSelected(target) { return this.selected === target; }
+  confirm() {
+    if (this.selected === 'favourites') { this.addToFavourites(); }
+    else if (this.selected) { this.addToPlaylist(this.selected); }
+  }
+  get subject() {
+    if (this.dataObj && this.dataObj.addQueue) { return 'Queue'; }
+    const it = this.dataObj && this.dataObj.item;
+    return it ? (it.title || it.name || it.album || '') : '';
+  }
+
   cancel() {
     this.$uibModalInstance.dismiss('cancel');
   }

@@ -1,0 +1,65 @@
+<!-- Artwork Alarms sheet (Dialogs mockup — ALARMS DIALOG). Same controller and data as Volumio's
+     alarm modal: alarms[] {enabled, time, playlist}. Volumio alarms have no weekday schedule, so
+     the mockup's day pills are not shown. "NEXT" is derived from the enabled alarms. -->
+<div class="aw-sheet aw-sheet--alarms">
+
+  <div class="aw-sheet__head">
+    <span class="material-symbols-rounded aw-sheet__icon">alarm</span>
+    <div class="aw-sheet__titles">
+      <div class="aw-sheet__title">{{::modal.dataObj.name}}</div>
+    </div>
+    <button type="button" class="aw-sheet__close" ng-click="modal.cancel()" aria-label="Close"><span class="material-symbols-rounded">close</span></button>
+  </div>
+
+  <div class="aw-sheet__body aw-sheet__body--alarms">
+    <p class="aw-sheet__note" ng-if="!modal.playlistService.playlists || modal.playlistService.playlists.length === 0" translate="ALARM.CRATE_PLAYLIST_FIRST"></p>
+
+    <div ng-if="modal.playlistService.playlists && modal.playlistService.playlists.length">
+      <div class="aw-sheet__eyebrow mono" ng-if="modal.alarms.length">SCHEDULED</div>
+
+      <div class="aw-alarm" ng-repeat="alarm in modal.alarms track by $index" ng-class="{'aw-alarm--off': !alarm.enabled}">
+        <div class="aw-stepper aw-stepper--bare">
+          <div class="aw-stepper__col">
+            <button type="button" ng-click="modal.stepAlarm(alarm, 'h', 1)" aria-label="Hours up"><span class="material-symbols-rounded">keyboard_arrow_up</span></button>
+            <span class="aw-stepper__num mono">{{modal.alarmPart(alarm, 'h')}}</span>
+            <button type="button" ng-click="modal.stepAlarm(alarm, 'h', -1)" aria-label="Hours down"><span class="material-symbols-rounded">keyboard_arrow_down</span></button>
+            <span class="aw-stepper__unit mono">HRS</span>
+          </div>
+          <span class="aw-stepper__colon mono">:</span>
+          <div class="aw-stepper__col">
+            <button type="button" ng-click="modal.stepAlarm(alarm, 'm', 1)" aria-label="Minutes up"><span class="material-symbols-rounded">keyboard_arrow_up</span></button>
+            <span class="aw-stepper__num mono">{{modal.alarmPart(alarm, 'm')}}</span>
+            <button type="button" ng-click="modal.stepAlarm(alarm, 'm', -1)" aria-label="Minutes down"><span class="material-symbols-rounded">keyboard_arrow_down</span></button>
+            <span class="aw-stepper__unit mono">MIN</span>
+          </div>
+        </div>
+        <div class="aw-alarm__what">
+          <ui-select id="{{alarm.id}}" class="aw-sheet__select aw-sheet__select--sm" ng-model="alarm.playlist" search-enabled="false" append-to-body="false" theme="bootstrap">
+            <ui-select-match class="ui-select-match" placeholder="{{'COMMON.CHOOSE_PLAYLIST' | translate}}">{{$select.selected}}</ui-select-match>
+            <ui-select-choices class="ui-select-choices" repeat="playlist in modal.playlistService.playlists track by $index"><div ng-bind-html="playlist"></div></ui-select-choices>
+          </ui-select>
+        </div>
+        <input bs-switch ng-model="alarm.enabled" type="checkbox" switch-size="medium" switch-animate="false"
+               switch-on-text="On" switch-off-text="Off" ng-true-value="true" ng-false-value="false">
+        <button type="button" class="aw-alarm__delete" ng-click="modal.deleteAlarm(alarm)" title="{{'COMMON.DELETE' | translate}}" aria-label="{{'COMMON.DELETE' | translate}}">
+          <span class="material-symbols-rounded">delete</span>
+        </button>
+      </div>
+
+      <button type="button" class="aw-alarm__add" ng-click="modal.add()">
+        <span class="material-symbols-rounded">add</span>
+        <span translate="COMMON.ADD"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="aw-sheet__foot">
+    <div class="aw-sheet__status" ng-if="modal.nextAlarm">
+      <span class="aw-sheet__dot aw-sheet__dot--on"></span>
+      <span class="mono">NEXT — {{modal.nextAlarm}}</span>
+    </div>
+    <button type="button" class="aw-sheet__btn" ng-click="modal.cancel()"><span translate="COMMON.CANCEL"></span></button>
+    <button type="button" class="aw-sheet__btn aw-sheet__btn--primary" ng-if="modal.playlistService.playlists && modal.playlistService.playlists.length" ng-click="modal.save()"><span translate="COMMON.SAVE"></span></button>
+  </div>
+
+</div>

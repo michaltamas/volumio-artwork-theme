@@ -1,6 +1,7 @@
 class ModalService {
-  constructor($uibModal, socketService, $rootScope, $filter,  $log) {
+  constructor($uibModal, socketService, $rootScope, $filter,  $log, themeManager) {
     'ngInject';
+    this.themeManager = themeManager;
     this.$uibModal = $uibModal;
 	  this.$filteredTranslate = $filter('translate');
     this.socketService = socketService;
@@ -21,8 +22,12 @@ class ModalService {
     size = 'sm',
     backdrop = 'static'
   ) {
+    // a theme may ship its own sheet for a core dialog (same controller and data)
+    const own = this.themeTemplate(templateUrl);
+    templateUrl = own.templateUrl;
     let modalInstance = this.$uibModal.open({
       animation: true,
+      windowClass: own.windowClass,
       templateUrl: templateUrl,
       controller: controller,
       controllerAs: 'modal',
@@ -41,6 +46,21 @@ class ModalService {
     })(this.openedModals.length - 1);
 
     return modalInstance;
+  }
+
+  // returns { templateUrl, windowClass }: the Artwork theme's own sheet (and a window class the
+  // theme sizes the dialog by) for the core dialogs it redesigns; unchanged otherwise
+  themeTemplate(templateUrl) {
+    if (!this.themeManager || this.themeManager.theme !== 'artwork') { return { templateUrl }; }
+    const own = {
+      'app/components/side-menu/elements/modal-sleep.html': 'sleep',
+      'app/components/side-menu/elements/modal-alarm-clock.html': 'alarm-clock',
+      'app/components/side-menu/elements/modal-power-off.html': 'power-off',
+      'app/browse/components/modal/modal-playlist.html': 'playlist'
+    };
+    const key = own[templateUrl];
+    if (!key) { return { templateUrl }; }
+    return { templateUrl: 'app/themes/artwork/components/modals/artwork-modal-' + key + '.html', windowClass: 'aw-dlg aw-dlg--' + key };
   }
 
   openDefaultModal(titleLangKey, descLangKey, callback = null) {

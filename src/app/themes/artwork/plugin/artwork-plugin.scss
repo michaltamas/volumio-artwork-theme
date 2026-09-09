@@ -459,3 +459,79 @@ body#artwork .aw-sheet {
     &:hover { background: rgba(255, 255, 255, .1); color: #fff; }
     &.active { font-weight: 600; color: #0d0e10; background: #fff; border-color: #fff; } }
 }
+
+/* ---- Alarms sheet (Dialogs mockup): 760 wide; cards pad 16 18 r14 .06/.11 gap 22; stepper 28/700,
+   chevrons 17, units 9; select h42 r11 .05/.1 14px; switch 52×30; delete 38 r11 border .11;
+   add box h48 dashed .16 bg .03; NEXT line mono 11 .08em ---- */
+body#artwork .modal.aw-dlg--alarm-clock .modal-dialog { width: 760px; } /* window class from modalService */
+body#artwork .aw-sheet--alarms {
+  .aw-sheet__body--alarms { padding: 4px 26px 6px; gap: 12px; > div { display: flex; flex-direction: column; gap: 12px; } }
+  .aw-sheet__note { font-size: 14px; color: #9aa0a8; margin: 0; }
+  .aw-sheet__eyebrow { padding-bottom: 2px; }
+  .aw-alarm { display: flex; align-items: center; gap: 22px; padding: 16px 18px; border-radius: 14px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .11);
+    &--off .aw-stepper--bare, &--off .aw-alarm__what { opacity: .55; } }
+  .aw-stepper--bare { padding: 0; background: transparent; border: 0; gap: 8px; align-items: flex-end;
+    .aw-stepper__col { gap: 4px; button .material-symbols-rounded { font-size: 17px; } }
+    .aw-stepper__num { font-size: 28px; }
+    .aw-stepper__colon { font-size: 24px; padding-bottom: 24px; }
+    .aw-stepper__unit { font-size: 9px; } }
+  .aw-alarm__what { flex: 1; min-width: 0; }
+  .aw-sheet__select--sm.ui-select-container.ui-select-bootstrap { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .1);
+    .ui-select-match > .btn { height: 40px; line-height: 40px; font-size: 14px; }
+    .caret { right: 14px; &::before { width: 20px; height: 20px; background-size: 20px 20px; } } }
+  .bootstrap-switch { margin-right: 0; width: 52px !important; height: 30px; border-radius: 15px; flex: none;
+    &::before { top: 3px; left: 3px; width: 24px; height: 24px; background: #16181b; }
+    &.bootstrap-switch-on { background: rgba(255, 255, 255, .9); &::before { left: 25px; } }
+    &::after { display: none; }
+    .bootstrap-switch-label { border-radius: 15px; } }
+  .aw-alarm__delete { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex: none; background: transparent; border: 1px solid rgba(255, 255, 255, .11); color: #a7adb3; padding: 0; cursor: pointer; transition: color .2s ease, border-color .2s ease;
+    .material-symbols-rounded { font-size: 20px; } &:hover { color: #ff8f8f; border-color: rgba(255, 143, 143, .4); } }
+  .aw-alarm__add { display: flex; align-items: center; justify-content: center; gap: 10px; height: 48px; width: 100%; border-radius: 14px; cursor: pointer;
+    border: 1px dashed rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .03); color: #c2c8cd; font-size: 14px; font-weight: 600;
+    .material-symbols-rounded { font-size: 20px; } &:hover { background: rgba(255, 255, 255, .06); color: #fff; } }
+}
+
+/* ---- Power dialog (Dialogs mockup): 440 wide; tile 40 r12 .07/.12; rows h52 r14 pad 0 18 (primary white,
+   secondary .06/.12), Cancel h44 border .14 #c2c8cd ---- */
+body#artwork .modal.aw-dlg--power-off .modal-dialog { width: 440px; }
+body#artwork .aw-sheet--power {
+  .aw-confirm__head { padding: 26px 26px 4px; display: flex; flex-direction: column; gap: 12px; }
+  .aw-confirm__tile { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #e4e7ea; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12);
+    .material-symbols-rounded { font-size: 23px; } }
+  .aw-confirm__title { font-family: var(--font-ui); font-size: 20px; font-weight: 700; letter-spacing: -.015em; color: var(--ink); }
+  .aw-power__actions { padding: 18px 26px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .aw-power__row { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 18px; border-radius: 14px; cursor: pointer; width: 100%; text-align: left;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); color: #f2f3f5;
+    .material-symbols-rounded { font-size: 22px; color: #c2c8cd; }
+    .aw-power__label { font-size: 15px; font-weight: 600; }
+    &:hover { background: rgba(255, 255, 255, .1); }
+    &--primary { background: #fff; border-color: #fff; color: #0d0e10; .material-symbols-rounded { color: #0d0e10; } .aw-power__label { font-weight: 700; } &:hover { background: #f2f3f5; } } }
+  .aw-power__cancel { height: 44px; margin-top: 4px; border-radius: 22px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #c2c8cd; background: transparent; border: 1px solid rgba(255, 255, 255, .14); cursor: pointer;
+    &:hover { background: rgba(255, 255, 255, .06); color: #fff; } }
+}
+
+/* ---- Add to playlist sheet (Dialogs mockup): 480 wide; input h46 r12 .06/.11; Create h46 r12 .04/.09;
+   list r14 .04/.1, rows h56 pad 0 16, selected .07 with check_circle ---- */
+body#artwork .modal.aw-dlg--playlist .modal-dialog { width: 480px; }
+body#artwork .aw-sheet--playlist {
+  .aw-playlist__new { padding: 4px 26px 0; display: flex; gap: 10px; }
+  .aw-playlist__input { flex: 1; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 12px; margin: 0; font-weight: 400; cursor: text;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .11);
+    .material-symbols-rounded { font-size: 20px; color: #a7adb3; }
+    input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none; &::placeholder { color: #8c9298; } }
+    &:focus-within { border-color: rgba(255, 255, 255, .3); } }
+  .aw-playlist__create { height: 46px; padding: 0 20px; border-radius: 12px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #e4e7ea; cursor: pointer;
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .12);
+    &:disabled { color: #8c9298; background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .09); cursor: default; }
+    &:not(:disabled):hover { background: rgba(255, 255, 255, .12); color: #fff; } }
+  .aw-playlist__list-wrap { padding: 18px 26px 0; .aw-sheet__eyebrow { margin-bottom: 10px; } }
+  .aw-playlist__list { border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .1); max-height: 336px; overflow-y: auto; }
+  .aw-playlist__row { display: flex; align-items: center; gap: 14px; height: 56px; width: 100%; padding: 0 16px; background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, .07); color: var(--ink-1); text-align: left; cursor: pointer;
+    &:last-child { border-bottom: 0; }
+    .material-symbols-rounded { font-size: 21px; color: #8c9298; }
+    .aw-playlist__name { flex: 1; min-width: 0; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    &:hover { background: rgba(255, 255, 255, .04); }
+    &.active { background: rgba(255, 255, 255, .07); .material-symbols-rounded { color: #f2f3f5; } .aw-playlist__name { font-weight: 600; } } }
+  .aw-sheet__foot .aw-sheet__status { font-size: 11px; letter-spacing: .08em; color: #a7adb3; }
+  .aw-sheet__btn:disabled { opacity: .5; cursor: default; }
+}

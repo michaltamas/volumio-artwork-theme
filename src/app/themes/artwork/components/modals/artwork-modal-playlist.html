@@ -1,0 +1,41 @@
+<!-- Artwork "Add to playlist" sheet (Dialogs mockup). Same controller: Favourites + the real playlist
+     names; pick a target, confirm with Add; a new name creates that playlist (Volumio's "New"). -->
+<div class="aw-sheet aw-sheet--playlist" id="modalPlaylist">
+  <div class="aw-sheet__head">
+    <span class="material-symbols-rounded aw-sheet__icon">playlist_add</span>
+    <div class="aw-sheet__titles">
+      <div class="aw-sheet__title">{{::modal.dataObj.title}}</div>
+      <div class="aw-sheet__sub" ng-if="modal.subject">{{modal.subject}}</div>
+    </div>
+    <button type="button" class="aw-sheet__close" ng-click="modal.cancel()" aria-label="Close"><span class="material-symbols-rounded">close</span></button>
+  </div>
+
+  <div class="aw-playlist__new">
+    <label class="aw-playlist__input">
+      <span class="material-symbols-rounded">add</span>
+      <input type="text" ng-model="modal.customPlaylist" placeholder="{{'COMMON.NEW' | translate}}" aria-label="{{'COMMON.NEW' | translate}}">
+    </label>
+    <button type="button" class="aw-playlist__create" ng-disabled="!modal.customPlaylist.length" ng-click="modal.addToCustomPlaylist()"><span translate="COMMON.NEW"></span></button>
+  </div>
+
+  <div class="aw-playlist__list-wrap">
+    <div class="aw-sheet__eyebrow mono">PLAYLISTS</div>
+    <div class="aw-playlist__list" role="listbox">
+      <button type="button" class="aw-playlist__row" role="option" ng-class="{active: modal.isSelected('favourites')}" ng-click="modal.select('favourites')" aria-selected="{{modal.isSelected('favourites')}}">
+        <span class="material-symbols-rounded">{{modal.isSelected('favourites') ? 'check_circle' : 'radio_button_unchecked'}}</span>
+        <span class="aw-playlist__name" translate="COMMON.FAVOURITES"></span>
+      </button>
+      <button type="button" class="aw-playlist__row" role="option" ng-repeat="playlist in modal.playlistService.playlists track by $index"
+              ng-class="{active: modal.isSelected(playlist)}" ng-click="modal.select(playlist)" aria-selected="{{modal.isSelected(playlist)}}">
+        <span class="material-symbols-rounded">{{modal.isSelected(playlist) ? 'check_circle' : 'radio_button_unchecked'}}</span>
+        <span class="aw-playlist__name">{{::playlist}}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="aw-sheet__foot">
+    <span class="aw-sheet__status mono">{{modal.selected ? 1 : 0}} SELECTED</span>
+    <button type="button" class="aw-sheet__btn" ng-click="modal.cancel()"><span translate="COMMON.CANCEL"></span></button>
+    <button type="button" class="aw-sheet__btn aw-sheet__btn--primary" ng-disabled="!modal.selected" ng-click="modal.confirm()"><span translate="COMMON.ADD"></span></button>
+  </div>
+</div>

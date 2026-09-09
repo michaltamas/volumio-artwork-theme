@@ -1,0 +1,18 @@
+<!-- Artwork Power dialog (Dialogs mockup — POWER DIALOG): the two real actions as rows, Cancel below. -->
+<div class="aw-sheet aw-sheet--power">
+  <div class="aw-confirm__head">
+    <div class="aw-confirm__tile"><span class="material-symbols-rounded">power_settings_new</span></div>
+    <div class="aw-confirm__title">{{::modal.dataObj.name}}</div>
+  </div>
+  <div class="aw-power__actions">
+    <button type="button" id="powerOffBtn" class="aw-power__row aw-power__row--primary" ng-click="modal.powerOff()">
+      <span class="material-symbols-rounded">power_settings_new</span>
+      <span class="aw-power__label" translate="COMMON.POWER_OFF"></span>
+    </button>
+    <button type="button" id="rebootBtn" class="aw-power__row" ng-click="modal.reboot()">
+      <span class="material-symbols-rounded">restart_alt</span>
+      <span class="aw-power__label" translate="COMMON.REBOOT_SYSTEM"></span>
+    </button>
+    <button type="button" class="aw-power__cancel" ng-click="modal.cancel()"><span translate="COMMON.CANCEL"></span></button>
+  </div>
+</div>
