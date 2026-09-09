@@ -6,6 +6,10 @@ body#artwork #toast-container {
   top: 28px; right: 32px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none;
   &.toast-top-right, &.toast-top-left, &.toast-bottom-right, &.toast-bottom-left { top: 28px; right: 32px; left: auto; bottom: auto; }
 
+  /* toasts dismissed before they compile leave raw '{{toastClass}}' divs behind for a moment; the base
+     toastr css paints them as 300x30 boxes — never show them */
+  > div:not(.toast) { display: none !important; }
+
   > .toast {
     pointer-events: auto; position: relative; overflow: hidden; width: 394px; margin: 0; padding: 16px 18px 18px; border-radius: 14px; opacity: 1;
     /* toastr markup: [close button] > div(ng-switch: .toast-title, .toast-message) > progress-bar */
