@@ -630,10 +630,10 @@ body#artwork {
   .music-card__meta { font-size: 13px; color: var(--ink-dim); margin: 2px 0 0;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  /* tilt-to-play (spec §5.3) — hover devices only */
+  /* hover: the card lifts straight up (no tilt) — hover devices only */
   @media (hover: hover) {
     .music-card__wrapper:hover {
-      transform: perspective(700px) rotateX(5deg) rotateY(-6deg) translateY(-8px);
+      transform: translateY(-8px);
     }
     .music-card__wrapper:hover .music-card__overlay { opacity: 1; }
   }
