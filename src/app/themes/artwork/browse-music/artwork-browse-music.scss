@@ -1096,16 +1096,21 @@ body#artwork #browse.browsing-album {
     .item__info { display: block; }
     .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
     .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
-    .item__favorite { display: block; .item__favorite-heart .fa { font-size: 0; color: #71777d;
+    /* the base theme keeps the heart invisible (opacity 0, stroked text) until hover; the mockup shows it always */
+    .item__favorite { display: block; opacity: 1; padding: 0; -webkit-text-stroke: 0; text-stroke: 0; -webkit-text-fill-color: currentColor; text-fill-color: currentColor;
+      &.favorited .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
+      .item__favorite-heart .fa { font-size: 0; color: #71777d; -webkit-text-fill-color: #71777d; text-fill-color: #71777d;
         &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
       &:hover .fa { color: #fff; } }
+    /* mockup column order: number · title · time · heart (Volumio's menu stays last) */
+    .item__duration { order: 2; } .item__favorite { order: 3; } .item__actions { order: 4; }
     .item__actions .fa { color: #71777d; font-size: 15px; }
   }
   .music-item.aw-playing {
     background: rgba(255, 255, 255, .12); border-radius: 11px; border-bottom-color: transparent;
     .item__title { font-weight: 700; color: #fff; }
     .item__duration { color: #e4e7ea; }
-    .item__favorite .item__favorite-heart .fa { color: #fff; }
+    .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
     /* EQ bars (mockup: three 2px bars, 13px box, animation eq .9s with .2s/.4s delays):
        ::before, ::after and the (otherwise hidden) dot span are the three bars */
     .item__number { font-size: 0; position: relative; width: 10px; height: 13px;
