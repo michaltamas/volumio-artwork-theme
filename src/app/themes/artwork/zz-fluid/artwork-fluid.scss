@@ -47,6 +47,15 @@ body#artwork #np .np-zone { max-width: 40vw; }
 @media (max-width: 560px) {
   body#artwork #np .np-upnext-films, body#artwork #np .np-upnext-label { display: none; }
 }
+/* short landscape screens (phones on their side, small panels): the row layout stays, but the
+   sheet may scroll and the cover is sized by the height */
+@media (max-height: 520px) and (orientation: landscape) {
+  body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow-y: auto; }
+  body#artwork #np { height: auto; min-height: 100%; overflow: visible; }
+  body#artwork #np #np-hero { flex: none; }
+  body#artwork #np #np-cover { height: auto; width: unquote("min(46vh, 40%)"); }
+  body#artwork #np #np-footer { padding-top: 18px; }
+}
 
 /* ---------- mini player ---------- */
 body#artwork #footer-content { padding-left: clamp(12px, 1.5vw, 22px); padding-right: clamp(12px, 1.5vw, 22px); }
