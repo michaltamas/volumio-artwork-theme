@@ -1373,3 +1373,7 @@ body#artwork #browse.browsing-artists .music-card__header, body#artwork #browse.
 body#artwork #browse.browsing-artists .music-card__img { border-radius: 50%; }
 body#artwork #browse.browsing-artists .music-card .meta__actions { top: 0; right: 0; }
 body#artwork #browse.browsing-artists .music-card .meta__actions .dropdown-menu { right: 0; left: auto; }
+/* every card wrapper is its own stacking context (transform transition), so a later sibling
+   painted over an earlier card's open dropdown: the hovered / focused card is raised */
+body#artwork .music-card__wrapper { position: relative; }
+body#artwork .music-card__wrapper:hover, body#artwork .music-card__wrapper:focus-within { z-index: 6; }
