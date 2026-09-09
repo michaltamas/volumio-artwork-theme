@@ -83,8 +83,9 @@ class BrowseService {
 
         this.navigationStack.pop();
 
-        this.$rootScope.$broadcast('browseService:fetchEnd');
+        // the request must describe the restored page before fetchEnd renders it
         this.currentFetchRequest = this.navigationStack[depth - 2];
+        this.$rootScope.$broadcast('browseService:fetchEnd');
 
        /*  window.location.hash = this.navigationStack[depth - 2].uri; */
 
@@ -282,6 +283,7 @@ class BrowseService {
           artist: this.currentFetchRequest.artist || null,
           service: this.currentFetchRequest.service || null,
           title: this.currentFetchRequest.title || null,
+          name: this.currentFetchRequest.name || null, // root sources carry their label as name, not title
           type: this.currentFetchRequest.type || null,
           uri: this.currentFetchRequest.uri || null,
           plugin_name: this.currentFetchRequest.plugin_name || null,
