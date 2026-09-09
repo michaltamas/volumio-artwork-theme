@@ -24,6 +24,7 @@ class PlaybackController {
 
     // Now Playing header readout: current audio output device (spec §6.1)
     this.fetchOutputDevice();
+    if (this.themeManager.theme === 'artwork') { this.initFitCover(); }
   }
 
   // Zone / room = the self device in the multiroom list.
@@ -99,6 +100,29 @@ class PlaybackController {
   get npTrackPos() {
     const st = this.playerService.state || {};
     return (typeof st.position === 'number' ? st.position : 0) + 1;
+  }
+
+  // Phone layout: the cover takes exactly what the other parts leave, measured (a title may wrap
+  // to two or three lines), so the sheet never scrolls. Re-run on track/resize; cleared otherwise.
+  fitCover() {
+    const np = this.$document[0].getElementById('np'), cover = this.$document[0].getElementById('np-cover');
+    if (!np || !cover) { return; }
+    const phone = this.themeManager.theme === 'artwork' && window.matchMedia('(max-width: 700px) and (orientation: portrait)').matches;
+    cover.style.width = '';
+    if (!phone) { return; }
+    const content = this.$document[0].getElementById('content');
+    const avail = content ? content.clientHeight : window.innerHeight;
+    const others = np.scrollHeight - cover.getBoundingClientRect().height;
+    const maxW = np.clientWidth - 40 - 32; /* the sheet's 20px sides and the mockup's 16px inset */
+    const size = Math.max(96, Math.min(maxW, avail - others));
+    cover.style.width = size + 'px';
+  }
+  initFitCover() {
+    const run = () => this.$timeout(() => this.fitCover(), 60, false);
+    this.$rootScope.$watch(() => { const s = this.playerService.state || {}; return [s.title, s.artist, s.album, s.samplerate, s.bitdepth, s.trackType].join('|'); }, run);
+    this._onResize = () => run();
+    window.addEventListener('resize', this._onResize);
+    run(); this.$timeout(() => this.fitCover(), 600, false);
   }
 
   // phone transport bar
