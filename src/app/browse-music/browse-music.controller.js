@@ -3,6 +3,7 @@ class BrowseMusicController {
     modalService, $timeout, matchmediaService, $compile, $document, $rootScope, $log, playerService,
     uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter) {
     'ngInject';
+    this.$scope = $scope;
     this.$log = $log;
     this.browseService = browseService;
     this.playQueueService = playQueueService;
@@ -63,6 +64,8 @@ class BrowseMusicController {
     this.awFilter = ''; this.awSortDesc = false; this.awVisibleCount = null; this.awActiveLetter = '';
     if (this.$document[0].body.id === 'artwork') {
       this.$rootScope.$on('browseController:listRendered', () => this.awAfterRender());
+      // the row of the track that is playing carries .aw-playing (album page: EQ bars instead of the number)
+      this.$scope.$watch(() => this.playerService.state && this.playerService.state.uri, () => this.awMarkPlaying());
     }
 
     this.socketService.on('pushBrowseLibrary', (data) => {
@@ -855,7 +858,7 @@ class BrowseMusicController {
       const html = items.map((item, itemIndex) => {
         let generatedListItem = `
             <div class="album__tracks">
-              <div class="music-item ${ item.type === 'title' ? 'title' : '' }" onclick="${angularThis}.clickListItemByIndex(${listIndex}, ${itemIndex})">
+              <div class="music-item ${ item.type === 'title' ? 'title' : '' }" data-uri="${ String(item.uri || '').replace(/"/g, '&quot;') }" onclick="${angularThis}.clickListItemByIndex(${listIndex}, ${itemIndex})">
                 <div
                   onclick="${angularThis}.preventBubbling(event)"
                   class="item__play ">
@@ -930,7 +933,7 @@ class BrowseMusicController {
       const html = items.map((item, itemIndex) => {
         let generatedListItem = `
             <div class="album__tracks">
-              <div class="music-item ${ item.type === 'title' ? 'title' : '' }" onclick="${angularThis}.clickListItemByIndex(${listIndex}, ${itemIndex})">
+              <div class="music-item ${ item.type === 'title' ? 'title' : '' }" data-uri="${ String(item.uri || '').replace(/"/g, '&quot;') }" onclick="${angularThis}.clickListItemByIndex(${listIndex}, ${itemIndex})">
                 <div
                   onclick="${angularThis}.preventBubbling(event)"
                   class="item__play ${ !this.showPlayButton(item) ? 'hidden' : '' }">
@@ -942,7 +945,7 @@ class BrowseMusicController {
                 </div>
 
                 <div class="item__image">
-                    <div class="item__number ${ item.tracknumber && !item.albumart ? '' : 'hidden' }">${ item.tracknumber }.</div>
+                    <div class="item__number ${ item.tracknumber && !item.albumart ? '' : 'hidden' }">${ item.tracknumber }<span class="item__number-dot">.</span></div>
                     <div class="item__albumart ${ !item.albumart ? 'hidden' : '' }">
                         <img class="item__image__img" src="${this.playerService.getAlbumart(item.albumart)}" alt="">
                     </div>
@@ -1078,7 +1081,16 @@ class BrowseMusicController {
     const target = nodes.find(el => this.awNorm(this.awTitleOf(el)).charAt(0).toUpperCase() === letter);
     if (target) { this.awActiveLetter = letter; target.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
   }
+  awMarkPlaying() {
+    // the player reports local files as mnt/…, the library lists them as music-library/… — same file
+    const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');
+    const uri = norm(this.playerService.state && this.playerService.state.uri);
+    Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-item[data-uri]'), el => {
+      el.classList.toggle('aw-playing', !!uri && norm(el.getAttribute('data-uri')) === uri);
+    });
+  }
   awAfterRender() {
+    this.awMarkPlaying();
     if (this._awListUri !== this.currentUri) {
       this._awListUri = this.currentUri;
       this.awFilter = ''; this.awSortDesc = false; this.awActiveLetter = ''; this.awVisibleCount = null;

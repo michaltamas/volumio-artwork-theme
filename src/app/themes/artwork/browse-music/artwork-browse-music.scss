@@ -1075,3 +1075,41 @@ body#artwork #browse.browsing-artists .music-item:hover .item__title { font-weig
 }
 /* row menu: the mockup shows horizontal dots */
 body#artwork #browse.browsing-artists .music-item .item__actions .fa-ellipsis-v::before { content: "\f141"; }
+
+/* ============================================================
+   Album page track rows (mockup 2c): grid 26px · title · time · heart, gap 18, pad 13 14;
+   number mono 12 #8c9298; title 16/500; time mono 12 #8c9298; heart 20 #71777d.
+   Rows are separated by a straight 1px line (.06) — no radius on the line; only the playing
+   row is a rounded (r11) .12 panel with EQ bars in the number slot (title 700, time #e4e7ea).
+   ============================================================ */
+@keyframes aw-eq { 0%, 100% { height: 4px; } 50% { height: 13px; } }
+body#artwork #browse.browsing-album {
+  .album__tracks { gap: 0; }
+  .music-item {
+    display: grid; grid-template-columns: 26px 1fr auto auto auto; align-items: center; gap: 18px;
+    padding: 13px 14px; min-height: 0; border-radius: 0; border-bottom: 1px solid rgba(255, 255, 255, .06);
+    &:hover { background: rgba(255, 255, 255, .04); }
+    .item__play, .item__albumart, .item__albumart-icon { display: none; }
+    .item__image { width: auto; height: auto; min-width: 0; margin: 0; }
+    .item__number { display: block !important; font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
+    .item__number-dot { display: none; }
+    .item__info { display: block; }
+    .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
+    .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
+    .item__favorite { display: block; .item__favorite-heart .fa { font-size: 0; color: #71777d;
+        &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
+      &:hover .fa { color: #fff; } }
+    .item__actions .fa { color: #71777d; font-size: 15px; }
+  }
+  .music-item.aw-playing {
+    background: rgba(255, 255, 255, .12); border-radius: 11px; border-bottom-color: transparent;
+    .item__title { font-weight: 700; color: #fff; }
+    .item__duration { color: #e4e7ea; }
+    .item__favorite .item__favorite-heart .fa { color: #fff; }
+    /* EQ bars (mockup: three 2px bars, 13px box, animation eq .9s with .2s/.4s delays):
+       ::before, ::after and the (otherwise hidden) dot span are the three bars */
+    .item__number { font-size: 0; position: relative; width: 10px; height: 13px;
+      &::before, &::after, .item__number-dot { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
+      &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } .item__number-dot { left: 8px; animation-delay: .4s; } }
+  }
+}
