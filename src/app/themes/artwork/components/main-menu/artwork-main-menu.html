@@ -40,6 +40,12 @@
         <span class="material-symbols-rounded">queue_music</span>
       </a>
     </li>
+    <li>
+      <a ng-click="mainMenu.$state.go('volumio.playback')" aria-label="Now Playing" title="Now Playing"
+         ng-class="{active: mainMenu.$state.current.name === 'volumio.playback'}">
+        <span class="material-symbols-rounded">graphic_eq</span>
+      </a>
+    </li>
   </ul>
 
   <ul class="main-menu-bottom">
