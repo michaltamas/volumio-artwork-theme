@@ -21,11 +21,11 @@
   <a href><span class="material-symbols-rounded">playlist_add</span><span translate="BROWSER.ADD_TO_PLAYLIST"></span></a>
 </li>
 <li ng-if="::(item.type === 'song' || item.type === 'folder-with-favourites') && browse.browseService.currentFetchRequest.uri !== 'favourites' && !item.favourite"
-    ng-click="browse.playlistService.addToFavourites(item)" title="{{'BROWSER.ADD_TO_FAVOURITES' | translate}}">
+    ng-click="browse.playlistService.addToFavourites(item); browse.awFavouritesChanged()" title="{{'BROWSER.ADD_TO_FAVOURITES' | translate}}">
   <a href><span class="material-symbols-rounded">favorite</span><span translate="BROWSER.ADD_TO_FAVOURITES"></span></a>
 </li>
 <li ng-if="::(browse.browseService.currentFetchRequest.uri === 'favourites' || item.favourite)"
-    ng-click="browse.playlistService.removeFromFavourites(item)" title="{{'BROWSER.REMOVE_FROM_FAVOURITES' | translate}}">
+    ng-click="browse.playlistService.removeFromFavourites(item); browse.awFavouritesChanged()" title="{{'BROWSER.REMOVE_FROM_FAVOURITES' | translate}}">
   <a href><span class="material-symbols-rounded">heart_broken</span><span translate="BROWSER.REMOVE_FROM_FAVOURITES"></span></a>
 </li>
 <li ng-if="::browse.browseService.currentFetchRequest.type === 'playlist'"

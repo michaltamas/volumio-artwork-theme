@@ -429,7 +429,13 @@ class BrowseMusicController {
     if (!item) {
       return;
     }
-    this.playlistService.addToFavourites(item);
+    // Artwork rows show the real favourite state, so the heart toggles: remove when already a favourite
+    if (this.$document[0].body.id === 'artwork' && item.favourite) {
+      this.playlistService.removeFromFavourites(item);
+    } else {
+      this.playlistService.addToFavourites(item);
+    }
+    this.awFavouritesChanged();
   }
 
   addToFavoritesByIndex(e, listIndex, itemIndex) {
@@ -1091,6 +1097,36 @@ class BrowseMusicController {
     }, 0, false);
   }
 
+  /* ---- favourites on list rows (Artwork): Volumio does not flag library items, so the theme reads the
+     Favourites list over the REST proxy and marks matching rows (.aw-fav) and items (item.favourite,
+     which the context menu already understands). ---- */
+  awLoadFavourites() {
+    if (this.$document[0].body.id !== 'artwork') { return; }
+    this.$http.get('/api/v1/browse', { params: { uri: 'favourites' } }).then(res => {
+      const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');
+      const lists = (res.data && res.data.navigation && res.data.navigation.lists) || [];
+      const set = {};
+      lists.forEach(l => (l.items || []).forEach(i => { if (i.uri) { set[norm(i.uri)] = true; } }));
+      this.awFavourites = set;
+      this.awMarkFavourites();
+    }, () => {});
+  }
+  awMarkFavourites() {
+    if (!this.awFavourites) { return; }
+    const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');
+    (this.browseService.lists || []).forEach(l => (l.items || []).forEach(i => {
+      if (i && i.uri && i.type === 'song') { i.favourite = !!this.awFavourites[norm(i.uri)]; }
+    }));
+    Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-item[data-uri]'), el => {
+      el.classList.toggle('aw-fav', !!this.awFavourites[norm(el.getAttribute('data-uri'))]);
+    });
+  }
+  // after an add/remove the backend needs a moment before the Favourites list reflects it
+  awFavouritesChanged() {
+    if (this.$document[0].body.id !== 'artwork') { return; }
+    this.$timeout(() => this.awLoadFavourites(), 900, false);
+  }
+
   awMarkPlaying() {
     // the player reports local files as mnt/…, the library lists them as music-library/… — same file
     const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');
@@ -1101,6 +1137,7 @@ class BrowseMusicController {
   }
   awAfterRender() {
     this.awMarkPlaying();
+    this.awLoadFavourites();
     if (this._awListUri !== this.currentUri) {
       this._awListUri = this.currentUri;
       this.awFilter = ''; this.awSortDesc = false; this.awActiveLetter = ''; this.awVisibleCount = null;
