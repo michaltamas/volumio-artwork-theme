@@ -27,7 +27,7 @@
                 ng-class="{selected: footer.awQueue.open}"
                 title="{{'COMMON.TAB_QUEUE' | translate}}">
           <span class="material-symbols-rounded">queue_music</span>
-          <span class="mini-queue__count" ng-if="footer.playerService && footer.awQueue.open">{{footer.queueLength}}</span>
+          <span class="mini-queue__count" ng-if="footer.queueLength">{{footer.queueLength}}</span>
         </button>
       </div>
 

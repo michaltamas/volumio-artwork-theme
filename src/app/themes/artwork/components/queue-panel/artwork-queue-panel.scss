@@ -78,10 +78,13 @@ body#artwork .aw-queue {
 body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: 20px; }
 @media (prefers-reduced-motion: reduce) { body#artwork .aw-queue { transition: none; } }
 
-/* mini player: the queue button becomes a white pill with the count while the panel is open (mockup) */
-body#artwork #footer-content .mini-queue.selected {
-  display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 14px; border-radius: 19px; background: #fff; color: #0d0e10;
-  .material-symbols-rounded { font-size: 20px; color: #0d0e10; }
+/* mini player: queue pill with the count (mockup: h38, pad 0 14, r19, glyph 20, mono 12/700);
+   glass while closed, white while the panel is open */
+body#artwork #footer-content .mini-queue {
+  display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 14px; border-radius: 19px;
+  background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .12); color: #e4e7ea;
+  .material-symbols-rounded { font-size: 20px; color: #e4e7ea; }
   .mini-queue__count { font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+  &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+  &.selected { background: #fff; border-color: #fff; color: #0d0e10; .material-symbols-rounded { color: #0d0e10; } }
 }
-body#artwork #footer-content .mini-queue:not(.selected) .mini-queue__count { display: none; }
