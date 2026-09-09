@@ -1180,7 +1180,10 @@ body#artwork #browse.browsing-list:not(.browsing-artists) {
     &:hover { background: rgba(255, 255, 255, .04); }
     .item__number-dot { display: none; }
     .item__image { width: 44px; height: 44px; flex: none; margin: 0; position: relative; }
-    .item__albumart, .item__image__img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; display: block; }
+    /* the base .item__albumart keeps an 8px right margin inside a 44px centred flex box, which shifted the
+       cover 4px left of the play overlay */
+    .item__albumart, .item__image__img { width: 44px; height: 44px; margin: 0; border-radius: 6px; object-fit: cover; display: block; }
+    .item__image { justify-content: flex-start; }
     .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
     .item__album, .item__artist { font-size: 14px; color: #a7adb3; }
     .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
