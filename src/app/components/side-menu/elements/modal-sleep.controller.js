@@ -31,6 +31,7 @@ class ModalSleepController {
             text: translations['SLEEP.POWER_OFF']
           }
         ];
+        this.syncAction();
         var hr = translations['SLEEP.HR'];
         var min = translations['SLEEP.MIN'];
 
@@ -92,6 +93,42 @@ class ModalSleepController {
     this.$uibModalInstance.dismiss('cancel');
   }
 
+  /* ---- helpers for the Artwork sleep sheet (stepper, preset pills, "ends at") ---- */
+  get durationMinutes() {
+    return this.sleepTime ? (this.sleepTime.getHours() * 60) + this.sleepTime.getMinutes() : 0;
+  }
+  stepHours(delta) {
+    const h = (this.sleepTime.getHours() + delta + 24) % 24;
+    this.sleepTime = new Date(0, 0, 0, h, this.sleepTime.getMinutes(), 0);
+    this.timeChanged();
+  }
+  stepMinutes(delta) {
+    const m = (this.sleepTime.getMinutes() + delta + 60) % 60;
+    this.sleepTime = new Date(0, 0, 0, this.sleepTime.getHours(), m, 0);
+    this.timeChanged();
+  }
+  choosePreset(preset) {
+    this.sleepPreset = preset;
+    this.whenSleepPresetSelect();
+  }
+  isPreset(preset) {
+    return !!preset && preset.val > 0 && preset.val === this.durationMinutes;
+  }
+  // when the timer would end if started now (real clock + real duration)
+  get endsAt() {
+    const d = this.durationMinutes;
+    if (!d) { return ''; }
+    const t = new Date(Date.now() + d * 60000);
+    return ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+  }
+  // the backend pushes the action as its value string; the select works with option objects
+  syncAction() {
+    if (typeof this.action === 'string' && Array.isArray(this.whenSleepSelect)) {
+      const found = this.whenSleepSelect.find(o => o.val === this.action);
+      if (found) { this.action = found; }
+    }
+  }
+
   init() {
     this.registerListner();
     this.initService();
@@ -102,6 +139,7 @@ class ModalSleepController {
       this.$log.debug('pushSleep', data);
       this.enabled = data.enabled;
       this.action = data.action;
+      this.syncAction();
       if (data.time) {
         let newDate = new Date();
         newDate.setHours(...data.time.split(':'));

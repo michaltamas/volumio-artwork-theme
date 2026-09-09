@@ -88,7 +88,9 @@ class AwSettingsService {
     if (!item) { return; }
     if (item.id === 'modal' || item.id === 'shutdown') {
       const controllerName = item.params.modalName.split('-').map(p => p[0].toUpperCase() + p.slice(1)).join('');
-      const templateUrl = 'app/components/side-menu/elements/' + item.params.modalName + '.html';
+      // the theme ships its own sheet for some modals (mockup dialogs); the rest use Volumio's
+      const own = { 'modal-sleep': 'app/themes/artwork/components/modals/artwork-modal-sleep.html' };
+      const templateUrl = own[item.params.modalName] || ('app/components/side-menu/elements/' + item.params.modalName + '.html');
       this.modalService.openModal(controllerName + 'Controller', templateUrl, item, item.params.modalSize || 'lg');
     } else if (item.id === 'link') {
       this.$window.open(item.params.url);

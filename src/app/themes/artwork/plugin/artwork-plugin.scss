@@ -210,31 +210,47 @@ body#artwork #pluginWrapper {
 /* ============================================================
    Modals (alarm, sleep, shutdown, add-to-playlist, track actions…): glass panel
    ============================================================ */
-body#artwork .modal-backdrop.in { background: #000; opacity: .62; }
-body#artwork .modal-dialog { width: 640px; max-width: calc(100vw - 32px); margin: 8vh auto; }
+/* ============================================================
+   Dialogs — mockup "Volumio OS 4 - Dialogs": sheet 660 / confirm 460, r18,
+   rgba(20,23,27,.72) + blur(44) saturate(1.3), border .12, shadow 0 50 100 -30 .9;
+   backdrop rgba(5,6,8,.58) + blur(6). Header 22 26 18: icon 24, title 20/700 -.015em,
+   sub 13 #9aa0a8, close 34 r10 border .1. Footer 20 26 22: pills h44 r22.
+   ============================================================ */
+body#artwork .modal-backdrop.in { background: rgba(5, 6, 8, .58); opacity: 1; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+body#artwork .modal { display: flex !important; align-items: center; justify-content: center; }
+body#artwork .modal-dialog { width: 560px; max-width: calc(100vw - 32px); margin: 0 auto; }
+body#artwork .modal-dialog.modal-lg { width: 660px; }
+body#artwork .modal-dialog.modal-md { width: 560px; }
+body#artwork .modal-dialog.modal-sm { width: 460px; }
 body#artwork .modal-content {
   @include aw-form-controls;
-  background: rgba(12, 14, 17, .94); border: 1px solid rgba(255, 255, 255, .14); border-radius: 16px;
-  box-shadow: 0 40px 80px -24px rgba(0, 0, 0, .85); color: var(--ink-1);
-  backdrop-filter: blur(34px); -webkit-backdrop-filter: blur(34px);
-  .modal-header { padding: 24px 26px 14px; border: 0; background: transparent;
-    .modal-title { font-family: var(--font-ui); font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); .fa, .glyphicon { display: none; } }
+  background: rgba(20, 23, 27, .72); border: 1px solid rgba(255, 255, 255, .12); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 50px 100px -30px rgba(0, 0, 0, .9); color: var(--ink-1);
+  backdrop-filter: blur(44px) saturate(1.3); -webkit-backdrop-filter: blur(44px) saturate(1.3);
+  /* Volumio's own modal markup (header / body / footer) laid out as the confirm pattern */
+  .modal-header { padding: 26px 26px 4px; border: 0; background: transparent; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;
+    .modal-title { font-family: var(--font-ui); font-size: 20px; font-weight: 700; letter-spacing: -.015em; color: var(--ink); margin: 0; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;
+      /* the title's icon becomes the 40px tile above the title */
+      .fa, .glyphicon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 20px; color: #e4e7ea;
+        background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .12); } }
     .close { color: #a7adb3; opacity: 1; text-shadow: none; &:hover { color: #fff; } } }
-  .modal-body { padding: 8px 26px 20px; font-size: 15px; color: #e4e7ea; background: transparent; border: 0;
+  .modal-body { padding: 8px 26px 4px; font-size: 14px; line-height: 1.55; color: #9aa0a8; background: transparent; border: 0; text-wrap: pretty;
     label { font-size: 15px; font-weight: 600; color: var(--ink-1); }
+    h4 { font-size: 15px; font-weight: 600; margin: 0 0 8px; color: var(--ink-1); }
     .form-group { margin-bottom: 16px; }
+    .row { margin: 0; } [class*="col-"] { padding-left: 0; padding-right: 14px; }
     hr { border-color: rgba(255, 255, 255, .08); }
     table { color: var(--ink-1); } }
-  .modal-footer { padding: 14px 26px 24px; border: 0; background: transparent; display: flex; justify-content: flex-end; gap: 10px;
+  .modal-footer { padding: 18px 26px 22px; border: 0; background: transparent; display: flex; gap: 10px;
+    .btn { flex: 1; height: 44px; line-height: 42px; border-radius: 22px; padding: 0 22px; font-size: 14px; font-weight: 600; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .16); background: transparent; margin: 0; }
+    .btn.btn-info, .btn.btn-primary, .btn.btn-success { background: #fff; color: #0d0e10; border: 0; font-weight: 700; height: 44px; line-height: 44px; }
     .btn + .btn { margin-left: 0; } }
+  /* destructive confirm: red tile, red warning tone, red primary */
+  .modal-header.aw-modal--danger .modal-title .fa { color: #ff8f8f; background: rgba(255, 107, 107, .14); border-color: rgba(255, 107, 107, .3); }
+  .modal-header.aw-modal--danger ~ .modal-footer .btn.btn-info { background: #ff8f8f; color: #2a0d0d; }
+  /* bespoke sheets (Artwork templates) reset Volumio's frame */
+  .aw-sheet { color: var(--ink-1); }
 }
-
-/* modal sizing + inherited colours (measured on the Sleep modal): Volumio opens
-   sleep/alarm as modal-lg (its layout assumes ~900px — the timepicker table spilled
-   out of a 640px dialog); labels/headings and timepicker chevrons were theme green */
-body#artwork .modal-dialog { width: 600px; }
-body#artwork .modal-dialog.modal-lg { width: 900px; max-width: calc(100vw - 32px); }
-body#artwork .modal-dialog.modal-sm { width: 420px; }
 body#artwork .modal-content {
   h1, h2, h3, h4, h5, label, .green, .headerText { color: var(--ink-1); }
   .modal-body h4 { font-size: 15px; font-weight: 600; margin: 0 0 8px; }
@@ -396,4 +412,50 @@ body#artwork #pluginWrapper {
     .sv-main { display: block; font-size: 16px; font-weight: 600; color: var(--ink-1); }
     .sv-sub { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 11px; color: #8c9298; text-transform: uppercase; letter-spacing: .04em; }
   }
+}
+
+/* ---- Artwork sheet pattern (Sleep timer) — values from the Dialogs mockup ---- */
+body#artwork .aw-sheet {
+  .aw-sheet__head { display: flex; align-items: center; gap: 14px; padding: 22px 26px 18px; }
+  .aw-sheet__icon { font-size: 24px; color: #e4e7ea; }
+  .aw-sheet__titles { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .aw-sheet__title { font-family: var(--font-ui); font-size: 20px; font-weight: 700; letter-spacing: -.015em; color: var(--ink); }
+  .aw-sheet__sub { font-size: 13px; color: #9aa0a8; }
+  .aw-sheet__close { margin-left: auto; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: transparent; border: 1px solid rgba(255, 255, 255, .1); color: #a7adb3; padding: 0; cursor: pointer;
+    .material-symbols-rounded { font-size: 21px; } &:hover { color: #fff; background: rgba(255, 255, 255, .06); } }
+  .aw-sheet__body { padding: 6px 26px 6px; display: flex; flex-direction: column; gap: 24px; }
+  .aw-sheet__section { display: flex; flex-direction: column; gap: 10px; }
+  .aw-sheet__eyebrow { font-size: 11px; letter-spacing: .18em; color: #a7adb3; }
+  /* select in a sheet: h50 r12 .06/.11, value 15 #f2f3f5, chevron 22 */
+  .aw-sheet__select.ui-select-container.ui-select-bootstrap { height: 50px; border-radius: 12px; background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .11);
+    .ui-select-match > .btn { height: 48px; line-height: 48px; font-size: 15px; font-weight: 400; color: #f2f3f5; }
+    .caret { right: 16px; &::before { width: 22px; height: 22px; background-size: 22px 22px; } } }
+  .aw-sheet__card { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border-radius: 12px; margin: 0; font-weight: 400; cursor: pointer;
+    background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .09); }
+  .aw-sheet__card-text { display: flex; flex-direction: column; gap: 3px; }
+  .aw-sheet__card-title { font-size: 15px; font-weight: 600; color: var(--ink-1); }
+  .aw-sheet__card-sub { font-size: 13px; color: #8c9298; }
+  .aw-sheet__card .bootstrap-switch { margin-right: 0; &::after { display: none; } }
+  .aw-sheet__foot { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 20px 26px 22px; }
+  .aw-sheet__status { display: flex; align-items: center; gap: 9px; margin-right: auto; .mono { font-size: 11px; letter-spacing: .08em; color: #a7adb3; } }
+  .aw-sheet__dot { width: 7px; height: 7px; border-radius: 50%; background: #71777d; &--on { background: #7de3b4; } }
+  .aw-sheet__btn { height: 44px; padding: 0 22px; border-radius: 22px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #e4e7ea; background: transparent; border: 1px solid rgba(255, 255, 255, .16); cursor: pointer;
+    &:hover { background: rgba(255, 255, 255, .06); }
+    &--primary { padding: 0 26px; font-weight: 700; color: #0d0e10; background: #fff; border: 0; &:hover { background: #f2f3f5; } }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  /* duration stepper: card 14 20 12, r14, .06/.11; numbers mono 40/700; chevrons 19 #9aa0a8; units mono 10 .16em #71777d */
+  .aw-sleep__duration { display: flex; align-items: center; gap: 18px; }
+  .aw-stepper { display: flex; align-items: flex-end; gap: 10px; padding: 14px 20px 12px; border-radius: 14px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .11); }
+  .aw-stepper__col { display: flex; flex-direction: column; align-items: center; gap: 5px;
+    button { background: transparent; border: 0; padding: 0; color: #9aa0a8; cursor: pointer; display: grid; place-items: center; .material-symbols-rounded { font-size: 19px; } &:hover { color: #fff; } } }
+  .aw-stepper__num { font-size: 40px; font-weight: 700; line-height: 1; color: #fff; min-width: 2ch; text-align: center; }
+  .aw-stepper__colon { font-size: 34px; color: #5f6669; padding-bottom: 28px; }
+  .aw-stepper__unit { font-size: 10px; letter-spacing: .16em; color: #71777d; }
+  .aw-sleep__presets { flex: 1; display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+  .aw-sleep__presets-label { font-size: 13px; color: #9aa0a8; }
+  .aw-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .aw-pill { height: 34px; padding: 0 14px; border-radius: 17px; display: grid; place-items: center; font-size: 13px; color: #c2c8cd; cursor: pointer;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .11);
+    &:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+    &.active { font-weight: 600; color: #0d0e10; background: #fff; border-color: #fff; } }
 }

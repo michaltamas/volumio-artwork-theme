@@ -92,10 +92,12 @@ class PluginComponentController {
   saveButton(item) {
     this.$log.debug(item);
     if (item.onClick.askForConfirm) {
+      // destructive actions (factory reset) get the danger treatment in themes that support it
+      const confirm = Object.assign({}, item.onClick.askForConfirm, { danger: item.id === 'factory' });
       let modalPromise = this.modalService.openModal(
         'ModalConfirmController',
         'app/components/modals/modal-confirm.html',
-        item.onClick.askForConfirm
+        confirm
       );
       modalPromise.result.then(
         yes => {

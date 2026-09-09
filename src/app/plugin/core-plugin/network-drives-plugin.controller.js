@@ -65,7 +65,8 @@ class NetworkDrivesPluginController {
       'app/components/modals/modal-confirm.html',
       {
         title: modalTitle,
-        message: modalMessage
+        message: modalMessage,
+        danger: true
       });
     modalPromise.result.then((yes) => {
       this.$log.debug('deleteShare', {id: drive.name});

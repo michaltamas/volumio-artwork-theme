@@ -1,0 +1,75 @@
+<!-- Artwork Sleep timer sheet (mockup "Dialogs" — SETTINGS SHEET / SLEEP TIMER).
+     Same controller and data as Volumio's sleep modal: duration (sleepTime), presets,
+     action (whenSleepSelect), enabled; "ends at" is the real clock plus the duration. -->
+<div class="aw-sheet aw-sheet--sleep">
+
+  <div class="aw-sheet__head">
+    <span class="material-symbols-rounded aw-sheet__icon">bedtime</span>
+    <div class="aw-sheet__titles">
+      <div class="aw-sheet__title">{{modal.dataObj.name}}</div>
+    </div>
+    <button type="button" class="aw-sheet__close" ng-click="modal.cancel()" aria-label="Close">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <div class="aw-sheet__body">
+
+    <div class="aw-sheet__section">
+      <div class="aw-sheet__eyebrow mono">DURATION</div>
+      <div class="aw-sleep__duration">
+        <div class="aw-stepper">
+          <div class="aw-stepper__col">
+            <button type="button" ng-click="modal.stepHours(1)" aria-label="Hours up"><span class="material-symbols-rounded">keyboard_arrow_up</span></button>
+            <span class="aw-stepper__num mono">{{modal.sleepTime | date:'HH'}}</span>
+            <button type="button" ng-click="modal.stepHours(-1)" aria-label="Hours down"><span class="material-symbols-rounded">keyboard_arrow_down</span></button>
+            <span class="aw-stepper__unit mono">HRS</span>
+          </div>
+          <span class="aw-stepper__colon mono">:</span>
+          <div class="aw-stepper__col">
+            <button type="button" ng-click="modal.stepMinutes(1)" aria-label="Minutes up"><span class="material-symbols-rounded">keyboard_arrow_up</span></button>
+            <span class="aw-stepper__num mono">{{modal.sleepTime | date:'mm'}}</span>
+            <button type="button" ng-click="modal.stepMinutes(-1)" aria-label="Minutes down"><span class="material-symbols-rounded">keyboard_arrow_down</span></button>
+            <span class="aw-stepper__unit mono">MIN</span>
+          </div>
+        </div>
+        <div class="aw-sleep__presets">
+          <div class="aw-sleep__presets-label" translate="SLEEP.PRESET_TIMES"></div>
+          <div class="aw-pills">
+            <button type="button" class="aw-pill" ng-repeat="preset in modal.sleepPresets track by preset.val"
+                    ng-class="{active: modal.isPreset(preset)}" ng-click="modal.choosePreset(preset)">{{preset.text}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aw-sheet__section">
+      <div class="aw-sheet__eyebrow mono">WHEN IT ENDS</div>
+      <ui-select id="whenSleep" class="aw-sheet__select" ng-model="modal.action" search-enabled="false" append-to-body="false" theme="bootstrap">
+        <ui-select-match class="ui-select-match" placeholder="">{{$select.selected.text}}</ui-select-match>
+        <ui-select-choices class="ui-select-choices" repeat="item in modal.whenSleepSelect track by $index">
+          <div id="sleepOption-{{item.val}}" ng-bind-html="item.text"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
+    <label class="aw-sheet__card">
+      <div class="aw-sheet__card-text">
+        <div class="aw-sheet__card-title" translate="COMMON.ACTIVE"></div>
+      </div>
+      <input bs-switch ng-model="modal.enabled" type="checkbox" switch-size="medium" switch-animate="false"
+             switch-on-text="On" switch-off-text="Off" ng-true-value="true" ng-false-value="false">
+    </label>
+
+  </div>
+
+  <div class="aw-sheet__foot">
+    <div class="aw-sheet__status" ng-if="modal.endsAt">
+      <span class="aw-sheet__dot" ng-class="{'aw-sheet__dot--on': modal.enabled}"></span>
+      <span class="mono">ENDS AT {{modal.endsAt}}</span>
+    </div>
+    <button type="button" class="aw-sheet__btn" ng-click="modal.cancel()"><span translate="COMMON.CANCEL"></span></button>
+    <button type="button" class="aw-sheet__btn aw-sheet__btn--primary" ng-click="modal.setSleep()"><span translate="COMMON.SAVE"></span></button>
+  </div>
+
+</div>
