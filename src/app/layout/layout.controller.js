@@ -95,7 +95,6 @@ class LayoutController {
         const root = document.documentElement.style;
         root.setProperty('--art-1', `hsl(${h}, ${s}%, 24%)`);
         root.setProperty('--art-2', `hsl(${h}, ${s}%, 17%)`);
-        this.setThemeColor(h, s);
       } catch (e) { /* cross-origin taint — keep the fixed fallback scrim */ }
     };
     // a distinct URL for the CORS request: Safari would otherwise reuse the cover cached by the
@@ -103,10 +102,8 @@ class LayoutController {
     img.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'aw=palette';
   }
 
-  // Mobile Safari paints the status-bar band from <meta name="theme-color">; it cannot show page
-  // content there. The band is tinted to what the top of the backdrop renders (the art-1 scrim
-  // over the blurred cover), so the head reads as one surface. Approximation of the runtime
-  // scrim over the blurred cover — calibrated by measuring the rendered top row.
+  // (kept for reference) tint the browser's status-bar band to the backdrop's top colour — the
+  // user chose a plain black band instead (theme-color is fixed in index.html)
   setThemeColor(h, s) {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (!meta) { return; }
