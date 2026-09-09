@@ -293,8 +293,17 @@ div#goBackPanelWrapper {
   }
 }
 
-/* playback screen has its own transport; drop the mini-player gap */
-body#artwork .with-playback-bar #content { padding-bottom: 0; }
+/* playback screen has its own transport; drop the mini-player gap (keyed on the page, so the
+   height stays put while the mini player is already sliding back in) */
+body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
+
+/* Now Playing opens as a sheet sliding up from the mini player and slides back down on the
+   chevron (.aw-np-out is set by the controller before the state changes) */
+@keyframes aw-np-in { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes aw-np-out { from { transform: none; } to { transform: translateY(100%); } }
+body#artwork #np { animation: aw-np-in .42s cubic-bezier(.2, .7, .2, 1) both; }
+body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1) forwards; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { body#artwork #np, body#artwork #np.aw-np-out { animation: none; } }
 
 /* topbar zone · output readout (spec §6.1) */
 #np .np-topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }

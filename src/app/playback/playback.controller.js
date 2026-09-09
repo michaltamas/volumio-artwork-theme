@@ -1,6 +1,10 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document) {
     'ngInject';
+    this.$rootScope = $rootScope;
+    this.$timeout = $timeout;
+    this.themeManager = themeManager;
+    this.$document = $document;
     this.playerService = playerService;
     this.matchmediaService = matchmediaService;
     this.$state = $state;
@@ -95,6 +99,14 @@ class PlaybackController {
   }
 
   goBack() {
+    // Artwork: slide the sheet down (and the mini player up) before leaving the state
+    const np = this.themeManager.theme === 'artwork' && this.$document[0].getElementById('np');
+    if (np && !np.classList.contains('aw-np-out')) {
+      np.classList.add('aw-np-out');
+      this.$rootScope.$broadcast('artwork:npClosing');
+      this.$timeout(() => this.$state.go(this.previousState), 380, false);
+      return;
+    }
     this.$state.go(this.previousState);
   }
 }

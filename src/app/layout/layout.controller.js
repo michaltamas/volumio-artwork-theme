@@ -25,6 +25,7 @@ class LayoutController {
     $scope.$on('$stateChangeSuccess', () => {
       this.updateTabbar();
     });
+    $scope.$on('artwork:npClosing', () => { this.isWithPlaybackBar = false; });
 
     if (this.themeManager.theme === 'artwork') {
       this.initArtworkPalette();
