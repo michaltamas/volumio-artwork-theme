@@ -95,6 +95,7 @@ class LayoutController {
         const root = document.documentElement.style;
         root.setProperty('--art-1', `hsl(${h}, ${s}%, 24%)`);
         root.setProperty('--art-2', `hsl(${h}, ${s}%, 17%)`);
+        this.setThemeColor(h, s);
       } catch (e) { /* cross-origin taint — keep the fixed fallback scrim */ }
     };
     // a distinct URL for the CORS request: Safari would otherwise reuse the cover cached by the
@@ -102,16 +103,16 @@ class LayoutController {
     img.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'aw=palette';
   }
 
-  // (kept for reference) tint the browser's status-bar band to the backdrop's top colour — the
-  // user chose a plain black band instead (theme-color is fixed in index.html)
+  // The browser's own bands (status bar, overscroll) take the mini player's colour: its glass
+  // (rgba(10,12,15,.72)) over the backdrop's low, art-2 tinted end.
   setThemeColor(h, s) {
+    const art2 = this.hslToRgb(h / 360, s / 100, 0.17);
+    const glass = [10, 12, 15];
+    const mix = art2.map((c, i) => Math.round(glass[i] * 0.9 + c * 0.1)); // measured against the rendered bar
+    const css = 'rgb(' + mix.join(',') + ')';
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (!meta) { return; }
-    // measured against the rendered top row: the band is art-1 with ~7% ground under it
-    const art1 = this.hslToRgb(h / 360, s / 100, 0.24);
-    const ground = [10, 12, 14];
-    const mix = art1.map((c, i) => Math.round(c * 0.93 + ground[i] * 0.07));
-    meta.setAttribute('content', 'rgb(' + mix.join(',') + ')');
+    if (meta) { meta.setAttribute('content', css); }
+    document.documentElement.style.backgroundColor = css;
   }
 
   hslToRgb(h, s, l) {

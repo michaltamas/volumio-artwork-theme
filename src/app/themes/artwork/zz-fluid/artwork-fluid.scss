@@ -181,7 +181,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
 @media (max-width: 700px) and (orientation: portrait) {
   /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
   :root { --rail-w: 0px; --sa-t: env(safe-area-inset-top, 0px); --sa-b: env(safe-area-inset-bottom, 0px); --mini-h: calc(80px + var(--sa-b)); --pad-screen: 20px; --pad-top: calc(14px + var(--sa-t)); }
-  html, body#artwork { background: #000; } /* the browser's own bands (status bar, overscroll) stay black */
+  html, body#artwork { background: #0e1013; } /* the browser's bands start in the mini player's tone; the palette refines it per cover */
   /* app shell = the visible viewport: the document itself never scrolls, so Safari keeps its bars
      still and never paints a stretched strip under the status bar; the screens scroll inside */
   html, body#artwork { height: 100vh; height: 100dvh; overflow: hidden; overscroll-behavior: none; }
