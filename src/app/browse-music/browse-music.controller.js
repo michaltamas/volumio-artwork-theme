@@ -62,6 +62,7 @@ class BrowseMusicController {
     if (this.$document[0].body.id === 'artwork') { this.loadArtworkLibraryHome(); }
     // Artwork list pages (Artists, Albums, Genres…): local filter / sort / alphabet rail
     this.awFilter = ''; this.awSortDesc = false; this.awVisibleCount = null; this.awActiveLetter = '';
+    this.awArtistShowAll = false; this.awArtistNewest = true;
     if (this.$document[0].body.id === 'artwork') {
       this.$rootScope.$on('browseController:listRendered', () => this.awAfterRender());
       // the row of the track that is playing carries .aw-playing (album page: EQ bars instead of the number)
@@ -1050,11 +1051,84 @@ class BrowseMusicController {
   awNorm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
   awNodes() {
     return Array.prototype.slice.call(document.querySelectorAll(
-      '#browse-page .music-card__wrapper:not(.placeholder-wrapper), #browse-page .album__tracks'));
+      '#browse-page .music-card__wrapper:not(.placeholder-wrapper), #browse-page .main__source:not(.aw-artist-albums) .album__tracks, .aw-artist-album'));
+  }
+  // artist page TRACKS head: rows left after the local filter
+  get awArtistVisibleTracks() {
+    return document.querySelectorAll('#browse-page .aw-artist-tracks .album__tracks:not(.aw-hidden)').length;
   }
   awTitleOf(el) {
-    const t = el.querySelector('.music-card__label, .item__title');
+    const t = el.querySelector('.music-card__label, .item__title, .aw-artist-album__title');
     return t ? t.textContent.trim() : '';
+  }
+
+  /* ===== Artwork artist page: albums + tracks from the artist's own lists (keyed on item types,
+     not on the translated list titles). Year and track count of an album come from the tracks
+     that name it — the album items themselves carry neither. ===== */
+  get isArtistInfo() { return !!(this.browseService.info && this.browseService.info.type === 'artist'); }
+  awArtistListsOf(kind) {
+    const lists = (this.browseService.lists || []);
+    return lists.map((l, i) => ({ l, i })).filter(({ l }) => {
+      const items = l.items || [];
+      const songs = items.filter(it => it.type === 'song').length;
+      return kind === 'songs' ? (items.length && songs === items.length) : (items.length && songs === 0);
+    });
+  }
+  get awArtistTracks() {
+    return [].concat.apply([], this.awArtistListsOf('songs').map(({ l }) => l.items || []));
+  }
+  get awArtistTrackCount() { return this.isArtistInfo ? this.awArtistTracks.length : 0; }
+  get awArtistAlbums() {
+    if (!this.isArtistInfo) { return []; }
+    const key = this.awNorm.bind(this);
+    const sig = (this.browseService.lists || []).map(l => (l.items || []).length).join(',') + '|' + this.currentUri;
+    if (this._awArtistSig === sig && this._awArtistAlbums) { return this._awArtistAlbums; }
+    const byAlbum = {};
+    this.awArtistTracks.forEach(t => {
+      const k = key(t.album); if (!k) { return; }
+      const e = byAlbum[k] || (byAlbum[k] = { tracks: 0, year: null });
+      e.tracks++;
+      const y = parseInt(String(t.year || '').slice(0, 4), 10);
+      if (y && (!e.year || y < e.year)) { e.year = y; }
+    });
+    const out = [];
+    this.awArtistListsOf('albums').forEach(({ l, i }) => {
+      (l.items || []).forEach((item, j) => {
+        const e = byAlbum[key(item.title)] || {};
+        out.push({ item, uri: item.uri || (i + ':' + j), listIndex: i, itemIndex: j, year: e.year || null, tracks: e.tracks || 0 });
+      });
+    });
+    this._awArtistSig = sig; this._awArtistAlbums = out;
+    return out;
+  }
+  get awArtistHasYears() { return this.awArtistAlbums.some(a => a.year); }
+  get awArtistAlbumsSorted() {
+    const albums = this.awArtistAlbums;
+    if (!this.awArtistHasYears) { return albums; }
+    const dir = this.awArtistNewest ? -1 : 1;
+    return albums.slice().sort((a, b) => {
+      if (!a.year && !b.year) { return 0; } if (!a.year) { return 1; } if (!b.year) { return -1; }
+      return (a.year - b.year) * dir || 0;
+    });
+  }
+  awToggleArtistOrder() { this.awArtistNewest = !this.awArtistNewest; }
+  // shuffle: play the artist, with random on (Volumio has no per-item shuffle command)
+  awShuffle(item) {
+    const p = this.playItemsList(item);
+    const on = () => { if (this.playerService.state && !this.playerService.state.random) { this.playerService.shuffle(); } };
+    if (p && typeof p.then === 'function') { p.then(on, on); } else { this.$timeout(on, 600, false); }
+  }
+  // Volumio renders the artist's album list as cards in #browse-page too — the theme's own grid
+  // replaces it, so tag those sources (by list index, never by title) for the stylesheet
+  awTagArtistSources() {
+    if (!this.isArtistInfo) { return; }
+    const sources = document.querySelectorAll('#browse-page .main__source');
+    const albums = this.awArtistListsOf('albums').map(x => x.i);
+    const songs = this.awArtistListsOf('songs').map(x => x.i);
+    Array.prototype.forEach.call(sources, (el, i) => {
+      el.classList.toggle('aw-artist-albums', albums.indexOf(i) !== -1);
+      el.classList.toggle('aw-artist-tracks', songs.indexOf(i) !== -1);
+    });
   }
   applyAwFilter() {
     const q = this.awNorm(this.awFilter).trim();
@@ -1177,9 +1251,11 @@ class BrowseMusicController {
   awAfterRender() {
     this.awMarkPlaying();
     this.awLoadFavourites();
+    this.awTagArtistSources();
     if (this._awListUri !== this.currentUri) {
       this._awListUri = this.currentUri;
       this.awFilter = ''; this.awSortDesc = false; this.awActiveLetter = ''; this.awVisibleCount = null;
+      this.awArtistShowAll = false; this.awArtistNewest = true;
     }
     this.applyAwFilter(); this.applyAwSort();
   }

@@ -1,0 +1,87 @@
+<!-- Artwork artist page (mockup "Artist detail"): back + breadcrumb + local search, round 156px
+     portrait, name + real counts, actions; albums grid (year / track count derived from the
+     artist's own track list); the track rows below are Volumio's (#browse-page). -->
+<div class="aw-artist">
+
+  <div class="aw-listbar aw-artist__bar">
+    <button type="button" class="aw-listbar__back" ng-click="browse.goBack()" aria-label="{{'COMMON.BACK' | translate}}" title="{{'COMMON.BACK' | translate}}">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <nav class="aw-crumbs" aria-label="Breadcrumb">
+      <a href ng-click="browse.backHome()">Library</a>
+      <span class="aw-crumbs__sep" ng-repeat-start="c in browse.awCrumbs track by $index">/</span>
+      <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title}}</a>
+      <span class="aw-crumbs__sep">/</span>
+      <span class="aw-crumbs__cur">{{browse.browseService.info.title}}</span>
+    </nav>
+    <label class="aw-filter aw-artist__filter">
+      <span class="material-symbols-rounded">search</span>
+      <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
+             placeholder="Search this artist" aria-label="Search this artist">
+    </label>
+  </div>
+
+  <div class="aw-artist__hero">
+    <img class="aw-artist__img" ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">
+    <div class="aw-artist__body">
+      <div class="aw-artist__eyebrow mono">{{'COMMON.ARTIST' | translate | uppercase}}</div>
+      <h1 class="aw-artist__name">{{browse.browseService.info.title}}</h1>
+      <div class="aw-artist__meta" ng-if="browse.awArtistAlbums.length || browse.awArtistTrackCount">
+        <span class="mono" ng-if="browse.awArtistAlbums.length">{{browse.awArtistAlbums.length}} {{'COMMON.ALBUMS' | translate | lowercase}}</span>
+        <span class="aw-artist__dot" ng-if="browse.awArtistAlbums.length && browse.awArtistTrackCount"></span>
+        <span class="mono" ng-if="browse.awArtistTrackCount">{{browse.awArtistTrackCount}} tracks</span>
+      </div>
+      <!-- biography (only when Volumio's metadata service has one) -->
+      <div class="aw-artist__story" ng-if="browse.currentItemMetas.story">
+        <span ng-bind-html="browse.currentItemMetas.story"></span>
+        <button type="button" class="aw-artist__more" ng-click="browse.showCreditsDetails({'title': browse.browseService.info.title, 'story': browse.currentItemMetas.story})">{{'BROWSER.READ_MORE' | translate}}…</button>
+      </div>
+    </div>
+    <div class="aw-artist__actions">
+      <button type="button" class="aw-artist__play" ng-click="browse.playItemsList(browse.browseService.info)">
+        <span class="material-symbols-rounded">play_arrow</span><span>{{'BROWSER.PLAY' | translate}}</span>
+      </button>
+      <button type="button" class="aw-artist__shuffle" ng-click="browse.awShuffle(browse.browseService.info)">
+        <span class="material-symbols-rounded">shuffle</span><span>Shuffle</span>
+      </button>
+      <button type="button" class="aw-artist__iconbtn" ng-click="browse.addToQueue(browse.browseService.info)" aria-label="{{'BROWSER.ADD_TO_QUEUE' | translate}}" title="{{'BROWSER.ADD_TO_QUEUE' | translate}}">
+        <span class="material-symbols-rounded">queue_music</span>
+      </button>
+      <div uib-dropdown class="hamburgerMenu aw-artist__menu">
+        <button type="button" class="aw-artist__iconbtn" uib-dropdown-toggle aria-label="More" title="More">
+          <span class="material-symbols-rounded">more_horiz</span>
+        </button>
+        <ul class="dropdown-menu buttonsGroup align-to-right" uib-dropdown-menu>
+          <li><a href ng-click="browse.playItemsList(browse.browseService.info)"><span class="material-symbols-rounded">play_arrow</span><span translate="BROWSER.PLAY"></span></a></li>
+          <li><a href ng-click="browse.addToQueue(browse.browseService.info)"><span class="material-symbols-rounded">queue_music</span><span translate="BROWSER.ADD_TO_QUEUE"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- albums: the artist's album list(s), sorted by the year found on their tracks -->
+  <div class="aw-artist__sechead" ng-if="browse.awArtistAlbums.length">
+    <span class="mono aw-artist__label">{{'COMMON.ALBUMS' | translate | uppercase}}</span>
+    <span class="mono aw-artist__count">{{browse.awArtistAlbums.length}}</span>
+    <button type="button" class="aw-artist__link" ng-if="browse.awArtistHasYears" ng-click="browse.awToggleArtistOrder()">{{browse.awArtistNewest ? 'Newest first' : 'Oldest first'}}</button>
+  </div>
+  <div class="aw-artist__albums" ng-if="browse.awArtistAlbums.length">
+    <div class="aw-artist-album" ng-repeat="a in browse.awArtistAlbumsSorted track by a.uri" ng-click="browse.clickListItemByIndex(a.listIndex, a.itemIndex)">
+      <div class="aw-artist-album__cover">
+        <img ng-src="{{browse.playerService.getAlbumart(a.item.albumart)}}" alt="" onerror="this.style.visibility='hidden'">
+        <button type="button" class="aw-artist-album__play" ng-click="$event.stopPropagation(); browse.playRenderedMusicCardClick(a.listIndex, a.itemIndex)" aria-label="{{'BROWSER.PLAY' | translate}}">
+          <span class="material-symbols-rounded">play_arrow</span>
+        </button>
+      </div>
+      <div class="aw-artist-album__title">{{a.item.title}}</div>
+      <div class="aw-artist-album__sub mono" ng-if="a.year || a.tracks"><span ng-if="a.year">{{a.year}}</span><span ng-if="a.year && a.tracks"> · </span><span ng-if="a.tracks">{{a.tracks}} tracks</span></div>
+    </div>
+  </div>
+
+  <!-- tracks: heading for Volumio's rows in #browse-page; first 5 shown, "See all" expands -->
+  <div class="aw-artist__sechead aw-artist__sechead--tracks" ng-if="browse.awArtistTrackCount">
+    <span class="mono aw-artist__label">TRACKS</span>
+    <span class="mono aw-artist__count">{{browse.awFilter ? browse.awArtistVisibleTracks + ' / ' : ''}}{{browse.awArtistTrackCount}}</span>
+    <button type="button" class="aw-artist__link" ng-if="browse.awArtistTrackCount > 5 && !browse.awFilter" ng-click="browse.awArtistShowAll = !browse.awArtistShowAll">{{browse.awArtistShowAll ? 'Show less' : 'See all ' + browse.awArtistTrackCount}}</button>
+  </div>
+</div>
