@@ -62,7 +62,8 @@ class AwSettingsNavController {
     if (k === 'network' && net && net.type) { return net.type; }
     return '';
   }
-  back() { this.$window.history.back(); }
+  // the phone settings list is reached from the menu sheet: back returns to Now Playing
+  back() { this.$state.go('volumio.playback'); }
 
   isActive(item) { return this.svc.isActive(item); }
 
