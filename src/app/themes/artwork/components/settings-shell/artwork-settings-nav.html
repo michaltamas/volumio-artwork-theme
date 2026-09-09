@@ -14,3 +14,25 @@
     OS {{nav.svc.systemInfo.systemversion}} · {{nav.svc.systemInfo.hardware | uppercase}}
   </div>
 </nav>
+
+<!-- phone: grouped list on the settings landing (mockup "Mobile — Settings") -->
+<div class="aw-mnav" ng-if="nav.isLanding">
+  <div class="aw-mnav__head">
+    <button type="button" class="aw-mnav__back" ng-click="nav.back()" aria-label="{{'COMMON.BACK' | translate}}"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div class="aw-mnav__titles">
+      <div class="aw-mnav__title">{{'COMMON.SETTINGS' | translate}}</div>
+      <div class="aw-mnav__sub mono" ng-if="nav.svc.systemInfo">VOLUMIO OS {{nav.svc.systemInfo.systemversion}}<span ng-if="nav.svc.systemInfo.hardware">&nbsp;·&nbsp;{{nav.svc.systemInfo.hardware | uppercase}}</span></div>
+    </div>
+  </div>
+  <div ng-repeat="g in nav.groups track by g.label">
+    <div class="aw-mnav__eyebrow mono">{{g.label}}</div>
+    <div class="aw-mnav__card">
+      <a class="aw-mnav__row" ng-repeat="item in g.items track by $index" ng-click="nav.svc.itemClick(item)">
+        <span class="material-symbols-rounded">{{nav.icon(item)}}</span>
+        <span class="aw-mnav__label">{{item.name}}</span>
+        <span class="aw-mnav__value mono" ng-if="nav.value(item)">{{nav.value(item) | uppercase}}</span>
+        <span class="material-symbols-rounded aw-mnav__chev">chevron_right</span>
+      </a>
+    </div>
+  </div>
+</div>

@@ -70,6 +70,8 @@ import AwSettingsService from './components/aw-settings-shell/aw-settings.servic
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
 import AwQueuePanelService from './services/aw-queue-panel.service';
+import AwMobileMenuDirective from './components/aw-mobile-menu/aw-mobile-menu.directive';
+import AwMobileMenuService from './services/aw-mobile-menu.service';
 import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
 // Track buttons
 import FavouriteTrackBtnDirective from './components/favourite-track-btn/favourite-track-btn.directive';
@@ -223,6 +225,7 @@ angular.module('volumio', [
   .service('playlistService', PlaylistService)
   .service('playQueueService', PlayQueueService)
   .service('awQueuePanel', AwQueuePanelService)
+  .service('awMobileMenu', AwMobileMenuService)
   .service('multiRoomService', MultiRoomService)
   .service('toastMessageService', ToastMessageService)
   .service('updaterService', UpdaterService)
@@ -291,6 +294,7 @@ angular.module('volumio', [
   .service('awSettingsService', AwSettingsService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
+  .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
 
   //MyVolumio Directives

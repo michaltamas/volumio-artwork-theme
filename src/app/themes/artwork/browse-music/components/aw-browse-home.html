@@ -4,6 +4,7 @@
 <div class="aw-browse">
 
   <div class="aw-tabs">
+    <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
     <div class="aw-tab active">Library</div>
     <div class="aw-tab" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">{{s.name}}</div>
     <div class="aw-tab" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">Radio</div>
@@ -38,6 +39,7 @@
     <div class="aw-card" ng-if="browse.sourceByUri('albums://')" ng-click="browse.fetchLibrary(browse.sourceByUri('albums://'))">
       <div class="aw-tile aw-tile--mosaic">
         <img ng-repeat="a in browse.libraryHome.albumsArt track by $index" ng-src="{{a}}" alt="" onerror="this.remove()">
+        <span class="material-symbols-rounded aw-tile__glyph">album</span>
       </div>
       <div class="aw-card-body">
         <div class="aw-card-title">Albums</div>
@@ -49,6 +51,7 @@
     <div class="aw-card" ng-if="browse.sourceByUri('artists://')" ng-click="browse.fetchLibrary(browse.sourceByUri('artists://'))">
       <div class="aw-tile aw-tile--avatars">
         <img ng-repeat="a in browse.libraryHome.artistsArt track by $index" ng-src="{{a}}" alt="" onerror="this.style.display='none'">
+        <span class="material-symbols-rounded aw-tile__glyph">mic_external_on</span>
       </div>
       <div class="aw-card-body">
         <div class="aw-card-title">Artists</div>
@@ -68,7 +71,7 @@
     </div>
 
     <div class="aw-card" ng-if="browse.sourceByUri('playlists')" ng-click="browse.fetchLibrary(browse.sourceByUri('playlists'))">
-      <div class="aw-tile aw-tile--stack" ng-if="browse.libraryHome.playlistArt"><img ng-src="{{browse.libraryHome.playlistArt}}" alt="" onerror="this.style.display='none'"></div>
+      <div class="aw-tile aw-tile--stack" ng-if="browse.libraryHome.playlistArt"><img ng-src="{{browse.libraryHome.playlistArt}}" alt="" onerror="this.style.display='none'"><span class="material-symbols-rounded aw-tile__glyph">queue_music</span></div>
       <div class="aw-tile aw-tile--icon" ng-if="!browse.libraryHome.playlistArt"><span class="material-symbols-rounded">queue_music</span></div>
       <div class="aw-card-body">
         <div class="aw-card-title">Playlists</div>
@@ -78,7 +81,7 @@
     </div>
 
     <div class="aw-card" ng-if="browse.sourceByUri('genres://')" ng-click="browse.fetchLibrary(browse.sourceByUri('genres://'))">
-      <div class="aw-tile aw-tile--icon aw-tile--lines" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="aw-tile aw-tile--icon aw-tile--lines" aria-hidden="true"><i></i><i></i><i></i><span class="material-symbols-rounded aw-tile__glyph">graphic_eq</span></div>
       <div class="aw-card-body">
         <div class="aw-card-title">Genres</div>
         <div class="aw-card-sub" ng-if="browse.libraryHome.counts.genres !== undefined">{{browse.libraryHome.counts.genres}} genres</div>

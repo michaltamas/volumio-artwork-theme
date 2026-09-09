@@ -1,7 +1,9 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu) {
     'ngInject';
     this.awQueue = awQueuePanel;
+    this.awMenu = awMobileMenu;
+    this.$state = $state;
     this.$rootScope = $rootScope;
     this.$timeout = $timeout;
     this.themeManager = themeManager;
@@ -97,6 +99,15 @@ class PlaybackController {
   get npTrackPos() {
     const st = this.playerService.state || {};
     return (typeof st.position === 'number' ? st.position : 0) + 1;
+  }
+
+  // phone transport bar
+  togglePlay() { const st = this.playerService.state || {}; if (st.status === 'play') { this.playerService.pause(); } else { this.playerService.play(); } }
+  cycleRepeat() {
+    const st = this.playerService.state || {};
+    if (!st.repeat) { this.playerService.repeatAlbum(true, false); }
+    else if (!st.repeatSingle) { this.playerService.repeatAlbum(true, true); }
+    else { this.playerService.repeatAlbum(false, false); }
   }
 
   goBack() {

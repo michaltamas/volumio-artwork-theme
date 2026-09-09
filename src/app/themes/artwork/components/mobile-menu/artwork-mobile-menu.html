@@ -1,0 +1,52 @@
+<div class="aw-mm" ng-class="{open: mm.menu.open}" aria-hidden="{{!mm.menu.open}}">
+  <div class="aw-mm__scrim" ng-click="mm.menu.hide()"></div>
+  <div class="aw-mm__sheet" role="dialog" aria-label="Menu">
+    <div class="aw-mm__head">
+      <div class="aw-mm__brand">V</div>
+      <div class="aw-mm__zone">
+        <div class="aw-mm__zone-name">{{mm.zone || 'Volumio'}}</div>
+        <div class="aw-mm__zone-out mono" ng-if="mm.output">{{mm.output | uppercase}}</div>
+      </div>
+      <button type="button" class="aw-mm__close" ng-click="mm.menu.hide()" aria-label="Close"><span class="material-symbols-rounded">close</span></button>
+    </div>
+    <div class="aw-mm__chip" ng-if="mm.signal">
+      <span class="aw-mm__dot"></span>
+      <span class="mono">BIT PERFECT · {{mm.signal}}</span>
+    </div>
+
+    <div class="aw-mm__eyebrow mono">LIBRARY</div>
+    <div class="aw-mm__list">
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.playback')}" ng-click="mm.go('volumio.playback')">
+        <span class="material-symbols-rounded">graphic_eq</span><span class="aw-mm__label">Now Playing</span></a>
+      <a class="aw-mm__item" ng-click="mm.goSearch()">
+        <span class="material-symbols-rounded">search</span><span class="aw-mm__label">{{'COMMON.SEARCH' | translate}}</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.home')}" ng-click="mm.go('volumio.home')">
+        <span class="material-symbols-rounded">home</span><span class="aw-mm__label">Home</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.browse')}" ng-click="mm.go('volumio.browse')">
+        <span class="material-symbols-rounded">library_music</span><span class="aw-mm__label">Browse</span>
+        <span class="aw-mm__value mono" ng-if="mm.sourcesCount">{{mm.sourcesCount}}</span></a>
+      <a class="aw-mm__item" ng-click="mm.openQueue()">
+        <span class="material-symbols-rounded">queue_music</span><span class="aw-mm__label">{{'COMMON.TAB_QUEUE' | translate}}</span>
+        <span class="aw-mm__value mono" ng-if="mm.queueCount">{{mm.queueCount}}</span></a>
+    </div>
+
+    <div class="aw-mm__eyebrow mono">SYSTEM</div>
+    <div class="aw-mm__list">
+      <a class="aw-mm__item" ng-click="mm.openItem('playback')">
+        <span class="material-symbols-rounded">speaker</span><span class="aw-mm__label">Playback device</span>
+        <span class="aw-mm__value mono" ng-if="mm.output">{{mm.output | uppercase}}</span></a>
+      <a class="aw-mm__item" ng-click="mm.openItem('zones')" ng-if="mm.item('zones')">
+        <span class="material-symbols-rounded">surround_sound</span><span class="aw-mm__label">{{mm.item('zones').name}}</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.settings')}" ng-click="mm.go('volumio.settings')">
+        <span class="material-symbols-rounded">tune</span><span class="aw-mm__label">Settings</span></a>
+      <a class="aw-mm__item" ng-click="mm.go('myvolumio.profile')" ng-if="mm.item('myvolumio') || true">
+        <span class="material-symbols-rounded">person</span><span class="aw-mm__label">MyVolumio</span></a>
+    </div>
+
+    <div class="aw-mm__foot">
+      <a class="aw-mm__power" ng-click="mm.openItem('shutdown')" ng-if="mm.item('shutdown')">
+        <span class="material-symbols-rounded">power_settings_new</span><span>{{mm.item('shutdown').name}}</span></a>
+      <span class="aw-mm__os mono" ng-if="mm.osVersion">OS {{mm.osVersion}}</span>
+    </div>
+  </div>
+</div>

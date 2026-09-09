@@ -1,0 +1,40 @@
+/* Phone menu sheet (mockup "Mobile — Menu", values from its inline CSS): 308px sheet 14px from
+   the edges over a dimmed, blurred screen; zone head, bit-perfect chip, 56px rows, power foot. */
+body#artwork .aw-mm { position: fixed; inset: 0; z-index: 30; visibility: hidden; pointer-events: none;
+  transition: visibility 0s linear .3s;
+  &.open { visibility: visible; pointer-events: auto; transition-delay: 0s; } }
+body#artwork .aw-mm__scrim { position: absolute; inset: 0; background: rgba(5, 6, 8, .5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity .28s ease; }
+body#artwork .aw-mm.open .aw-mm__scrim { opacity: 1; }
+body#artwork .aw-mm__sheet {
+  position: absolute; left: 14px; top: 14px; bottom: 14px; width: unquote("min(308px, calc(100vw - 28px))"); border-radius: 22px; overflow: hidden;
+  display: flex; flex-direction: column; padding: 22px 14px 16px;
+  background: rgba(13, 15, 18, .9); backdrop-filter: blur(48px) saturate(1.15); -webkit-backdrop-filter: blur(48px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, .11); box-shadow: 40px 0 90px -30px rgba(0, 0, 0, .92); color: var(--ink-1);
+  transform: translateX(-24px); opacity: 0; transition: transform .32s cubic-bezier(.2, .7, .2, 1), opacity .26s ease;
+}
+body#artwork .aw-mm.open .aw-mm__sheet { transform: none; opacity: 1; }
+body#artwork .aw-mm__head { display: flex; align-items: center; gap: 13px; padding: 0 12px; }
+body#artwork .aw-mm__brand { width: 41px; height: 41px; border-radius: 11px; border: 1.5px solid #f2f3f5; display: grid; place-items: center; font-family: var(--font-ui); font-size: 17px; font-weight: 800; flex: none; } /* 38 + borders */
+body#artwork .aw-mm__zone { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: normal; }
+body#artwork .aw-mm__zone-name { font-size: 16px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body#artwork .aw-mm__zone-out { font-size: 10px; letter-spacing: .08em; color: #a2a8ae; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body#artwork .aw-mm__close { border: 0; background: transparent; padding: 0; color: #c2c8cd; cursor: pointer; display: grid; place-items: center; .material-symbols-rounded { font-size: 23px; } }
+body#artwork .aw-mm__chip { display: flex; align-items: center; gap: 9px; margin: 18px 12px 0; height: 36px; padding: 0 12px; border-radius: 18px; /* 34 + borders */
+  background: rgba(125, 227, 180, .1); border: 1px solid rgba(125, 227, 180, .26);
+  .mono { font-size: 10px; letter-spacing: .1em; color: #a8ecce; } }
+body#artwork .aw-mm__dot { width: 7px; height: 7px; border-radius: 50%; background: #7de3b4; }
+body#artwork .aw-mm__eyebrow { font-size: 10px; letter-spacing: .18em; color: #b6bcc2; padding: 22px 14px 8px; line-height: normal; }
+body#artwork .aw-mm__eyebrow + .aw-mm__list + .aw-mm__eyebrow { padding-top: 20px; }
+body#artwork .aw-mm__list { display: flex; flex-direction: column; gap: 2px; }
+body#artwork .aw-mm__item { display: flex; align-items: center; gap: 14px; height: 56px; padding: 0 14px; border-radius: 12px; cursor: pointer; text-decoration: none; color: #e4e7ea;
+  .material-symbols-rounded { font-size: 23px; color: #c2c8cd; width: 23px; }
+  &:hover { background: rgba(255, 255, 255, .06); text-decoration: none; color: #fff; }
+  &.active { background: rgba(255, 255, 255, .1); color: #fff; .material-symbols-rounded { color: #fff; } .aw-mm__label { font-weight: 600; } } }
+body#artwork .aw-mm__label { flex: 1; min-width: 0; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body#artwork .aw-mm__value { font-size: 10px; letter-spacing: .08em; color: #a2a8ae; }
+body#artwork .aw-mm__foot { margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 14px 14px 0; border-top: 1px solid rgba(255, 255, 255, .09); }
+body#artwork .aw-mm__power { display: flex; align-items: center; gap: 12px; color: #e4e7ea; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+  .material-symbols-rounded { font-size: 21px; color: #a7adb3; } &:hover { color: #fff; text-decoration: none; } }
+body#artwork .aw-mm__os { margin-left: auto; font-size: 10px; color: #8c9298; }
+@media (prefers-reduced-motion: reduce) { body#artwork .aw-mm, body#artwork .aw-mm__sheet, body#artwork .aw-mm__scrim { transition: none; } }

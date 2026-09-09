@@ -2,6 +2,7 @@
 <div id="np">
 
   <div id="np-topbar">
+    <button type="button" class="np-menu-btn" ng-click="playback.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
     <div class="np-topbar-left">
       <a class="np-chevron" ng-click="playback.goBack()" aria-label="Back" title="Back">
         <span class="material-symbols-rounded">expand_more</span>
@@ -57,6 +58,16 @@
     </div>
   </div>
 
+  <!-- phone: secondary actions as tiles (mockup "Mobile — Now Playing"); hidden elsewhere -->
+  <div class="np-m-actions">
+    <favourite-track-btn class="np-m-tile"></favourite-track-btn>
+    <add-track-to-playlist-btn class="np-m-tile"></add-track-to-playlist-btn>
+    <button type="button" class="np-m-tile" ng-class="{active: playback.playerService.state.repeat}" ng-click="playback.cycleRepeat()" title="{{'TRACK_INFO_BAR.REPEAT' | translate}}">
+      <span class="material-symbols-rounded">{{playback.playerService.state.repeat && playback.playerService.state.repeatSingle ? 'repeat_one' : 'repeat'}}</span>
+    </button>
+    <track-actions-btn class="np-m-tile"></track-actions-btn>
+  </div>
+
   <div id="np-footer">
     <div id="np-seek"><player-seekbar></player-seekbar></div>
     <div id="np-footer-row">
@@ -78,6 +89,17 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- phone: transport bar at the bottom (queue · prev · play · next · zones) -->
+  <div class="np-m-bar">
+    <button type="button" class="np-m-bar__btn" ng-click="playback.awQueue.toggle()" title="{{'COMMON.TAB_QUEUE' | translate}}"><span class="material-symbols-rounded">queue_music</span></button>
+    <button type="button" class="np-m-bar__btn np-m-bar__btn--skip" ng-click="playback.playerService.prev()" title="Previous"><span class="material-symbols-rounded">skip_previous</span></button>
+    <button type="button" class="np-m-bar__play" ng-click="playback.togglePlay()" title="Play/Pause">
+      <span class="material-symbols-rounded">{{playback.playerService.state.status === 'play' ? 'pause' : 'play_arrow'}}</span>
+    </button>
+    <button type="button" class="np-m-bar__btn np-m-bar__btn--skip" ng-click="playback.playerService.next()" title="Next"><span class="material-symbols-rounded">skip_next</span></button>
+    <button type="button" class="np-m-bar__btn" ng-click="playback.$state.go('volumio.multi-room')" title="Zones"><span class="material-symbols-rounded">speaker</span></button>
   </div>
 
 </div>

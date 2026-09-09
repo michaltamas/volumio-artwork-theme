@@ -48,29 +48,6 @@ body#artwork #np .np-zone { max-width: 40vw; }
   body#artwork #np .np-upnext-films, body#artwork #np .np-upnext-label { display: none; }
 }
 
-/* ---------- rail → bottom bar on narrow portrait screens ---------- */
-@media (max-width: 700px) and (orientation: portrait) {
-  :root { --rail-w: 0px; --bar-h: 56px; }
-  body#artwork #main-menu {
-    top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: var(--bar-h);
-    flex-direction: row; align-items: center; padding: 0 6px; gap: 0; z-index: 4;
-    border-right: 0; border-top: 1px solid var(--glass-1-border);
-  }
-  body#artwork #main-menu .brand { display: none; }
-  body#artwork #main-menu .main-menu-list, body#artwork #main-menu .main-menu-bottom { flex-direction: row; width: auto; gap: 2px; margin: 0; }
-  body#artwork #main-menu .main-menu-list { flex: 1 1 auto; justify-content: space-evenly; }
-  body#artwork #main-menu .main-menu-bottom { flex: none; }
-  body#artwork #main-menu li { width: auto; }
-  body#artwork #main-menu a { width: clamp(34px, 10vw, 44px); height: 44px; .material-symbols-rounded { font-size: clamp(19px, 5.5vw, 23px); } }
-  body#artwork #contentWrapper { margin-left: 0; width: 100%; }
-  body#artwork #footer-content { left: 0; bottom: var(--bar-h); }
-  body#artwork .main-container.with-playback-bar ~ #footer-container #footer-content { transform: translateY(calc(100% + var(--bar-h))); }
-  body#artwork #content { padding-bottom: calc(var(--mini-h) + var(--bar-h)); }
-  body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: var(--bar-h); }
-  body#artwork .aw-queue { bottom: calc(var(--mini-h) + var(--bar-h) + 12px); }
-  body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: calc(var(--bar-h) + 12px); }
-}
-
 /* ---------- mini player ---------- */
 body#artwork #footer-content { padding-left: clamp(12px, 1.5vw, 22px); padding-right: clamp(12px, 1.5vw, 22px); }
 body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: clamp(10px, 1.4vw, 20px); }
@@ -80,7 +57,7 @@ body#artwork #footer-content .mini-transport #playerButtons { gap: clamp(12px, 1
   body#artwork #footer-content .mini-volume { display: none; }
 }
 @media (max-width: 700px) { body#artwork #footer-content .mini-transport .repeat-button, body#artwork #footer-content .mini-transport .player-action-shuffle { display: none; } }
-@media (max-width: 560px) {
+@media (max-width: 560px) and (orientation: landscape) {
   /* compact bar: identity · prev/play/next · queue; no waveform row */
   :root { --mini-h: 64px; }
   body#artwork #footer-content { padding-top: 0; padding-bottom: 0; }
@@ -175,3 +152,162 @@ body#artwork .myvolumio-card-container.visible-xs { display: none !important; }
 /* ---------- dialogs & toasts ---------- */
 body#artwork .modal-dialog, body#artwork .modal-dialog.modal-lg, body#artwork .modal-dialog.modal-md, body#artwork .modal.aw-dlg--alarm-clock .modal-dialog { max-width: calc(100vw - 24px); }
 body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw - 24px))"); }
+
+/* ============================================================
+   PHONE (narrow portrait, mockup "Mobile screens"): the rail becomes the menu sheet, the mini
+   player is an 80px bar (cover · title · play · next · zones), Now Playing centres on one axis
+   with action tiles and a bottom transport, Browse is a 3-column tile grid, Queue and Settings
+   are full screens.
+   ============================================================ */
+/* desktop: the phone-only elements stay out of the way */
+body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph { display: none; }
+
+@media (max-width: 700px) and (orientation: portrait) {
+  :root { --rail-w: 0px; --mini-h: 80px; --pad-screen: 20px; --pad-top: 14px; }
+  body#artwork #main-menu { display: none; }
+  body#artwork #contentWrapper { margin-left: 0; width: 100%; }
+
+  /* --- mini player: 80px, cover 52 r5, title 14/600, artist·album 12, rates mono 9; play 44 · next 26 · speaker 24 --- */
+  body#artwork #footer-content { left: 0; height: 80px; padding: 0 16px; background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top-color: rgba(255, 255, 255, .09); }
+  body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; column-gap: 12px; align-content: center; }
+  body#artwork #footer-content .mini-identity { grid-column: 1; grid-row: 1; }
+  body#artwork #footer-content .mini-transport { grid-column: 2; grid-row: 1; }
+  body#artwork #footer-content .mini-right { grid-column: 3; grid-row: 1; gap: 14px; }
+  body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto auto; }
+  body#artwork #footer-container #footer-content .mini-queue { display: none; } /* two ids: outranks the queue panel's pill rule */
+  body#artwork #footer-content .mini-wave, body#artwork #footer-content .mini-volume,
+  body#artwork #footer-content .mini-transport .repeat-button, body#artwork #footer-content .mini-transport .player-action-shuffle, body#artwork #footer-content .mini-transport #prev-button { display: none; }
+  body#artwork #footer-content .mini-transport #playerButtons { gap: 14px; }
+  body#artwork #footer-content .mini-transport .playPause { width: 44px; height: 44px; .material-symbols-rounded { font-size: 26px; } }
+  body#artwork #footer-content .mini-transport .btn-link .material-symbols-rounded { font-size: 26px; }
+  body#artwork #footer-content .mini-zone { padding: 0; height: auto; background: transparent; border: 0; .material-symbols-rounded { font-size: 24px; color: #c2c8cd; } .mini-zone-name { display: none; } }
+  body#artwork #footer-content .mini-identity #trackInfo-compact { grid-template-columns: 52px 1fr; column-gap: 12px; height: 52px; }
+  body#artwork #footer-content .mini-identity .trackInfo-album-art-wrapper { width: 52px; height: 52px; }
+  body#artwork #footer-content .mini-identity img.album-art { width: 52px !important; height: 52px !important; border-radius: 5px; }
+  body#artwork #footer-content .mini-identity #trackInfo-title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  body#artwork #footer-content .mini-identity #trackInfo-artist-album { display: block; font-size: 12px; line-height: 1.3; color: #a2a8ae; }
+  body#artwork #footer-content .mini-identity .track-info-rates { font-size: 9px; letter-spacing: .1em; color: #a7adb3; }
+  body#artwork .main-container.with-playback-bar ~ #footer-container #footer-content { transform: translateY(100%); }
+
+  /* --- Now Playing --- */
+  body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow-y: auto; }
+  body#artwork #np { height: auto; min-height: 100%; overflow: visible; padding: 14px 20px 0; display: flex; flex-direction: column; }
+  body#artwork #np #np-topbar { display: flex; align-items: center; gap: 0; margin-top: 0; min-height: 0; }
+  body#artwork #np .np-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 26px; } }
+  body#artwork #np .np-topbar-left { flex: 1; min-width: 0; display: flex; flex-direction: row-reverse; align-items: center; gap: 0; }
+  body#artwork #np .np-zone { flex: 1; text-align: center; font-size: 10px; letter-spacing: .18em; color: #d6dade; .np-zone-out { display: none; } }
+  body#artwork #np .np-chevron { width: auto; height: auto; background: transparent; color: #e4e7ea; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork #np #np-badge-slot { display: none; }
+  body#artwork #np #np-hero { flex: none; flex-direction: column; align-items: center; margin-top: 20px; gap: 0; }
+  body#artwork #np #np-cover { height: auto; width: unquote("min(calc(100% - 32px), 42vh)"); max-width: none; border-radius: 12px;
+    img { border-radius: 12px; box-shadow: 0 34px 66px -22px rgba(0, 0, 0, .9); } }
+  body#artwork #np #np-meta { padding: 0; width: 100%; display: block; text-align: center; margin-top: 26px; }
+  body#artwork #np .np-title + .np-artist, body#artwork #np .np-title + .np-album { margin-top: 9px; }
+  body#artwork #np .np-eyebrow, body#artwork #np .np-signalpath { display: none; }
+  body#artwork #np .np-title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 0; }
+  body#artwork #np .np-artist { display: inline; font-size: 15px; color: #d6dade; margin: 0; }
+  body#artwork #np .np-album { display: inline; font-size: 15px; color: #d6dade; margin: 0; &::before { content: ' · '; } }
+  body#artwork #np .np-artist:empty + .np-album::before { content: none; }
+  body#artwork #np #np-chip-slot { margin-top: 11px; }
+  body#artwork #np .np-quality { gap: 9px; justify-content: center; }
+  body#artwork #np .np-chip { height: 30px; padding: 0 11px; border-radius: 15px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .14); gap: 5px; /* 28 + borders */
+    .np-chip-num { font-size: 11px; font-weight: 700; color: #fff; } .np-chip-unit { font-size: 10px; } .np-chip-num--rate { margin-left: 2px; } }
+  body#artwork #np .np-format { font-size: 10px; letter-spacing: .14em; color: #b6bcc2; }
+  body#artwork #np .np-m-actions { display: flex; justify-content: center; gap: 12px; margin-top: 22px; }
+  body#artwork #np .np-m-tile, body#artwork #np .np-m-tile .btn, body#artwork #np .np-m-tile .btn-link {
+    width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; padding: 0; margin: 0; /* 52 + borders */
+    background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .11); color: #c2c8cd; cursor: pointer; box-shadow: none;
+    .material-symbols-rounded { font-size: 24px; } }
+  body#artwork #np .np-m-tile .btn, body#artwork #np .np-m-tile .btn-link { width: 100%; height: 100%; border: 0; background: transparent; border-radius: 16px; }
+  body#artwork #np .np-m-tile .fa { font-size: 0; }
+  body#artwork #np favourite-track-btn.np-m-tile .fa::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; }
+  body#artwork #np favourite-track-btn.np-m-tile .active, body#artwork #np favourite-track-btn.np-m-tile .active .fa::before { color: #fff; }
+  body#artwork #np add-track-to-playlist-btn.np-m-tile .fa::before { content: 'playlist_add'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; }
+  body#artwork #np track-actions-btn.np-m-tile .fa::before { content: 'more_horiz'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; }
+  body#artwork #np .np-m-tile.active { color: #fff; background: rgba(255, 255, 255, .16); }
+  body#artwork #np #np-footer { margin-top: auto; padding: 24px 0 14px; }
+  body#artwork #np #np-seek { margin-bottom: 0; }
+  body#artwork #np #np-seek .artwork-wave { width: 100%; height: 30px; }
+  body#artwork #np #np-seek .wave-bar { border-radius: 1px; }
+  body#artwork #np #np-footer-row { display: none; }
+  body#artwork #np .np-m-bar { display: flex; align-items: center; justify-content: space-between; height: 88px; margin: 0 -20px; padding: 0 26px; flex: none;
+    background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top: 1px solid rgba(255, 255, 255, .09); }
+  body#artwork #np .np-m-bar__btn { border: 0; background: transparent; padding: 0; color: #c2c8cd; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 27px; } }
+  body#artwork #np .np-m-bar__btn--skip { color: #fff; .material-symbols-rounded { font-size: 34px; } }
+  body#artwork #np .np-m-bar__play { width: 66px; height: 66px; border-radius: 50%; border: 0; background: #fff; color: #0d0e10; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 36px; } }
+  body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
+  body#artwork #np.aw-np-out, body#artwork #np { animation-name: none; } /* the sheet slide is a desktop gesture; the phone page swaps in place */
+
+  /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
+  body#artwork .aw-browse .aw-tabs { gap: 12px; flex-wrap: nowrap; }
+  body#artwork .aw-browse .aw-tab, body#artwork .aw-browse .aw-avatar, body#artwork .aw-browse .aw-search-key { display: none; }
+  body#artwork .aw-browse .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork .aw-browse .aw-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); /* 42 + borders */
+    input::placeholder { color: #a7adb3; } }
+  body#artwork .aw-browse .aw-browse-head { margin-top: 24px; align-items: baseline; gap: 12px; }
+  body#artwork .aw-browse .aw-browse-title { font-size: 30px; letter-spacing: -.025em; }
+  body#artwork .aw-browse .aw-browse-stats { font-size: 11px; color: #b6bcc2; }
+  body#artwork .aw-browse .aw-cards, body#artwork .aw-browse .aw-sources { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+  body#artwork .aw-browse .aw-sources { margin-top: 16px; }
+  body#artwork .aw-browse .aw-card, body#artwork .aw-browse .aw-source { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+  body#artwork .aw-browse .aw-tile, body#artwork .aw-browse .aw-source > .material-symbols-rounded:first-child {
+    width: auto; height: auto; aspect-ratio: 1; border-radius: 14px; display: grid; place-items: center; overflow: hidden;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); color: #d6dade; font-size: 34px; }
+  body#artwork .aw-browse .aw-tile img, body#artwork .aw-browse .aw-tile--lines i { display: none; }
+  body#artwork .aw-browse .aw-tile--mosaic, body#artwork .aw-browse .aw-tile--avatars, body#artwork .aw-browse .aw-tile--stack { display: grid; }
+  body#artwork .aw-browse .aw-tile .material-symbols-rounded { font-size: 34px; color: #d6dade; }
+  body#artwork .aw-browse .aw-tile__glyph { display: block; }
+  body#artwork .aw-browse .aw-card-body, body#artwork .aw-browse .aw-source-body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  body#artwork .aw-browse .aw-card-title, body#artwork .aw-browse .aw-source-name { font-size: 13px; font-weight: 600; color: #f2f3f5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork .aw-browse .aw-card-sub { font-family: var(--font-mono); font-size: 10px; color: #a2a8ae; margin: 0; }
+  body#artwork .aw-browse .aw-card-meta, body#artwork .aw-browse .aw-card-chev, body#artwork .aw-browse .aw-source-chev { display: none; }
+  body#artwork .aw-browse .aw-sources-head { margin-top: 22px; }
+
+  /* --- Queue: full screen --- */
+  body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }
+  body#artwork aw-queue-panel .aw-queue.open { transform: none; }
+  body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: 0; }
+  body#artwork aw-queue-panel .aw-queue__head { padding: 28px 20px 0; }
+  body#artwork aw-queue-panel .aw-queue__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+  body#artwork aw-queue-panel .aw-queue__sub { font-size: 10px; letter-spacing: .1em; color: #b6bcc2; }
+  body#artwork aw-queue-panel .aw-queue__close { border: 0; width: auto; height: auto; .material-symbols-rounded { font-size: 26px; } }
+  body#artwork aw-queue-panel .aw-queue__chips { padding: 18px 20px 0; gap: 10px; flex-wrap: nowrap; }
+  body#artwork aw-queue-panel .aw-queue__chip { width: 48px; height: 48px; padding: 0; border-radius: 14px; justify-content: center; /* 46 + borders */
+    > span:last-child { display: none; } .material-symbols-rounded { font-size: 22px; color: #d6dade; } }
+  body#artwork aw-queue-panel .aw-queue__chip--danger .material-symbols-rounded { color: #ff8f8f; }
+  body#artwork aw-queue-panel .aw-queue__sechead { padding: 22px 20px 0; > .mono { font-size: 10px; color: #b6bcc2; } .aw-queue__hint { display: inline; font-size: 12px; } }
+  body#artwork aw-queue-panel .aw-queue__scroll { padding: 10px 20px calc(var(--mini-h) + 12px); }
+  body#artwork aw-queue-panel .aw-queue__row { height: 64px; gap: 13px; padding: 0 12px; border-radius: 12px; }
+  body#artwork aw-queue-panel .aw-queue__drag { font-size: 19px; }
+  body#artwork aw-queue-panel .aw-queue__slot { width: 20px; }
+  body#artwork aw-queue-panel .aw-queue__num { font-size: 12px; color: #8c9298; }
+  body#artwork aw-queue-panel .aw-queue__cover { width: 40px; height: 40px; }
+  body#artwork aw-queue-panel .aw-queue__name { font-size: 14px; }
+  body#artwork aw-queue-panel .aw-queue__meta { font-size: 12px; color: #a2a8ae; }
+  body#artwork aw-queue-panel .aw-queue__time { font-size: 12px; color: #a2a8ae; }
+  body#artwork aw-queue-panel .aw-queue__foot { display: none; }
+
+  /* --- Settings: grouped list on the landing; plugin pages full width with their own back --- */
+  body#artwork #contentWrapper.aw-settings-shell, body#artwork #contentWrapper.aw-settings-shell.aw-settings-shell--noside { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-snav { display: none; }
+  body#artwork #contentWrapper.aw-settings-shell > aw-settings-side { display: none; }
+  body#artwork #contentWrapper.aw-settings-shell aw-settings-nav { display: block; min-height: 0; overflow-y: auto; }
+  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { display: block; padding: 14px 20px calc(var(--mini-h) + 20px); color: var(--ink-1); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-mnav ~ * { display: none; }
+  body#artwork #contentWrapper.aw-settings-shell.aw-state-volumio-settings > #content { display: none; } /* the landing's "choose a section" box is the list itself here */
+  body#artwork .aw-mnav__head { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+  body#artwork .aw-mnav__back { border: 0; background: transparent; padding: 0; color: #e4e7ea; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork .aw-mnav__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: normal; }
+  body#artwork .aw-mnav__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
+  body#artwork .aw-mnav__sub { font-size: 10px; letter-spacing: .1em; color: #b6bcc2; }
+  body#artwork .aw-mnav__eyebrow { font-size: 10px; letter-spacing: .18em; color: #b6bcc2; padding: 14px 2px 8px; line-height: normal; }
+  body#artwork .aw-mnav__card { border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .1); }
+  body#artwork .aw-mnav__row { display: flex; align-items: center; gap: 13px; height: 52px; padding: 0 14px; border-bottom: 1px solid rgba(255, 255, 255, .06); cursor: pointer; text-decoration: none; color: #e4e7ea;
+    &:last-child { border-bottom: 0; } &:hover { background: rgba(255, 255, 255, .05); text-decoration: none; color: #fff; }
+    > .material-symbols-rounded:first-child { font-size: 22px; color: #c2c8cd; width: 22px; } }
+  body#artwork .aw-mnav__label { flex: 1; min-width: 0; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork .aw-mnav__value { font-size: 11px; color: #a2a8ae; }
+  body#artwork .aw-mnav__chev { font-size: 20px; color: #71777d; }
+  body#artwork #pluginWrapper .boxHeader .title h2 a.btn { display: inline-grid; } /* the plugin page's own back button returns */
+}
+

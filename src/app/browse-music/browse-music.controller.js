@@ -1,8 +1,9 @@
 class BrowseMusicController {
   constructor($scope, browseService, playQueueService, playlistService, socketService,
     modalService, $timeout, matchmediaService, $compile, $document, $rootScope, $log, playerService,
-    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter) {
+    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu) {
     'ngInject';
+    this.awMenu = awMobileMenu;
     this.$scope = $scope;
     this.$log = $log;
     this.browseService = browseService;
