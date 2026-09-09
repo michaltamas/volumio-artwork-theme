@@ -255,7 +255,6 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #np .np-m-bar__btn--skip { color: #fff; .material-symbols-rounded { font-size: 34px; } }
   body#artwork #np .np-m-bar__play { width: 66px; height: 66px; border-radius: 50%; border: 0; background: #fff; color: #0d0e10; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 36px; } }
   body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
-  body#artwork #np.aw-np-out, body#artwork #np { animation-name: none; } /* the sheet slide is a desktop gesture; the phone page swaps in place */
 
   /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
   body#artwork .aw-browse { padding-top: calc(14px + var(--sa-t)); }

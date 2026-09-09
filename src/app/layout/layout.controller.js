@@ -97,7 +97,9 @@ class LayoutController {
         this.setThemeColor(h, s);
       } catch (e) { /* cross-origin taint — keep the fixed fallback scrim */ }
     };
-    img.src = url;
+    // a distinct URL for the CORS request: Safari would otherwise reuse the cover cached by the
+    // plain <img> loads (no CORS mode) and taint the canvas — no palette, no status-bar tint
+    img.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'aw=palette';
   }
 
   // Mobile Safari paints the status-bar band from <meta name="theme-color">; it cannot show page
