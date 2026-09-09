@@ -14,33 +14,33 @@
       <span class="mono">BIT PERFECT · {{mm.signal}}</span>
     </div>
 
+    <!-- the same destinations as the desktop rail, in the same order -->
     <div class="aw-mm__eyebrow mono">LIBRARY</div>
     <div class="aw-mm__list">
-      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.playback')}" ng-click="mm.go('volumio.playback')">
-        <span class="material-symbols-rounded">graphic_eq</span><span class="aw-mm__label">Now Playing</span></a>
-      <a class="aw-mm__item" ng-click="mm.goSearch()">
-        <span class="material-symbols-rounded">search</span><span class="aw-mm__label">{{'COMMON.SEARCH' | translate}}</span></a>
       <a class="aw-mm__item" ng-class="{active: mm.is('volumio.home')}" ng-click="mm.go('volumio.home')">
         <span class="material-symbols-rounded">home</span><span class="aw-mm__label">Home</span></a>
-      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.browse')}" ng-click="mm.go('volumio.browse')">
-        <span class="material-symbols-rounded">library_music</span><span class="aw-mm__label">Browse</span>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.browse') && !mm.isSource('playlists') && !mm.isSource('favourites')}" ng-click="mm.go('volumio.browse')">
+        <span class="material-symbols-rounded">album</span><span class="aw-mm__label">Music</span>
         <span class="aw-mm__value mono" ng-if="mm.sourcesCount">{{mm.sourcesCount}}</span></a>
+      <a class="aw-mm__item" ng-if="mm.source('playlists')" ng-class="{active: mm.isSource('playlists')}" ng-click="mm.openSource('playlists')">
+        <span class="material-symbols-rounded">playlist_play</span><span class="aw-mm__label">Playlists</span></a>
+      <a class="aw-mm__item" ng-if="mm.source('favourites')" ng-class="{active: mm.isSource('favourites')}" ng-click="mm.openSource('favourites')">
+        <span class="material-symbols-rounded">favorite</span><span class="aw-mm__label">Favourites</span></a>
       <a class="aw-mm__item" ng-click="mm.openQueue()">
         <span class="material-symbols-rounded">queue_music</span><span class="aw-mm__label">{{'COMMON.TAB_QUEUE' | translate}}</span>
         <span class="aw-mm__value mono" ng-if="mm.queueCount">{{mm.queueCount}}</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.playback')}" ng-click="mm.go('volumio.playback')">
+        <span class="material-symbols-rounded">graphic_eq</span><span class="aw-mm__label">Now Playing</span></a>
     </div>
 
     <div class="aw-mm__eyebrow mono">SYSTEM</div>
     <div class="aw-mm__list">
-      <a class="aw-mm__item" ng-click="mm.openItem('playback')">
-        <span class="material-symbols-rounded">speaker</span><span class="aw-mm__label">Playback device</span>
-        <span class="aw-mm__value mono" ng-if="mm.output">{{mm.output | uppercase}}</span></a>
-      <a class="aw-mm__item" ng-click="mm.openItem('zones')" ng-if="mm.item('zones')">
-        <span class="material-symbols-rounded">surround_sound</span><span class="aw-mm__label">{{mm.item('zones').name}}</span></a>
-      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.settings')}" ng-click="mm.go('volumio.settings')">
-        <span class="material-symbols-rounded">tune</span><span class="aw-mm__label">Settings</span></a>
-      <a class="aw-mm__item" ng-click="mm.go('myvolumio.profile')" ng-if="mm.item('myvolumio') || true">
+      <a class="aw-mm__item" ng-class="{active: mm.isMyVolumio}" ng-click="mm.goMyVolumio()">
         <span class="material-symbols-rounded">person</span><span class="aw-mm__label">MyVolumio</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.multi-room')}" ng-click="mm.go('volumio.multi-room')">
+        <span class="material-symbols-rounded">speaker</span><span class="aw-mm__label">Zones</span></a>
+      <a class="aw-mm__item" ng-class="{active: mm.isSettings}" ng-click="mm.go('volumio.settings')">
+        <span class="material-symbols-rounded">tune</span><span class="aw-mm__label">Settings</span></a>
     </div>
 
     <div class="aw-mm__foot">

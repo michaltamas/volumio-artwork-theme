@@ -16,8 +16,9 @@ export default class AwMobileMenuDirective {
 }
 
 class AwMobileMenuController {
-  constructor($scope, $state, $timeout, $document, awMobileMenu, awQueuePanel, awSettingsService, playerService, playQueueService, browseService, multiRoomService) {
+  constructor($scope, $state, $timeout, $document, awMobileMenu, awQueuePanel, awSettingsService, playerService, playQueueService, browseService, multiRoomService, authService) {
     'ngInject';
+    this.authService = authService;
     this.$state = $state;
     this.$timeout = $timeout;
     this.menu = awMobileMenu;
@@ -54,6 +55,30 @@ class AwMobileMenuController {
   item(key) { return this.settings.menu.find(i => this.settings.itemKey(i) === key) || null; }
 
   go(state) { this.menu.hide(); this.$state.go(state); }
+  get isSettings() { const n = this.$state.current.name; return n === 'volumio.settings' || n === 'volumio.plugin' || n === 'volumio.plugin-manager'; }
+  get isMyVolumio() { return this.$state.current.name.indexOf('myvolumio') === 0; }
+  // library sources straight from the menu, like the rail: from the top of the browse stack
+  source(uri) { return (this.browseService.sources || []).find(s => s.uri === uri) || null; }
+  isSource(uri) { const r = this.browseService.currentFetchRequest; return this.$state.current.name === 'volumio.browse' && !!r && r.uri === uri; }
+  openSource(uri) {
+    const src = this.source(uri); if (!src) { return; }
+    this.menu.hide();
+    this.browseService.navigationStack = [];
+    this.browseService.historyUri = [];
+    if (this.$state.current.name !== 'volumio.browse') { this.$state.go('volumio.browse'); }
+    this.browseService.fetchLibrary(src);
+  }
+  // MyVolumio profile is guarded by requireUser: enable auth first, then go (same as the rail)
+  goMyVolumio() {
+    this.menu.hide();
+    const go = () => this.$state.go('myvolumio.profile');
+    try {
+      this.authService.enableAuth();
+      const wait = this.authService.waitForUser && this.authService.waitForUser();
+      if (wait && typeof wait.then === 'function') { wait.then(go, go); return; }
+    } catch (e) { /* auth plugin missing: the guard redirects */ }
+    go();
+  }
   goSearch() {
     this.menu.hide();
     this.$state.go('volumio.browse');
