@@ -391,7 +391,11 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider, the
     url: '/profile/edit',
     views: {
       'content@myvolumio': {
-        templateUrl: 'app/components/myvolumio/edit-profile/myvolumio-edit-profile.html',
+        // the theme's own page when it ships one (Artwork), Volumio's otherwise
+        templateProvider: ['$templateRequest', 'themeManager', ($templateRequest, themeManager) => {
+          const own = 'app/themes/' + themeManager.theme + '/components/myvolumio/' + themeManager.theme + '-myvolumio-edit-profile.html';
+          return $templateRequest(own, true).catch(() => $templateRequest('app/components/myvolumio/edit-profile/myvolumio-edit-profile.html', true));
+        }],
         controller: 'MyVolumioEditProfileController',
         controllerAs: 'myVolumioEditProfileController',
         resolve: {

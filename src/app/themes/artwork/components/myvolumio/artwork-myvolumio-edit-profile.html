@@ -1,0 +1,108 @@
+<!-- Artwork MyVolumio "Edit profile": same controller (myVolumioEditProfileController), fields and
+     actions as Volumio's page, laid out with the theme's own idiom (page head, 196px avatar tile,
+     settings rows, key/value card, pills). -->
+<div class="aw-pe" ng-if="myVolumioEditProfileController.user !== null">
+
+  <div class="aw-albumhead__top">
+    <button type="button" class="aw-back" ui-sref="myvolumio.profile" aria-label="{{'MYVOLUMIO.PROFILE' | translate}}" title="{{'MYVOLUMIO.PROFILE' | translate}}">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <div class="aw-albumhead__eyebrow mono">{{'MYVOLUMIO.MY_VOLUMIO' | translate | uppercase}}</div>
+  </div>
+  <h1 class="aw-pe__title">{{'MYVOLUMIO.EDIT_PROFILE' | translate}}</h1>
+
+  <div class="aw-pe__grid">
+
+    <!-- avatar -->
+    <div class="aw-pe__avatar">
+      <my-volumio-avatar-image image-override="myVolumioEditProfileController.form.photoUrl"></my-volumio-avatar-image>
+      <label class="aw-btn aw-pe__file">
+        <span class="material-symbols-rounded">photo_camera</span>
+        <span translate="MYVOLUMIO.EDIT_AVATAR"></span>
+        <input type="file" ng-model="myVolumioEditProfileController.userAvatar" my-volumio-file-on-change on-change-callback="myVolumioEditProfileController.avatarChange(file)">
+      </label>
+      <button type="button" class="aw-btn aw-btn--primary" ng-if="myVolumioEditProfileController.isAvatarChanged === true" ng-click="myVolumioEditProfileController.saveAvatar()">
+        <span ng-if="myVolumioEditProfileController.uploadingAvatar === true" class="material-symbols-rounded aw-spin">progress_activity</span>
+        <span translate="MYVOLUMIO.SAVE_AVATAR"></span>
+      </button>
+    </div>
+
+    <!-- profile form -->
+    <form class="aw-pe__form" role="form" ng-submit="myVolumioEditProfileController.doEdit()">
+      <div class="aw-pe__eyebrow mono">{{'MYVOLUMIO.PERSONAL_INFO' | translate | uppercase}}</div>
+      <div class="aw-pe__note" ng-if="!myVolumioEditProfileController.isUserFilledWithMandatory()">
+        <span class="aw-pe__note-dot"></span><span translate="MYVOLUMIO.COMPLETE_YOUR_PROFILE"></span>
+      </div>
+
+      <label class="aw-pe__row">
+        <span class="aw-pe__label"><span translate="MYVOLUMIO.FIRST_NAME"></span> *</span>
+        <input class="form-control" type="text" ng-model="myVolumioEditProfileController.form.firstName" required pattern=".{2,}">
+      </label>
+      <label class="aw-pe__row">
+        <span class="aw-pe__label"><span translate="MYVOLUMIO.LAST_NAME"></span> *</span>
+        <input class="form-control" type="text" ng-model="myVolumioEditProfileController.form.lastName" required pattern=".{2,}">
+      </label>
+      <label class="aw-pe__row">
+        <span class="aw-pe__label"><span translate="MYVOLUMIO.EMAIL_ADDRESS"></span> *</span>
+        <input class="form-control" type="email" required ng-model="myVolumioEditProfileController.form.email" ng-change="myVolumioEditProfileController.notifyEmailChanged()">
+      </label>
+      <label class="aw-pe__row">
+        <span class="aw-pe__label" translate="MYVOLUMIO.PASSWORD"></span>
+        <input class="form-control" type="password" ng-model="myVolumioEditProfileController.form.password" placeholder="Leave blank to keep current" autocomplete="new-password">
+      </label>
+      <label class="aw-pe__row">
+        <span class="aw-pe__label" translate="MYVOLUMIO.CONFIRM_PASSWORD"></span>
+        <input class="form-control" type="password" ng-model="myVolumioEditProfileController.passwordCheck" autocomplete="new-password">
+      </label>
+
+      <div class="aw-pe__actions">
+        <button type="submit" class="aw-btn aw-btn--primary"><span translate="COMMON.SAVE"></span></button>
+      </div>
+    </form>
+  </div>
+
+  <!-- subscription -->
+  <div class="aw-pe__section">
+    <div class="aw-pe__eyebrow mono">{{'MYVOLUMIO.SUBSCRIPTION' | translate | uppercase}}</div>
+    <div class="aw-kv aw-pe__kv">
+      <div class="aw-kv__row"><span translate="MYVOLUMIO.SUBSCRIPTION_STATUS"></span>
+        <span class="mono" ng-if="myVolumioEditProfileController.isUserSubscriptionActive()">{{myVolumioEditProfileController.getUserSubscriptionStatus() | uppercase}}</span>
+        <span class="mono" ng-if="!myVolumioEditProfileController.isUserSubscriptionActive()">{{'MYVOLUMIO.INACTIVE' | translate | uppercase}}</span></div>
+      <div class="aw-kv__row" ng-if="myVolumioEditProfileController.isUserSubscriptionActive()"><span translate="MYVOLUMIO.SUBSCRIPTION_PLAN"></span>
+        <span class="mono">{{myVolumioEditProfileController.user.plan | uppercase}} {{'MYVOLUMIO.'+myVolumioEditProfileController.getPlanDuration() | uppercase | translate}}</span></div>
+      <div class="aw-kv__row" ng-if="myVolumioEditProfileController.isUserSubscriptionActive() && myVolumioEditProfileController.getSignupDate() != null"><span translate="MYVOLUMIO.SUBSCRIPTION_SIGNED_UP_ON"></span>
+        <span class="mono">{{myVolumioEditProfileController.getSignupDate() | date : 'longDate'}}</span></div>
+      <div class="aw-kv__row" ng-if="myVolumioEditProfileController.isUserSubscriptionActive() && myVolumioEditProfileController.user.planData && myVolumioEditProfileController.user.planData.nextPayment && !myVolumioEditProfileController.isLifetimePlan()"><span translate="MYVOLUMIO.SUBSCRIPTION_NEXT_PAYMENT"></span>
+        <span class="mono">{{myVolumioEditProfileController.user.planData.nextPayment.amount}} {{myVolumioEditProfileController.user.planData.nextPayment.currency}} <span translate="MYVOLUMIO.SUBSCRIPTION_ON"></span> {{myVolumioEditProfileController.user.planData.nextPayment.date | date : 'longDate'}}</span></div>
+    </div>
+    <div class="aw-pe__sub-actions">
+      <a class="aw-pe__link" href ng-click="myVolumioEditProfileController.clickShowTerms()">MyVolumio <span translate="MYVOLUMIO.TOS"></span></a>
+      <span class="aw-pe__spacer"></span>
+      <button type="button" class="aw-btn" ng-if="myVolumioEditProfileController.user.planData && myVolumioEditProfileController.user.planData.updateUrl && !myVolumioEditProfileController.isLifetimePlan()" ng-click="myVolumioEditProfileController.updateSubscriptionMethod()">
+        <span class="material-symbols-rounded">credit_card</span><span translate="MYVOLUMIO.CHANGE_PAYMENT_METHOD"></span></button>
+      <button type="button" class="aw-btn aw-btn--danger" ng-if="myVolumioEditProfileController.user.planData && myVolumioEditProfileController.user.planData.cancelUrl && !myVolumioEditProfileController.isLifetimePlan()" ng-click="myVolumioEditProfileController.cancelSubscription()">
+        <span class="material-symbols-rounded">close</span><span translate="MYVOLUMIO.CANCEL_SUBSCRIPTION"></span></button>
+      <button type="button" class="aw-btn aw-btn--primary" ng-if="!myVolumioEditProfileController.isUserSubscriptionActive()" ng-click="myVolumioEditProfileController.subscribe()">
+        <span class="material-symbols-rounded">play_arrow</span><span translate="MYVOLUMIO.SUBSCRIBE"></span></button>
+    </div>
+  </div>
+
+  <!-- account deletion -->
+  <div class="aw-pe__section aw-pe__danger" ng-if="myVolumioEditProfileController.isAccountCancellationAllowed()">
+    <button type="button" class="aw-btn aw-btn--danger" ng-click="myVolumioEditProfileController.deleteUser()">
+      <span ng-if="myVolumioEditProfileController.deletingUser !== true" class="material-symbols-rounded">delete</span>
+      <span ng-if="myVolumioEditProfileController.deletingUser === true" class="material-symbols-rounded aw-spin">progress_activity</span>
+      <span translate="MYVOLUMIO.DELETE_ACCOUNT"></span>
+    </button>
+  </div>
+
+</div>
+
+<div class="aw-pe aw-pe--login" ng-if="myVolumioEditProfileController.user === null">
+  <div class="aw-albumhead__top">
+    <div class="aw-albumhead__eyebrow mono">{{'MYVOLUMIO.MY_VOLUMIO' | translate | uppercase}}</div>
+  </div>
+  <h1 class="aw-pe__title">{{'MYVOLUMIO.EDIT_PROFILE' | translate}}</h1>
+  <p class="aw-pe__note"><span class="aw-pe__note-dot"></span><span translate="MYVOLUMIO.NOT_LOGGED_IN"></span></p>
+  <button type="button" class="aw-btn aw-btn--primary" ng-click="myVolumioEditProfileController.logIn()"><span translate="MYVOLUMIO.LOGIN"></span></button>
+</div>
