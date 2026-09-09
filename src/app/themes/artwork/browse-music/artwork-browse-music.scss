@@ -607,6 +607,10 @@ body#artwork {
     background: rgba(6, 9, 12, .42);
     opacity: 0; transition: opacity .25s ease;
   }
+  /* the overlay grid holds genre, menu, play and heart — the play slot is centred on the
+     whole card, not left where its grid row lands */
+  .music-card .meta__play { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+    .play-btn { pointer-events: auto; } }
   .music-card .play-btn {
     width: 56px; height: 56px; border-radius: var(--r-pill);
     background: var(--ink); border: 0;
