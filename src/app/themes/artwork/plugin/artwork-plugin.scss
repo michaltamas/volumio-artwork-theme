@@ -476,6 +476,7 @@ body#artwork .aw-sheet--alarms {
     .aw-stepper__colon { font-size: 24px; padding-bottom: 24px; }
     .aw-stepper__unit { font-size: 9px; } }
   .aw-alarm__what { flex: 1; min-width: 0; }
+  /* an alarm without a playlist shows the real placeholder ("Choose Playlist") like the mockup */
   .aw-sheet__select--sm.ui-select-container.ui-select-bootstrap { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .1);
     .ui-select-match > .btn { height: 40px; line-height: 40px; font-size: 14px; }
     .caret { right: 14px; &::before { width: 20px; height: 20px; background-size: 20px 20px; } } }
@@ -535,3 +536,7 @@ body#artwork .aw-sheet--playlist {
   .aw-sheet__foot .aw-sheet__status { font-size: 11px; letter-spacing: .08em; color: #a7adb3; }
   .aw-sheet__btn:disabled { opacity: .5; cursor: default; }
 }
+
+/* an empty select in a sheet shows Volumio's real placeholder (e.g. "Choose Playlist"), like the mockup;
+   outranks the mixin's placeholder reset (same !important, more specific) */
+body#artwork .modal-content .aw-sheet .ui-select-container.ui-select-bootstrap .ui-select-placeholder { display: inline !important; color: #8c9298; }
