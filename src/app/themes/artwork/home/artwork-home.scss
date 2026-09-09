@@ -1,9 +1,9 @@
 /* Artwork My Music / Library home (spec §6.2 + updated mockup) */
 body#artwork #artwork-home {
   position: relative; z-index: 1;
-  padding: 38px 52px 60px;
+  padding: clamp(24px, 4.2vh, 38px) var(--pad-screen) 60px;
   color: var(--ink-1);
-  min-height: 100vh; box-sizing: border-box;
+  min-height: 100%; box-sizing: border-box;
 
   /* tabs row */
   .home-tabs { display: flex; align-items: center; gap: 26px; }

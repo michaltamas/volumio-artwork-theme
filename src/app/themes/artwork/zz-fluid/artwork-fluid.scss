@@ -97,7 +97,7 @@ body#artwork .aw-listhead { flex-wrap: wrap; row-gap: 10px; }
 body#artwork .home-hero { flex-wrap: wrap; gap: clamp(18px, 2.5vw, 36px); }
 body#artwork .home-hero-cover img { width: clamp(140px, 15.5vw, 224px); height: clamp(140px, 15.5vw, 224px); }
 body#artwork .home-tabs { flex-wrap: wrap; row-gap: 8px; }
-body#artwork #home .main__row, body#artwork .home-shelf .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(110px, 12vw, 180px), 1fr)); gap: clamp(12px, 1.5vw, 22px); }
+body#artwork #artwork-home .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(110px, 12vw, 180px), 1fr)); gap: clamp(12px, 1.5vw, 22px); }
 
 /* ---------- album page: one column when the two do not fit; on short screens the cover and
    the title shrink with the height so the header stays whole beside the list ---------- */
@@ -281,6 +281,22 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork .aw-browse .aw-card-sub { font-family: var(--font-mono); font-size: 10px; color: #a2a8ae; margin: 0; }
   body#artwork .aw-browse .aw-card-meta, body#artwork .aw-browse .aw-card-chev, body#artwork .aw-browse .aw-source-chev { display: none; }
   body#artwork .aw-browse .aw-sources-head { margin-top: 22px; }
+
+  /* --- Home: the same head as Browse (hamburger + search), same paddings --- */
+  body#artwork #artwork-home { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); min-height: 100%; }
+  body#artwork #artwork-home .home-tabs { gap: 12px; }
+  body#artwork #artwork-home .home-tab, body#artwork #artwork-home .home-avatar, body#artwork #artwork-home .home-search-key { display: none; }
+  body#artwork #artwork-home .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork #artwork-home .home-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); }
+  body#artwork #artwork-home .home-hero { margin-top: 24px; gap: 16px; align-items: center; flex-wrap: nowrap; }
+  body#artwork #artwork-home .home-hero-cover { flex: none; }
+  body#artwork #artwork-home .home-hero-cover img { width: 120px; height: 120px; }
+  body#artwork #artwork-home .home-hero-meta { padding-bottom: 0; }
+  body#artwork #artwork-home .home-hero-title { font-size: 24px; letter-spacing: -.02em; }
+  body#artwork #artwork-home .home-hero-actions { margin-top: 12px; flex-wrap: wrap; gap: 10px; }
+  body#artwork #artwork-home .home-resume { height: 40px; padding: 0 18px 0 14px; }
+  body#artwork #artwork-home .home-shelf { margin-top: 26px; }
+  body#artwork #artwork-home .main__row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
 
   /* --- Queue: full screen --- */
   body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }

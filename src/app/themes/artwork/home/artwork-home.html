@@ -3,6 +3,7 @@
 
   <!-- tabs row -->
   <div class="home-tabs">
+    <button type="button" class="aw-menu-btn" ng-click="home.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
     <div class="home-tab active">Library</div>
     <!-- the other tabs are the real browse sources (streaming services, web radio) -->
     <div class="home-tab" ng-repeat="s in home.sources track by s.uri" ng-click="home.openSource(s)">{{s.name}}</div>

@@ -1,6 +1,7 @@
 class HomeController {
-  constructor($state, $scope, $http, playerService, socketService, browseService) {
+  constructor($state, $scope, $http, playerService, socketService, browseService, awMobileMenu) {
     'ngInject';
+    this.awMenu = awMobileMenu;
     this.$state = $state;
     this.$scope = $scope;
     this.$http = $http;
