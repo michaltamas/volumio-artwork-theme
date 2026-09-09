@@ -1011,6 +1011,7 @@ body#artwork #browse.browsing-list .main__list { display: flex; flex-direction: 
   background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .11); cursor: text;
   .material-symbols-rounded { font-size: 20px; color: #a7adb3; flex: none; }
   input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none;
+    &:focus, &:focus-visible { outline: none; box-shadow: none; } /* the pill shows focus, not the inner input */
     &::placeholder { color: #a7adb3; }
     &::-webkit-search-cancel-button { -webkit-appearance: none; } }
   &:focus-within { border-color: rgba(255, 255, 255, .3); }

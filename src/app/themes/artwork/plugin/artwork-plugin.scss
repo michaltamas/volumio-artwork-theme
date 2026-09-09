@@ -516,7 +516,10 @@ body#artwork .aw-sheet--playlist {
   .aw-playlist__input { flex: 1; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 12px; margin: 0; font-weight: 400; cursor: text;
     background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .11);
     .material-symbols-rounded { font-size: 20px; color: #a7adb3; }
-    input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none; &::placeholder { color: #8c9298; } }
+    /* the pill is the field: focus shows on the wrapper (border), never as a ring on the inner input
+       (the theme's generic input:focus ring would outrank a plain outline:0) */
+    input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none; &::placeholder { color: #8c9298; }
+      &:focus, &:focus-visible { outline: none; box-shadow: none; } }
     &:focus-within { border-color: rgba(255, 255, 255, .3); } }
   .aw-playlist__create { height: 46px; padding: 0 20px; border-radius: 12px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #e4e7ea; cursor: pointer;
     background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .12);
