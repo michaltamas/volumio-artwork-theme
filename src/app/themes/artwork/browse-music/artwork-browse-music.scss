@@ -1087,7 +1087,8 @@ body#artwork #browse.browsing-album {
   .album__tracks { gap: 0; }
   .music-item {
     display: grid; grid-template-columns: 26px 1fr auto auto auto; align-items: center; gap: 18px;
-    padding: 13px 14px; min-height: 0; border-radius: 0; border-bottom: 1px solid rgba(255, 255, 255, .06);
+    padding: 13px 14px; margin: 0; min-height: 0; border-radius: 0; border: 0;
+    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: rgba(255, 255, 255, .06); } /* separator outside the box: symmetric rows */
     &:hover { background: rgba(255, 255, 255, .04); }
     .item__play, .item__albumart, .item__albumart-icon { display: none; }
     .item__image { width: auto; height: auto; min-width: 0; margin: 0; }
@@ -1107,7 +1108,8 @@ body#artwork #browse.browsing-album {
     .item__actions .fa { color: #71777d; font-size: 15px; }
   }
   .music-item.aw-playing {
-    background: rgba(255, 255, 255, .12); border-radius: 11px; border-bottom-color: transparent;
+    background: rgba(255, 255, 255, .12); border-radius: 11px;
+    &::after { display: none; }
     .item__title { font-weight: 700; color: #fff; }
     .item__duration { color: #e4e7ea; }
     .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
@@ -1124,7 +1126,8 @@ body#artwork #browse.browsing-album {
 body#artwork #browse.browsing-album {
   .music-item { position: relative; }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: rgba(255, 255, 255, .07); border-radius: 11px; border-bottom-color: transparent;
+    background: rgba(255, 255, 255, .07); border-radius: 11px;
+    &::after { display: none; }
     .item__number { visibility: hidden; }
     .item__play { display: block; }
   }
@@ -1176,7 +1179,9 @@ body#artwork #browse.browsing-album .music-item.aw-fav .item__favorite .item__fa
 body#artwork #browse.browsing-list:not(.browsing-artists) {
   .album__tracks { gap: 0; }
   .music-item {
-    position: relative; padding: 10px 14px; min-height: 0; border-radius: 0; border-bottom: 1px solid rgba(255, 255, 255, .06); gap: 18px;
+    position: relative; padding: 10px 14px; margin: 0; min-height: 0; border-radius: 0; border: 0; gap: 18px; line-height: normal;
+    /* the separator is drawn outside the box so the row (and its hover panel) stays vertically symmetric */
+    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: rgba(255, 255, 255, .06); }
     &:hover { background: rgba(255, 255, 255, .04); }
     .item__number-dot { display: none; }
     .item__image { width: 44px; height: 44px; flex: none; margin: 0; position: relative; }
@@ -1200,14 +1205,16 @@ body#artwork #browse.browsing-list:not(.browsing-artists) {
           &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; line-height: 1; } } } }
   }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: rgba(255, 255, 255, .07); border-radius: 11px; border-bottom-color: transparent;
+    background: rgba(255, 255, 255, .07); border-radius: 11px;
+    &::after { display: none; }
     .item__play { display: block; }
   }
   .music-item.aw-fav .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff;
     &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); } }
   .music-item.aw-playing {
-    background: rgba(255, 255, 255, .12); border-radius: 11px; border-bottom-color: transparent;
+    background: rgba(255, 255, 255, .12); border-radius: 11px;
+    &::after { display: none; }
     .item__title { font-weight: 700; color: #fff; }
     .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
     /* EQ bars over the cover */
