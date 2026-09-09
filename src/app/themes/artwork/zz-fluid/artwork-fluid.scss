@@ -280,7 +280,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
     width: auto; height: auto; aspect-ratio: 1; border-radius: 14px; display: grid; place-items: center; overflow: hidden;
     background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); color: #d6dade; font-size: 34px; }
   body#artwork .aw-browse .aw-tile img, body#artwork .aw-browse .aw-tile--lines i { display: none; }
-  body#artwork .aw-browse .aw-tile--mosaic, body#artwork .aw-browse .aw-tile--avatars, body#artwork .aw-browse .aw-tile--stack { display: grid; }
+  body#artwork .aw-browse .aw-tile--mosaic, body#artwork .aw-browse .aw-tile--avatars, body#artwork .aw-browse .aw-tile--stack { display: grid; grid-template-columns: 1fr; gap: 0; place-items: center; }
   body#artwork .aw-browse .aw-tile .material-symbols-rounded { font-size: 34px; color: #d6dade; }
   body#artwork .aw-browse .aw-tile__glyph { display: block; }
   body#artwork .aw-browse .aw-card-body, body#artwork .aw-browse .aw-source-body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
