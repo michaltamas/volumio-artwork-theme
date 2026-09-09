@@ -1243,7 +1243,7 @@ body#artwork #browse.browsing-search {
   .browse-header-container { display: none; }
   .panel .body-content.new-browse { top: 0; height: 100%; }
   .aw-browse { padding-bottom: 0; }
-  #browse-page { padding: 0 52px 48px; }
+  #browse-page { padding: 0 0 48px; } /* #browseTablesWrapper already pads 52px: results align with the title */
   .aw-listhead--search { margin: 26px 0 6px; }
   /* result groups (Songs / Albums / Artists…) as section eyebrows */
   .main__source { margin: 0; }
