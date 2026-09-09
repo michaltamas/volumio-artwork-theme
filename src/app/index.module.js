@@ -271,7 +271,7 @@ angular.module('volumio', [
   .directive('playlist', (themeManager) => new PlaylistDirective(themeManager))
   .directive('browseScrollManager',
       (browseService, matchmediaService) => new BrowseScrollManagerDirective(browseService, matchmediaService))
-  .directive('browseHamburgerMenu', () => new BrowseHamburgerMenuDirective())
+  .directive('browseHamburgerMenu', (themeManager) => new BrowseHamburgerMenuDirective(themeManager))
   .directive('trackInfoBar', () => new TrackInfoBarDirective())
   .directive('trackInfoBarButtons', () => new TrackInfoBarButtonsDirective())
   .directive('equalizer', () => new EqualizerDirective())

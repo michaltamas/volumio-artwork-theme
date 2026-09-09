@@ -1118,3 +1118,43 @@ body#artwork #browse.browsing-album {
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } .item__number-dot { left: 8px; animation-delay: .4s; } }
   }
 }
+
+/* ---- album rows: hover / open-menu state (mockup "Context menu"): rounded .07 panel, the number slot
+   shows a play glyph (the real play button of the row); the playing row keeps its EQ bars ---- */
+body#artwork #browse.browsing-album {
+  .music-item { position: relative; }
+  .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
+    background: rgba(255, 255, 255, .07); border-radius: 11px; border-bottom-color: transparent;
+    .item__number { visibility: hidden; }
+    .item__play { display: block; }
+  }
+  .music-item .item__play {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; z-index: 1;
+    .play-btn { width: 26px; height: 26px; padding: 0; border: 0; background: transparent; display: block; cursor: pointer; visibility: visible !important;
+      .fa { display: grid; place-items: center; width: 26px; height: 26px; font-size: 0; color: #fff; &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; line-height: 1; } } }
+  }
+}
+
+/* ---- context menu (mockup "Context menu"): 272 wide, pad 8, r14, glass .09 + blur 60 sat 1.6 br .72,
+   border .14; header 36px cover · 14/600 title · mono 10 sub; items h44 pad 0 14 r10, icon 20 #a7adb3,
+   label 14/500 #e4e7ea; hover .09 + white; separator 1px .09 margin 6 10; danger #ff8f8f ---- */
+body#artwork .hamburgerMenu ul.dropdown-menu.buttonsGroup {
+  width: 272px; padding: 8px; margin: 0; border-radius: 14px; overflow: hidden;
+  background: rgba(255, 255, 255, .09); backdrop-filter: blur(60px) saturate(1.6) brightness(.72); -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(.72);
+  border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 34px 70px -26px rgba(0, 0, 0, .92);
+  /* the items live inside the <browse-hamburger-menu> element, not directly under the ul */
+  li { list-style: none; }
+  li > a { display: flex; align-items: center; gap: 13px; height: 44px; padding: 0 14px; border-radius: 10px; color: #e4e7ea; font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
+    .material-symbols-rounded { width: 20px; font-size: 20px; color: #a7adb3; flex: none; }
+    > span:not(.material-symbols-rounded):not(.aw-menu__badge) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    &:hover, &:focus { background: rgba(255, 255, 255, .09); color: #fff; .material-symbols-rounded { color: #fff; } } }
+  .aw-menu__badge { font-size: 11px; color: #71777d; }
+  .aw-menu__sep { height: 1px; margin: 6px 10px; background: rgba(255, 255, 255, .09); }
+  .aw-menu__danger > a, .aw-menu__danger > a .material-symbols-rounded { color: #ff8f8f; }
+  .aw-menu__danger > a:hover { background: rgba(255, 143, 143, .08); color: #ff8f8f; .material-symbols-rounded { color: #ff8f8f; } }
+  .aw-menu__head { display: flex; align-items: center; gap: 12px; padding: 10px 14px 12px;
+    img { width: 36px; height: 36px; border-radius: 5px; object-fit: cover; flex: none; }
+    .aw-menu__head-text { min-width: 0; }
+    .aw-menu__title { font-size: 14px; font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .aw-menu__sub { font-size: 10px; letter-spacing: .08em; color: #a7adb3; margin-top: 2px; } }
+}

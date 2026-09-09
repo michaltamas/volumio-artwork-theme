@@ -1081,6 +1081,16 @@ class BrowseMusicController {
     const target = nodes.find(el => this.awNorm(this.awTitleOf(el)).charAt(0).toUpperCase() === letter);
     if (target) { this.awActiveLetter = letter; target.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
   }
+  // uib-dropdown on-toggle of a row's context menu: the row whose menu is open reads as active
+  // (the markup already calls this; it was never implemented)
+  toggledItem() {
+    this.$timeout(() => {
+      Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-item'), row => {
+        row.classList.toggle('aw-active', !!row.querySelector('.hamburgerMenu.open'));
+      });
+    }, 0, false);
+  }
+
   awMarkPlaying() {
     // the player reports local files as mnt/…, the library lists them as music-library/… — same file
     const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');

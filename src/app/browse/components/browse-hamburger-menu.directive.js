@@ -1,5 +1,5 @@
 class BrowseHamburgerMenuDirective {
-  constructor() {
+  constructor(themeManager) {
     'ngInject';
     let directive = {
       restrict: 'E',
@@ -7,7 +7,9 @@ class BrowseHamburgerMenuDirective {
         item: '=',
         browse: '='
       },
-      templateUrl: 'app/browse/components/browse-hamburger-menu.html',
+      // the Artwork theme ships its own menu (same conditions and handlers, Material glyphs, header)
+      templateUrl: themeManager && themeManager.theme === 'artwork' ?
+        'app/themes/artwork/browse/artwork-browse-hamburger-menu.html' : 'app/browse/components/browse-hamburger-menu.html',
       link: function link(scope, el) {
 
         let menuWrapper = el[0].parentNode;
