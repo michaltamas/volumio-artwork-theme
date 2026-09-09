@@ -94,9 +94,32 @@ class LayoutController {
         const root = document.documentElement.style;
         root.setProperty('--art-1', `hsl(${h}, ${s}%, 24%)`);
         root.setProperty('--art-2', `hsl(${h}, ${s}%, 17%)`);
+        this.setThemeColor(h, s);
       } catch (e) { /* cross-origin taint — keep the fixed fallback scrim */ }
     };
     img.src = url;
+  }
+
+  // Mobile Safari paints the status-bar band from <meta name="theme-color">; it cannot show page
+  // content there. The band is tinted to what the top of the backdrop renders (the art-1 scrim
+  // over the blurred cover), so the head reads as one surface. Approximation of the runtime
+  // scrim over the blurred cover — calibrated by measuring the rendered top row.
+  setThemeColor(h, s) {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) { return; }
+    // measured against the rendered top row: the band is art-1 with ~7% ground under it
+    const art1 = this.hslToRgb(h / 360, s / 100, 0.24);
+    const ground = [10, 12, 14];
+    const mix = art1.map((c, i) => Math.round(c * 0.93 + ground[i] * 0.07));
+    meta.setAttribute('content', 'rgb(' + mix.join(',') + ')');
+  }
+
+  hslToRgb(h, s, l) {
+    if (!s) { const v = Math.round(l * 255); return [v, v, v]; }
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+    const f = (t) => { if (t < 0) { t += 1; } if (t > 1) { t -= 1; }
+      if (t < 1 / 6) { return p + (q - p) * 6 * t; } if (t < 1 / 2) { return q; } if (t < 2 / 3) { return p + (q - p) * (2 / 3 - t) * 6; } return p; };
+    return [f(h + 1 / 3), f(h), f(h - 1 / 3)].map(v => Math.round(v * 255));
   }
 
   rgbToHsl(r, g, b) {
