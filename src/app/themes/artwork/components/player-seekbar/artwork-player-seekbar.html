@@ -7,8 +7,7 @@
     <div class="wave-bar"
          ng-repeat="h in playerSeekBar.bars track by $index"
          ng-class="{played: playerSeekBar.barPlayed($index)}"
-         ng-style="{height: (h / 46 * 100) + '%'}"
-         ng-click="playerSeekBar.seekToBar($index)"></div>
+         ng-style="{height: (h / 46 * 100) + '%'}"></div>
   </div>
   <span class="seek-time seek-duration mono">{{playerSeekBar.getDuration()}}</span>
 </div>

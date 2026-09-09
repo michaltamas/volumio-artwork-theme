@@ -14,11 +14,16 @@ export default class PlayerSeekbarDirective {
 }
 
 class playerSeekBarController {
-  constructor(playerService, $timeout, matchmediaService) {
+  constructor(playerService, $timeout, matchmediaService, $scope, $element) {
     'ngInject';
     this.playerService = playerService;
     this.$timeout = $timeout;
     this.matchmedia = matchmediaService;
+    this.$scope = $scope;
+    this.$element = $element;
+    this.scrubbing = false;
+    // the waveform renders after this constructor: bind the scrubber once it exists
+    $timeout(() => this.bindScrub(), 0, false);
 
     this.timeoutHandler = null;
 
@@ -53,6 +58,41 @@ class playerSeekBarController {
   }
 
   get waveScale(){ return this.playerService._seekScale || 1000; }
+
+  // Pointer scrubbing on the waveform (mouse, touch, pen): the played bars and the elapsed
+  // label follow the finger, the seek is sent once on release. A tap seeks the same way.
+  bindScrub(){
+    const root = this.$element[0];
+    if (!root || root._awScrub) { return; }
+    root._awScrub = true;
+    root.addEventListener('pointerdown', (e) => {
+      const w = e.target.closest ? e.target.closest('.artwork-wave') : null;
+      if (!w || (e.button && e.button !== 0)) { return; }
+      const st = this.playerService.state;
+      if (!st || st.disableUi || !st.duration) { return; }
+      e.preventDefault();
+      try { w.setPointerCapture(e.pointerId); } catch (err) { /* older engines */ }
+      this.playerService.stopSeek();
+      this.scrubbing = true;
+      const pct = (x) => { const r = w.getBoundingClientRect(); return r.width ? Math.min(1, Math.max(0, (x - r.left) / r.width)) : 0; };
+      const preview = (x) => {
+        const p = pct(x);
+        this.playerService.seekPercent = Math.round(p * this.waveScale);
+        this.playerService.elapsedTime = Math.round(p * st.duration * 1000);
+        this.playerService.calculateElapsedTimeString();
+        this.$scope.$applyAsync();
+      };
+      preview(e.clientX);
+      const move = (ev) => preview(ev.clientX);
+      const up = (ev) => {
+        w.removeEventListener('pointermove', move); w.removeEventListener('pointerup', up); w.removeEventListener('pointercancel', up);
+        this.scrubbing = false;
+        this.seekPercent = Math.round(pct(ev.clientX) * this.waveScale); // debounced setSeek → playerService.seek
+        this.$scope.$applyAsync();
+      };
+      w.addEventListener('pointermove', move); w.addEventListener('pointerup', up); w.addEventListener('pointercancel', up);
+    });
+  }
 
   barPlayed(i){
     return (i + 0.5) / this.WAVE_N <= (this.playerService.seekPercent / this.waveScale);

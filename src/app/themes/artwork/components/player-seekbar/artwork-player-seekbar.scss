@@ -8,7 +8,7 @@
 
 .artwork-wave {
   flex: 0 0 auto; display: flex; align-items: flex-end; gap: 2px;
-  height: 50px; cursor: pointer;
+  height: 50px; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; /* the finger scrubs, the page does not scroll */
   &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 4px; border-radius: 2px; }
 }
 .wave-bar {
