@@ -1366,3 +1366,10 @@ body#artwork #browse.browsing-artist .music-item {
     .aw-eq::before, .aw-eq::after, .aw-eq i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
     .aw-eq::before { left: 0; } .aw-eq::after { left: 4px; animation-delay: .2s; } .aw-eq i { left: 8px; animation-delay: .4s; } }
 }
+
+/* artists grid: the context button sits in the card's square corner (outside the round avatar)
+   and its dropdown is never clipped by the circle */
+body#artwork #browse.browsing-artists .music-card__header, body#artwork #browse.browsing-artists .music-card__overlay { overflow: visible; }
+body#artwork #browse.browsing-artists .music-card__img { border-radius: 50%; }
+body#artwork #browse.browsing-artists .music-card .meta__actions { top: 0; right: 0; }
+body#artwork #browse.browsing-artists .music-card .meta__actions .dropdown-menu { right: 0; left: auto; }

@@ -19,7 +19,7 @@
     <div class="aw-mm__list">
       <a class="aw-mm__item" ng-class="{active: mm.is('volumio.home')}" ng-click="mm.go('volumio.home')">
         <span class="material-symbols-rounded">home</span><span class="aw-mm__label">Home</span></a>
-      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.browse') && !mm.isSource('playlists') && !mm.isSource('favourites')}" ng-click="mm.go('volumio.browse')">
+      <a class="aw-mm__item" ng-class="{active: mm.is('volumio.browse') && !mm.isSource('playlists') && !mm.isSource('favourites')}" ng-click="mm.goMusic()">
         <span class="material-symbols-rounded">album</span><span class="aw-mm__label">Music</span>
         <span class="aw-mm__value mono" ng-if="mm.sourcesCount">{{mm.sourcesCount}}</span></a>
       <a class="aw-mm__item" ng-if="mm.source('playlists')" ng-class="{active: mm.isSource('playlists')}" ng-click="mm.openSource('playlists')">

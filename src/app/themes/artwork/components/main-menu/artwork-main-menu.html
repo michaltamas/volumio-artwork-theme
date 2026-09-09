@@ -16,7 +16,7 @@
       </a>
     </li>
     <li>
-      <a ng-click="mainMenu.$state.go('volumio.browse')" aria-label="Music" title="Music"
+      <a ng-click="mainMenu.goMusic()" aria-label="Music" title="Music"
          ng-class="{active: mainMenu.$state.current.name === 'volumio.browse' && !mainMenu.isSourceActive('playlists') && !mainMenu.isSourceActive('favourites')}">
         <span class="material-symbols-rounded">album</span>
       </a>

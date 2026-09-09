@@ -82,6 +82,16 @@ class MainMenuController {
     }
   }
 
+  // Artwork rail "Music": the Library landing. Already inside browse (a playlist, an album…)
+  // the state does not change, so ask the browse page itself to go home.
+  goMusic() {
+    if (this.$state.current.name === 'volumio.browse') {
+      const el = this.$window.document.getElementById('browse');
+      const sc = el && angular.element(el).scope();
+      if (sc && sc.browse && sc.browse.backHome) { sc.browse.backHome(); return; }
+    }
+    this.$state.go('volumio.browse');
+  }
   // Artwork rail: open a library source (Playlists, Favourites) like a Library card would —
   // from the top of the browse stack, so Back returns to Library
   sourceByUri(uri) {

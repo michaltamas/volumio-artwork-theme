@@ -305,6 +305,9 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #artwork-home .home-shelf { margin-top: 26px; }
   body#artwork #artwork-home .main__row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
 
+  /* --- list, album and artist heads: the menu button next to Back --- */
+  body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+
   /* --- Queue: full screen --- */
   body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }
   body#artwork aw-queue-panel .aw-queue.open { transform: none; }

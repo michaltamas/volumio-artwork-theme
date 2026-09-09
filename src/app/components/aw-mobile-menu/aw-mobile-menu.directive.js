@@ -55,6 +55,15 @@ class AwMobileMenuController {
   item(key) { return this.settings.menu.find(i => this.settings.itemKey(i) === key) || null; }
 
   go(state) { this.menu.hide(); this.$state.go(state); }
+  // "Music" = the Library landing, also from inside a browse page (state unchanged there)
+  goMusic() {
+    this.menu.hide();
+    if (this.$state.current.name === 'volumio.browse') {
+      const el = document.getElementById('browse'); const sc = el && angular.element(el).scope();
+      if (sc && sc.browse && sc.browse.backHome) { sc.browse.backHome(); return; }
+    }
+    this.$state.go('volumio.browse');
+  }
   get isSettings() { const n = this.$state.current.name; return n === 'volumio.settings' || n === 'volumio.plugin' || n === 'volumio.plugin-manager'; }
   get isMyVolumio() { return this.$state.current.name.indexOf('myvolumio') === 0; }
   // library sources straight from the menu, like the rail: from the top of the browse stack

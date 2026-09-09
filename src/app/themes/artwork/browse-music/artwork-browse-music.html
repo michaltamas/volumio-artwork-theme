@@ -68,6 +68,7 @@
 
           <!-- Artwork list pages (mockup 2e Artists): back + breadcrumb, local filter, grid/list toggle -->
           <div class="aw-listbar" ng-if="browse.isPlainList">
+            <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
             <button type="button" class="aw-listbar__back" ng-click="browse.goBack()" aria-label="Back" title="Back">
               <span class="material-symbols-rounded">arrow_back</span>
             </button>
