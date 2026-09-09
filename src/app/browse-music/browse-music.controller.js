@@ -1132,7 +1132,12 @@ class BrowseMusicController {
     const norm = u => String(u || '').replace(/^(music-library|mnt)\//, '');
     const uri = norm(this.playerService.state && this.playerService.state.uri);
     Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-item[data-uri]'), el => {
-      el.classList.toggle('aw-playing', !!uri && norm(el.getAttribute('data-uri')) === uri);
+      const playing = !!uri && norm(el.getAttribute('data-uri')) === uri;
+      el.classList.toggle('aw-playing', playing);
+      // rows with a cover carry the EQ bars as an overlay element (the number-slot rows use the number itself)
+      const img = el.querySelector('.item__image');
+      if (img && playing && !img.querySelector('.aw-eq')) { const eq = document.createElement('span'); eq.className = 'aw-eq'; eq.appendChild(document.createElement('i')); img.appendChild(eq); }
+      if (img && !playing) { const eq = img.querySelector('.aw-eq'); if (eq) { eq.remove(); } }
     });
   }
   awAfterRender() {

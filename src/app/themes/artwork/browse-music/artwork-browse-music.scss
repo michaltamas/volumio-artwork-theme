@@ -1166,3 +1166,51 @@ body#artwork #browse.browsing-album .music-item.aw-fav .item__favorite .item__fa
   &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); }
 }
+
+/* ============================================================
+   Song lists (Last 100, Favourites, genre/folder tracks…) get the album-row idiom: straight 1px
+   separators, no radius; hover / open-menu row = rounded .07 panel with the row's play button over the
+   44px cover; the playing row = rounded .12 panel with EQ bars over its cover; heart always visible,
+   filled when the track is a favourite. Artists keep their own row rules.
+   ============================================================ */
+body#artwork #browse.browsing-list:not(.browsing-artists) {
+  .album__tracks { gap: 0; }
+  .music-item {
+    position: relative; padding: 10px 14px; min-height: 0; border-radius: 0; border-bottom: 1px solid rgba(255, 255, 255, .06); gap: 18px;
+    &:hover { background: rgba(255, 255, 255, .04); }
+    .item__number-dot { display: none; }
+    .item__image { width: 44px; height: 44px; flex: none; margin: 0; position: relative; }
+    .item__albumart, .item__image__img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; display: block; }
+    .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
+    .item__album, .item__artist { font-size: 14px; color: #a7adb3; }
+    .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
+    .item__actions .fa { color: #71777d; font-size: 15px; }
+    /* heart: real favourite state, always visible */
+    .item__favorite { display: block; opacity: 1; padding: 0; -webkit-text-stroke: 0; text-stroke: 0;
+      .item__favorite-heart .fa { font-size: 0; color: #71777d; -webkit-text-fill-color: #71777d;
+        &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
+      &:hover .fa { color: #fff; -webkit-text-fill-color: #fff; } }
+    /* the row's play button as an overlay on the cover, shown on hover / open menu */
+    .item__play { display: none; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; padding: 0; margin: 0; z-index: 1; border-radius: 6px; background: rgba(6, 9, 12, .5);
+      .play-btn { width: 44px; height: 44px; padding: 0; border: 0; background: transparent; display: block; cursor: pointer; visibility: visible !important;
+        .fa { display: grid; place-items: center; width: 44px; height: 44px; font-size: 0; color: #fff;
+          &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; line-height: 1; } } } }
+  }
+  .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
+    background: rgba(255, 255, 255, .07); border-radius: 11px; border-bottom-color: transparent;
+    .item__play { display: block; }
+  }
+  .music-item.aw-fav .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff;
+    &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); } }
+  .music-item.aw-playing {
+    background: rgba(255, 255, 255, .12); border-radius: 11px; border-bottom-color: transparent;
+    .item__title { font-weight: 700; color: #fff; }
+    .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
+    /* EQ bars over the cover */
+    .item__image::after { content: ''; position: absolute; inset: 0; border-radius: 6px; background: rgba(6, 9, 12, .5); }
+    .item__image .aw-eq { position: absolute; left: 50%; top: 50%; width: 10px; height: 13px; transform: translate(-50%, -50%); z-index: 1;
+      &::before, &::after, i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
+      &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } i { left: 8px; animation-delay: .4s; } }
+  }
+}
