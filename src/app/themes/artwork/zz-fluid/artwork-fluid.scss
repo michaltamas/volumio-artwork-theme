@@ -182,6 +182,9 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
   :root { --rail-w: 0px; --sa-t: env(safe-area-inset-top, 0px); --sa-b: env(safe-area-inset-bottom, 0px); --mini-h: calc(80px + var(--sa-b)); --pad-screen: 20px; --pad-top: calc(14px + var(--sa-t)); }
   html, body#artwork { background: #0e1013; } /* the browser's bands start in the mini player's tone; the palette refines it per cover */
+  /* Safari frosts the status bar over whatever the page paints under it — the top of the blurred
+     cover is the lightest part of the backdrop, so a solid band in the mini player's colour goes there */
+  body#artwork::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top, 0px); background: var(--aw-band, #0e1013); z-index: 40; pointer-events: none; }
   /* app shell = the visible viewport: the document itself never scrolls, so Safari keeps its bars
      still and never paints a stretched strip under the status bar; the screens scroll inside */
   html, body#artwork { height: 100vh; height: 100dvh; overflow: hidden; overscroll-behavior: none; }

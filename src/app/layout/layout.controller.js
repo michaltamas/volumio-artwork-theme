@@ -113,6 +113,7 @@ class LayoutController {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) { meta.setAttribute('content', css); }
     document.documentElement.style.backgroundColor = css;
+    document.documentElement.style.setProperty('--aw-band', css); // the band painted under the status bar
   }
 
   hslToRgb(h, s, l) {
