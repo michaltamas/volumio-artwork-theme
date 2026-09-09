@@ -78,9 +78,13 @@
     .ui-select-placeholder { display: none !important; }
     /* chevron: centred on the box (the span spans the full row height, so centre the glyph in a grid);
        right 17px puts the glyph ink 20.5px from the edge like the design screenshot */
-    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 17px; top: 0; bottom: 0; transform: none;
+    .caret { border: 0; width: auto; height: auto; margin: 0; position: absolute; right: 14px; top: 0; bottom: 0; transform: none;
       display: grid; place-items: center; line-height: 1;
-      &::before { content: 'expand_more'; font-family: 'Material Symbols Rounded'; font-weight: 400; font-size: 20px; color: #a7adb3; line-height: 1; } }
+      /* the chevron is a vector, not an icon-font glyph: the design's expand_more ink is 8.5×4.5px with a
+         2.5px round stroke in #a7adb3, and font rendering (weight, smoothing, zoom) made it thinner
+         on some machines. Same geometry, rendered identically everywhere. */
+      &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6.75 8.75 L10 11.25 L13.25 8.75' fill='none' stroke='%23a7adb3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); } }
   }
 
   /* switch (bootstrap-switch) → 44×26 pill, dark knob, On/Off label beside */
