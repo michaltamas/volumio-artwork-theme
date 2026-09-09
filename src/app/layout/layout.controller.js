@@ -17,7 +17,12 @@ class LayoutController {
     this.initMainMenu();
 
     this.updateTabbar();
+    // $locationChangeStart fires before the state switches (browser back/forward: $state.current
+    // is still the old page), so re-evaluate once the transition has landed as well
     $scope.$on('$locationChangeStart', (event, next, current) => {
+      this.updateTabbar();
+    });
+    $scope.$on('$stateChangeSuccess', () => {
       this.updateTabbar();
     });
 
