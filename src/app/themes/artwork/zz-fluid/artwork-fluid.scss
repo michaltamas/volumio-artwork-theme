@@ -57,6 +57,13 @@ body#artwork #np .np-zone { max-width: 40vw; }
   body#artwork #np #np-footer { padding-top: 18px; }
 }
 
+/* ---------- browse pages end above the mini player ----------
+   #browse's body is absolutely positioned inside #content and takes the padding box, so its
+   scroll area ran under the mini player and the last rows were unreachable. Pin its bottom to
+   the bar instead of a height (works for both the bare top:0 pages and the core header case). */
+body#artwork #browse .panel .body-content.new-browse { bottom: var(--mini-h); height: auto !important; }
+body#artwork .main-container.with-playback-bar #browse .panel .body-content.new-browse { bottom: 0; }
+
 /* ---------- mini player ---------- */
 body#artwork #footer-content { padding-left: clamp(12px, 1.5vw, 22px); padding-right: clamp(12px, 1.5vw, 22px); }
 body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: clamp(10px, 1.4vw, 20px); }
@@ -301,7 +308,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   /* --- Queue: full screen --- */
   body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }
   body#artwork aw-queue-panel .aw-queue.open { transform: none; }
-  body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: 0; }
+  body#artwork #layout-container .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: 0; } /* outranks the panel's own NP rule */
   body#artwork aw-queue-panel .aw-queue__head { padding: calc(28px + var(--sa-t)) 20px 0; }
   body#artwork aw-queue-panel .aw-queue__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
   body#artwork aw-queue-panel .aw-queue__sub { font-size: 10px; letter-spacing: .1em; color: #b6bcc2; }
