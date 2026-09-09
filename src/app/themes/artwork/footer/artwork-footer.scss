@@ -1,7 +1,7 @@
 /* Artwork mini player (spec §5.10 / mockup) */
 #footer-content {
   position: fixed; left: var(--rail-w); right: 0; bottom: 0;
-  height: 98px; z-index: 3;
+  height: var(--mini-h); z-index: 3;
   padding: 11px 22px 13px; /* measured: 1px border-top + 11 = play 13px from the top; waveform 13px from the bottom (mockup 13/13) */
   background: rgba(8, 10, 13, 0.55);
   backdrop-filter: blur(34px);
@@ -76,20 +76,13 @@
 }
 
 /* content leaves room for the mini player; hidden on the full Now Playing screen */
-body#artwork #content { padding-bottom: 98px; }
+body#artwork #content { padding-bottom: var(--mini-h); }
 /* on the full Now Playing screen the mini player slides down out of view (and back up when
    leaving) in step with the Now Playing sheet */
 body#artwork #footer-content { transition: transform .42s cubic-bezier(.2, .7, .2, 1); will-change: transform; }
 body#artwork .main-container.with-playback-bar ~ #footer-container #footer-content { transform: translateY(100%); pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { body#artwork #footer-content { transition: none; } }
 
-/* mobile mini */
-#footer-content .artwork-mini-mobile { display: none; }
-@media (max-width: 767px) {
-  #footer-content { height: auto; }
-  #footer-content .artwork-mini { display: none; }
-  #footer-content .artwork-mini-mobile { display: block; }
-}
 
 /* ---- mini-player identity + transport polish (match mockup) ---- */
 #footer-content {

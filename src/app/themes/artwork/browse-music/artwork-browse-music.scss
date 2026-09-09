@@ -668,7 +668,7 @@ body#artwork {
 
 /* ============ Artwork search (results reuse the library cards) ============ */
 body#artwork {
-  .dedicated-search { padding: 34px 52px 6px; }
+  .dedicated-search { padding: var(--pad-top) var(--pad-screen) 6px; }
   .dedicated-search .search-container { max-width: 720px; margin: 0 auto; position: relative; }
   .dedicated-search form { margin: 0; }
   .dedicated-search input.form-control {
@@ -717,8 +717,8 @@ body#artwork {
 
 /* two columns: header (left) + track list (right); playlist stays single col */
 body#artwork #browse.browsing-album #browseTablesWrapper {
-  display: grid; grid-template-columns: minmax(320px, 34%) 1fr; grid-template-rows: minmax(0, 1fr);
-  gap: 56px; align-items: start; padding: 34px 52px 48px; /* --pad-screen; the browse top bar is hidden here */
+  display: grid; grid-template-columns: minmax(260px, 34%) 1fr; grid-template-rows: minmax(0, 1fr);
+  gap: clamp(24px, 3.9vw, 56px); align-items: start; padding: var(--pad-top) var(--pad-screen) 48px; /* --pad-screen; the browse top bar is hidden here */
   /* only the track list scrolls: the wrapper is a fixed viewport, the header column stays put */
   overflow: hidden !important;
   /* header column: keeps its place; only if taller than the viewport does it scroll on its own
@@ -747,7 +747,7 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
   &__eyebrow { margin-top: 24px; font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
   &__title {
     margin: 10px 0 0; font-family: var(--font-ui); font-weight: 800; letter-spacing: -.025em;
-    font-size: 46px; line-height: 1.04; color: var(--ink); text-wrap: pretty;
+    font-size: var(--t-h1); line-height: 1.04; color: var(--ink); text-wrap: pretty;
   }
   &__artist { margin-top: 8px; font-size: 19px; color: var(--ink-2); }
   &__meta { margin-top: 14px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
@@ -827,7 +827,7 @@ body#artwork #browse.browsing-home .panel .body-content.new-browse { top: 0; hei
 /* ============================================================
    Browse landing (mockup 2b-browse) — values from the mockup's inline CSS
    ============================================================ */
-body#artwork .aw-browse { padding: 34px 52px 40px; color: var(--ink-1); }
+body#artwork .aw-browse { padding: var(--pad-top) var(--pad-screen) 40px; color: var(--ink-1); }
 
 .aw-tabs { display: flex; align-items: center; gap: 16px; }
 .aw-tab { font-size: 15px; color: #8c9298; cursor: pointer;
@@ -911,17 +911,17 @@ body#artwork #browse-page { background: transparent; }
    Browse lists (artists, albums, genres…): mockup breadcrumb/title rows
    ============================================================ */
 /* screen padding on every browse page; the landing/album blocks set their own top */
-body#artwork #browseTablesWrapper { padding-left: 52px; padding-right: 52px; }
+body#artwork #browseTablesWrapper { padding-left: var(--pad-screen); padding-right: var(--pad-screen); }
 body#artwork .aw-browse { padding-left: 0; padding-right: 0; }
 
 /* header: the rail already has Home — keep back + view toggle, search as a pill on the right */
 body#artwork .browse-header-container .navButtons button:first-child { display: none; }
-body#artwork .browse-header-container { padding: 0 52px; }
+body#artwork .browse-header-container { padding: 0 var(--pad-screen); }
 body#artwork .searchBox input { width: 440px; max-width: 100%; }
 
 /* title row: "Artists" + count (mockup: 46/800 + mono 13 #a7adb3) */
 .aw-listhead { display: flex; align-items: baseline; gap: 12px; margin: 26px 0 18px; }
-.aw-listhead__title { margin: 0; font-family: var(--font-ui); font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+.aw-listhead__title { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
 .aw-listhead__count { font-size: 13px; color: #a7adb3; }
 
 /* artists list view: 52px round avatar, name, ⋯ (mockup grid 52px 1fr … 24px, gap 20, pad 11 12, r 11) */
@@ -967,7 +967,7 @@ body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 34px;
   /* mockup: <img 260> + a flex column (title, description, meta, actions; padding-bottom 6) with
      align-items:flex-end — the column's bottom sits on the cover's bottom */
   .aw-albumhead__body { grid-column: 2; grid-row: 2; align-self: end; display: flex; flex-direction: column; min-width: 0; padding-bottom: 6px; }
-  .aw-albumhead__title { font-size: 64px; letter-spacing: -.035em; line-height: 1; margin: 0; }
+  .aw-albumhead__title { font-size: var(--t-h1-xl); letter-spacing: -.035em; line-height: 1; margin: 0; }
   .aw-albumhead__meta { margin-top: 14px; }
   .aw-albumhead__actions { margin-top: 26px; }
   .aw-albumhead__artist { display: none; } /* playlists have no single artist */
@@ -1284,7 +1284,7 @@ body#artwork .aw-artist {
     box-shadow: 0 26px 54px -22px rgba(0, 0, 0, .9); border: 1px solid rgba(255, 255, 255, .1); background: rgba(255, 255, 255, .06); }
   &__body { display: flex; flex-direction: column; gap: 12px; padding-bottom: 6px; min-width: 0; }
   &__eyebrow { font-size: 11px; letter-spacing: .18em; color: #a7adb3; }
-  &__name { margin: 0; font-family: var(--font-ui); font-size: 52px; font-weight: 800; letter-spacing: -.035em; line-height: 1; color: #fff; text-wrap: pretty; }
+  &__name { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1-lg); font-weight: 800; letter-spacing: -.035em; line-height: 1; color: #fff; text-wrap: pretty; }
   &__meta { display: flex; align-items: center; gap: 18px; line-height: normal; .mono { font-size: 13px; color: #c2c8cd; } }
   &__dot { width: 5px; height: 5px; background: rgba(255, 255, 255, .4); flex: none; }
   &__story { font-size: 13px; color: #a7adb3; line-height: 1.5; max-width: 640px;

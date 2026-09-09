@@ -22,14 +22,10 @@
         ng-class="[ state.current.url, layout.isWithPlaybackBar ? 'with-playback-bar' : '' ]"
       >
 
-          <main-menu id="main-menu-container"
-            class="hidden-sm col-md-4"
-            ng-if="!layout.matchmediaService.isPhone"
-          ></main-menu>
+          <main-menu id="main-menu-container"></main-menu>
     
-          <div id="contentWrapper" 
-            class="col-xs-24 col-md-20"
-            ng-class="[ layout.wrapperColumnClass, state.current.url, 'aw-state-' + state.current.name.replace('.', '-'), layout.isSettingsShell ? 'aw-settings-shell' : '', (layout.isSettingsShell && !layout.awSettings.hasSide) ? 'aw-settings-shell--noside' : '' ]"
+          <div id="contentWrapper"
+            ng-class="[ state.current.url, 'aw-state-' + state.current.name.replace('.', '-'), layout.isSettingsShell ? 'aw-settings-shell' : '', (layout.isSettingsShell && !layout.awSettings.hasSide) ? 'aw-settings-shell--noside' : '' ]"
             hm-swipeleft="layout.swipeLeft()"
             hm-swiperight="layout.swipeRight()"
             hm-recognizer-options='[{"directions":"DIRECTION_LEFT|DIRECTION_RIGHT", "threshold": 50}]'

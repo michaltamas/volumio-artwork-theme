@@ -146,7 +146,7 @@ body#artwork .myvolumio-card-container { background: transparent; border: 0; box
    avatar / name / email / Edit, Current plan card, devices table.
    ============================================================ */
 body#artwork .aw-state-myvolumio-profile .box {
-  position: relative; padding: 40px 52px 60px; background: transparent; border: 0; box-shadow: none;
+  position: relative; padding: clamp(24px, 4.4vh, 40px) var(--pad-screen) 60px; background: transparent; border: 0; box-shadow: none;
   /* Volumio wraps the profile and the device table in dark .panel-body boxes; the design is flat */
   .panel, .panel-body, .panel-heading { background: transparent; border: 0; box-shadow: none; }
 
@@ -272,9 +272,9 @@ body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card .pane
 @keyframes aw-spin { to { transform: rotate(360deg); } }
 body#artwork .aw-state-myvolumio-edit-profile .box { padding: 0; background: transparent; border: 0; box-shadow: none; }
 body#artwork .aw-pe {
-  padding: 40px 52px 60px; color: var(--ink-1);
+  padding: clamp(24px, 4.4vh, 40px) var(--pad-screen) 60px; color: var(--ink-1);
   .aw-albumhead__top { margin-bottom: 26px; }
-  &__title { margin: 0; font-family: var(--font-ui); font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+  &__title { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
   &__grid { display: grid; grid-template-columns: 196px 1fr; gap: 44px; margin-top: 34px; align-items: start; }
   &__avatar { display: flex; flex-direction: column; gap: 12px;
     .avatar-image-box { width: 196px; height: 196px; border-radius: var(--r-cover); display: grid; place-items: center; overflow: hidden;
@@ -290,7 +290,7 @@ body#artwork .aw-pe {
   &__note { display: flex; align-items: center; gap: 9px; margin: 14px 0 0; font-size: 13px; color: #8c9298; }
   &__note-dot { width: 5px; height: 5px; background: rgba(255, 255, 255, .5); flex: none; }
   /* settings row: label · 300px control */
-  &__row { display: grid; grid-template-columns: 1fr 300px; align-items: center; gap: 24px; padding: 18px 0; margin: 0; border-bottom: 1px solid rgba(255, 255, 255, .05); font-weight: 400; cursor: default; }
+  &__row { display: grid; grid-template-columns: 1fr minmax(180px, 300px); align-items: center; gap: 24px; padding: 18px 0; margin: 0; border-bottom: 1px solid rgba(255, 255, 255, .05); font-weight: 400; cursor: default; }
   &__label { font-size: 16px; font-weight: 600; color: var(--ink-1); }
   &__row input.form-control { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13); color: #fff; font-size: 15px; box-shadow: none; padding: 0 14px;
     &:focus { border-color: rgba(255, 255, 255, .3); box-shadow: none; outline: none; }

@@ -35,7 +35,7 @@ body#artwork #artwork-home {
   .home-hero-meta { display: flex; flex-direction: column; padding-bottom: 6px; min-width: 0; }
   .home-eyebrow { font-size: 11px; letter-spacing: .2em; color: var(--ink-3); }
   .home-hero-title {
-    font-family: var(--font-ui); font-size: 54px; font-weight: 800; letter-spacing: -.03em;
+    font-family: var(--font-ui); font-size: var(--t-h1-lg); font-weight: 800; letter-spacing: -.03em;
     line-height: 1.02; margin-top: 12px; color: var(--ink); text-wrap: pretty;
   }
   .home-hero-actions { display: flex; align-items: center; gap: 16px; margin-top: 22px; }

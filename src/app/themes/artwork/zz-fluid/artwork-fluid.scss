@@ -1,0 +1,177 @@
+/* ============================================================
+   Fluid layout. Sizes flow with the viewport through the tokens (clamp); only the STRUCTURE
+   switches, and it switches on space and orientation, not on device classes:
+   · portrait + narrow  → the rail becomes a bottom bar
+   · tall or narrow     → Now Playing stacks the cover above the text
+   · narrow             → album page becomes one column, settings shell folds, lists drop columns
+   This file loads last (zz-) so its rules win ties.
+   (libsass drops min()/max() with mixed units — they are written with unquote().)
+   ============================================================ */
+body#artwork #contentWrapper { padding: 0; }
+body#artwork #main-menu { padding: clamp(12px, 2.4vh, 22px) 0; }
+body#artwork #main-menu .brand { width: clamp(30px, 2.5vw, 36px); height: clamp(30px, 2.5vw, 36px); margin-bottom: clamp(10px, 2vh, 18px); }
+body#artwork #main-menu a .material-symbols-rounded { font-size: clamp(20px, 1.6vw, 23px); }
+
+/* ---------- Now Playing ---------- */
+body#artwork #np #np-hero { gap: clamp(20px, 3.9vw, 56px); margin-top: clamp(14px, 4vh, 36px); }
+body#artwork #np #np-meta { padding-top: clamp(0px, 1.5vh, 14px); }
+body#artwork #np .np-eyebrow { margin-bottom: clamp(8px, 1.8vh, 16px); }
+body#artwork #np .np-artist { font-size: clamp(17px, 1.6vw, 23px); margin-top: clamp(10px, 2.4vh, 22px); }
+body#artwork #np .np-album { font-size: clamp(14px, 1.25vw, 18px); }
+body#artwork #np #np-chip-slot { margin-top: clamp(14px, 3.5vh, 32px); }
+body#artwork #np #np-footer { padding-top: clamp(14px, 4.8vh, 44px); }
+body#artwork #np #np-seek { margin-bottom: clamp(10px, 2vh, 18px); }
+body#artwork #np #np-transport, body#artwork #np #np-transport #playerButtons { gap: clamp(14px, 2.5vw, 36px); }
+body#artwork #np #np-transport .playPause { width: clamp(56px, 5.3vw, 76px); height: clamp(56px, 5.3vw, 76px);
+  .material-symbols-rounded { font-size: clamp(32px, 2.9vw, 42px); } }
+body#artwork #np #np-footer-row { flex-wrap: wrap; row-gap: 12px; }
+/* waveform: the mockup's 104 × 4px bars need 622px — below that the bars share the width */
+body#artwork #np #np-seek .artwork-wave { max-width: 100%; }
+@media (max-width: 800px) {
+  body#artwork #np #np-seek .artwork-wave { flex: 1 1 auto; width: 100%; justify-self: stretch; }
+  body#artwork #np #np-seek .wave-bar { flex: 1 1 0; width: auto; min-width: 0; }
+}
+body#artwork #np .np-badge { max-width: 48vw; overflow: hidden; }
+body#artwork #np .np-zone { max-width: 40vw; }
+/* tall or narrow: the cover sits above the text, sized by the width (or half the height) */
+@media (max-aspect-ratio: 5/4), (max-width: 760px) {
+  /* stacked: the sheet may be taller than the screen — it scrolls, the transport stays at the
+     bottom whenever the content is short enough */
+  body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow-y: auto; }
+  body#artwork #np { height: auto; min-height: 100%; overflow: visible; }
+  body#artwork #np #np-hero { flex-direction: column; align-items: flex-start; flex: 1 0 auto; }
+  body#artwork #np #np-cover { height: auto; width: unquote("min(100%, 36vh)"); max-width: none; }
+  body#artwork #np #np-meta { padding-top: 0; }
+  body#artwork #np .np-title { font-size: clamp(26px, 7.5vw, 54px); }
+}
+@media (max-width: 560px) {
+  body#artwork #np .np-upnext-films, body#artwork #np .np-upnext-label { display: none; }
+}
+
+/* ---------- rail → bottom bar on narrow portrait screens ---------- */
+@media (max-width: 700px) and (orientation: portrait) {
+  :root { --rail-w: 0px; --bar-h: 56px; }
+  body#artwork #main-menu {
+    top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: var(--bar-h);
+    flex-direction: row; align-items: center; padding: 0 6px; gap: 0; z-index: 4;
+    border-right: 0; border-top: 1px solid var(--glass-1-border);
+  }
+  body#artwork #main-menu .brand { display: none; }
+  body#artwork #main-menu .main-menu-list, body#artwork #main-menu .main-menu-bottom { flex-direction: row; width: auto; gap: 2px; margin: 0; }
+  body#artwork #main-menu .main-menu-list { flex: 1 1 auto; justify-content: space-evenly; }
+  body#artwork #main-menu .main-menu-bottom { flex: none; }
+  body#artwork #main-menu li { width: auto; }
+  body#artwork #main-menu a { width: clamp(34px, 10vw, 44px); height: 44px; .material-symbols-rounded { font-size: clamp(19px, 5.5vw, 23px); } }
+  body#artwork #contentWrapper { margin-left: 0; width: 100%; }
+  body#artwork #footer-content { left: 0; bottom: var(--bar-h); }
+  body#artwork .main-container.with-playback-bar ~ #footer-container #footer-content { transform: translateY(calc(100% + var(--bar-h))); }
+  body#artwork #content { padding-bottom: calc(var(--mini-h) + var(--bar-h)); }
+  body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: var(--bar-h); }
+  body#artwork .aw-queue { bottom: calc(var(--mini-h) + var(--bar-h) + 12px); }
+  body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: calc(var(--bar-h) + 12px); }
+}
+
+/* ---------- mini player ---------- */
+body#artwork #footer-content { padding-left: clamp(12px, 1.5vw, 22px); padding-right: clamp(12px, 1.5vw, 22px); }
+body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: clamp(10px, 1.4vw, 20px); }
+body#artwork #footer-content .mini-transport #playerButtons { gap: clamp(12px, 1.8vw, 26px); }
+@media (max-width: 900px) {
+  body#artwork #footer-content .mini-zone .mini-zone-name { display: none; } body#artwork #footer-content .mini-zone { padding: 0 11px; }
+  body#artwork #footer-content .mini-volume { display: none; }
+}
+@media (max-width: 700px) { body#artwork #footer-content .mini-transport .repeat-button, body#artwork #footer-content .mini-transport .player-action-shuffle { display: none; } }
+@media (max-width: 560px) {
+  /* compact bar: identity · prev/play/next · queue; no waveform row */
+  :root { --mini-h: 64px; }
+  body#artwork #footer-content { padding-top: 0; padding-bottom: 0; }
+  body#artwork #footer-content .artwork-mini { grid-template-rows: auto; align-content: center; }
+  body#artwork #footer-content .mini-wave, body#artwork #footer-content .mini-zone { display: none; }
+  body#artwork #footer-content .mini-identity, body#artwork #footer-content .mini-right { grid-row: 1; }
+  body#artwork #footer-content .mini-identity #trackInfo-artist-album { display: none; }
+}
+
+/* ---------- queue panel ---------- */
+body#artwork .aw-queue { width: unquote("min(560px, calc(100vw - 24px))"); right: unquote("max(12px, min(20px, 1.4vw))"); top: unquote("max(12px, min(20px, 2.2vh))"); }
+@media (max-width: 600px) { body#artwork .aw-queue .aw-queue__hint { display: none; } body#artwork .aw-queue__row { gap: 10px; padding: 0 10px; } }
+
+/* ---------- browse landing, lists, grids ---------- */
+body#artwork .aw-cards { grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 250px)"), 1fr)); gap: clamp(10px, 1.25vw, 18px); }
+body#artwork .aw-sources { grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 200px)"), 1fr)); }
+body#artwork .aw-search, body#artwork .home-search { width: unquote("min(320px, 100%)"); }
+body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 13vw, 190px), 1fr)); gap: clamp(12px, 1.7vw, 24px); }
+body#artwork .aw-listbar { flex-wrap: wrap; row-gap: 10px; }
+body#artwork .aw-filter { width: unquote("min(290px, 100%)"); }
+body#artwork .aw-listhead { flex-wrap: wrap; row-gap: 10px; }
+@media (max-width: 640px) {
+  body#artwork .aw-filter { flex-basis: 100%; margin-left: 0; }
+  body#artwork .aw-alpha { display: none; }
+  body#artwork #browse .music-item .item__album { display: none; }
+}
+@media (max-height: 520px) { body#artwork .aw-alpha { display: none; } }
+body#artwork .home-hero { flex-wrap: wrap; gap: clamp(18px, 2.5vw, 36px); }
+body#artwork .home-hero-cover img { width: clamp(140px, 15.5vw, 224px); height: clamp(140px, 15.5vw, 224px); }
+body#artwork .home-tabs { flex-wrap: wrap; row-gap: 8px; }
+body#artwork #home .main__row, body#artwork .home-shelf .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(110px, 12vw, 180px), 1fr)); gap: clamp(12px, 1.5vw, 22px); }
+
+/* ---------- album page: one column when the two do not fit; on short screens the cover and
+   the title shrink with the height so the header stays whole beside the list ---------- */
+body#artwork .aw-albumhead__cover { max-width: unquote("min(380px, 100%, 44vh)"); }
+body#artwork #browse.browsing-album .aw-albumhead__title { font-size: unquote("min(var(--t-h1), 6vh)"); }
+body#artwork #browse.browsing-album .aw-albumhead__actions { margin-top: clamp(12px, 2.6vh, 24px); }
+@media (max-width: 860px), (max-height: 560px) {
+  body#artwork #browse.browsing-album #browseTablesWrapper { display: block; overflow-y: auto !important; }
+  body#artwork #browse.browsing-album #browseTablesWrapper > div:first-child { overflow: visible; margin: 0; padding: 0; scrollbar-width: auto; }
+  body#artwork #browse.browsing-album #browseTablesWrapper > #browse-page { height: auto; margin-top: 28px; overflow: visible; }
+  body#artwork .aw-albumhead__cover { max-width: unquote("min(320px, 60vw)"); }
+}
+/* playlist head: the 260px cover column folds too */
+@media (max-width: 700px) {
+  body#artwork .aw-albumhead--playlist { grid-template-columns: 1fr; }
+  body#artwork .aw-albumhead--playlist .aw-albumhead__cover { grid-row: auto; max-width: unquote("min(260px, 60vw)"); }
+  body#artwork .aw-albumhead--playlist .aw-albumhead__body { grid-column: 1; grid-row: auto; }
+  body#artwork .aw-cols .aw-cols__info, body#artwork #browse.browsing-playlist .music-item .item__info { grid-template-columns: 1fr; }
+  body#artwork #browse.browsing-playlist .music-item .item__album { display: none; }
+}
+
+/* ---------- artist page ---------- */
+body#artwork .aw-artist__hero { flex-wrap: wrap; row-gap: 18px; gap: clamp(16px, 2vw, 28px); }
+body#artwork .aw-artist__img { width: clamp(96px, 11vw, 158px); height: clamp(96px, 11vw, 158px); }
+body#artwork .aw-artist__albums { grid-template-columns: repeat(auto-fill, minmax(clamp(112px, 12vw, 165px), 1fr)); gap: clamp(12px, 1.4vw, 20px); }
+body#artwork #browse.browsing-artist .music-item .item__title { width: clamp(140px, 30vw, 290px); }
+@media (max-width: 700px) {
+  body#artwork .aw-artist__actions { margin-left: 0; flex-basis: 100%; padding-bottom: 0; }
+  body#artwork .aw-artist__bar { flex-wrap: wrap; row-gap: 10px; }
+  body#artwork .aw-artist__filter { width: 100%; margin-left: 0; }
+  body#artwork #browse.browsing-artist .music-item .item__title { width: auto; flex: 1; }
+}
+
+/* ---------- settings shell ---------- */
+body#artwork #contentWrapper.aw-settings-shell { grid-template-columns: clamp(170px, 15vw, 216px) 1fr clamp(250px, 23.6vw, 340px); }
+body#artwork #contentWrapper.aw-settings-shell.aw-settings-shell--noside { grid-template-columns: clamp(170px, 15vw, 216px) 1fr; }
+@media (max-width: 1180px) {
+  body#artwork #contentWrapper.aw-settings-shell, body#artwork #contentWrapper.aw-settings-shell.aw-settings-shell--noside { grid-template-columns: clamp(170px, 15vw, 216px) 1fr; }
+  body#artwork #contentWrapper.aw-settings-shell > aw-settings-side { display: none; }
+}
+@media (max-width: 720px) {
+  body#artwork #contentWrapper.aw-settings-shell, body#artwork #contentWrapper.aw-settings-shell.aw-settings-shell--noside { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-snav { flex-direction: row; height: auto; overflow-x: auto; padding: 10px 8px; gap: 4px; border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, .07); scrollbar-width: none; }
+  body#artwork #contentWrapper.aw-settings-shell .aw-snav::-webkit-scrollbar { display: none; }
+  body#artwork #contentWrapper.aw-settings-shell .aw-snav__eyebrow, body#artwork #contentWrapper.aw-settings-shell .aw-snav__foot { display: none; }
+  body#artwork #contentWrapper.aw-settings-shell .aw-snav__item { flex: none; height: 38px; }
+}
+/* settings rows: label above the control when the row is narrow */
+@media (max-width: 640px) {
+  body#artwork #pluginWrapper .form-group, body#artwork .aw-pe__row { grid-template-columns: 1fr !important; row-gap: 10px !important; }
+  body#artwork #pluginWrapper .form-group > label.plugin-label { grid-column: 1 !important; grid-row: auto !important; }
+  body#artwork #pluginWrapper .form-group > .control-doc { grid-column: 1 !important; grid-row: auto !important; }
+  body#artwork #pluginWrapper .form-group > .control-item { grid-column: 1 !important; grid-row: auto !important; }
+  body#artwork #pluginWrapper .form-group > .control-description { grid-column: 1 !important; grid-row: auto !important; }
+  body#artwork .aw-pe__grid, body#artwork .my-profile { grid-template-columns: 1fr !important; }
+}
+
+/* the stock MyVolumio card for small screens duplicates the rail's MyVolumio entry */
+body#artwork .myvolumio-card-container.visible-xs { display: none !important; }
+
+/* ---------- dialogs & toasts ---------- */
+body#artwork .modal-dialog, body#artwork .modal-dialog.modal-lg, body#artwork .modal-dialog.modal-md, body#artwork .modal.aw-dlg--alarm-clock .modal-dialog { max-width: calc(100vw - 24px); }
+body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw - 24px))"); }

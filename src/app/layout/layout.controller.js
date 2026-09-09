@@ -34,7 +34,7 @@ class LayoutController {
 
   // Artwork theme: settings pages render inside a 3-pane shell (desktop only)
   get isSettingsShell() {
-    if (this.themeManager.theme !== 'artwork' || this.matchmediaService.isPhone) { return false; }
+    if (this.themeManager.theme !== 'artwork') { return false; }
     const n = this.$state.current.name;
     return n === 'volumio.settings' || n === 'volumio.plugin' || n === 'volumio.plugin-manager';
   }

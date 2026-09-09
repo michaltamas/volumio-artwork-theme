@@ -2,7 +2,7 @@
   <div id="player-bar" ng-class="{'playback-bar': footer.showPlayerFooter}">
 
     <!-- desktop mini player (spec §5.10 / mockup) -->
-    <div class="artwork-mini hidden-xs hidden-sm">
+    <div class="artwork-mini">
 
       <div class="mini-identity">
         <track-info is-in-footer="true"></track-info>
@@ -37,15 +37,6 @@
 
     </div>
 
-    <!-- mobile -->
-    <div class="artwork-mini-mobile visible-xs visible-sm">
-      <div class="lined-seekbar"><player-seekbar></player-seekbar></div>
-      <div class="mobile-row">
-        <div class="track-info-container"><track-info is-in-footer="true"></track-info></div>
-        <div class="controls-container"><player-buttons is-in-footer="true"></player-buttons></div>
-      </div>
-      <ng-include id="tab-bar" src="'app/themes/artwork/partials/artwork-tab-bar.html'"></ng-include>
-    </div>
 
   </div>
 </div>

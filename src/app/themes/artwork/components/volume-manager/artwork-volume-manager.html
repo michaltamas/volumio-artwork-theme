@@ -86,7 +86,7 @@
 </div>
 
 <!-- HORIZONTAL SLIDER -->
-<div ng-if="volumeManager.isOnFooter" class="volume-slider hidden-xs hidden-sm">
+<div ng-if="volumeManager.isOnFooter" class="volume-slider">
 
     <button ng-click="volumeManager.toggleMute()" class="btn btn-link button-mute pull-left" ng-class="{selected: volumeManager.playerService.state.mute}" ng-disabled="volumeManager.playerService.state.disableVolumeControl">
         <i class="fa fa-volume-off"></i>

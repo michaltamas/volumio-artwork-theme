@@ -196,7 +196,7 @@ div#goBackPanelWrapper {
      whole viewport — 100vh overflowed the parent and clipped the transport */
   height: 100%; min-height: 100%; overflow: hidden;
   box-sizing: border-box;
-  padding: 44px 52px 38px;
+  padding: clamp(20px, 4.9vh, 44px) var(--pad-screen) clamp(16px, 4.2vh, 38px);
   color: var(--ink-1);
 
   #np-topbar {
@@ -228,7 +228,7 @@ div#goBackPanelWrapper {
   .np-eyebrow { font-size: 11px; letter-spacing: .2em; color: #cfd4d8; margin-bottom: 16px; }
   .np-title {
     font-family: var(--font-ui);
-    font-size: 70px; line-height: .98; letter-spacing: -.035em; font-weight: 800;
+    font-size: var(--t-display); line-height: .98; letter-spacing: -.035em; font-weight: 800;
     color: var(--ink); margin: 0; text-wrap: pretty;
   }
   .np-artist { font-size: 23px; font-weight: 400; color: #e4e7ea; margin-top: 22px; }

@@ -1,7 +1,7 @@
 <div id="playerButtons" ng-class="!playerButtons.isInFooter ? 'mobile-playback' : 'footer-control'">
   <button ng-if="!playerButtons.playerService.state.repeat"
       class="btn btn-link playerControls repeat-button"
-      ng-class="{'active': playerButtons.playerService.state.repeat, 'hidden-xs hidden-sm': playerButtons.isInFooter}"
+      ng-class="{'active': playerButtons.playerService.state.repeat}"
       ng-click="playerButtons.playerService.repeatAlbum(true, false)"
       title="{{'TRACK_INFO_BAR.REPEAT_ALL' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
@@ -9,7 +9,7 @@
   </button>
   <button ng-if="playerButtons.playerService.state.repeat && !playerButtons.playerService.state.repeatSingle"
       class="btn btn-link playerControls repeat-button"
-      ng-class="{'active': playerButtons.playerService.state.repeat, 'hidden-xs hidden-sm': playerButtons.isInFooter}"
+      ng-class="{'active': playerButtons.playerService.state.repeat}"
       ng-click="playerButtons.playerService.repeatAlbum(true, true)"
       title="{{'TRACK_INFO_BAR.REPEAT_SINGLE' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
@@ -17,7 +17,7 @@
   </button>
   <button ng-if="playerButtons.playerService.state.repeat && playerButtons.playerService.state.repeatSingle"
       class="btn btn-link playerControls repeat-button"
-      ng-class="{'active': playerButtons.playerService.state.repeat, 'hidden-xs hidden-sm': playerButtons.isInFooter}"
+      ng-class="{'active': playerButtons.playerService.state.repeat}"
       ng-click="playerButtons.playerService.repeatAlbum(false, false)"
       title="{{'TRACK_INFO_BAR.REPEAT_OFF' | translate}}"
       ng-disabled="trackManager.playerService.state.disableUi">
@@ -27,7 +27,6 @@
       id='prev-button'
       ng-click="playerButtons.playerService.prev()"
       class="btn btn-link"
-      ng-class="{'hidden-xs hidden-sm': playerButtons.isInFooter}"
       title="{{'BROWSER.PREVIOUS_TRACK' | translate}}"
       ng-disabled="playerButtons.playerService.state.disableUi">
     <span class="material-symbols-rounded">skip_previous</span>
@@ -79,7 +78,6 @@
       id='next-button'
       ng-click="playerButtons.playerService.next()"
       class="btn btn-link"
-      ng-class="{'hidden-xs hidden-sm': playerButtons.isInFooter}"
       title="{{'BROWSER.NEXT_TRACK' | translate}}"
       ng-disabled="playerButtons.playerService.state.disableUi">
     <span class="material-symbols-rounded">skip_next</span>
@@ -89,7 +87,7 @@
     class='btn btn-link'
     id="shuffle-button"
     ng-click='playerButtons.playerService.shuffle()'
-    ng-class="{'active': playerButtons.playerService.state.random, 'player-action-shuffle': true, 'hidden-xs hidden-sm': playerButtons.isInFooter}"
+    ng-class="{'active': playerButtons.playerService.state.random, 'player-action-shuffle': true}"
     title="{{'TRACK_INFO_BAR.RANDOM' | translate}}"
     ng-disabled="trackManager.playerService.state.disableUi">
      <span class="material-symbols-rounded">shuffle</span>

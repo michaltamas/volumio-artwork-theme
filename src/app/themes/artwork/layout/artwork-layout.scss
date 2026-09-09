@@ -4,23 +4,7 @@
   .main-container{
 
     height: 100%;
-    padding-bottom: calc( #{$theme-player-height-smartphone} + #{$theme-tabbar-height-smartphone} );
-
-    &.browse, &.search{
-      //
-    }
-
-    &.with-playback-bar{
-      padding-bottom: calc( #{$theme-playback-bar-height-smartphone} );
-    }
-
-    @include breakpoint(md){
-      padding-bottom: calc( #{$theme-player-height-tablet} );
-    }
-
-    @include breakpoint(lg){
-      padding-bottom: calc( #{$theme-player-height-desktop} );
-    }
+    padding-bottom: 0; /* the content keeps its own room for the mini player (fluid --mini-h) */
 
     #main-menu-container{
       backdrop-filter: blur(10px);

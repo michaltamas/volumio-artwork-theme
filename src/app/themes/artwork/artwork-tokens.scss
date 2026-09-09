@@ -12,7 +12,12 @@
   --ok:#7de3b4; --ok-alt:#5fd35f; --warn:#e07b2c; --err:#e0453a;
   /* radius / space / rail (spec §3.4) */
   --r-frame:18px; --r-panel:16px; --r-card:14px; --r-cover:6px; --r-control:12px; --r-pill:999px;
-  --rail-w:76px; --rail-item:46px; --gap-shelf:22px; --gap-row:2px;
+  /* fluid sizes: mockup values are the upper bound (1440px frame), they scale down with the viewport
+     (rail 76 → 56, screen padding 52 → 16, mini player 98 → 76, display type 70 → 34) */
+  --rail-w: clamp(56px, 4.6vw, 76px); --rail-item: clamp(40px, 3vw, 46px); --gap-shelf:22px; --gap-row:2px;
+  --pad-screen: clamp(16px, 3.6vw, 52px); --pad-top: clamp(18px, 3.4vh, 34px);
+  --mini-h: clamp(76px, 10.5vh, 98px);
+  --t-display: clamp(34px, 4.86vw, 70px); --t-h1: clamp(28px, 3.2vw, 46px); --t-h1-lg: clamp(30px, 3.6vw, 52px); --t-h1-xl: clamp(34px, 4.4vw, 64px);
 }
 /* sampled palette ground (spec §4.3).
    NOTE: @property registration (for smooth crossfade interpolation, §7.1) is
