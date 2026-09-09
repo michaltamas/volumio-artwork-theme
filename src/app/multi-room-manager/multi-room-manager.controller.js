@@ -1,6 +1,7 @@
 class MultiRoomManagerController {
-  constructor(socketService, multiRoomService, $timeout, $log, playerService) {
+  constructor(socketService, multiRoomService, $timeout, $log, playerService, awMobileMenu) {
     'ngInject';
+    this.awMenu = awMobileMenu;
     this.socketService = socketService;
     this.multiRoomService = multiRoomService;
     this.$timeout = $timeout;

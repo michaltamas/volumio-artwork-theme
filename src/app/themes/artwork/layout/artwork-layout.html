@@ -45,6 +45,8 @@
             <!-- Artwork settings shell: real menu on the left, data widgets on the right -->
             <aw-settings-nav ng-if="layout.isSettingsShell"></aw-settings-nav>
 
+            <!-- phone: MyVolumio pages use Volumio's own templates (no head to put the menu in) -->
+            <button type="button" class="aw-menu-btn aw-menu-btn--float" ng-if="layout.floatMenu" ng-click="layout.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
             <div id="content"
                 ng-class="state.current.url"
                 ui-view="content">

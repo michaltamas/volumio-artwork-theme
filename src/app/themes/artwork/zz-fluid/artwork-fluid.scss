@@ -176,7 +176,7 @@ body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw -
    are full screens.
    ============================================================ */
 /* desktop: the phone-only elements stay out of the way */
-body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph, body#artwork .aw-band { display: none; }
+body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn--float, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph, body#artwork .aw-band { display: none; }
 
 @media (max-width: 700px) and (orientation: portrait) {
   /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
@@ -321,6 +321,36 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
 
   /* --- list, album and artist heads: the menu button next to Back --- */
   body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+
+  /* --- Zones: device cards (icon · name / now playing / volume / actions) --- */
+  body#artwork .aw-zones { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-zones .aw-listhead { gap: 12px; margin: 0 0 6px; }
+  body#artwork .aw-zones .aw-listhead .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork .aw-zones .aw-listhead__title { font-size: 24px; letter-spacing: -.02em; }
+  body#artwork .aw-zones .aw-zones__cols { display: none; }
+  body#artwork .aw-zones .aw-zone { grid-template-columns: 44px minmax(0, 1fr); grid-template-areas: "icon name" "np np" "vol vol" "act act"; gap: 12px 14px; padding: 14px; margin-top: 10px; border-top: 0; background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .08); border-radius: 14px; }
+  body#artwork .aw-zones .aw-zone__icon { grid-area: icon; } body#artwork .aw-zones .aw-zone__name { grid-area: name; }
+  body#artwork .aw-zones .aw-zone__np { grid-area: np; } body#artwork .aw-zones .aw-zone__vol { grid-area: vol; }
+  body#artwork .aw-zones .aw-zone__act { grid-area: act; justify-content: flex-start; flex-wrap: wrap; }
+
+  /* --- MyVolumio pages (Volumio's templates): floating menu button, single column --- */
+  body#artwork .aw-menu-btn--float { display: grid; place-items: center; position: fixed; top: calc(14px + var(--sa-t)); left: 20px; z-index: 5; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork .aw-state-myvolumio-profile .box, body#artwork .aw-state-myvolumio-access .box { padding: calc(52px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-state-myvolumio-profile .box #authLoginPlugin .panel-heading .btn-danger { top: calc(48px + var(--sa-t)); right: 20px; }
+  body#artwork .aw-state-myvolumio-profile .box .my-profile { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+  body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row { grid-template-columns: 1fr; gap: 20px; }
+  body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row .plans-table, body#artwork .aw-state-myvolumio-profile .box .my-profile > div > .row .user-data { grid-column: 1 !important; grid-row: auto !important; }
+  body#artwork .aw-state-myvolumio-profile .box .avatar-image-box { width: 120px; height: 120px; .avatar-letter { font-size: 64px; } }
+  body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card, body#artwork .aw-state-myvolumio-profile .box .plans-table, body#artwork .aw-state-myvolumio-profile .box .plans-table .panel { width: auto !important; min-width: 0 !important; max-width: 100%; }
+  body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card .panel.panel-primary .panel-body { font-size: 32px; }
+  body#artwork .aw-state-myvolumio-profile .box .user-data .user-title { font-size: 30px; }
+  body#artwork .aw-state-myvolumio-profile .box .user-data .btn { float: none; display: inline-flex; margin-top: 14px; }
+  body#artwork .aw-pe { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-pe .aw-albumhead__top { margin-bottom: 18px; }
+  body#artwork .aw-pe__title { font-size: 24px; letter-spacing: -.02em; }
+  body#artwork .aw-pe__grid { margin-top: 20px; gap: 20px; }
+  body#artwork .aw-pe__avatar .avatar-image-box { width: 120px; height: 120px; .avatar-letter { font-size: 64px; } }
+  body#artwork .aw-pe__avatar .aw-btn { width: auto; align-self: flex-start; }
 
   /* --- Queue: full screen --- */
   body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }

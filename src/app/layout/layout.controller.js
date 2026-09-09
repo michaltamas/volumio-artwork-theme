@@ -1,7 +1,8 @@
 class LayoutController {
-  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService, awQueuePanel) {
+  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService, awQueuePanel, awMobileMenu) {
     'ngInject';
     this.awQueue = awQueuePanel;
+    this.awMenu = awMobileMenu;
     this.$state = $state;
     // artwork settings shell (nav + side widgets around the settings/plugin pages)
     this.awSettings = awSettingsService;
@@ -31,6 +32,12 @@ class LayoutController {
     if (this.themeManager.theme === 'artwork') {
       this.initArtworkPalette();
     }
+  }
+
+  // phone: a floating menu button on the MyVolumio pages rendered by Volumio's own templates
+  get floatMenu() {
+    const n = this.$state.current.name;
+    return this.themeManager.theme === 'artwork' && n.indexOf('myvolumio') === 0 && n !== 'myvolumio.edit-profile';
   }
 
   // Artwork theme: settings pages render inside a 3-pane shell (desktop only)
