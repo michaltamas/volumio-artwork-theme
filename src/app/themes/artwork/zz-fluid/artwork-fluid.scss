@@ -176,12 +176,16 @@ body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw -
    are full screens.
    ============================================================ */
 /* desktop: the phone-only elements stay out of the way */
-body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph { display: none; }
+body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph, body#artwork .aw-band { display: none; }
 
 @media (max-width: 700px) and (orientation: portrait) {
   /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
   :root { --rail-w: 0px; --sa-t: env(safe-area-inset-top, 0px); --sa-b: env(safe-area-inset-bottom, 0px); --mini-h: calc(80px + var(--sa-b)); --pad-screen: 20px; --pad-top: calc(14px + var(--sa-t)); }
-  html, body#artwork { background: #0e1013; } /* the browser's bands start in the mini player's tone; the palette refines it per cover */
+  /* Safari 26 samples <body>'s background-color for its bars when no fixed strip qualifies (the
+     mini player is blurred, so the bottom bar falls back to body). Volumio's appearance plugin
+     paints body inline, hence !important. The palette refines --aw-band per cover. */
+  html, body#artwork { background: #0e1013; }
+  body#artwork { background-color: var(--aw-band, #0e1013) !important; background-image: none !important; }
   /* Mobile Safari colours its status bar from the page's top edge (it does not use theme-color
      there). The top edge is the lightest part of the backdrop, hence a grey bar — so the page's
      top edge is painted in the mini player's colour: solid for the safe area plus 8px, fading
@@ -189,6 +193,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
      carries the same band above its scrim so opening it does not shift the colour. */
   body#artwork::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 72px); z-index: 1; pointer-events: none;
     background: linear-gradient(to bottom, var(--aw-band, #0e1013) 0, var(--aw-band, #0e1013) calc(env(safe-area-inset-top, 0px) + 8px), transparent 100%); }
+  body#artwork .aw-band { display: block; position: fixed; top: 0; left: 0; right: 0; height: 4px; background-color: var(--aw-band, #0e1013); z-index: 60; pointer-events: none; }
   body#artwork .aw-mm::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 8px); background: var(--aw-band, #0e1013); pointer-events: none; z-index: 1; }
   body#artwork aw-mobile-menu .aw-mm__sheet { z-index: 2; }
   /* app shell = the visible viewport: the document itself never scrolls, so Safari keeps its bars

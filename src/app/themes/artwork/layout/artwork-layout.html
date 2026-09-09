@@ -1,5 +1,10 @@
 <!-- NOTE: MOVE HERE THE BACKGROUND IF POSSIBLE -->
 
+<!-- iOS 26 Safari colours its status bar from the background-color of a real fixed element at the
+     top edge (≥3px high, ≥80% wide; pseudo-elements and blurred elements are ignored) — this strip
+     carries the mini player's colour (--aw-band, per cover); shown on phones only -->
+<div class="aw-band" aria-hidden="true"></div>
+
 <!-- Artwork Is The Interface: full-frame blurred cover behind every screen (spec §4) -->
 <div class="art-stack" aria-hidden="true">
   <img class="art-bg"
