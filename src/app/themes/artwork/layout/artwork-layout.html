@@ -26,8 +26,8 @@
     
           <div id="contentWrapper"
             ng-class="[ state.current.url, 'aw-state-' + state.current.name.replace('.', '-'), layout.isSettingsShell ? 'aw-settings-shell' : '', (layout.isSettingsShell && !layout.awSettings.hasSide) ? 'aw-settings-shell--noside' : '' ]"
-            hm-swipeleft="layout.swipeLeft()"
-            hm-swiperight="layout.swipeRight()"
+            hm-swipeleft="layout.swipeLeft($event)"
+            hm-swiperight="layout.swipeRight($event)"
             hm-recognizer-options='[{"directions":"DIRECTION_LEFT|DIRECTION_RIGHT", "threshold": 50}]'
           >
 

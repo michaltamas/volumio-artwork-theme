@@ -1,6 +1,7 @@
 class LayoutController {
-  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService) {
+  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService, awQueuePanel) {
     'ngInject';
+    this.awQueue = awQueuePanel;
     this.$state = $state;
     // artwork settings shell (nav + side widgets around the settings/plugin pages)
     this.awSettings = awSettingsService;
@@ -151,7 +152,16 @@ class LayoutController {
       'col-md-20' ;
   }
 
-  swipeLeft() {
+  // a swipe that starts on a control which drags itself (waveform scrubber, sliders, the queue
+  // panel's rows, the menu sheet, inputs) belongs to that control
+  swipeIgnored(ev) {
+    const t = ev && ev.target;
+    return !!(t && t.closest && t.closest('.artwork-wave, .slider, input, textarea, .aw-queue, .aw-mm, .bootstrap-switch'));
+  }
+  get isArtwork() { return this.themeManager.theme === 'artwork'; }
+
+  swipeLeft(ev) {
+    if (this.swipeIgnored(ev)) { return; }
     const currentState = this.$state.current.name;
     this.$log.debug(this.$state.current.name);
     switch (currentState) {
@@ -159,13 +169,15 @@ class LayoutController {
         this.$state.go('volumio.playback');
         break;
       case 'volumio.playback':
-        this.$state.go('volumio.play-queue');
+        if (this.isArtwork) { this.awQueue.show(); } else { this.$state.go('volumio.play-queue'); }
         break;
     }
   }
 
-  swipeRight() {
+  swipeRight(ev) {
+    if (this.swipeIgnored(ev)) { return; }
     const currentState = this.$state.current.name;
+    if (this.isArtwork && this.awQueue.open) { this.awQueue.hide(); return; }
     switch (currentState) {
       case 'volumio.play-queue':
         this.$state.go('volumio.playback');
