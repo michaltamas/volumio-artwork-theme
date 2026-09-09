@@ -461,7 +461,7 @@ body#artwork .aw-sheet {
 }
 
 /* ---- Alarms sheet (Dialogs mockup): 760 wide; cards pad 16 18 r14 .06/.11 gap 22; stepper 28/700,
-   chevrons 17, units 9; select h42 r11 .05/.1 14px; switch 52×30; delete 38 r11 border .11;
+   chevrons 17, units 9; select h42 r11 .05/.1 14px; switch = the shared control; delete 38 r11 border .11;
    add box h48 dashed .16 bg .03; NEXT line mono 11 .08em ---- */
 body#artwork .modal.aw-dlg--alarm-clock .modal-dialog { width: 760px; } /* window class from modalService */
 body#artwork .aw-sheet--alarms {
@@ -480,11 +480,8 @@ body#artwork .aw-sheet--alarms {
   .aw-sheet__select--sm.ui-select-container.ui-select-bootstrap { height: 42px; border-radius: 11px; background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .1);
     .ui-select-match > .btn { height: 40px; line-height: 40px; font-size: 14px; }
     .caret { right: 14px; &::before { width: 20px; height: 20px; background-size: 20px 20px; } } }
-  .bootstrap-switch { margin-right: 0; width: 52px !important; height: 30px; border-radius: 15px; flex: none;
-    &::before { top: 3px; left: 3px; width: 24px; height: 24px; background: #16181b; }
-    &.bootstrap-switch-on { background: rgba(255, 255, 255, .9); &::before { left: 25px; } }
-    &::after { display: none; }
-    .bootstrap-switch-label { border-radius: 15px; } }
+  /* the standard switch control (mixin), only without its On/Off label in the card */
+  .bootstrap-switch { margin-right: 0; flex: none; &::after { display: none; } }
   .aw-alarm__delete { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex: none; background: transparent; border: 1px solid rgba(255, 255, 255, .11); color: #a7adb3; padding: 0; cursor: pointer; transition: color .2s ease, border-color .2s ease;
     .material-symbols-rounded { font-size: 20px; } &:hover { color: #ff8f8f; border-color: rgba(255, 143, 143, .4); } }
   .aw-alarm__add { display: flex; align-items: center; justify-content: center; gap: 10px; height: 48px; width: 100%; border-radius: 14px; cursor: pointer;
