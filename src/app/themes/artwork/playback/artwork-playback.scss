@@ -235,7 +235,7 @@ div#goBackPanelWrapper {
   .np-album  { font-size: 18px; font-weight: 400; color: #a7adb3; margin-top: 5px; }
   #np-chip-slot { margin-top: 32px; }
 
-  #np-footer { margin-top: auto; padding-top: 28px; }
+  #np-footer { margin-top: auto; padding-top: 44px; } /* a little more air between the cover and the seek bar than the mockup's 28 */
   #np-seek { margin-bottom: 18px; }
   #np-transport { display: flex; }
 }
