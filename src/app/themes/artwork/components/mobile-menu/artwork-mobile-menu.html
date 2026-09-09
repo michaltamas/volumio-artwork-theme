@@ -26,9 +26,6 @@
         <span class="material-symbols-rounded">playlist_play</span><span class="aw-mm__label">Playlists</span></a>
       <a class="aw-mm__item" ng-if="mm.source('favourites')" ng-class="{active: mm.isSource('favourites')}" ng-click="mm.openSource('favourites')">
         <span class="material-symbols-rounded">favorite</span><span class="aw-mm__label">Favourites</span></a>
-      <a class="aw-mm__item" ng-click="mm.openQueue()">
-        <span class="material-symbols-rounded">queue_music</span><span class="aw-mm__label">{{'COMMON.TAB_QUEUE' | translate}}</span>
-        <span class="aw-mm__value mono" ng-if="mm.queueCount">{{mm.queueCount}}</span></a>
       <a class="aw-mm__item" ng-class="{active: mm.is('volumio.playback')}" ng-click="mm.go('volumio.playback')">
         <span class="material-symbols-rounded">graphic_eq</span><span class="aw-mm__label">Now Playing</span></a>
     </div>
