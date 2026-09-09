@@ -175,6 +175,10 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
   :root { --rail-w: 0px; --sa-t: env(safe-area-inset-top, 0px); --sa-b: env(safe-area-inset-bottom, 0px); --mini-h: calc(80px + var(--sa-b)); --pad-screen: 20px; --pad-top: calc(14px + var(--sa-t)); }
   html, body#artwork { background: #0a0c0e; }
+  /* app shell = the visible viewport: the document itself never scrolls, so Safari keeps its bars
+     still and never paints a stretched strip under the status bar; the screens scroll inside */
+  html, body#artwork { height: 100vh; height: 100dvh; overflow: hidden; overscroll-behavior: none; }
+  body#artwork #layout-container, body#artwork .main-container { height: 100vh; height: 100dvh; }
   body#artwork #main-menu { display: none; }
   body#artwork #contentWrapper { margin-left: 0; width: 100%; }
   body#artwork aw-mobile-menu .aw-mm__sheet { top: calc(14px + var(--sa-t)); bottom: calc(14px + var(--sa-b)); overflow-y: auto; scrollbar-width: none; } /* the component's own sheet rule loads later: element prefix outranks it */
