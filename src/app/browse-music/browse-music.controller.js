@@ -163,7 +163,7 @@ class BrowseMusicController {
     const items = (j) => { try { return j.navigation.lists[0].items || []; } catch (e) { return []; } };
     const art = (i) => this.playerService.getAlbumart(i.albumart);
     get('/api/v1/collectionstats').then(s => { if (s && s.albums !== undefined) { home.stats = s; } });
-    get('/api/v1/browse?uri=albums://').then(j => { home.albumsArt = items(j).slice(0, 4).map(art); });
+    get('/api/v1/browse?uri=albums://').then(j => { home.albumsArt = items(j).slice(0, 8).map(art); }); // 8 candidates: broken covers drop out, the tile shows four
     get('/api/v1/browse?uri=artists://').then(j => { home.artistsArt = items(j).slice(0, 2).map(art); });
     get('/api/v1/browse?uri=favourites').then(j => { home.counts.favourites = items(j).length; });
     get('/api/v1/browse?uri=playlists').then(j => {

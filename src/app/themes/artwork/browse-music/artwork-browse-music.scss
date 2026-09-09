@@ -851,7 +851,10 @@ body#artwork .aw-browse { padding: 34px 52px 40px; color: var(--ink-1); }
 }
 .aw-tile { width: 96px; height: 96px; border-radius: 8px; overflow: hidden; flex: none; background: var(--card-flat); } /* missing artwork degrades to a flat dark cell (spec §8) */
 .aw-tile--mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
-  img { width: 100%; height: 100%; object-fit: cover; display: block; } }
+  /* every thumbnail rounded on its own (user request); a cover that fails to load removes itself so the
+     next candidate (up to 8 are provided) fills the cell — only four are ever shown */
+  img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+  img:nth-child(n+5) { display: none; } }
 .aw-tile--stack img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .aw-tile--avatars { display: flex; align-items: center; background: none; overflow: visible;
   img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #0a0c0e; flex: none; }

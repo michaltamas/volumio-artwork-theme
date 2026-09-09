@@ -27,7 +27,7 @@
 
     <div class="aw-card" ng-if="browse.sourceByUri('albums://')" ng-click="browse.fetchLibrary(browse.sourceByUri('albums://'))">
       <div class="aw-tile aw-tile--mosaic">
-        <img ng-repeat="a in browse.libraryHome.albumsArt track by $index" ng-src="{{a}}" alt="" onerror="this.style.display='none'">
+        <img ng-repeat="a in browse.libraryHome.albumsArt track by $index" ng-src="{{a}}" alt="" onerror="this.remove()">
       </div>
       <div class="aw-card-body">
         <div class="aw-card-title">Albums</div>
