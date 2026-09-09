@@ -18,6 +18,8 @@ function config(theme, variant, $logProvider, toastrConfig, themeManagerProvider
     maxOpened: true,
     preventOpenDuplicates: true
   });
+  // Artwork theme: every toast carries a close control (mockup toasts)
+  if (theme === 'artwork') { angular.extend(toastrConfig, { closeButton: true }); }
 
   localStorageServiceProvider.setPrefix('volumio');
   // Mailchimp
