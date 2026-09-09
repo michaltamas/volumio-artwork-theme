@@ -1,4 +1,4 @@
-<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.isPlaylistInfo,'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-artists': browse.currentUri === 'artists://', 'browsing-list': browse.isPlainList}" browse-scroll-manager>
+<div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.isPlaylistInfo,'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-search': browse.isLandingSearch, 'browsing-artists': browse.currentUri === 'artists://', 'browsing-list': browse.isPlainList}" browse-scroll-manager>
 
     <div class="panel panel-default">
 
@@ -32,8 +32,9 @@
 
         <div id="browseTablesWrapper">
 
+          <!-- the landing stays mounted while searching from its pill: results render below its header -->
           <div
-              ng-if="!browse.browseService.isBrowsing && !browse.browseService.isSearching"
+              ng-if="!browse.browseService.isBrowsing"
               ng-include
               src="'app/themes/artwork/browse-music/components/aw-browse-home.html'">
           </div> <!-- /SOURCES PAGE -->

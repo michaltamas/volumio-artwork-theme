@@ -66,6 +66,9 @@ class BrowseMusicController {
       this.$rootScope.$on('browseController:listRendered', () => this.awAfterRender());
       // the row of the track that is playing carries .aw-playing (album page: EQ bars instead of the number)
       this.$scope.$watch(() => this.playerService.state && this.playerService.state.uri, () => this.awMarkPlaying());
+      const onKey = e => { if ((e.metaKey || e.ctrlKey) && String(e.key).toLowerCase() === 'k' && document.getElementById('aw-search-input')) { e.preventDefault(); this.awFocusSearch(); } };
+      this.$document[0].addEventListener('keydown', onKey);
+      this.$scope.$on('$destroy', () => this.$document[0].removeEventListener('keydown', onKey));
     }
 
     this.socketService.on('pushBrowseLibrary', (data) => {
@@ -1125,6 +1128,37 @@ class BrowseMusicController {
   awFavouritesChanged() {
     if (this.$document[0].body.id !== 'artwork') { return; }
     this.$timeout(() => this.awLoadFavourites(), 900, false);
+  }
+
+  /* ---- Artwork landing search: the pill on the Browse landing is a real input; results render in place
+     (global search, like the dedicated page) and clearing the field brings the landing back ---- */
+  get isLandingSearch() {
+    return !!(this.browseService.isSearching && !this.browseService.isBrowsing);
+  }
+  awSearch() {
+    if (this.searchField && this.searchField.length >= 2) {
+      this.browseService.isSearching = true;
+      if (this.searchTimeoutHandler) { this.$timeout.cancel(this.searchTimeoutHandler); }
+      this.searchTimeoutHandler = this.$timeout(() => {
+        this.socketService.emit('search', { type: this.browseService.filterBy, value: this.searchField });
+      }, 600, false);
+    } else if (!this.searchField) {
+      this.awClearSearch();
+    }
+  }
+  awClearSearch() {
+    if (this.searchTimeoutHandler) { this.$timeout.cancel(this.searchTimeoutHandler); }
+    this.searchField = '';
+    this.browseService.isSearching = false;
+    this.browseService.lists = null;
+    this.resetBrowsePage();
+  }
+  awFocusSearch() {
+    const el = document.getElementById('aw-search-input');
+    if (el) { el.focus(); el.select(); }
+  }
+  get awSearchCount() {
+    try { return (this.browseService.lists || []).reduce((n, l) => n + ((l.items || []).length), 0); } catch (e) { return 0; }
   }
 
   awMarkPlaying() {

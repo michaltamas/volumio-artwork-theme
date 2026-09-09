@@ -7,18 +7,28 @@
     <div class="aw-tab active">Library</div>
     <div class="aw-tab" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">{{s.name}}</div>
     <div class="aw-tab" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">Radio</div>
-    <div class="aw-search" ui-sref="volumio.search" role="button" tabindex="0">
+    <!-- a real search field: Volumio's global search, results render on this page (⌘K focuses it) -->
+    <label class="aw-search" ng-class="{active: browse.searchField.length}">
       <span class="material-symbols-rounded">search</span>
-      <span class="aw-search-label" ng-if="browse.libraryHome.stats">Search {{browse.libraryHome.stats.songs}} tracks</span>
-      <span class="aw-search-label" ng-if="!browse.libraryHome.stats">Search everything</span>
-      <span class="aw-search-key mono">⌘K</span>
-    </div>
+      <input id="aw-search-input" type="search" ng-model="browse.searchField" ng-change="browse.awSearch()" ng-model-options="{ debounce: 150 }"
+             placeholder="{{browse.libraryHome.stats ? 'Search ' + browse.libraryHome.stats.songs + ' tracks' : 'Search everything'}}" aria-label="Search" autocomplete="off">
+      <span class="aw-search-key mono" ng-if="!browse.searchField.length">⌘K</span>
+      <button type="button" class="aw-search-clear" ng-if="browse.searchField.length" ng-click="browse.awClearSearch()" aria-label="Clear search">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </label>
     <div class="aw-avatar" ui-sref="myvolumio" role="button" tabindex="0" aria-label="MyVolumio">
       <span class="material-symbols-rounded">person</span>
     </div>
   </div>
 
-  <div class="aw-browse-head">
+    <!-- search results head (the lists themselves render in #browse-page below) -->
+  <div class="aw-listhead aw-listhead--search" ng-if="browse.isLandingSearch">
+    <h1 class="aw-listhead__title">Results</h1>
+    <span class="aw-listhead__count mono" ng-if="browse.awSearchCount">{{browse.awSearchCount}}</span>
+  </div>
+  <div ng-if="!browse.isLandingSearch">
+<div class="aw-browse-head">
     <h1 class="aw-browse-title">Browse</h1>
     <div class="aw-browse-stats mono" ng-if="browse.libraryStatsLine">{{browse.libraryStatsLine}}</div>
   </div>
@@ -122,4 +132,5 @@
     </div>
   </div>
 
+  </div>
 </div>

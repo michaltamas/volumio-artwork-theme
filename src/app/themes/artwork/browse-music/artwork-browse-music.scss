@@ -1179,7 +1179,7 @@ body#artwork #browse.browsing-album .music-item.aw-fav .item__favorite .item__fa
    44px cover; the playing row = rounded .12 panel with EQ bars over its cover; heart always visible,
    filled when the track is a favourite. Artists keep their own row rules.
    ============================================================ */
-body#artwork #browse.browsing-list:not(.browsing-artists) {
+body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.browsing-search {
   .album__tracks { gap: 0; }
   .music-item {
     position: relative; padding: 10px 14px; margin: 0; min-height: 0; border-radius: 0; border: 0; gap: 18px; line-height: normal;
@@ -1226,4 +1226,28 @@ body#artwork #browse.browsing-list:not(.browsing-artists) {
       &::before, &::after, i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } i { left: 8px; animation-delay: .4s; } }
   }
+}
+
+/* ---- landing search: the pill is an input; results render under the landing header ---- */
+body#artwork .aw-search {
+  margin-bottom: 0; font-weight: 400; cursor: text;
+  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none;
+    &::placeholder { color: #a7adb3; }
+    &:focus, &:focus-visible { outline: none; box-shadow: none; }
+    &::-webkit-search-cancel-button { -webkit-appearance: none; } }
+  &:focus-within { border-color: rgba(255, 255, 255, .3); }
+  .aw-search-clear { margin-left: auto; width: 22px; height: 22px; border-radius: 6px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; color: #a7adb3; cursor: pointer;
+    .material-symbols-rounded { font-size: 18px; } &:hover { color: #fff; background: rgba(255, 255, 255, .1); } }
+}
+body#artwork #browse.browsing-search {
+  .browse-header-container { display: none; }
+  .panel .body-content.new-browse { top: 0; height: 100%; }
+  .aw-browse { padding-bottom: 0; }
+  #browse-page { padding: 0 52px 48px; }
+  .aw-listhead--search { margin: 26px 0 6px; }
+  /* result groups (Songs / Albums / Artists…) as section eyebrows */
+  .main__source { margin: 0; }
+  .main__source__title { display: block; margin: 22px 0 6px; padding: 0 0 10px; border-bottom: 1px solid rgba(255, 255, 255, .1); background: transparent;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #cfd4d8; font-weight: 400; }
+  .main__row { padding: 12px 0 8px; }
 }
