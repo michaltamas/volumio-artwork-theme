@@ -172,12 +172,17 @@ body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw -
 body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions, body#artwork .np-m-bar, body#artwork .aw-mnav, body#artwork .aw-tile__glyph { display: none; }
 
 @media (max-width: 700px) and (orientation: portrait) {
-  :root { --rail-w: 0px; --mini-h: 80px; --pad-screen: 20px; --pad-top: 14px; }
+  /* edge to edge (viewport-fit=cover): the notch / home-indicator insets pad the bars, never the art */
+  :root { --rail-w: 0px; --sa-t: env(safe-area-inset-top, 0px); --sa-b: env(safe-area-inset-bottom, 0px); --mini-h: calc(80px + var(--sa-b)); --pad-screen: 20px; --pad-top: calc(14px + var(--sa-t)); }
+  html, body#artwork { background: #0a0c0e; }
   body#artwork #main-menu { display: none; }
   body#artwork #contentWrapper { margin-left: 0; width: 100%; }
+  body#artwork aw-mobile-menu .aw-mm__sheet { top: calc(14px + var(--sa-t)); bottom: calc(14px + var(--sa-b)); overflow-y: auto; scrollbar-width: none; } /* the component's own sheet rule loads later: element prefix outranks it */
+  body#artwork aw-mobile-menu .aw-mm__sheet::-webkit-scrollbar { display: none; }
+  body#artwork .aw-mm__foot { flex: none; padding-bottom: 2px; }
 
   /* --- mini player: 80px, cover 52 r5, title 14/600, artist·album 12, rates mono 9; play 44 · next 26 · speaker 24 --- */
-  body#artwork #footer-content { left: 0; height: 80px; padding: 0 16px; background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top-color: rgba(255, 255, 255, .09); }
+  body#artwork #footer-content { left: 0; height: calc(80px + var(--sa-b)); padding: 0 16px var(--sa-b); background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top-color: rgba(255, 255, 255, .09); }
   body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; column-gap: 12px; align-content: center; }
   body#artwork #footer-content .mini-identity { grid-column: 1; grid-row: 1; }
   body#artwork #footer-content .mini-transport { grid-column: 2; grid-row: 1; }
@@ -200,7 +205,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
 
   /* --- Now Playing --- */
   body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow-y: auto; }
-  body#artwork #np { height: auto; min-height: 100%; overflow: visible; padding: 14px 20px 0; display: flex; flex-direction: column; }
+  body#artwork #np { height: auto; min-height: 100%; overflow: visible; padding: calc(14px + var(--sa-t)) 20px 0; display: flex; flex-direction: column; }
   body#artwork #np #np-topbar { display: flex; align-items: center; gap: 0; margin-top: 0; min-height: 0; }
   body#artwork #np .np-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 26px; } }
   body#artwork #np .np-topbar-left { flex: 1; min-width: 0; display: flex; flex-direction: row-reverse; align-items: center; gap: 0; }
@@ -208,7 +213,8 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #np .np-chevron { width: auto; height: auto; background: transparent; color: #e4e7ea; .material-symbols-rounded { font-size: 24px; } }
   body#artwork #np #np-badge-slot { display: none; }
   body#artwork #np #np-hero { flex: none; flex-direction: column; align-items: center; margin-top: 20px; gap: 0; }
-  body#artwork #np #np-cover { height: auto; width: unquote("min(calc(100% - 32px), 42vh)"); max-width: none; border-radius: 12px;
+  /* the cover takes what is left after the fixed parts (bars, text, tiles, seek ≈ 450px) so the page never scrolls */
+  body#artwork #np #np-cover { height: auto; width: unquote("min(calc(100% - 32px), calc(100vh - 450px - var(--sa-t) - var(--sa-b)))"); width: unquote("min(calc(100% - 32px), calc(100dvh - 450px - var(--sa-t) - var(--sa-b)))"); max-width: none; border-radius: 12px;
     img { border-radius: 12px; box-shadow: 0 34px 66px -22px rgba(0, 0, 0, .9); } }
   body#artwork #np #np-meta { padding: 0; width: 100%; display: block; text-align: center; margin-top: 26px; }
   body#artwork #np .np-title + .np-artist, body#artwork #np .np-title + .np-album { margin-top: 9px; }
@@ -239,7 +245,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #np #np-seek .artwork-wave { width: 100%; height: 30px; }
   body#artwork #np #np-seek .wave-bar { border-radius: 1px; }
   body#artwork #np #np-footer-row { display: none; }
-  body#artwork #np .np-m-bar { display: flex; align-items: center; justify-content: space-between; height: 88px; margin: 0 -20px; padding: 0 26px; flex: none;
+  body#artwork #np .np-m-bar { display: flex; align-items: center; justify-content: space-between; height: calc(88px + var(--sa-b)); margin: 0 -20px; padding: 0 26px var(--sa-b); flex: none;
     background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top: 1px solid rgba(255, 255, 255, .09); }
   body#artwork #np .np-m-bar__btn { border: 0; background: transparent; padding: 0; color: #c2c8cd; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 27px; } }
   body#artwork #np .np-m-bar__btn--skip { color: #fff; .material-symbols-rounded { font-size: 34px; } }
@@ -248,6 +254,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #np.aw-np-out, body#artwork #np { animation-name: none; } /* the sheet slide is a desktop gesture; the phone page swaps in place */
 
   /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
+  body#artwork .aw-browse { padding-top: calc(14px + var(--sa-t)); }
   body#artwork .aw-browse .aw-tabs { gap: 12px; flex-wrap: nowrap; }
   body#artwork .aw-browse .aw-tab, body#artwork .aw-browse .aw-avatar, body#artwork .aw-browse .aw-search-key { display: none; }
   body#artwork .aw-browse .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
@@ -276,7 +283,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork aw-queue-panel .aw-queue { left: 0; right: 0; top: 0; bottom: 0; width: auto; border-radius: 0; border: 0; box-shadow: none; background: rgba(13, 15, 18, .92); transform: translateY(24px); }
   body#artwork aw-queue-panel .aw-queue.open { transform: none; }
   body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bottom: 0; }
-  body#artwork aw-queue-panel .aw-queue__head { padding: 28px 20px 0; }
+  body#artwork aw-queue-panel .aw-queue__head { padding: calc(28px + var(--sa-t)) 20px 0; }
   body#artwork aw-queue-panel .aw-queue__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
   body#artwork aw-queue-panel .aw-queue__sub { font-size: 10px; letter-spacing: .1em; color: #b6bcc2; }
   body#artwork aw-queue-panel .aw-queue__close { border: 0; width: auto; height: auto; .material-symbols-rounded { font-size: 26px; } }
@@ -301,10 +308,10 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork #contentWrapper.aw-settings-shell .aw-snav { display: none; }
   body#artwork #contentWrapper.aw-settings-shell > aw-settings-side { display: none; }
   body#artwork #contentWrapper.aw-settings-shell aw-settings-nav { display: block; min-height: 0; overflow-y: auto; }
-  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { display: block; padding: 14px 20px calc(var(--mini-h) + 20px); color: var(--ink-1); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { display: block; padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); color: var(--ink-1); }
   body#artwork #contentWrapper.aw-settings-shell .aw-mnav ~ * { display: none; }
   body#artwork #contentWrapper.aw-settings-shell.aw-state-volumio-settings > #content { display: none; } /* the landing's "choose a section" box is the list itself here */
-  body#artwork .aw-mnav__head { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+  body#artwork .aw-mnav__head { display: flex; align-items: center; gap: 12px; margin-top: 0; }
   body#artwork .aw-mnav__back { border: 0; background: transparent; padding: 0; color: #e4e7ea; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-mnav__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: normal; }
   body#artwork .aw-mnav__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
@@ -317,6 +324,11 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .np-m-actions
   body#artwork .aw-mnav__label { flex: 1; min-width: 0; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   body#artwork .aw-mnav__value { font-size: 11px; color: #a2a8ae; }
   body#artwork .aw-mnav__chev { font-size: 20px; color: #71777d; }
-  body#artwork #pluginWrapper .boxHeader .title h2 a.btn { display: inline-grid; } /* the plugin page's own back button returns */
+  /* plugin pages: the same head as the settings landing (plain arrow · 24/800 title) */
+  body#artwork #pluginWrapper { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork #pluginWrapper .boxHeader .title h2 { display: flex; align-items: center; gap: 12px; font-size: 24px; letter-spacing: -.02em; line-height: normal; }
+  body#artwork #pluginWrapper .boxHeader .title h2 a.btn { display: grid; place-items: center; width: auto; height: auto; padding: 0; margin: 0; background: transparent; border: 0; box-shadow: none; color: #e4e7ea; flex: none;
+    .fa { font-size: 0; } .fa::before { content: 'arrow_back'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; } }
+  body#artwork #pluginWrapper .pluginDescription { margin-top: 6px; }
 }
 
