@@ -1,7 +1,8 @@
 class HomeController {
-  constructor($state, $scope, $http, playerService, socketService, browseService, awMobileMenu) {
+  constructor($state, $scope, $http, playerService, socketService, browseService, awMobileMenu, $timeout) {
     'ngInject';
     this.awMenu = awMobileMenu;
+    this.$timeout = $timeout;
     this.$state = $state;
     this.$scope = $scope;
     this.$http = $http;
@@ -103,6 +104,14 @@ class HomeController {
   }
 
   goTo(state) { this.$state.go(state); }
+  // search behaves like the Library landing's: go there and focus its search (results render in place)
+  goSearch() {
+    this.$state.go('volumio.browse');
+    this.$timeout(() => {
+      const el = document.getElementById('browse'); const sc = el && angular.element(el).scope();
+      if (sc && sc.browse) { sc.browse.backHome(); this.$timeout(() => sc.browse.awFocusSearch && sc.browse.awFocusSearch(), 300, false); }
+    }, 400, false);
+  }
 }
 
 export default HomeController;
