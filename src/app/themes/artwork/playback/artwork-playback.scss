@@ -330,9 +330,12 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
 #np .np-upnext-films img:nth-child(2) { opacity: .6; }
 #np .np-upnext-films img:nth-child(3) { opacity: .34; }
 #np .np-queue {
-  width: 44px; height: 44px; border-radius: 12px; /* mockup: r12, rgba(255,255,255,.12), no border */
+  min-width: 44px; height: 44px; border-radius: 12px; padding: 0 14px; /* mockup: r12, rgba(255,255,255,.12), no border */
   background: rgba(255,255,255,.12); border: 0; color: var(--ink-1);
-  display: grid; place-items: center; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px; cursor: pointer;
   .material-symbols-rounded { font-size: 22px; }
+  /* queue length next to the glyph (the mini player's pill uses the same mono 12/700) */
+  .np-queue__count { font-size: 12px; font-weight: 700; }
   &:hover { background: var(--glass-2-hover); }
+  &.active { background: #fff; color: #0d0e10; }
 }

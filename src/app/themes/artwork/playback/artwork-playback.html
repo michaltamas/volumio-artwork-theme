@@ -74,6 +74,7 @@
         </div>
         <button type="button" class="np-queue" ng-click="playback.awQueue.toggle()" ng-class="{active: playback.awQueue.open}" title="{{'COMMON.TAB_QUEUE' | translate}}">
           <span class="material-symbols-rounded">queue_music</span>
+          <span class="np-queue__count mono" ng-if="playback.npQueueLen">{{playback.npQueueLen}}</span>
         </button>
       </div>
     </div>
