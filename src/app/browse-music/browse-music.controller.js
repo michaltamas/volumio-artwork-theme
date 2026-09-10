@@ -67,7 +67,7 @@ class BrowseMusicController {
     if (this.$document[0].body.id === 'artwork') {
       this.$rootScope.$on('browseController:listRendered', () => this.awAfterRender());
       // the row of the track that is playing carries .aw-playing (album page: EQ bars instead of the number)
-      this.$scope.$watch(() => this.playerService.state && this.playerService.state.uri, () => this.awMarkPlaying());
+      this.$scope.$watch(() => { const st = this.playerService.state || {}; return st.uri + '|' + st.status; }, () => this.awMarkPlaying());
       const onKey = e => { if ((e.metaKey || e.ctrlKey) && String(e.key).toLowerCase() === 'k' && document.getElementById('aw-search-input')) { e.preventDefault(); this.awFocusSearch(); } };
       this.$document[0].addEventListener('keydown', onKey);
       this.$scope.$on('$destroy', () => this.$document[0].removeEventListener('keydown', onKey));
@@ -956,7 +956,7 @@ class BrowseMusicController {
                 </div>
 
                 <div class="item__image">
-                    <div class="item__number ${ item.tracknumber && !item.albumart ? '' : 'hidden' }">${ item.tracknumber }<span class="item__number-dot">.</span></div>
+                    <div class="item__number ${ item.tracknumber && !item.albumart ? '' : 'hidden' }">${ item.tracknumber || (itemIndex + 1) }<span class="item__number-dot">.</span></div>
                     <div class="item__albumart ${ !item.albumart ? 'hidden' : '' }">
                         <img class="item__image__img" src="${this.playerService.getAlbumart(item.albumart)}" alt="">
                     </div>
@@ -1243,6 +1243,7 @@ class BrowseMusicController {
     Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-item[data-uri]'), el => {
       const playing = !!uri && norm(el.getAttribute('data-uri')) === uri;
       el.classList.toggle('aw-playing', playing);
+      el.classList.toggle('aw-paused', playing && ((this.playerService.state || {}).status !== 'play'));
       // rows with a cover carry the EQ bars as an overlay element (the number-slot rows use the number itself)
       const img = el.querySelector('.item__image');
       if (img && playing && !img.querySelector('.aw-eq')) { const eq = document.createElement('span'); eq.className = 'aw-eq'; eq.appendChild(document.createElement('i')); img.appendChild(eq); }

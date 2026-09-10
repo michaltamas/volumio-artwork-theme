@@ -40,6 +40,7 @@ class AwQueuePanelController {
   get state() { return this.playerService.state || {}; }
   get position() { return typeof this.state.position === 'number' ? this.state.position : -1; }
   isCurrent(i) { return i === this.position && this.state.status !== 'stop'; }
+  get isPlaying() { return this.state.status === 'play'; }
 
   play(i) { this.playQueueService.play(i); }
   remove(i, $event) { if ($event) { $event.stopPropagation(); } this.playQueueService.remove(i); }

@@ -31,7 +31,7 @@
 
   <div class="aw-queue__scroll">
     <div class="aw-queue__list">
-      <div class="aw-queue__row" ng-repeat="t in q.queue track by $index" ng-class="{'is-current': q.isCurrent($index)}" ng-click="q.play($index)">
+      <div class="aw-queue__row" ng-repeat="t in q.queue track by $index" ng-class="{'is-current': q.isCurrent($index), 'is-paused': q.isCurrent($index) && !q.isPlaying}" ng-click="q.play($index)">
         <span class="material-symbols-rounded aw-queue__drag" aria-hidden="true">drag_indicator</span>
         <div class="aw-queue__slot">
           <span class="aw-queue__eq" ng-if="q.isCurrent($index)"><i></i><i></i><i></i></span>
