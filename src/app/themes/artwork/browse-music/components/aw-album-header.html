@@ -14,6 +14,12 @@
       <span class="material-symbols-rounded">arrow_back</span>
     </button>
     <div class="aw-albumhead__eyebrow mono">{{ browse.isPlaylistInfo ? 'PLAYLIST' : 'ALBUM' }}</div>
+    <!-- phone: breadcrumb like the artist page (the eyebrow is hidden there) -->
+    <nav class="aw-crumbs aw-crumbs--album" aria-label="Breadcrumb">
+      <a href ng-click="browse.backHome()">Library</a>
+      <span class="aw-crumbs__sep">/</span>
+      <span class="aw-crumbs__cur">{{ browse.browseService.info.title || browse.browseService.info.album }}</span>
+    </nav>
   </div>
 
   <div class="aw-albumhead__cover">

@@ -799,7 +799,8 @@ body#artwork {
   /* on an ALBUM page the album + artist columns just repeat the header —
      hide them so the title reads clean (design §6.3). Playlists/search keep them. */
   #browse.browsing-album .album__tracks .item__album,
-  #browse.browsing-album .album__tracks .item__artist { display: none; }
+  #browse.browsing-album .album__tracks .item__artist,
+  #browse.browsing-album .album__tracks .item__info__separator { display: none; }
 }
 
 /* ============================================================
@@ -1389,3 +1390,5 @@ body#artwork #browse .music-card__img { border-radius: var(--r-cover); }
 body#artwork #browse .music-card__overlay { border-radius: var(--r-cover); }
 body#artwork #browse .music-card .meta__actions .dropdown-menu { right: 0; left: auto; }
 body#artwork #browse .music-card__wrapper:nth-child(odd) .meta__actions .dropdown-menu { left: 0; right: auto; }
+
+body#artwork .aw-albumhead .aw-crumbs--album { display: none; } /* phone only */
