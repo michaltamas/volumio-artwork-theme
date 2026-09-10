@@ -243,6 +243,19 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #layout-container, body#artwork .main-container { height: 100vh; height: 100dvh; }
   body#artwork #main-menu { display: none; }
   body#artwork #contentWrapper { margin-left: 0; width: 100%; }
+  /* one top edge for every screen: the head row (menu · back · title/search) starts at --phone-top
+     on all pages, so the hamburger never jumps when switching screens */
+  :root { --phone-top: calc(14px + var(--sa-t)); }
+  body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-album #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: var(--phone-top); }
+  body#artwork .aw-browse, body#artwork #artwork-home, body#artwork .aw-zones, body#artwork #np, body#artwork .aw-pe { padding-top: var(--phone-top); }
+  body#artwork .aw-listbar, body#artwork .aw-artist__bar, body#artwork .aw-albumhead__top, body#artwork .aw-browse .aw-tabs, body#artwork #artwork-home .home-tabs, body#artwork .aw-zones .aw-listhead, body#artwork #np #np-topbar, body#artwork .aw-mnav__head { min-height: 44px; margin-top: 0; }
+  body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-artist__bar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn, body#artwork .aw-browse .aw-menu-btn, body#artwork #artwork-home .aw-menu-btn, body#artwork .aw-zones .aw-menu-btn, body#artwork #np .np-menu-btn, body#artwork .aw-mnav__back, body#artwork .aw-menu-btn--float { height: 44px; width: 32px; }
+  body#artwork .aw-menu-btn--float { top: var(--phone-top); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { padding-top: var(--phone-top); }
+  body#artwork #pluginWrapper { padding-top: var(--phone-top); }
+  body#artwork #pluginWrapper .boxHeader .title h2 { min-height: 44px; }
+  /* the top band (colour → backdrop) must paint above the page ground but below the bars */
+  body#artwork::before { z-index: 2; }
   body#artwork aw-mobile-menu .aw-mm__sheet { top: calc(14px + var(--sa-t)); bottom: calc(14px + var(--sa-b)); overflow-y: auto; scrollbar-width: none; } /* the component's own sheet rule loads later: element prefix outranks it */
   body#artwork aw-mobile-menu .aw-mm__sheet::-webkit-scrollbar { display: none; }
   body#artwork .aw-mm__foot { flex: none; padding-bottom: 2px; }
@@ -271,7 +284,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
 
   /* --- Now Playing --- */
   body#artwork #layout-container .main-container #contentWrapper #content.playback { overflow-y: auto; }
-  body#artwork #np { height: auto; min-height: 100%; overflow: visible; padding: calc(14px + var(--sa-t)) 20px 0; display: flex; flex-direction: column; }
+  body#artwork #np { height: auto; min-height: 100%; overflow: visible; padding: var(--phone-top) 20px 0; display: flex; flex-direction: column; }
   body#artwork #np #np-topbar { display: flex; align-items: center; gap: 0; margin-top: 0; min-height: 0; }
   body#artwork #np .np-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 26px; } }
   body#artwork #np .np-topbar-left { flex: 1; min-width: 0; display: flex; flex-direction: row-reverse; align-items: center; gap: 0; }
@@ -319,13 +332,12 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
 
   /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
-  body#artwork .aw-browse { padding-top: calc(14px + var(--sa-t)); }
   body#artwork .aw-browse .aw-tabs { gap: 12px; flex-wrap: nowrap; }
   body#artwork .aw-browse .aw-tab, body#artwork .aw-browse .aw-avatar, body#artwork .aw-browse .aw-search-key { display: none; }
   body#artwork .aw-browse .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-browse .aw-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); /* 42 + borders */
     input::placeholder { color: #a7adb3; } }
-  body#artwork .aw-browse .aw-browse-head { margin-top: 24px; align-items: baseline; gap: 12px; }
+  body#artwork .aw-browse .aw-browse-head { margin-top: 20px; align-items: baseline; gap: 12px; }
   body#artwork .aw-browse .aw-browse-title { font-size: 30px; letter-spacing: -.025em; }
   body#artwork .aw-browse .aw-browse-stats { font-size: 11px; color: #b6bcc2; }
   body#artwork .aw-browse .aw-cards, body#artwork .aw-browse .aw-sources { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
@@ -345,7 +357,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .aw-browse .aw-sources-head { margin-top: 22px; }
 
   /* --- Home: the same head as Browse (hamburger + search), same paddings --- */
-  body#artwork #artwork-home { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); min-height: 100%; }
+  body#artwork #artwork-home { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); min-height: 100%; }
   body#artwork #artwork-home .home-tabs { gap: 12px; }
   body#artwork #artwork-home .home-tab, body#artwork #artwork-home .home-avatar, body#artwork #artwork-home .home-search-key { display: none; }
   body#artwork #artwork-home .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
@@ -365,7 +377,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
 
   /* --- Album page: head like the artist page (120px square cover beside the title), then
      compact rows (number · title · time · heart · ⋯) --- */
-  body#artwork #browse.browsing-album #browseTablesWrapper { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork #browse.browsing-album #browseTablesWrapper { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-items: center; }
   /* head like the artist page: plain arrow, then "Library / <album>" */
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__top { grid-column: 1 / -1; margin-bottom: 18px; gap: 12px; }
@@ -398,8 +410,8 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #browse.browsing-album .music-item .item__play { left: 8px; width: 22px; }
 
   /* --- Zones: device cards (icon · name / now playing / volume / actions) --- */
-  body#artwork .aw-zones { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
-  body#artwork .aw-zones .aw-listhead { gap: 12px; margin: 0 0 6px; }
+  body#artwork .aw-zones { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-zones .aw-listhead { gap: 12px; margin: 0 0 6px; align-items: center; }
   body#artwork .aw-zones .aw-listhead .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-zones .aw-listhead__title { font-size: 24px; letter-spacing: -.02em; }
   body#artwork .aw-zones .aw-zones__cols { display: none; }
@@ -421,7 +433,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card .panel.panel-primary .panel-body { font-size: 32px; }
   body#artwork .aw-state-myvolumio-profile .box .user-data .user-title { font-size: 30px; }
   body#artwork .aw-state-myvolumio-profile .box .user-data .btn { float: none; display: inline-flex; margin-top: 14px; }
-  body#artwork .aw-pe { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-pe { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-pe .aw-albumhead__top { margin-bottom: 18px; }
   body#artwork .aw-pe__title { font-size: 24px; letter-spacing: -.02em; }
   body#artwork .aw-pe__grid { margin-top: 20px; gap: 20px; }
@@ -457,10 +469,11 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #contentWrapper.aw-settings-shell .aw-snav { display: none; }
   body#artwork #contentWrapper.aw-settings-shell > aw-settings-side { display: none; }
   body#artwork #contentWrapper.aw-settings-shell aw-settings-nav { display: block; min-height: 0; overflow-y: auto; }
-  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { display: block; padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); color: var(--ink-1); }
+  body#artwork #contentWrapper.aw-settings-shell .aw-mnav { display: block; padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); color: var(--ink-1); }
   body#artwork #contentWrapper.aw-settings-shell .aw-mnav ~ * { display: none; }
   body#artwork #contentWrapper.aw-settings-shell.aw-state-volumio-settings > #content { display: none; } /* the landing's "choose a section" box is the list itself here */
-  body#artwork .aw-mnav__head { display: flex; align-items: center; gap: 12px; margin-top: 0; }
+  body#artwork .aw-mnav__head { display: flex; align-items: flex-start; gap: 12px; margin-top: 0; }
+  body#artwork .aw-mnav__back { height: 44px; align-self: flex-start; margin-top: -2px; }
   body#artwork .aw-mnav__back { border: 0; background: transparent; padding: 0; color: #e4e7ea; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-mnav__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: normal; }
   body#artwork .aw-mnav__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
@@ -474,7 +487,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .aw-mnav__value { font-size: 11px; color: #a2a8ae; }
   body#artwork .aw-mnav__chev { font-size: 20px; color: #71777d; }
   /* plugin pages: the same head as the settings landing (plain arrow · 24/800 title) */
-  body#artwork #pluginWrapper { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork #pluginWrapper { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
   body#artwork #pluginWrapper .boxHeader .title h2 { display: flex; align-items: center; gap: 12px; font-size: 24px; letter-spacing: -.02em; line-height: normal; }
   body#artwork #pluginWrapper .boxHeader .title h2 a.btn { display: grid; place-items: center; width: auto; height: auto; padding: 0; margin: 0; background: transparent; border: 0; box-shadow: none; color: #e4e7ea; flex: none;
     .fa { font-size: 0; } .fa::before { content: 'arrow_back'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; } }
