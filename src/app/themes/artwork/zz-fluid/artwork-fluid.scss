@@ -473,7 +473,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #contentWrapper.aw-settings-shell .aw-mnav ~ * { display: none; }
   body#artwork #contentWrapper.aw-settings-shell.aw-state-volumio-settings > #content { display: none; } /* the landing's "choose a section" box is the list itself here */
   body#artwork .aw-mnav__head { display: flex; align-items: flex-start; gap: 12px; margin-top: 0; }
-  body#artwork .aw-mnav__back { height: 44px; align-self: flex-start; margin-top: -2px; }
+  body#artwork .aw-mnav__back { height: 44px; align-self: flex-start; margin-top: 0; }
   body#artwork .aw-mnav__back { border: 0; background: transparent; padding: 0; color: #e4e7ea; display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-mnav__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; line-height: normal; }
   body#artwork .aw-mnav__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
