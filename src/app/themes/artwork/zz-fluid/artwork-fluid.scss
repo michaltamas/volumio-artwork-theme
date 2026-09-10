@@ -131,8 +131,13 @@ body#artwork #browse.browsing-album .aw-albumhead__actions { margin-top: clamp(1
   body#artwork .aw-albumhead--playlist .aw-albumhead__body { grid-column: 1; grid-row: auto; }
   body#artwork .aw-cols { display: none; }
   /* playlist rows: position · cover · title over artist · ⋯ (the 5-column desktop grid folds) */
-  body#artwork #browse.browsing-playlist .music-item { grid-template-columns: 28px minmax(0, 1fr) 28px; gap: 12px; padding: 10px 0; min-height: 64px; }
-  body#artwork #browse.browsing-playlist .music-item .item__image { width: 28px; height: auto; grid-column: 1; }
+  body#artwork #browse.browsing-playlist .music-item { grid-template-columns: auto minmax(0, 1fr) 28px; gap: 12px; padding: 10px 0; min-height: 64px; }
+  /* the position sits in .item__image (CSS counter); a cover, when the row has one, gets its own
+     44px slot after it instead of painting over the number */
+  body#artwork #browse.browsing-playlist .music-item .item__image { width: auto; min-width: 28px; height: auto; grid-column: 1; display: flex; align-items: center; gap: 12px; overflow: visible; }
+  body#artwork #browse.browsing-playlist .music-item .item__image::before { width: 28px; text-align: center; flex: none; }
+  body#artwork #browse.browsing-playlist .music-item .item__image .item__albumart { position: static; width: 44px; height: 44px; flex: none; margin: 0; }
+  body#artwork #browse.browsing-playlist .music-item .item__image .item__albumart img { width: 44px; height: 44px; border-radius: 5px; object-fit: cover; }
   body#artwork #browse.browsing-playlist .music-item .item__info { grid-column: 2; }
   body#artwork #browse.browsing-playlist .music-item .item__actions { grid-column: 3; }
   body#artwork #browse.browsing-playlist .music-item .item__info { display: flex !important; flex-wrap: wrap; align-content: center; gap: 2px 0; min-width: 0; }
