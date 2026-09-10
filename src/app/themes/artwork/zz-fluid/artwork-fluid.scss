@@ -365,9 +365,9 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* --- Album page: head like the artist page (120px square cover beside the title), then
      compact rows (number · title · time · heart · ⋯) --- */
   body#artwork #browse.browsing-album #browseTablesWrapper { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
-  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: 16px; align-items: center; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-items: center; }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__top { grid-column: 1 / -1; margin-bottom: 18px; }
-  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__cover { grid-column: 1; grid-row: 2; width: 120px; max-width: none; img { box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .8); } }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__cover { grid-column: 1; grid-row: 2; width: 150px; max-width: none; img { box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .8); } }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__body { display: contents; }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__artist, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__meta { grid-column: 2; min-width: 0; }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title { grid-row: 2; align-self: end; }
