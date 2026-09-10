@@ -544,7 +544,13 @@ body#artwork .modal-content .aw-sheet .ui-select-container.ui-select-bootstrap .
 /* ---- track actions sheet (⋯ on Now Playing): head with the track, 4 action tiles, rows ---- */
 body#artwork .modal.aw-dlg--track-actions .modal-dialog { width: 460px; }
 body#artwork .aw-sheet--track {
-  .aw-track__titles { min-width: 0; }
+  .aw-confirm__head { padding: 26px 26px 18px; display: flex; flex-direction: row; align-items: center; gap: 14px; }
+  .aw-confirm__tile { flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #e4e7ea; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12);
+    .material-symbols-rounded { font-size: 23px; } }
+  .aw-confirm__title { font-family: var(--font-ui); font-size: 20px; font-weight: 700; letter-spacing: -.015em; color: var(--ink); }
+  .aw-track__titles { min-width: 0; flex: 1; }
+  .aw-power__cancel { height: 44px; margin-top: 4px; border-radius: 22px; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #c2c8cd; background: transparent; border: 1px solid rgba(255, 255, 255, .14); cursor: pointer; width: 100%;
+    &:hover { background: rgba(255, 255, 255, .06); color: #fff; } }
   .aw-confirm__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .aw-track__sub { margin-top: 4px; font-size: 13px; color: #a7adb3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .aw-track__tiles { display: flex; justify-content: center; gap: 12px; padding: 4px 26px 0; }
