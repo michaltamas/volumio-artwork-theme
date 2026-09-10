@@ -166,7 +166,7 @@ body#artwork #contentWrapper.aw-settings-shell.aw-settings-shell--noside { grid-
 body#artwork .myvolumio-card-container.visible-xs { display: none !important; }
 
 /* ---------- dialogs & toasts ---------- */
-body#artwork .modal-dialog, body#artwork .modal-dialog.modal-lg, body#artwork .modal-dialog.modal-md, body#artwork .modal.aw-dlg--alarm-clock .modal-dialog { max-width: calc(100vw - 24px); }
+body#artwork .modal-dialog, body#artwork .modal-dialog.modal-lg, body#artwork .modal-dialog.modal-md, body#artwork .modal.aw-dlg--alarm-clock .modal-dialog, body#artwork .modal.aw-dlg--track-actions .modal-dialog { max-width: calc(100vw - 24px); }
 body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw - 24px))"); }
 
 /* ============================================================

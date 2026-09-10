@@ -1,0 +1,50 @@
+<!-- Artwork "track actions" sheet (⋯ on Now Playing): the same controller and actions as
+     Volumio's track-manager sheet — shuffle / repeat / favourite / add to playlist, credits and
+     stories (MetaVolumio), go to artist / album, tweet, close. -->
+<div class="aw-sheet aw-sheet--track">
+  <div class="aw-confirm__head">
+    <div class="aw-confirm__tile"><span class="material-symbols-rounded">more_horiz</span></div>
+    <div class="aw-track__titles">
+      <div class="aw-confirm__title">{{modal.playerService.state.title}}</div>
+      <div class="aw-track__sub" ng-if="modal.playerService.state.artist || modal.playerService.state.album">{{modal.playerService.state.artist}}<span ng-if="modal.playerService.state.artist && modal.playerService.state.album">&nbsp;·&nbsp;</span>{{modal.playerService.state.album}}</div>
+    </div>
+  </div>
+
+  <div class="aw-track__tiles">
+    <button type="button" class="aw-track__tile" ng-class="{active: modal.playerService.state.random}" ng-click="modal.playerService.shuffle()" title="{{'TRACK_INFO_BAR.RANDOM' | translate}}"><span class="material-symbols-rounded">shuffle</span></button>
+    <button type="button" class="aw-track__tile" ng-if="!modal.playerService.state.repeat" ng-click="modal.playerService.repeatAlbum(true, false)" title="{{'TRACK_INFO_BAR.REPEAT_ALL' | translate}}"><span class="material-symbols-rounded">repeat</span></button>
+    <button type="button" class="aw-track__tile active" ng-if="modal.playerService.state.repeat && !modal.playerService.state.repeatSingle" ng-click="modal.playerService.repeatAlbum(true, true)" title="{{'TRACK_INFO_BAR.REPEAT_SINGLE' | translate}}"><span class="material-symbols-rounded">repeat</span></button>
+    <button type="button" class="aw-track__tile active" ng-if="modal.playerService.state.repeat && modal.playerService.state.repeatSingle" ng-click="modal.playerService.repeatAlbum(false, false)" title="{{'TRACK_INFO_BAR.REPEAT_OFF' | translate}}"><span class="material-symbols-rounded">repeat_one</span></button>
+    <favourite-track-btn class="aw-track__tile"></favourite-track-btn>
+    <add-track-to-playlist-btn class="aw-track__tile"></add-track-to-playlist-btn>
+  </div>
+
+  <div class="aw-track__rows">
+    <button type="button" class="aw-track__row" ng-class="{'is-off': modal.creditsError}" ng-disabled="modal.creditsLoading || modal.creditsError" ng-click="modal.getAlbumCredits()">
+      <span class="material-symbols-rounded">info</span>
+      <span class="aw-track__label" ng-if="!modal.creditsError">{{'BROWSER.ALBUM_CREDITS' | translate}}</span>
+      <span class="aw-track__label" ng-if="modal.creditsError">{{'BROWSER.ALBUM_CREDITS' | translate}} · {{'BROWSER.NOT_FOUND' | translate}}</span>
+      <span class="material-symbols-rounded aw-track__spin" ng-if="modal.creditsLoading">progress_activity</span>
+    </button>
+    <button type="button" class="aw-track__row" ng-class="{'is-off': modal.albumStoryError}" ng-disabled="modal.albumStoryLoading || modal.albumStoryError" ng-click="modal.getAlbumStory()">
+      <span class="material-symbols-rounded">album</span>
+      <span class="aw-track__label" ng-if="!modal.albumStoryError">{{'BROWSER.ALBUM_STORY' | translate}}</span>
+      <span class="aw-track__label" ng-if="modal.albumStoryError">{{'BROWSER.ALBUM_STORY' | translate}} · {{'BROWSER.NOT_FOUND' | translate}}</span>
+      <span class="material-symbols-rounded aw-track__spin" ng-if="modal.albumStoryLoading">progress_activity</span>
+    </button>
+    <button type="button" class="aw-track__row" ng-class="{'is-off': modal.artistError}" ng-disabled="modal.artistStoryLoading || modal.artistError" ng-click="modal.getArtistStory()">
+      <span class="material-symbols-rounded">groups</span>
+      <span class="aw-track__label" ng-if="!modal.artistError">{{'BROWSER.ARTIST_STORY' | translate}}</span>
+      <span class="aw-track__label" ng-if="modal.artistError">{{'BROWSER.ARTIST_STORY' | translate}} · {{'BROWSER.NOT_FOUND' | translate}}</span>
+      <span class="material-symbols-rounded aw-track__spin" ng-if="modal.artistStoryLoading">progress_activity</span>
+    </button>
+    <div class="aw-track__sep"></div>
+    <button type="button" class="aw-track__row" ng-if="modal.playerService.state.artist" ng-click="modal.goTo('artist')">
+      <span class="material-symbols-rounded">person</span><span class="aw-track__label" translate="TRACK_MANAGER.GO_TO_ARTIST"></span></button>
+    <button type="button" class="aw-track__row" ng-if="modal.playerService.state.album" ng-click="modal.goTo('album')">
+      <span class="material-symbols-rounded">album</span><span class="aw-track__label" translate="TRACK_MANAGER.GO_TO_ALBUM"></span></button>
+    <button type="button" class="aw-track__row" ng-if="modal.playerService.state.album && modal.uiSettingsService.uiSettings.trackManagerButtonBar.actions.twitter !== false" ng-click="modal.tweetTrack(modal.uiSettingsService.uiSettings.trackManagerButtonBar.actions.twitterData)">
+      <span class="material-symbols-rounded">share</span><span class="aw-track__label" translate="TRACK_MANAGER.TWEET_TRACK"></span></button>
+    <button type="button" class="aw-power__cancel" ng-click="modal.cancel()"><span translate="COMMON.CLOSE"></span></button>
+  </div>
+</div>

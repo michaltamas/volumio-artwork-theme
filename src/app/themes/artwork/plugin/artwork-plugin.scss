@@ -540,3 +540,29 @@ body#artwork .aw-sheet--playlist {
 /* an empty select in a sheet shows Volumio's real placeholder (e.g. "Choose Playlist"), like the mockup;
    outranks the mixin's placeholder reset (same !important, more specific) */
 body#artwork .modal-content .aw-sheet .ui-select-container.ui-select-bootstrap .ui-select-placeholder { display: inline !important; color: #8c9298; }
+
+/* ---- track actions sheet (⋯ on Now Playing): head with the track, 4 action tiles, rows ---- */
+body#artwork .modal.aw-dlg--track-actions .modal-dialog { width: 460px; }
+body#artwork .aw-sheet--track {
+  .aw-track__titles { min-width: 0; }
+  .aw-confirm__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aw-track__sub { margin-top: 4px; font-size: 13px; color: #a7adb3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aw-track__tiles { display: flex; justify-content: center; gap: 12px; padding: 4px 26px 0; }
+  .aw-track__tile, .aw-track__tile .btn, .aw-track__tile .btn-link { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; padding: 0; margin: 0;
+    background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .11); color: #c2c8cd; cursor: pointer; box-shadow: none;
+    .material-symbols-rounded { font-size: 24px; } }
+  .aw-track__tile .btn, .aw-track__tile .btn-link { width: 100%; height: 100%; border: 0; background: transparent; }
+  .aw-track__tile .fa { font-size: 0; }
+  favourite-track-btn.aw-track__tile .fa::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; }
+  add-track-to-playlist-btn.aw-track__tile .fa::before { content: 'playlist_add'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; }
+  .aw-track__tile.active, .aw-track__tile .active { color: #fff; background: rgba(255, 255, 255, .16); }
+  .aw-track__rows { padding: 18px 26px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .aw-track__row { display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 16px; border-radius: 14px; width: 100%; text-align: left; cursor: pointer;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); color: #e4e7ea;
+    .material-symbols-rounded { font-size: 21px; color: #c2c8cd; } .aw-track__label { flex: 1; min-width: 0; font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    &:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+    &.is-off, &[disabled] { opacity: .5; cursor: default; }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  .aw-track__spin { animation: aw-spin 1s linear infinite; color: #c2c8cd; }
+  .aw-track__sep { height: 1px; margin: 6px 0; background: rgba(255, 255, 255, .09); }
+}

@@ -56,7 +56,8 @@ class ModalService {
       'app/components/side-menu/elements/modal-sleep.html': 'sleep',
       'app/components/side-menu/elements/modal-alarm-clock.html': 'alarm-clock',
       'app/components/side-menu/elements/modal-power-off.html': 'power-off',
-      'app/browse/components/modal/modal-playlist.html': 'playlist'
+      'app/browse/components/modal/modal-playlist.html': 'playlist',
+      'app/components/track-manager/components/modals/modal-track-manager-actions.html': 'track-actions'
     };
     const key = own[templateUrl];
     if (!key) { return { templateUrl }; }

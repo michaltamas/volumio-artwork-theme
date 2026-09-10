@@ -1380,3 +1380,12 @@ body#artwork #browse.browsing-artists .music-card .meta__actions .dropdown-menu 
    painted over an earlier card's open dropdown: the hovered / focused card is raised */
 body#artwork .music-card__wrapper { position: relative; }
 body#artwork .music-card__wrapper:hover, body#artwork .music-card__wrapper:focus-within { z-index: 6; }
+
+/* grid cards: the cover box clips its overlay, so an open context menu was cut to the tile.
+   The overlay and the header stay unclipped (the image itself keeps the rounded corners) and
+   the dropdown is a floating panel that opens towards the free side. */
+body#artwork #browse .music-card__header, body#artwork #browse .music-card__overlay { overflow: visible; }
+body#artwork #browse .music-card__img { border-radius: var(--r-cover); }
+body#artwork #browse .music-card__overlay { border-radius: var(--r-cover); }
+body#artwork #browse .music-card .meta__actions .dropdown-menu { right: 0; left: auto; }
+body#artwork #browse .music-card__wrapper:nth-child(odd) .meta__actions .dropdown-menu { left: 0; right: auto; }
