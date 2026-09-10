@@ -362,6 +362,34 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* --- list, album and artist heads: the menu button next to Back --- */
   body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
 
+  /* --- Album page: head like the artist page (120px square cover beside the title), then
+     compact rows (number · title · time · heart · ⋯) --- */
+  body#artwork #browse.browsing-album #browseTablesWrapper { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: 16px; align-items: center; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__top { grid-column: 1 / -1; margin-bottom: 18px; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__cover { grid-column: 1; grid-row: 2; width: 120px; max-width: none; img { box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .8); } }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__body { display: contents; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__artist, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__meta { grid-column: 2; min-width: 0; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title { grid-row: 2; align-self: end; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__artist { grid-row: 3; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__meta { grid-row: 4; align-self: start; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__cover { grid-row: 2 / 5; align-self: center; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__eyebrow { display: none; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title { font-size: 22px !important; letter-spacing: -.02em; line-height: 1.1; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__artist { font-size: 15px; margin-top: 6px; color: #d6dade; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__meta { font-size: 10px; margin-top: 8px; letter-spacing: .08em; white-space: normal; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__actions { grid-column: 1 / -1; grid-row: 5; margin-top: 18px !important; gap: 10px; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__actions .aw-btn { height: 44px; padding: 0 18px; font-size: 14px; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__actions .aw-iconbtn { width: 44px; height: 44px; }
+  body#artwork #browse.browsing-album #browseTablesWrapper > #browse-page { margin-top: 22px; }
+  body#artwork #browse.browsing-album .music-item { grid-template-columns: 22px minmax(0, 1fr) auto auto auto; gap: 10px; padding: 12px 8px; }
+  body#artwork #browse.browsing-album .music-item .item__number { font-size: 11px; }
+  body#artwork #browse.browsing-album .music-item:not(.aw-playing) .item__number-dot { display: none !important; }
+  body#artwork #browse.browsing-album .music-item .item__title { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #browse.browsing-album .music-item .item__duration { font-size: 11px; }
+  body#artwork #browse.browsing-album .music-item .item__favorite .item__favorite-heart .fa::before { font-size: 18px; }
+  body#artwork #browse.browsing-album .music-item .item__play { left: 8px; width: 22px; }
+
   /* --- Zones: device cards (icon · name / now playing / volume / actions) --- */
   body#artwork .aw-zones { padding: calc(14px + var(--sa-t)) 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-zones .aw-listhead { gap: 12px; margin: 0 0 6px; }
