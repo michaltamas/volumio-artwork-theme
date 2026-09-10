@@ -96,9 +96,16 @@ body#artwork .aw-listbar { flex-wrap: wrap; row-gap: 10px; }
 body#artwork .aw-filter { width: unquote("min(290px, 100%)"); }
 body#artwork .aw-listhead { flex-wrap: wrap; row-gap: 10px; }
 @media (max-width: 640px) {
+  /* list rows: title on its own line, then "artist · album" on one line (Volumio emits
+     album · separator · artist; order puts the artist first), ellipsis on both lines */
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__info { display: flex !important; flex-wrap: wrap; align-content: center; gap: 2px 0; min-width: 0; }
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__title { flex: 0 0 100%; order: 0; width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__artist { order: 1; }
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__info__separator { order: 2; display: block; margin: 0 6px; }
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__album { order: 3; }
+  body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__artist, body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__album, body#artwork #browse:not(.browsing-album):not(.browsing-artist) .music-item .item__info__separator { display: block; flex: 0 1 auto; width: auto; min-width: 0; font-size: 13px; color: #8c9298; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   body#artwork .aw-filter { flex-basis: 100%; margin-left: 0; }
   body#artwork .aw-alpha { display: none; }
-  body#artwork #browse .music-item .item__album { display: none; }
 }
 @media (max-height: 520px) { body#artwork .aw-alpha { display: none; } }
 body#artwork .home-hero { flex-wrap: wrap; gap: clamp(18px, 2.5vw, 36px); }
@@ -122,8 +129,21 @@ body#artwork #browse.browsing-album .aw-albumhead__actions { margin-top: clamp(1
   body#artwork .aw-albumhead--playlist { grid-template-columns: 1fr; }
   body#artwork .aw-albumhead--playlist .aw-albumhead__cover { grid-row: auto; max-width: unquote("min(260px, 60vw)"); }
   body#artwork .aw-albumhead--playlist .aw-albumhead__body { grid-column: 1; grid-row: auto; }
-  body#artwork .aw-cols .aw-cols__info, body#artwork #browse.browsing-playlist .music-item .item__info { grid-template-columns: 1fr; }
-  body#artwork #browse.browsing-playlist .music-item .item__album { display: none; }
+  body#artwork .aw-cols { display: none; }
+  /* playlist rows: position · cover · title over artist · ⋯ (the 5-column desktop grid folds) */
+  body#artwork #browse.browsing-playlist .music-item { grid-template-columns: 28px minmax(0, 1fr) 28px; gap: 12px; padding: 10px 0; min-height: 64px; }
+  body#artwork #browse.browsing-playlist .music-item .item__image { width: 28px; height: auto; grid-column: 1; }
+  body#artwork #browse.browsing-playlist .music-item .item__info { grid-column: 2; }
+  body#artwork #browse.browsing-playlist .music-item .item__actions { grid-column: 3; }
+  body#artwork #browse.browsing-playlist .music-item .item__info { display: flex !important; flex-wrap: wrap; align-content: center; gap: 2px 0; min-width: 0; }
+  body#artwork #browse.browsing-playlist .music-item .item__title { flex: 0 0 100%; order: 0; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #browse.browsing-playlist .music-item .item__artist { order: 1; }
+  body#artwork #browse.browsing-playlist .music-item .item__info__separator { order: 2; display: block; margin: 0 6px; }
+  body#artwork #browse.browsing-playlist .music-item .item__album { order: 3; }
+  body#artwork #browse.browsing-playlist .music-item .item__artist, body#artwork #browse.browsing-playlist .music-item .item__album, body#artwork #browse.browsing-playlist .music-item .item__info__separator { display: block; flex: 0 1 auto; min-width: 0; font-size: 13px; color: #8c9298; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #browse.browsing-playlist .music-item .item__title, body#artwork #browse.browsing-playlist .music-item .item__artist, body#artwork #browse.browsing-playlist .music-item .item__album { grid-area: auto; }
+  body#artwork #browse.browsing-playlist .music-item .item__favorite { display: none; }
+  body#artwork #browse.browsing-playlist .music-item .item__actions { display: block; width: 28px; }
 }
 
 /* ---------- artist page ---------- */
