@@ -161,6 +161,7 @@ body#artwork #browse.browsing-artist .music-item .item__title { width: clamp(140
   body#artwork .aw-artist__bar { flex-wrap: wrap; row-gap: 10px; }
   body#artwork .aw-artist__filter { width: 100%; margin-left: 0; }
   body#artwork #browse.browsing-artist .music-item .item__title { width: auto; flex: 1; }
+  body#artwork .aw-artist__menu .dropdown-menu { max-width: calc(100vw - 40px); }
   /* track rows: title over album, one line each; position slot 22px, tighter gaps */
   body#artwork #browse.browsing-artist .music-item { gap: 12px; padding: 0 8px; height: 60px; }
   body#artwork #browse.browsing-artist .music-item .item__image { width: 22px; }
