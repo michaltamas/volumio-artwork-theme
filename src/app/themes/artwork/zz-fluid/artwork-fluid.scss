@@ -168,6 +168,13 @@ body#artwork .myvolumio-card-container.visible-xs { display: none !important; }
 /* ---------- dialogs & toasts ---------- */
 body#artwork .modal-dialog, body#artwork .modal-dialog.modal-lg, body#artwork .modal-dialog.modal-md, body#artwork .modal.aw-dlg--alarm-clock .modal-dialog, body#artwork .modal.aw-dlg--track-actions .modal-dialog { max-width: calc(100vw - 24px); }
 body#artwork #toast-container > .toast { width: unquote("min(394px, calc(100vw - 24px))"); }
+/* narrow screens: the toast column spans the width (12px sides, under the status bar) and long
+   words (URIs) wrap instead of running off the card */
+@media (max-width: 480px) {
+  html body#artwork #toast-container, html body#artwork #toast-container.toast-top-right { left: 12px !important; right: 12px !important; top: calc(12px + env(safe-area-inset-top, 0px)) !important; align-items: stretch; }
+  html body#artwork #toast-container > .toast { width: auto !important; }
+  body#artwork #toast-container > .toast .toast-message, body#artwork #toast-container > .toast .toast-title { overflow-wrap: anywhere; word-break: break-word; }
+}
 
 /* ============================================================
    PHONE (narrow portrait, mockup "Mobile screens"): the rail becomes the menu sheet, the mini
