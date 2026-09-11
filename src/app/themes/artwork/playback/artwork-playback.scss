@@ -320,15 +320,20 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
 #np #np-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 4px; }
 #np #np-transport { justify-content: flex-start; }
 #np #np-upnext { display: flex; align-items: center; gap: 13px; flex: none; }
-#np .np-upnext-label { font-size: 11px; letter-spacing: .16em; color: #a7adb3; white-space: nowrap; }
+#np .np-upnext-label { font-size: 11px; letter-spacing: .16em; color: #a7adb3; white-space: nowrap; background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-mono);
+  &:hover { color: #fff; } &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 4px; border-radius: 4px; } }
+#np .np-upnext-film { display: block; padding: 0; margin: 0; border: 0; background: transparent; border-radius: 5px; cursor: pointer; transition: transform .15s ease;
+  img { display: block; transition: opacity .15s ease; }
+  &:hover { transform: translateY(-2px); img { opacity: 1 !important; } }
+  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
 /* mockup: three separate 44px covers r5 with a 13px gap, fading 1 / .6 / .34 — never overlapping */
 #np .np-upnext-films { display: flex; gap: 13px; }
 #np .np-upnext-films img {
   width: 44px; height: 44px; border-radius: 5px; object-fit: cover;
 }
-#np .np-upnext-films img:nth-child(1) { opacity: 1; }
-#np .np-upnext-films img:nth-child(2) { opacity: .6; }
-#np .np-upnext-films img:nth-child(3) { opacity: .34; }
+#np .np-upnext-film:nth-child(1) img { opacity: 1; }
+#np .np-upnext-film:nth-child(2) img { opacity: .6; }
+#np .np-upnext-film:nth-child(3) img { opacity: .34; }
 #np .np-queue {
   min-width: 44px; height: 44px; border-radius: 12px; padding: 0 14px; /* mockup: r12, rgba(255,255,255,.12), no border */
   background: rgba(255,255,255,.12); border: 0; color: var(--ink-1);

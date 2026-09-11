@@ -70,6 +70,12 @@ class PlaybackController {
     } catch (e) { return []; }
   }
 
+  // Up Next cover i → the queue entry right after the current one
+  playUpNext(i) {
+    const pos = (this.playerService.state && this.playerService.state.position) || 0;
+    this.playQueueService.play(pos + 1 + i);
+  }
+
   // --- Now Playing readouts derived from real player state (spec §5.4–5.6) ---
   // "24 bit" -> {n:"24", u:"bit"}, "48 kHz" -> {n:"48", u:"kHz"}
   splitVal(s) {

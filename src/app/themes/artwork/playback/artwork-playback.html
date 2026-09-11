@@ -77,11 +77,13 @@
         <player-buttons></player-buttons>
       </div>
       <div id="np-upnext" ng-if="playback.upNext.length">
-        <span class="np-upnext-label mono">UP NEXT</span>
+        <button type="button" class="np-upnext-label mono" ng-click="playback.awQueue.show()" title="{{'COMMON.TAB_QUEUE' | translate}}">UP NEXT</button>
         <div class="np-upnext-films">
-          <img ng-repeat="t in playback.upNext track by $index"
-               ng-src="{{playback.playerService.getAlbumart(t.albumart)}}"
-               alt="{{t.title}}" title="{{t.title}}"/>
+          <!-- each cover plays that queue entry -->
+          <button type="button" class="np-upnext-film" ng-repeat="t in playback.upNext track by $index"
+                  ng-click="playback.playUpNext($index)" title="{{t.name || t.title}}{{t.artist ? ' · ' + t.artist : ''}}" aria-label="Play {{t.name || t.title}}">
+            <img ng-src="{{playback.playerService.getAlbumart(t.albumart)}}" alt=""/>
+          </button>
         </div>
         <button type="button" class="np-queue" ng-click="playback.awQueue.toggle()" ng-class="{active: playback.awQueue.open}" title="{{'COMMON.TAB_QUEUE' | translate}}">
           <span class="material-symbols-rounded">queue_music</span>
