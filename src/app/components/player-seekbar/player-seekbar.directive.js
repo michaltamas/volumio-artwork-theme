@@ -35,8 +35,46 @@ class playerSeekBarController {
     // Artwork theme waveform scrubber (spec §5.7). Volumio doesn't provide peak
     // data, so heights come from a deterministic seeded envelope (LCG x sine
     // window). Other themes' seekbar templates simply don't render these.
+    // The bar count follows the waveform's width: the theme sets the bar pitch
+    // (--wave-pitch, bar + 2px gap) or a fixed count (--wave-count).
     this.WAVE_N = 104;
+    this.waveKey = 0;
     this.bars = this.buildWave(this.WAVE_N);
+    this.initWaveSizing();
+  }
+
+  initWaveSizing(){
+    const measure = () => this.measureWave();
+    if (window.ResizeObserver) {
+      // observes the waveform itself (the host element is inline and reports no size)
+      this.resizeObserver = new window.ResizeObserver(measure);
+    } else {
+      angular.element(window).on('resize', measure);
+    }
+    // the waveform exists only once a duration is known (ng-if): measure when it appears
+    this.$scope.$watch(() => this.getDuration() !== null, (has) => { if (has) { this.$timeout(measure, 0, false); } });
+    this.$scope.$on('$destroy', () => {
+      if (this.resizeObserver) { this.resizeObserver.disconnect(); } else { angular.element(window).off('resize', measure); }
+    });
+  }
+
+  measureWave(){
+    const wave = this.$element[0].querySelector('.artwork-wave');
+    if (wave && this.resizeObserver && wave !== this.observedWave) {
+      if (this.observedWave) { this.resizeObserver.unobserve(this.observedWave); }
+      this.observedWave = wave;
+      this.resizeObserver.observe(wave); // calls back once with the current size
+    }
+    if (!wave || !wave.clientWidth) { return; }
+    const cs = window.getComputedStyle(wave);
+    const fixed = parseInt(cs.getPropertyValue('--wave-count'), 10);
+    const pitch = parseFloat(cs.getPropertyValue('--wave-pitch')) || 6;
+    const n = fixed > 0 ? fixed : Math.max(16, Math.floor((wave.clientWidth + 2) / pitch));
+    if (n === this.WAVE_N) { return; }
+    this.WAVE_N = n;
+    this.waveKey++;
+    this.bars = this.buildWave(n);
+    this.$scope.$applyAsync();
   }
 
   init(){
@@ -98,6 +136,12 @@ class playerSeekBarController {
     return (i + 0.5) / this.WAVE_N <= (this.playerService.seekPercent / this.waveScale);
   }
 
+  // the played share of the waveform, 0..100 (clips the bright row, places the playhead)
+  playedPct(){
+    const p = (this.playerService.seekPercent / this.waveScale) * 100;
+    return Math.min(100, Math.max(0, p || 0));
+  }
+
   seekToBar(i){
     this.seekPercent = Math.round(((i + 0.5) / this.WAVE_N) * this.waveScale);
   }
@@ -141,6 +185,12 @@ class playerSeekBarController {
   getElapsed() {
     let elapsedTime = this.playerService.elapsedTime;
     return this.momentToString(elapsedTime);
+  }
+
+  getRemaining(){
+    const st = this.playerService.state;
+    if (!st || !st.duration) { return ''; }
+    return this.momentToString(Math.max(0, st.duration * 1000 - (this.playerService.elapsedTime || 0)));
   }
 
   getDuration(){

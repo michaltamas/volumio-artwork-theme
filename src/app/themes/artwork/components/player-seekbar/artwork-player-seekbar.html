@@ -1,13 +1,19 @@
-<!-- Artwork waveform scrubber (spec §5.7). elapsed | waveform | duration -->
+<!-- Artwork waveform scrubber (spec §5.7). elapsed | waveform | duration; Now Playing adds the
+     remaining time and a playhead. The bar count follows the waveform's width (see the directive):
+     the dim row, the played row clipped at the position, the playhead. -->
 <div class="artwork-seek" ng-if="playerSeekBar.getDuration() != null">
   <span class="seek-time seek-elapsed mono">{{playerSeekBar.getElapsed()}}</span>
   <div class="artwork-wave" role="slider" tabindex="0" aria-label="Seek"
        aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{playerSeekBar.ariaNow()}}"
        ng-keydown="playerSeekBar.onKey($event)">
-    <div class="wave-bar"
-         ng-repeat="h in playerSeekBar.bars track by $index"
-         ng-class="{played: playerSeekBar.barPlayed($index)}"
-         ng-style="{height: (h / 46 * 100) + '%'}"></div>
+    <div class="wave-bars">
+      <div class="wave-bar" ng-repeat="h in playerSeekBar.bars track by (playerSeekBar.waveKey + ':' + $index)" ng-style="::{height: (h / 46 * 100) + '%'}"></div>
+    </div>
+    <div class="wave-bars wave-bars--played" ng-style="{'clip-path': 'inset(0 ' + (100 - playerSeekBar.playedPct()) + '% 0 0)', '-webkit-clip-path': 'inset(0 ' + (100 - playerSeekBar.playedPct()) + '% 0 0)'}" aria-hidden="true">
+      <div class="wave-bar" ng-repeat="h in playerSeekBar.bars track by (playerSeekBar.waveKey + ':' + $index)" ng-style="::{height: (h / 46 * 100) + '%'}"></div>
+    </div>
+    <div class="wave-head" ng-style="{left: playerSeekBar.playedPct() + '%'}" aria-hidden="true"></div>
   </div>
+  <span class="seek-time seek-remaining mono">-{{playerSeekBar.getRemaining()}}</span>
   <span class="seek-time seek-duration mono">{{playerSeekBar.getDuration()}}</span>
 </div>
