@@ -133,22 +133,24 @@ volume-manager{
 #footer-content .volume-slider {
   display: flex; align-items: center; gap: 8px; float: none;
 
+  gap: 9px; /* mockup: icon · 70px track */
   .button-mute {
-    float: none; width: 32px; height: 32px; padding: 0; margin: 0; border: 0; background: none;
-    display: grid; place-items: center; color: var(--ink-2); border-radius: var(--r-control);
-    .fa { font-size: 15px; }
-    &:hover { color: var(--ink-1); background: rgba(255, 255, 255, .08); }
-    &.selected { color: var(--ink-muted); } /* muted */
+    float: none; width: 26px; height: 26px; padding: 0; margin: 0; border: 0; background: none;
+    display: grid; place-items: center; color: #c2c8cd; border-radius: var(--r-control);
+    /* mockup glyph: Material volume_up (volume_off while muted), keyed on the mute state */
+    .fa { font-size: 0; &::before { content: 'volume_up'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; line-height: 1; } }
+    &:hover { color: #fff; background: transparent; }
+    &.selected { color: var(--ink-muted); .fa::before { content: 'volume_off'; } } /* muted */
   }
 
-  .volumeSlider { margin: 0; padding: 0; width: 64px; flex: none; }
+  .volumeSlider { margin: 0; padding: 0; width: 70px; flex: none; }
   .volume-text { display: none; }
 
   /* bootstrap-slider internals */
-  .slider.slider-horizontal { width: 64px; height: 20px; margin: 0; }
+  .slider.slider-horizontal { width: 70px; height: 20px; margin: 0; }
   .slider.slider-horizontal .slider-track {
-    height: 3px; top: 50%; margin-top: -1.5px; border-radius: 2px;
-    background: rgba(255, 255, 255, .18) !important; background-image: none !important; box-shadow: none;
+    height: 4px; top: 50%; margin-top: -2px; border-radius: 2px;
+    background: rgba(255, 255, 255, .2) !important; background-image: none !important; box-shadow: none;
   }
   .slider-track-low, .slider-track-high {
     background: transparent !important; background-image: none !important; box-shadow: none;

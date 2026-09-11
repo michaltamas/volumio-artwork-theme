@@ -60,9 +60,13 @@ body#artwork #browse .panel .body-content.new-browse { bottom: var(--mini-h); he
 body#artwork .main-container.with-playback-bar #browse .panel .body-content.new-browse { bottom: 0; }
 
 /* ---------- mini player ---------- */
-body#artwork #footer-content { padding-left: clamp(12px, 1.5vw, 22px); padding-right: clamp(12px, 1.5vw, 22px); }
-body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: clamp(10px, 1.4vw, 20px); }
-body#artwork #footer-content .mini-transport #playerButtons { gap: clamp(12px, 1.8vw, 26px); }
+/* mockup: columns 300px | 1fr | 280px, gap 24, padding 0 28. Fluid: the identity column is
+   capped at 300px and shrinks with the bar, the right cluster takes its content, the centre
+   (transport over the waveform) takes the rest — never less than the transport itself */
+body#artwork #footer-content { padding-left: clamp(12px, 1.95vw, 28px); padding-right: clamp(12px, 1.95vw, 28px); }
+body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, unquote("min(300px, 23%)")) minmax(auto, 1fr) auto; column-gap: clamp(10px, 1.67vw, 24px); }
+/* mockup: 26px between glyphs — the buttons carry 6px padding each side */
+body#artwork #footer-content .mini-transport #playerButtons { gap: clamp(4px, 1vw, 14px); }
 @media (max-width: 900px) {
   body#artwork #footer-content .mini-zone .mini-zone-name { display: none; } body#artwork #footer-content .mini-zone { padding: 0 11px; }
   body#artwork #footer-content .mini-volume { display: none; }

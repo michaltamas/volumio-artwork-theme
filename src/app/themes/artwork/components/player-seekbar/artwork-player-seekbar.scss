@@ -24,13 +24,15 @@
 }
 .wave-head { display: none; position: absolute; top: -8px; bottom: -6px; width: 2px; margin-left: -1px; border-radius: 1px; background: #fff; pointer-events: none; }
 
-/* mini-player: waveform STRETCHES to fill the strip (spec §5.7 — mini bars
-   are flex:1, 104 of them, unlike the fixed-pitch Now Playing waveform) */
+/* mini-player (mockup): the waveform fills the centre column under the transport —
+   104 flex bars in 602px there, i.e. the Now Playing 6px pitch; bars stretch to fill */
 #footer-content {
   .artwork-seek { gap: 12px; }
-  .artwork-wave { --wave-count: 104; flex: 1 1 auto; height: 16px; }
+  .artwork-wave { --wave-pitch: 6px; flex: 1 1 auto; height: 16px; }
   .wave-bar { flex: 1 1 0; width: auto; min-width: 0; }
-  .seek-time { font-size: 11px; } /* spec §3.5: nothing below 11px */
+  .seek-time { font-size: 11px; letter-spacing: 0; } /* mockup: Space Mono 11px, no tracking */
+  .seek-elapsed { color: #fff; }
+  .seek-duration { color: #a7adb3; }
 }
 
 /* Now Playing: the waveform across the full width, the timecodes UNDER it —

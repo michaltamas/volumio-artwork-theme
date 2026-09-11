@@ -81,11 +81,11 @@ body#artwork .main-container.with-playback-bar ~ aw-queue-panel .aw-queue { bott
 
 /* mini player: queue pill with the count (mockup: h38, pad 0 14, r19, glyph 20, mono 12/700);
    glass while closed, white while the panel is open */
+/* mockup: a plain 24px queue icon; the queue length sits beside it */
 body#artwork #footer-content .mini-queue {
-  display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 14px; border-radius: 19px;
-  background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .12); color: #e4e7ea;
-  .material-symbols-rounded { font-size: 20px; color: #e4e7ea; }
-  .mini-queue__count { font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
-  &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
-  &.selected { background: #fff; border-color: #fff; color: #0d0e10; .material-symbols-rounded { color: #0d0e10; } }
+  display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 4px; border: 0; border-radius: 10px; background: transparent; color: #c2c8cd;
+  .material-symbols-rounded { font-size: 24px; color: inherit; }
+  .mini-queue__count { font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+  &:hover { color: #fff; background: transparent; }
+  &.selected { color: #fff; }
 }
