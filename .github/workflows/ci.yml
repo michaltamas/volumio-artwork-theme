@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check shell scripts
+        run: shellcheck build.sh scripts/*.sh
+
+      - name: Build Artwork One (Node 10 in Docker)
+        run: ./build.sh artwork artwork
+
+      - name: Package the release archive
+        run: scripts/package.sh "$(git describe --tags --always)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: artwork-ui
+          path: artwork-ui.tar.gz
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: artwork-ui
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          # the matching CHANGELOG section, without the link references
+          awk -v v="$version" '
+            index($0, "## [" v "]") == 1 { on = 1; next }
+            on && /^## / { exit }
+            on && !/^\[[^]]+\]: / { print }
+          ' CHANGELOG.md > notes.md
+          printf '\n**Install or update on the player:**\n\n```bash\ncurl -fsSL https://raw.githubusercontent.com/%s/master/scripts/install.sh | bash\n```\n' "$GITHUB_REPOSITORY" >> notes.md
+          gh release create "$GITHUB_REF_NAME" artwork-ui.tar.gz \
+            --title "Artwork One $GITHUB_REF_NAME" --notes-file notes.md --verify-tag
