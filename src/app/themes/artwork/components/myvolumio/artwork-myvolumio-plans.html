@@ -1,0 +1,30 @@
+<!-- MyVolumio plans in the theme's idiom: the same controller, back button and plan cards as
+     Volumio's page; the Yearly/Monthly bs-switch becomes a two-segment control on the same model -->
+<div class="box">
+  <div id="authPlansPlugin" class="aw-plans">
+    <my-volumio-back-button label="{{'MYVOLUMIO.PROFILE' | translate}}" route-destination="myvolumio.profile">
+    </my-volumio-back-button>
+
+    <div class="aw-plans__head">
+      <h1 class="aw-plans__title" translate="MYVOLUMIO.PLANS"></h1>
+      <div class="aw-plans__seg" role="radiogroup">
+        <button type="button" role="radio" aria-checked="{{!myVolumioPlansController.showYearly}}"
+                ng-class="{'is-on': !myVolumioPlansController.showYearly}"
+                ng-click="myVolumioPlansController.showYearly = false" translate="MYVOLUMIO.MONTHLY"></button>
+        <button type="button" role="radio" aria-checked="{{myVolumioPlansController.showYearly}}"
+                ng-class="{'is-on': myVolumioPlansController.showYearly}"
+                ng-click="myVolumioPlansController.showYearly = true" translate="MYVOLUMIO.YEARLY"></button>
+      </div>
+    </div>
+
+    <div ng-if="!myVolumioPlansController.isVolumioV3" class="aw-plans__grid">
+      <my-volumio-plan-card ng-if="myVolumioPlansController.product0" product="myVolumioPlansController.product0" show-mode="myVolumioPlansController.showMode"></my-volumio-plan-card>
+      <my-volumio-plan-card ng-if="myVolumioPlansController.product1" product="myVolumioPlansController.product1" show-mode="myVolumioPlansController.showMode"></my-volumio-plan-card>
+      <my-volumio-plan-card ng-if="myVolumioPlansController.product2" product="myVolumioPlansController.product2" show-mode="myVolumioPlansController.showMode"></my-volumio-plan-card>
+    </div>
+    <div ng-if="myVolumioPlansController.isVolumioV3" class="aw-plans__grid">
+      <my-volumio-plan-card ng-if="myVolumioPlansController.product0" product="myVolumioPlansController.product0" show-mode="myVolumioPlansController.showMode"></my-volumio-plan-card>
+      <my-volumio-plan-card ng-if="myVolumioPlansController.product1" product="myVolumioPlansController.product1" show-mode="myVolumioPlansController.showMode"></my-volumio-plan-card>
+    </div>
+  </div>
+</div>

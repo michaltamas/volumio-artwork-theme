@@ -420,3 +420,52 @@ body#artwork .aw-state-myvolumio-login .box, body#artwork .aw-state-myvolumio-si
     .glyphicon { top: 0; font-size: 13px; color: #c2c8cd; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } } }
   .panel-body > my-volumio-back-button + p { margin: 0 0 22px; }
 }
+
+/* ============================================================
+   MyVolumio plans — the theme's own template (Monthly | Yearly segments on the same model)
+   in the auth pages' idiom: back pill, 46/800 title, the signup plan step's segmented control
+   and glass plan cards.
+   ============================================================ */
+body#artwork .aw-state-myvolumio-plans .box {
+  position: relative; padding: clamp(24px, 4.4vh, 40px) var(--pad-screen) 60px; background: transparent; border: 0; box-shadow: none; color: var(--ink-1);
+  .aw-plans { max-width: 960px; margin: 0 auto; }
+  my-volumio-back-button { display: block; margin: 0 0 18px; a { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 18px; background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 14px !important; font-weight: 500; text-decoration: none;
+    .glyphicon { top: 0; font-size: 13px; color: #c2c8cd; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } } }
+  .aw-plans__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 0 0 24px; }
+  .aw-plans__title { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+  /* the signup plan step's Monthly/Yearly toggle */
+  .aw-plans__seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .11);
+    button { height: 32px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; font-size: 13px; font-weight: 500; color: #a7adb3; cursor: pointer;
+      &:hover { color: #fff; } &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
+      &.is-on { background: #fff; color: #0d0e10; } } }
+  .aw-plans__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 300px)"), 1fr)); gap: 16px; align-items: stretch; }
+}
+
+/* Volumio's plan card (plans, subscribe, change and cancel subscription): a glass card with
+   the price, the trial line, a hairline feature list and full-width pills in the foot */
+body#artwork my-volumio-plan-card { display: block; min-width: 0; }
+body#artwork my-volumio-plan-card .plan-box {
+  height: 100%;
+  .panel { display: flex; flex-direction: column; height: 100%; margin: 0 !important; border-radius: 16px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); box-shadow: none; text-align: left; overflow: hidden; color: #e4e7ea;
+    &:hover { box-shadow: none; } }
+  .panel > .panel-heading { padding: 22px 22px 0; background: transparent; border: 0; color: #fff;
+    .panel-title { font-family: var(--font-ui); font-size: 17px; font-weight: 700; letter-spacing: 0; text-transform: none; color: #fff; } }
+  .panel-body { flex: 1 1 auto; padding: 0 22px; text-align: left; background: transparent; border: 0; }
+  .the-price { min-height: 0; height: auto; margin: 0; padding: 6px 0 0; background: transparent; box-shadow: none; border: 0; font-size: 13px; color: #8c9298;
+    h1 { margin: 0 0 6px; padding: 0; font-family: var(--font-ui); font-size: 40px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; color: #fff; }
+    span { font-size: 13px !important; color: #8c9298; } /* inline font-size: small */
+    br { display: none; } }
+  .trial-text { margin: 12px 0 0; font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #7de3b4; }
+  table.table { margin: 16px 0 0; background: transparent; border-top: 1px solid rgba(255, 255, 255, .09);
+    tr, tr.active { background: transparent; }
+    tr > td, tr.active > td { padding: 10px 0; border: 0; border-bottom: 1px solid rgba(255, 255, 255, .06); background: transparent; font-size: 13px; line-height: 1.4; color: #c2c8cd; }
+    tr:last-child > td { border-bottom: 0; } }
+  .panel-footer { min-height: 0; padding: 18px 22px 22px; background: transparent; border: 0; color: #e4e7ea;
+    > div { display: flex; flex-direction: column; gap: 10px; }
+    > div:empty { display: none; } }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 44px; padding: 0 18px; margin: 0; border-radius: 22px; box-shadow: none; text-shadow: none; font-size: 14px; font-weight: 700; white-space: normal; line-height: 1.2;
+    .glyphicon, .fa { top: 0; font-size: 12px; } &[disabled], &.disabled { opacity: .45; } }
+  .btn-label { position: static; left: auto; display: inline-flex; padding: 0; background: transparent; border-radius: 0; }
+  .btn-success, .btn-primary { background: #fff; color: #0d0e10; border: 0; &:hover, &:focus { background: #f2f3f5; color: #0d0e10; } }
+  .btn-default { background: transparent; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .18); font-weight: 600; &:hover, &:focus { background: rgba(255, 255, 255, .08); color: #fff; } }
+}

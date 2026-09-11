@@ -414,7 +414,11 @@ function routerConfig($stateProvider, $urlRouterProvider, $locationProvider, the
     url: '/plans',
     views: {
       'content@myvolumio': {
-        templateUrl: 'app/components/myvolumio/plans/myvolumio-plans.html',
+        // the theme's own page when it ships one (Artwork), Volumio's otherwise
+        templateProvider: ['$templateRequest', 'themeManager', ($templateRequest, themeManager) => {
+          const own = 'app/themes/' + themeManager.theme + '/components/myvolumio/' + themeManager.theme + '-myvolumio-plans.html';
+          return $templateRequest(own, true).catch(() => $templateRequest('app/components/myvolumio/plans/myvolumio-plans.html', true));
+        }],
         controller: 'MyVolumioPlansController',
         controllerAs: 'myVolumioPlansController',
         resolve: {
