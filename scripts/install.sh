@@ -82,7 +82,9 @@ else
   tar -xzf "$TMP/$ASSET" -C "$STAGE"
 fi
 
-[ -f "$STAGE/index.html" ] && [ -d "$STAGE/app" ] || die "this does not look like an Artwork One build (index.html or app/ missing)"
+if [ ! -f "$STAGE/index.html" ] || [ ! -d "$STAGE/app" ]; then
+  die "this does not look like an Artwork One build (index.html or app/ missing)"
+fi
 
 # Volumio's own builds ship this fallback for players without network: the UI then
 # talks to the backend on the same machine.
