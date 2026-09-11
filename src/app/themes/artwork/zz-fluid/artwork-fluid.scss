@@ -232,10 +232,8 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
      top edge is painted in the mini player's colour: solid for the safe area plus 8px, fading
      into the backdrop over the next 64px. Behind the content, above the art. The menu sheet
      carries the same band above its scrim so opening it does not shift the colour. */
-  /* the band is solid for the safe area and fades out within the next 12px — before the head row,
-     so the hamburger, titles and search sit on the plain backdrop */
-  body#artwork::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 14px); z-index: 1; pointer-events: none;
-    background: linear-gradient(to bottom, var(--aw-band, #0e1013) 0, var(--aw-band, #0e1013) calc(env(safe-area-inset-top, 0px) + 2px), transparent 100%); }
+  body#artwork::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 72px); z-index: 1; pointer-events: none;
+    background: linear-gradient(to bottom, var(--aw-band, #0e1013) 0, var(--aw-band, #0e1013) calc(env(safe-area-inset-top, 0px) + 8px), transparent 100%); }
   body#artwork .aw-band { display: block; position: fixed; top: 0; left: 0; right: 0; height: 4px; background-color: var(--aw-band, #0e1013); z-index: 60; pointer-events: none; }
   body#artwork .aw-mm::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 8px); background: var(--aw-band, #0e1013); pointer-events: none; z-index: 1; }
   body#artwork aw-mobile-menu .aw-mm__sheet { z-index: 2; }
@@ -247,7 +245,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #contentWrapper { margin-left: 0; width: 100%; }
   /* one top edge for every screen: the head row (menu · back · title/search) starts at --phone-top
      on all pages, so the hamburger never jumps when switching screens */
-  :root { --phone-top: calc(20px + var(--sa-t)); }
+  :root { --phone-top: calc(14px + var(--sa-t)); }
   body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-album #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: var(--phone-top); }
   body#artwork .aw-browse, body#artwork #artwork-home, body#artwork .aw-zones, body#artwork #np, body#artwork .aw-pe { padding-top: var(--phone-top); }
   body#artwork .aw-listbar, body#artwork .aw-artist__bar, body#artwork .aw-albumhead__top, body#artwork .aw-browse .aw-tabs, body#artwork #artwork-home .home-tabs, body#artwork .aw-zones .aw-listhead, body#artwork #np #np-topbar, body#artwork .aw-mnav__head { min-height: 44px; margin-top: 0; }
