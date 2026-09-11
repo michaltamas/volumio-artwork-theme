@@ -1037,11 +1037,16 @@ class BrowseMusicController {
   }
   // ancestors between "Library" (the landing) and the current list — the real navigation stack
   get awCrumbs() {
+    // root sources (Artists, Playlists…) carry their label as name, deeper pages as title
     const stack = this.browseService.navigationStack || [];
-    return stack.slice(0, -1).filter(s => s.title);
+    // memoised on the stack's contents: a fresh array each digest would never settle ng-repeat
+    const key = stack.map(s => s.uri).join('|');
+    if (this._awCrumbsKey !== key) { this._awCrumbsKey = key; this._awCrumbs = stack.slice(0, -1).filter(s => s.title || s.name); }
+    return this._awCrumbs;
   }
   awGoCrumb(item) {
-    this.fetchLibrary({ uri: item.uri, title: item.title, name: item.title, service: item.service,
+    if (!item) { return; }
+    this.fetchLibrary({ uri: item.uri, title: item.title || item.name, name: item.name || item.title, service: item.service,
       type: item.type, plugin_name: item.plugin_name, plugin_type: item.plugin_type });
   }
   setGridView(on) {

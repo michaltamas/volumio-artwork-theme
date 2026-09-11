@@ -11,7 +11,7 @@
     <nav class="aw-crumbs" aria-label="Breadcrumb">
       <a href ng-click="browse.backHome()">Library</a>
       <span class="aw-crumbs__sep" ng-repeat-start="c in browse.awCrumbs track by $index">/</span>
-      <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title}}</a>
+      <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title || c.name}}</a>
       <span class="aw-crumbs__sep">/</span>
       <span class="aw-crumbs__cur">{{browse.browseService.info.title}}</span>
     </nav>

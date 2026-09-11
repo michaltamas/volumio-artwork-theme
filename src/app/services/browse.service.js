@@ -118,6 +118,7 @@ class BrowseService {
     this.isSearching = false;
     this.lists = [];
     this.historyUri = [];
+    this.navigationStack = []; // the landing is the root: a new trail starts from here
     this.currentFetchRequest = {};
     this.scrollPositions.clear();
   }
@@ -278,6 +279,10 @@ class BrowseService {
 
         */
 
+        // revisiting a page already in the trail (a breadcrumb click, or a loop back to a parent)
+        // returns to it instead of stacking a second copy
+        const seen = this.navigationStack.findIndex(s => s.uri && s.uri === this.currentFetchRequest.uri);
+        if (seen > -1) { this.navigationStack.splice(seen); }
         this.navigationStack.push({
           album: this.currentFetchRequest.album || null,
           albumart: this.currentFetchRequest.albumart || null,
