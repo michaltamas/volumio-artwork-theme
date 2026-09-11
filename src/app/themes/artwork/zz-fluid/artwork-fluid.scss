@@ -273,7 +273,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #footer-content .mini-transport .playPause { width: 44px; height: 44px; .material-symbols-rounded { font-size: 26px; } }
   body#artwork #footer-content .mini-transport .btn-link .material-symbols-rounded { font-size: 26px; }
   body#artwork #footer-content .mini-zone { padding: 0; height: auto; background: transparent; border: 0; .material-symbols-rounded { font-size: 24px; color: #c2c8cd; } .mini-zone-name { display: none; } }
-  body#artwork #footer-content .mini-identity #trackInfo-compact { grid-template-columns: 52px 1fr; column-gap: 12px; height: 52px; }
+  body#artwork #footer-content .mini-identity #trackInfo-compact { grid-template-columns: 52px 1fr; column-gap: 12px; --mini-rows: 18px 16px 15px; --mini-line-gap: 2px; height: auto; min-height: 52px; }
   body#artwork #footer-content .mini-identity .trackInfo-album-art-wrapper { width: 52px; height: 52px; }
   body#artwork #footer-content .mini-identity img.album-art { width: 52px !important; height: 52px !important; border-radius: 5px; }
   body#artwork #footer-content .mini-identity #trackInfo-title { font-size: 14px; font-weight: 600; line-height: 1.3; }

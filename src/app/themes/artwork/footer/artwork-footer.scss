@@ -97,10 +97,14 @@ body#artwork .main-container.with-playback-bar ~ #footer-container #footer-conte
   .mini-identity #trackInfo-compact {
     display: grid;
     grid-template-columns: 60px 1fr;
+    /* three lines of fixed height (mockup 18 + 4 + 15 + 4 + 15 = 56) centred on the 60px cover.
+       Auto rows let the spanning cover stretch them, and a fixed container height squeezed them,
+       which pushed the title above the top edge. */
     grid-template-areas: "cover title" "cover artist" "cover rates";
-    grid-template-rows: auto auto auto;
-    align-content: center; align-items: center; column-gap: 14px; row-gap: 4px; /* mockup */
-    height: 64px;
+    grid-template-rows: var(--mini-rows, 18px 15px 15px);
+    align-content: center; align-items: center; column-gap: 14px; row-gap: var(--mini-line-gap, 4px);
+    height: auto; min-height: 60px;
+    > .clear { display: none; } /* Volumio's float clearer would become a fourth grid row */
   }
   .mini-identity .trackInfo-album-art-wrapper {
     grid-area: cover; width: 60px; height: 60px; align-self: center;
@@ -123,16 +127,16 @@ body#artwork .main-container.with-playback-bar ~ #footer-container #footer-conte
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     #trackInfo-album { display: none; } /* artist only, quality shows below */
   }
-  .mini-identity .track-info-actions-n-rates { grid-area: rates; min-width: 0; }
+  .mini-identity .track-info-actions-n-rates { grid-area: rates; min-width: 0; margin: 0; padding: 0; }
   .mini-identity .track-user-actions { display: none !important; }
   /* rates + format collapse onto ONE clipped line (mockup: "24/192 · FLAC") */
   .mini-identity .track-info-rates {
     /* mono-s: 10px / .16em / --ink-muted (spec §5.10) */
     font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: #a7adb3; /* mockup */
-    display: flex; align-items: center; gap: 6px; height: 15px; line-height: 15px;
+    display: flex; align-items: center; gap: 6px; height: 15px; line-height: 15px; margin: 0; /* base theme: margin-top 10px */
     overflow: hidden; white-space: nowrap;
     span { line-height: 15px; }
-    .track-info-type { display: inline-flex; align-items: center; margin: 0; }
+    .track-info-type { display: inline-flex; align-items: center; margin: 0; font-size: inherit; } /* base theme: 14px */
     .track-info-rate + .track-info-type::before { content: '·'; margin-right: 6px; }
   }
 
