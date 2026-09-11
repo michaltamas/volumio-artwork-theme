@@ -245,7 +245,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #contentWrapper { margin-left: 0; width: 100%; }
   /* one top edge for every screen: the head row (menu · back · title/search) starts at --phone-top
      on all pages, so the hamburger never jumps when switching screens */
-  :root { --phone-top: calc(14px + var(--sa-t)); }
+  :root { --phone-top: calc(22px + var(--sa-t)); }
   body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-album #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: var(--phone-top); }
   body#artwork .aw-browse, body#artwork #artwork-home, body#artwork .aw-zones, body#artwork #np, body#artwork .aw-pe { padding-top: var(--phone-top); }
   body#artwork .aw-listbar, body#artwork .aw-artist__bar, body#artwork .aw-albumhead__top, body#artwork .aw-browse .aw-tabs, body#artwork #artwork-home .home-tabs, body#artwork .aw-zones .aw-listhead, body#artwork #np #np-topbar, body#artwork .aw-mnav__head { min-height: 44px; margin-top: 0; }
