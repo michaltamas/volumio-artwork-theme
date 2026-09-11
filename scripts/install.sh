@@ -99,7 +99,7 @@ cp -a "$STAGE" "$INSTALL_DIR.new"
 mv "$INSTALL_DIR.new" "$INSTALL_DIR"
 rm -rf "$INSTALL_DIR.old"
 
-# 3) register it with Volumio's Appearance settings (idempotent)
+# 3) register it where Volumio lists additional interfaces (idempotent)
 UI_NAME="$UI_NAME" UI_PRETTY_NAME="$UI_PRETTY_NAME" INSTALL_DIR="$INSTALL_DIR" UI_LIST="$UI_LIST" node -e '
   const fs = require("fs");
   const { UI_NAME, UI_PRETTY_NAME, INSTALL_DIR, UI_LIST } = process.env;
@@ -124,5 +124,5 @@ if [ "$ACTIVATE" -eq 1 ]; then
   echo "Done: Artwork One $INSTALLED is active. Reload the page in your browser."
 else
   echo "Done: Artwork One $INSTALLED is installed."
-  echo "Select it in Volumio: Settings > Appearance > User interface > $UI_PRETTY_NAME."
+  echo "Select it in Volumio: Settings > System > User Interface layout design > $UI_PRETTY_NAME, then Save."
 fi

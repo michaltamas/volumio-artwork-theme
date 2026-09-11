@@ -101,7 +101,7 @@ Artwork One is installed next to Volumio's own interfaces. Nothing is replaced, 
    ```bash
    curl -fsSL https://raw.githubusercontent.com/michaltamas/volumio-artwork-theme/master/scripts/install.sh | bash
    ```
-4. **Select it** in the Volumio web interface: **Settings → Appearance → User Interface → Artwork One**. The page reloads in the new interface.
+4. **Select it** in the Volumio web interface: open **Settings → System**, choose **Artwork One** under *User Interface layout design* and press **Save**. The page reloads in the new interface.
 
 To install and switch to it in one step, add `--activate`. Volumio restarts, then reload the page:
 
@@ -123,7 +123,7 @@ cat /data/artwork-ui/VERSION
 
 ## Switching back and uninstalling
 
-To go back to Volumio's own interface, choose it in **Settings → Appearance → User Interface**. Artwork One stays installed and can be selected again later.
+To go back to Volumio's own interface, choose it under *User Interface layout design* in **Settings → System**. Artwork One stays installed and can be selected again later.
 
 To remove it completely, run on the player:
 
@@ -164,7 +164,7 @@ Releases are built by [GitHub Actions](.github/workflows/ci.yml) from the tagged
 
 ## How it works
 
-Volumio's web interface is a single AngularJS application, [Volumio2-UI](https://github.com/volumio/Volumio2-UI), that ships with several themes: Classic, Contemporary and Manifest. This repository is a fork of it with one more theme, `artwork`. The player's backend serves whichever theme is selected under **Settings → Appearance** and talks to it over the same Socket.IO API as always, so Artwork One needs no changes on the player besides its own files.
+Volumio's web interface is a single AngularJS application, [Volumio2-UI](https://github.com/volumio/Volumio2-UI), that ships with several themes: Classic, Contemporary and Manifest. This repository is a fork of it with one more theme, `artwork`. The player's backend serves whichever theme is selected in **Settings → System** and talks to it over the same Socket.IO API as always, so Artwork One needs no changes on the player besides its own files.
 
 | Path | What lives there |
 |---|---|
@@ -183,7 +183,7 @@ Volumio's other themes remain in the source tree. This project only builds and p
 
 | Symptom | What to do |
 |---|---|
-| *Artwork One* is missing from Settings → Appearance | Check that `/data/thirdPartyUisList.json` lists it and that `/data/artwork-ui/index.html` exists. Running the installer again fixes both. |
+| *Artwork One* is missing from *User Interface layout design* in Settings → System | Check that `/data/thirdPartyUisList.json` lists it and that `/data/artwork-ui/index.html` exists. Running the installer again fixes both. |
 | The page stays blank or looks half-styled after switching | Reload the page, bypassing the cache (Shift + reload), because the browser may still hold files from the previous interface. |
 | The installer reports *download failed* | The player has no internet access, or GitHub is unreachable from it. Download `artwork-ui.tar.gz` from the releases page on another computer, copy it to the player and run `install.sh --from artwork-ui.tar.gz`. |
 | You cannot reach the settings any more to switch back | Run the uninstaller over SSH, or write another interface to `/data/active_volumio_ui` and run `volumio vrestart`. |
