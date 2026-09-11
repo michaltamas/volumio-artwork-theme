@@ -166,6 +166,9 @@ class UiSettingsService {
     settingsUrl += `/${this.themeManager.variant}-settings.json`;
     // Return pending promise or cached results
     if (this.uiSettings) {
+      // a new socket (socket:init after a host change, even to the same host) drops every
+      // listener and any reply still in flight: ask again, or the language is never applied
+      this.requestSettings();
       return this.$q.resolve(this.uiSettings);
     } else if (this.settingsPromise) {
       return this.settingsPromise;
@@ -177,14 +180,18 @@ class UiSettingsService {
         return this.uiSettings;
       })
       .finally(() => {
-		if (this.socketService.isSocketAvalaible()) {
-        	this.socketService.emit('getUiSettings');
-        	this.socketService.emit('getWizard');
-          this.socketService.emit('getPrivacySettings');
-		}
+        this.requestSettings();
       });
     return this.settingsPromise;
 
+  }
+
+  requestSettings() {
+    if (this.socketService.isSocketAvalaible()) {
+      this.socketService.emit('getUiSettings');
+      this.socketService.emit('getWizard');
+      this.socketService.emit('getPrivacySettings');
+    }
   }
 
   detectVolumioTouschreenViaUserAgent() {
