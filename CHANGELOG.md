@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-09-11
+
+### Fixed
+
+- Mini player: the track title was clipped at the top, most visibly on phones, and the format label (*FLAC*) rendered larger than the rest of the quality line. The three lines now keep their own heights and sit centred on the cover.
+
+### Changed
+
+- New README introduction and refreshed screenshots.
+
 ## [1.0.0] - 2026-09-11
 
 First public release.
@@ -25,4 +35,5 @@ First public release.
 
 - The interface language was never applied after the socket connection was rebuilt, for example when a MyVolumio address was opened directly, so every text showed its translation key. Volumio's UI settings are now requested again for every new connection.
 
+[1.0.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.1
 [1.0.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.0

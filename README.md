@@ -4,9 +4,16 @@
 [![Latest release](https://img.shields.io/github/v/release/michaltamas/volumio-artwork-theme)](https://github.com/michaltamas/volumio-artwork-theme/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A web interface for [Volumio](https://volumio.com) in which the record becomes the interface. The cover of whatever is playing, blurred and enlarged, fills the background; the controls float above it on frosted glass; and the colours are sampled from the cover, so the whole interface shifts hue as the music changes.
+### Every record has a face. Artwork One gives it the whole screen.
 
-Artwork One replaces the look of Volumio's web interface, not its features. Every screen of the stock interface is still there: sources, search, queue, playlists, favourites, multiroom, settings, plugins and MyVolumio. It runs on the player itself and works in any current browser, from a phone to a large screen or a small touch display attached to the player.
+Artwork One turns your [Volumio](https://volumio.com) player into something you want to look at. The cover of whatever is playing spills across the entire screen, softly blurred, and every control floats above it on frosted glass. The colours come straight from the artwork, so the interface changes its mood with every album: warm amber for one record, deep ocean blue for the next.
+
+Beneath the new look sits everything you already rely on. Every source, every setting and every plugin Volumio offers is still there, with nothing hidden and nothing taken away. It lives on your player, installs with a single command, and feels at home wherever you meet your music: on the phone in your hand, a tablet on the sofa, a desktop browser, or a small touch screen next to your DAC.
+
+- **Made for listening in high resolution.** Bit depth, sample rate, format and source, shown with pride instead of tucked away.
+- **A waveform instead of a progress bar.** Glide through a track with a finger, a mouse or the arrow keys.
+- **One fluid design.** No fixed breakpoints: it reshapes itself continuously for any screen, down to edge-to-edge on an iPhone.
+- **Free to try.** One line to install, one click in Settings to switch back.
 
 ![Now Playing](docs/screenshots/now-playing.jpg)
 
