@@ -78,7 +78,7 @@ else
     URL="https://github.com/$REPO/releases/download/$VERSION/$ASSET"
   fi
   echo ">> downloading $URL"
-  curl -fL --retry 3 -o "$TMP/$ASSET" "$URL" || die "download failed"
+  curl -fL --retry 3 --progress-bar -o "$TMP/$ASSET" "$URL" || die "download failed"
   tar -xzf "$TMP/$ASSET" -C "$STAGE"
 fi
 
