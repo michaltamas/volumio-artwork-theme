@@ -343,3 +343,80 @@ body#artwork .aw-state-myvolumio-access .box {
     .btn-success { background: #fff; color: #0d0e10; border: 0; .glyphicon { color: #0d0e10; } &:hover { background: #f2f3f5; color: #0d0e10; } }
     .btn-primary, .btn-info, .btn-default { background: transparent; color: #e4e7ea; border: 1px solid rgba(255, 255, 255, .18); font-weight: 600; &:hover { background: rgba(255, 255, 255, .08); color: #fff; } } }
 }
+
+/* ============================================================
+   MyVolumio login / signup / password recovery — Volumio's pages in the theme's idiom
+   (same as Access): mono eyebrow + outline pill, 46/800 title, a 480px form column,
+   inputs like the settings inputs, white primary pill, outline secondary pills.
+   ============================================================ */
+body#artwork .aw-state-myvolumio-login .box, body#artwork .aw-state-myvolumio-signup .box, body#artwork .aw-state-myvolumio-recover-password .box {
+  position: relative; padding: clamp(24px, 4.4vh, 40px) var(--pad-screen) 60px; background: transparent; border: 0; box-shadow: none; color: var(--ink-1);
+  .panel, .panel-body, .panel-heading, .well { background: transparent; border: 0; box-shadow: none; padding: 0; margin: 0; }
+  .boxHeader { background: transparent; border: 0; padding: 0; margin: 0 0 28px;
+    .title { display: flex; align-items: center; justify-content: space-between; }
+    .title h2 { margin: 0; background: transparent; padding: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #cfd4d8; font-weight: 400; line-height: 36px; } }
+  #authLoginPlugin > .panel-heading { display: none; }
+  /* outline pills (What is MyVolumio, Signup ⇄ Login) */
+  #myvolumio-info, .btn-outline { float: none; display: inline-flex; align-items: center; gap: 9px; height: 36px; padding: 0 16px; border-radius: 18px; margin: 0;
+    background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 14px; font-weight: 500; box-shadow: none; text-decoration: none; cursor: pointer;
+    .fa { color: #c2c8cd; margin: 0; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } }
+  /* the form column */
+  .row { margin: 0; }
+  [class*="col-"] { float: none; width: auto; padding: 0; margin-left: 0 !important; }
+  .omb_login { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; }
+  .omb_login > .btn-outline, .omb_login > .d-flex { align-self: flex-end; order: -1; margin-bottom: 18px; }
+  .omb_authTitle { margin: 0 0 22px; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); text-align: left; }
+  .omb_socialButtons { display: flex; gap: 10px; margin: 0 0 18px;
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 21px; margin: 0; background: transparent; border: 1px solid rgba(255, 255, 255, .18); color: #e4e7ea; font-size: 13px; font-weight: 500; box-shadow: none; text-shadow: none; &:hover { background: rgba(255, 255, 255, .08); } } }
+  .omb_loginOr { display: flex; align-items: center; margin: 0 0 18px; .omb_hrOr { display: none; } .omb_spanOr { position: static; background: transparent; padding: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #8c9298; } }
+  .input-group { display: block; width: 100%; .input-group-addon { display: none; } .form-control { float: none; position: relative; } } /* Bootstrap floats the input: the group had no height */
+  .help-block { display: block; height: 12px; margin: 0; overflow: hidden; }
+  .form-group, .my-volumio__form-group { margin: 0 0 12px; }
+  .row::before, .row::after { display: none; } /* Bootstrap clearfix pseudo-elements become grid items */
+  .my-volumio__row-gutter { display: grid; grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 200px)"), 1fr)); gap: 0 12px; }
+  input.form-control, .my-volumio__text-input { height: 44px; border-radius: 11px !important; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13); color: #fff; font-size: 15px; box-shadow: none; padding: 0 14px; width: 100%;
+    &:focus { border-color: rgba(255, 255, 255, .3); box-shadow: none; outline: none; } &::placeholder { color: #8c9298; } }
+  /* primary action */
+  input[type="submit"].btn, .btn-success, .my-volumio__btn-primary { display: flex; align-items: center; justify-content: center; width: 100%; height: 46px; margin: 8px 0 0; border-radius: 23px !important; border: 0;
+    background: #fff; color: #0d0e10; font-size: 15px; font-weight: 700; box-shadow: none; text-shadow: none; &:hover { background: #f2f3f5; color: #0d0e10; } &.disabled { opacity: .6; } }
+  .omb_forgotPwd { margin: 14px 0 0; text-align: right; a { font-size: 13px; font-weight: 500; color: #c2c8cd; border-bottom: 1px solid rgba(255, 255, 255, .25); text-decoration: none; &:hover { color: #fff; } } }
+  .checkbox.hidden { display: none; }
+  /* signup: intro card, consent checkboxes */
+  .my-volumio__info-card { margin: 0 0 18px; padding: 16px 18px; border-radius: 14px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); font-size: 14px; line-height: 1.5; color: #c2c8cd;
+    a { color: #fff; font-weight: 600; cursor: pointer; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .3); } }
+  .mb-2, .mb-10 { margin-bottom: 10px; }
+  .d-flex { display: flex; } .align-items-start { align-items: flex-start; gap: 10px; }
+  .button-checkbox { flex: none; }
+  .my-volumio__fake-checkbox { width: 20px; height: 20px; margin: 1px 0 0; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .3); background: transparent; display: grid; place-items: center; cursor: pointer;
+    .my-volumio__fake-checkbox__tick { display: none; img { width: 12px; filter: invert(1); } } }
+  .my-volumio__checkbox:checked + .my-volumio__fake-checkbox { background: #fff; border-color: #fff; .my-volumio__fake-checkbox__tick { display: block; } }
+  .align-items-start > div:last-child { font-size: 13px; line-height: 1.5; color: #c2c8cd; .label { background: transparent; padding: 0; font-size: 13px; a { color: #fff; font-weight: 600; } } }
+  /* signup step 2: plan choice */
+  .my-volumio__toggle-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px;
+    h3 { margin: 0; font-family: var(--font-ui); font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: #fff; } }
+  .my-volumio__toggle .toggle__labels { display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .11);
+    .toggle__label-text { height: 32px; padding: 0 14px; border-radius: 8px; display: grid; place-items: center; margin: 0; font-size: 13px; font-weight: 500; color: #a7adb3; cursor: pointer; } }
+  #yearly:checked ~ .toggle__labels label[for="yearly"], #monthly:checked ~ .toggle__labels label[for="monthly"] { background: #fff; color: #0d0e10; }
+  .my-volumio__plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 240px)"), 1fr)); gap: 14px; max-width: 900px; margin: 0 auto 20px; }
+  .plan__item { margin: 0; cursor: pointer; }
+  .plan__card { height: 100%; padding: 20px 22px; border-radius: 16px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); color: #e4e7ea; }
+  .plan__checkbox:checked + .plan__card { border-color: #fff; background: rgba(255, 255, 255, .1); }
+  .plan__title { font-size: 17px; font-weight: 700; color: #fff; gap: 10px; }
+  .plan__fake-radio { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); display: grid; place-items: center; img { width: 12px; display: none; filter: invert(1); } }
+  .plan__checkbox:checked + .plan__card .plan__fake-radio { background: #fff; border-color: #fff; img { display: block; } }
+  .plan__trial { margin-top: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #7de3b4; }
+  .plan__price { margin-top: 6px; font-family: var(--font-ui); font-size: 34px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
+  .plan__period { font-size: 13px; color: #8c9298; }
+  .plan__features { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .09); display: flex; flex-direction: column; gap: 8px; }
+  .plan__feature { font-size: 13px; color: #c2c8cd; }
+  .collapse__panel__header { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; font-size: 13px; font-weight: 500; color: #c2c8cd; cursor: pointer; img { filter: invert(1); width: 12px; } }
+  /* recovery: the nested boxes flatten into the same column */
+  .container { width: auto; max-width: 480px; margin: 0 auto; padding: 0; }
+  .text-center { text-align: left; }
+  .text-center h3 .fa-lock { display: none; }
+  .text-center h2 { margin: 0 0 10px; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+  .panel-body > p, .text-center > p { font-size: 14px; color: #a7adb3; margin: 0 0 18px; }
+  my-volumio-back-button { display: block; margin: 0 0 18px; a { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 18px; background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 14px !important; font-weight: 500; text-decoration: none;
+    .glyphicon { top: 0; font-size: 13px; color: #c2c8cd; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } } }
+  .panel-body > my-volumio-back-button + p { margin: 0 0 22px; }
+}
