@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-09-13
+
+### Fixed
+
+- The Zones & Outputs sheet appeared blurred and dimmed, most visibly on iOS Safari: Volumio's own stacking kept the sheet below the layer that dims the page behind it. The sheet now sits above it, and its volume row is tidier.
+
 ## [1.2.0] - 2026-09-13
 
 Thanks to the first tester on the Volumio community forum, who found all four of these
@@ -61,6 +67,7 @@ First public release.
 
 - The interface language was never applied after the socket connection was rebuilt, for example when a MyVolumio address was opened directly, so every text showed its translation key. Volumio's UI settings are now requested again for every new connection.
 
+[1.2.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.2.1
 [1.2.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.2.0
 [1.1.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.1.0
 [1.0.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.1
