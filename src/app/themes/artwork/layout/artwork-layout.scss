@@ -88,7 +88,7 @@
   body#artwork .music-card__wrapper:hover { transform: none; }
   body#artwork .music-card__overlay { transition: none; }
   body#artwork .art-bg, body#artwork .art-scrim { transition: none; }
-  body#artwork .wave-bar, body#artwork .aw-card, body#artwork .aw-snav__item, body#artwork .slider-handle { transition: none; }
+  body#artwork .aw-card, body#artwork .aw-snav__item, body#artwork .slider-handle { transition: none; }
 }
 @supports not (backdrop-filter: blur(1px)) {
   body#artwork #main-menu, body#artwork #footer-content { background: rgba(8, 10, 13, .86); }

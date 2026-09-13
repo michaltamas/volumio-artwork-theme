@@ -25,7 +25,7 @@ body#artwork #np #np-transport, body#artwork #np #np-transport #playerButtons { 
 body#artwork #np #np-transport .playPause { width: clamp(56px, 5.3vw, 76px); height: clamp(56px, 5.3vw, 76px);
   .material-symbols-rounded { font-size: clamp(32px, 2.9vw, 42px); } }
 body#artwork #np #np-footer-row { flex-wrap: wrap; row-gap: 12px; }
-/* waveform: full width at any size — the seekbar fits the bar count to it */
+/* the seek bar takes the full width at any size */
 body#artwork #np .np-badge { max-width: 48vw; overflow: hidden; }
 body#artwork #np .np-zone { max-width: 40vw; }
 /* tall or narrow: the cover sits above the text, sized by the width (or half the height) */
@@ -62,7 +62,7 @@ body#artwork .main-container.with-playback-bar #browse .panel .body-content.new-
 /* ---------- mini player ---------- */
 /* mockup: columns 300px | 1fr | 280px, gap 24, padding 0 28. Fluid: the identity column is
    capped at 300px and shrinks with the bar, the right cluster takes its content, the centre
-   (transport over the waveform) takes the rest — never less than the transport itself */
+   (transport over the seek bar) takes the rest — never less than the transport itself */
 body#artwork #footer-content { padding-left: clamp(12px, 1.95vw, 28px); padding-right: clamp(12px, 1.95vw, 28px); }
 body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, unquote("min(300px, 23%)")) minmax(auto, 1fr) auto; column-gap: clamp(10px, 1.67vw, 24px); }
 /* mockup: 26px between glyphs — the buttons carry 6px padding each side */
@@ -73,11 +73,11 @@ body#artwork #footer-content .mini-transport #playerButtons { gap: clamp(4px, 1v
 }
 @media (max-width: 700px) { body#artwork #footer-content .mini-transport .repeat-button, body#artwork #footer-content .mini-transport .player-action-shuffle { display: none; } }
 @media (max-width: 560px) and (orientation: landscape) {
-  /* compact bar: identity · prev/play/next · queue; no waveform row */
+  /* compact bar: identity · prev/play/next · queue; no seek row */
   :root { --mini-h: 64px; }
   body#artwork #footer-content { padding-top: 0; padding-bottom: 0; }
   body#artwork #footer-content .artwork-mini { grid-template-rows: auto; align-content: center; }
-  body#artwork #footer-content .mini-wave, body#artwork #footer-content .mini-zone { display: none; }
+  body#artwork #footer-content .mini-seek, body#artwork #footer-content .mini-zone { display: none; }
   body#artwork #footer-content .mini-identity, body#artwork #footer-content .mini-right { grid-row: 1; }
   body#artwork #footer-content .mini-identity #trackInfo-artist-album { display: none; }
 }
@@ -267,7 +267,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #footer-content .mini-right { grid-column: 3; grid-row: 1; gap: 14px; }
   body#artwork #footer-content .artwork-mini { grid-template-columns: minmax(0, 1fr) auto auto; }
   body#artwork #footer-container #footer-content .mini-queue { display: none; } /* two ids: outranks the queue panel's pill rule */
-  body#artwork #footer-content .mini-wave, body#artwork #footer-content .mini-volume,
+  body#artwork #footer-content .mini-seek, body#artwork #footer-content .mini-volume,
   body#artwork #footer-content .mini-transport .repeat-button, body#artwork #footer-content .mini-transport .player-action-shuffle, body#artwork #footer-content .mini-transport #prev-button { display: none; }
   body#artwork #footer-content .mini-transport #playerButtons { gap: 14px; }
   body#artwork #footer-content .mini-transport .playPause { width: 44px; height: 44px; .material-symbols-rounded { font-size: 26px; } }
@@ -320,10 +320,16 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #np .np-m-tile.active { color: #fff; background: rgba(255, 255, 255, .16); }
   body#artwork #np #np-footer { margin-top: auto; padding: 24px 0 14px; }
   body#artwork #np #np-seek { margin-bottom: 0; }
-  /* Mobile mockup: 44 flex bars over 350px (8px pitch), elapsed | duration, no playhead */
-  body#artwork #np #np-seek .artwork-wave { --wave-pitch: 8px; width: 100%; height: 30px; }
-  body#artwork #np #np-seek .wave-bar { flex: 1 1 0; width: auto; min-width: 0; border-radius: 1px; }
-  body#artwork #np #np-seek .seek-remaining, body#artwork #np #np-seek .wave-head { display: none; }
+  /* phone mockup: 6px track, 22px handle, elapsed left and remaining right, no total */
+  body#artwork #np #np-seek .artwork-seek__hit { width: 100%; height: 56px; }
+  body#artwork #np #np-seek .seek-track { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .15); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4); }
+  body#artwork #np #np-seek .seek-handle { width: 22px; height: 22px; margin: -11px 0 0 -11px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, .15), 0 0 16px rgba(255, 255, 255, .42), 0 2px 7px rgba(0, 0, 0, .55); }
+  body#artwork #np #np-seek .artwork-seek { grid-template-columns: 1fr auto; grid-template-areas: "track track" "elapsed remaining"; row-gap: 2px; }
+  body#artwork #np #np-seek .seek-time { font-size: 11px; }
+  body#artwork #np #np-seek .seek-elapsed { color: #fff; }
+  body#artwork #np #np-seek .seek-remaining { justify-self: end; }
+  body#artwork #np #np-seek .seek-duration { display: none; }
   body#artwork #np #np-footer-row { display: none; }
   body#artwork #np .np-m-bar { display: flex; align-items: center; justify-content: space-between; height: calc(88px + var(--sa-b)); margin: 0 -20px; padding: 0 26px var(--sa-b); flex: none;
     background: rgba(10, 12, 15, .72); backdrop-filter: blur(40px) saturate(1.15); -webkit-backdrop-filter: blur(40px) saturate(1.15); border-top: 1px solid rgba(255, 255, 255, .09); }

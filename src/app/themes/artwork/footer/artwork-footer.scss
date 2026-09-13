@@ -2,7 +2,7 @@
 #footer-content {
   position: fixed; left: var(--rail-w); right: 0; bottom: 0;
   height: var(--mini-h); z-index: 3;
-  padding: 0 22px; /* mockup: the transport + waveform block (46 + 9 + 16) is centred in the bar */
+  padding: 0 22px; /* mockup: the transport + seek block (46 + 9 + 16) is centred in the bar */
   background: rgba(8, 10, 13, 0.55);
   backdrop-filter: blur(34px);
   -webkit-backdrop-filter: blur(34px);
@@ -15,7 +15,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 300px 1fr 280px;
-    grid-template-rows: auto auto;      /* transport row, waveform row */
+    grid-template-rows: auto auto;      /* transport row, seek row */
     align-content: center; row-gap: clamp(3px, calc((var(--mini-h) - 80px) / 2), 9px); /* mockup: gap 9 in the 98px bar; tighter as the bar shortens (76px) */
     align-items: center;
     column-gap: 20px;
@@ -77,8 +77,8 @@
     .material-symbols-rounded { font-size: 22px; }
     &:hover, &.selected { color: var(--ink-1); } }
 
-  /* waveform strip: centre column, directly under the transport (spec §6.2 mockup) */
-  .mini-wave { grid-column: 2; grid-row: 2; padding-top: 0; min-width: 0; }
+  /* seek bar: centre column, directly under the transport (mockup) */
+  .mini-seek { grid-column: 2; grid-row: 2; padding-top: 0; min-width: 0; }
 }
 
 /* content leaves room for the mini player; hidden on the full Now Playing screen */
@@ -93,7 +93,7 @@ body#artwork .main-container.with-playback-bar ~ #footer-container #footer-conte
 /* ---- mini-player identity + transport polish (match mockup) ---- */
 #footer-content {
   /* compact 3-line identity locked to the 60px cover height, so it can never
-     push the waveform row out of the 98px bar */
+     push the seek row out of the 98px bar */
   .mini-identity #trackInfo-compact {
     display: grid;
     grid-template-columns: 60px 1fr;

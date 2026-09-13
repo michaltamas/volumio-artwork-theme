@@ -22,7 +22,7 @@ class playerSeekBarController {
     this.$scope = $scope;
     this.$element = $element;
     this.scrubbing = false;
-    // the waveform renders after this constructor: bind the scrubber once it exists
+    // the track renders after this constructor: bind the scrubber once it exists
     $timeout(() => this.bindScrub(), 0, false);
 
     this.timeoutHandler = null;
@@ -32,79 +32,23 @@ class playerSeekBarController {
     this.seekPercent = this.playerService.seekPercent;
     this.init();
 
-    // Artwork theme waveform scrubber (spec §5.7). Volumio doesn't provide peak
-    // data, so heights come from a deterministic seeded envelope (LCG x sine
-    // window). Other themes' seekbar templates simply don't render these.
-    // The bar count follows the waveform's width: the theme sets the bar pitch
-    // (--wave-pitch, bar + 2px gap) or a fixed count (--wave-count).
-    this.WAVE_N = 104;
-    this.waveKey = 0;
-    this.bars = this.buildWave(this.WAVE_N);
-    this.initWaveSizing();
-  }
-
-  initWaveSizing(){
-    const measure = () => this.measureWave();
-    if (window.ResizeObserver) {
-      // observes the waveform itself (the host element is inline and reports no size)
-      this.resizeObserver = new window.ResizeObserver(measure);
-    } else {
-      angular.element(window).on('resize', measure);
-    }
-    // the waveform exists only once a duration is known (ng-if): measure when it appears
-    this.$scope.$watch(() => this.getDuration() !== null, (has) => { if (has) { this.$timeout(measure, 0, false); } });
-    this.$scope.$on('$destroy', () => {
-      if (this.resizeObserver) { this.resizeObserver.disconnect(); } else { angular.element(window).off('resize', measure); }
-    });
-  }
-
-  measureWave(){
-    const wave = this.$element[0].querySelector('.artwork-wave');
-    if (wave && this.resizeObserver && wave !== this.observedWave) {
-      if (this.observedWave) { this.resizeObserver.unobserve(this.observedWave); }
-      this.observedWave = wave;
-      this.resizeObserver.observe(wave); // calls back once with the current size
-    }
-    if (!wave || !wave.clientWidth) { return; }
-    const cs = window.getComputedStyle(wave);
-    const fixed = parseInt(cs.getPropertyValue('--wave-count'), 10);
-    const pitch = parseFloat(cs.getPropertyValue('--wave-pitch')) || 6;
-    const n = fixed > 0 ? fixed : Math.max(16, Math.floor((wave.clientWidth + 2) / pitch));
-    if (n === this.WAVE_N) { return; }
-    this.WAVE_N = n;
-    this.waveKey++;
-    this.bars = this.buildWave(n);
-    this.$scope.$applyAsync();
   }
 
   init(){
     this.inited = true;
   }
 
-  buildWave(n){
-    let seed = 1337;
-    const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
-    const out = [];
-    for (let i = 0; i < n; i++) {
-      // a fuller, audio-like envelope: never collapses to zero at the ends,
-      // gentle rise/fall plus per-bar variation (values 0..1 -> % of height)
-      const window = 0.45 + 0.55 * Math.sin(Math.PI * (0.12 + 0.76 * i / (n - 1)));
-      const v = (0.35 + 0.65 * rnd()) * window;   // ~0.15 .. 1.0
-      out.push(Math.max(14, Math.round(v * 46))); // 14..46 (percent of container)
-    }
-    return out;
-  }
+  // Volumio's seek scale: seekPercent runs 0..1000 unless the service says otherwise
+  get seekScale(){ return this.playerService._seekScale || 1000; }
 
-  get waveScale(){ return this.playerService._seekScale || 1000; }
-
-  // Pointer scrubbing on the waveform (mouse, touch, pen): the played bars and the elapsed
-  // label follow the finger, the seek is sent once on release. A tap seeks the same way.
+  // Pointer scrubbing (mouse, touch, pen): the fill, the handle and the elapsed label follow
+  // the finger, the seek is sent once on release. A tap seeks the same way.
   bindScrub(){
     const root = this.$element[0];
     if (!root || root._awScrub) { return; }
     root._awScrub = true;
     root.addEventListener('pointerdown', (e) => {
-      const w = e.target.closest ? e.target.closest('.artwork-wave') : null;
+      const w = e.target.closest ? e.target.closest('.artwork-seek__hit') : null;
       if (!w || (e.button && e.button !== 0)) { return; }
       const st = this.playerService.state;
       if (!st || st.disableUi || !st.duration) { return; }
@@ -115,7 +59,7 @@ class playerSeekBarController {
       const pct = (x) => { const r = w.getBoundingClientRect(); return r.width ? Math.min(1, Math.max(0, (x - r.left) / r.width)) : 0; };
       const preview = (x) => {
         const p = pct(x);
-        this.playerService.seekPercent = Math.round(p * this.waveScale);
+        this.playerService.seekPercent = Math.round(p * this.seekScale);
         this.playerService.elapsedTime = Math.round(p * st.duration * 1000);
         this.playerService.calculateElapsedTimeString();
         this.$scope.$applyAsync();
@@ -125,35 +69,28 @@ class playerSeekBarController {
       const up = (ev) => {
         w.removeEventListener('pointermove', move); w.removeEventListener('pointerup', up); w.removeEventListener('pointercancel', up);
         this.scrubbing = false;
-        this.seekPercent = Math.round(pct(ev.clientX) * this.waveScale); // debounced setSeek → playerService.seek
+        this.seekPercent = Math.round(pct(ev.clientX) * this.seekScale); // debounced setSeek → playerService.seek
         this.$scope.$applyAsync();
       };
       w.addEventListener('pointermove', move); w.addEventListener('pointerup', up); w.addEventListener('pointercancel', up);
     });
   }
 
-  barPlayed(i){
-    return (i + 0.5) / this.WAVE_N <= (this.playerService.seekPercent / this.waveScale);
-  }
-
-  // the played share of the waveform, 0..100 (clips the bright row, places the playhead)
+  // the played share of the track, 0..100 (the fill's width and the handle's position)
   playedPct(){
-    const p = (this.playerService.seekPercent / this.waveScale) * 100;
+    const p = (this.playerService.seekPercent / this.seekScale) * 100;
     return Math.min(100, Math.max(0, p || 0));
   }
 
-  seekToBar(i){
-    this.seekPercent = Math.round(((i + 0.5) / this.WAVE_N) * this.waveScale);
-  }
-
   ariaNow(){
-    return Math.round((this.playerService.seekPercent / this.waveScale) * 100);
+    return Math.round((this.playerService.seekPercent / this.seekScale) * 100);
   }
 
   onKey(ev){
-    const step = this.waveScale / this.WAVE_N;
+    const st = this.playerService.state;
+    const step = st && st.duration ? Math.max(1, (5 / st.duration) * this.seekScale) : this.seekScale / 100; // 5 seconds
     if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') {
-      this.seekPercent = Math.min(this.waveScale, this.playerService.seekPercent + step); ev.preventDefault();
+      this.seekPercent = Math.min(this.seekScale, this.playerService.seekPercent + step); ev.preventDefault();
     } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') {
       this.seekPercent = Math.max(0, this.playerService.seekPercent - step); ev.preventDefault();
     }

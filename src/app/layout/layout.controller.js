@@ -162,7 +162,7 @@ class LayoutController {
   // panel's rows, the menu sheet, inputs) belongs to that control
   swipeIgnored(ev) {
     const t = ev && ev.target;
-    return !!(t && t.closest && t.closest('.artwork-wave, .slider, input, textarea, .aw-queue, .aw-mm, .bootstrap-switch'));
+    return !!(t && t.closest && t.closest('.artwork-seek, .slider, input, textarea, .aw-queue, .aw-mm, .bootstrap-switch'));
   }
   get isArtwork() { return this.themeManager.theme === 'artwork'; }
 
