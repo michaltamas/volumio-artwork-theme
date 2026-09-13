@@ -23,6 +23,7 @@ class PlaybackController {
     });
 
     // Now Playing header readout: current audio output device (spec §6.1)
+    this.npAlsa = null;
     this.fetchOutputDevice();
     if (this.themeManager.theme === 'artwork') { this.initFitCover(); }
   }
@@ -41,25 +42,63 @@ class PlaybackController {
   // (the same getUiConfig/pushUiConfig path the Playback Options page uses).
   fetchOutputDevice() {
     const handler = (cfg) => {
-      if (this.npOutput || !cfg) { return; }
-      let found = '';
+      if (!cfg) { return; }
+      const found = {};
       const walk = (arr) => (arr || []).forEach((el) => {
         if (!el) { return; }
-        if (String(el.id || '') === 'output_device') {
+        const id = String(el.id || '');
+        if (id) {
           const v = el.value;
-          found = (v && (v.label || v.value)) || found;
+          found[id] = (v && typeof v === 'object') ? (v.label !== undefined ? v.label : v.value) : v;
         }
         if (el.content) { walk(el.content); }
       });
       try {
         if (cfg.sections) { cfg.sections.forEach(s => walk(s.content)); }
         if (cfg.content) { walk(cfg.content); }
-      } catch (e) { /* ignore */ }
-      if (found) { this.npOutput = String(found); }
+      } catch (e) { return; }
+      if (found.output_device === undefined) { return; } // a different plugin's config
+      this.npOutput = found.output_device ? String(found.output_device) : this.npOutput;
+      const res = found.resampling;
+      this.npAlsa = {
+        resampling: (res === true || res === 'true') ? true : ((res === false || res === 'false') ? false : null),
+        bitdepth: this.alsaTarget(found.resampling_target_bitdepth),
+        samplerate: this.alsaTarget(found.resampling_target_samplerate),
+        mixerType: found.mixer_type ? String(found.mixer_type) : ''
+      };
     };
     this.socketService.on('pushUiConfig', handler);
     this.socketService.emit('getUiConfig', { page: 'audio_interface/alsa_controller' });
   }
+
+  // "*" and "Native" both mean "leave this as the track has it"
+  alsaTarget(v) {
+    const s = String(v === undefined || v === null ? '' : v).trim();
+    if (!s || s === '*' || /native/i.test(s)) { return ''; }
+    return s;
+  }
+
+  // The resample step of the signal path, from the player's real playback settings.
+  // Empty while the settings are unknown, so the path never claims something untrue.
+  get npResample() {
+    const a = this.npAlsa;
+    if (!a || a.resampling === null) { return ''; }
+    if (!a.resampling) { return 'NO RESAMPLE'; }
+    const target = [a.bitdepth, a.samplerate].filter(Boolean).join(' / ');
+    return target ? 'RESAMPLE ' + target : 'RESAMPLE';
+  }
+
+  // Bit perfect means the stream reaches the DAC untouched: no resampling, and the volume
+  // is not applied in software. Hidden while the settings are unknown.
+  get npBitPerfect() {
+    const a = this.npAlsa;
+    if (!a || a.resampling === null) { return false; }
+    const mixer = String(a.mixerType || '').toLowerCase();
+    return a.resampling === false && (mixer === 'hardware' || mixer === 'none' || mixer === 'disabled');
+  }
+
+  // Zones & outputs sheet (the mini player's zone button opens the same one)
+  openOutputs() { this.$rootScope.$broadcast('volumio:toggleOutputs'); }
 
   // next few tracks in the queue, for the Now Playing "UP NEXT" filmstrip
   get upNext() {

@@ -130,7 +130,7 @@ volume-manager{
 /* ============ Artwork mini-player volume (mockup §5.10 right group) ============
    speaker icon + a thin 64px horizontal track with an ink fill. No numeric readout,
    no green, no 20px knob — the handle only appears on hover / keyboard focus. */
-#footer-content .volume-slider {
+#footer-content .volume-slider, body#artwork .np-volume .volume-slider {
   display: flex; align-items: center; gap: 8px; float: none;
 
   gap: 9px; /* mockup: icon · 70px track */

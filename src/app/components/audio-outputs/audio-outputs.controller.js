@@ -1,5 +1,5 @@
 class AudioOutputsController {
-  constructor($log, audioOutputsService, socketService, playerService) {
+  constructor($log, audioOutputsService, socketService, playerService, $rootScope) {
     "ngInject";
     this.audioOutputsService = audioOutputsService;
     this.socketService = socketService;
@@ -8,6 +8,9 @@ class AudioOutputsController {
 
     this.menuVisible = false;
     this.outputs = [];
+
+    // screens outside the footer (the phone's Now Playing bar) ask for the sheet this way
+    $rootScope.$on('volumio:toggleOutputs', () => this.toggleMenu());
 
     this.defaultView = true;
     this.groupView = false;

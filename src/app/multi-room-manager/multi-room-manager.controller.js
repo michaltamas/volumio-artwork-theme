@@ -50,12 +50,22 @@ class MultiRoomManagerController {
   ungroup(device) {
     if (device && device.ip) { this.multiRoomService.removeChildDevice(device.ip); }
   }
+  // This player's own volume goes through the plain volume command. Only a grouped device
+  // takes the multiroom route: on a player without the multiroom plugin the backend answers
+  // setMultiroom with nothing and crashes on it, taking the whole UI down with it.
   setVolume(device) {
     if (!device || !device.state) { return; }
     const v = parseInt(device.state.volume, 10);
     if (isNaN(v)) { return; }
-    if (device.isChild) { this.changeChildVolume(device.ip, v); } else { this.changeGroupVolume(device.ip, v); }
+    if (device.isSelf) { this.playerService.volume = v; return; }
+    if (device.isChild) { this.changeChildVolume(device.ip, v); return; }
+    if (this.isGrouped(device)) { this.changeGroupVolume(device.ip, v); }
   }
+
+  isGrouped(device) { return !!(device && (device.groupable || device.leader || (device.child && device.child.length))); }
+
+  // a remote player that is not grouped has no volume channel we may use
+  canSetVolume(device) { return !!(device && device.state && (device.isSelf || device.isChild || this.isGrouped(device))); }
 
   changeChildVolume(ip, volume) {
     if (this.timeoutHandler) {

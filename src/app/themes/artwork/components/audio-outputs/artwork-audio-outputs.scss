@@ -1,0 +1,69 @@
+/* Zones & outputs sheet. Volumio's own markup, dressed as one of the theme's sheets:
+   a panel on the right on wide screens, a bottom sheet on phones. The scrim sits directly
+   under the panel and closes it on a tap, which on a phone is the only way out: the sheet
+   used to cover the whole screen with the scrim buried beneath it. */
+body#artwork {
+  #sideMenuScrim {
+    position: fixed; inset: 0; z-index: 399;
+    background: rgba(0, 0, 0, .55);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+
+  .outputs__menu {
+    position: fixed; z-index: 400;
+    top: 12px; right: 12px; bottom: 12px; left: auto; width: unquote("min(380px, calc(100vw - 24px))"); /* libsass drops a bare min() with mixed units */
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    border-radius: 18px;
+    background: rgba(16, 18, 22, .92);
+    -webkit-backdrop-filter: blur(34px) saturate(1.1); backdrop-filter: blur(34px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0 30px 70px -24px rgba(0, 0, 0, .8);
+    color: var(--ink-1);
+  }
+
+  .outputs__title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
+  .outputs__title__text { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #cfd4d8; }
+  .outputs__action {
+    display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 13px; border-radius: 17px;
+    background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 13px; font-weight: 500;
+    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+    .outputs__action__icon { font-size: 17px; }
+  }
+  .outputs__subtitle { margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #8c9298; }
+
+  .outputs__device, .device {
+    display: flex; align-items: center; gap: 12px; margin: 0 0 10px; padding: 12px; border-radius: 14px;
+    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .09);
+  }
+  .device__thumb { flex: none; width: 44px; height: 44px; border-radius: 6px; overflow: hidden;
+    img { width: 100%; height: 100%; object-fit: cover; } }
+  .device__info { min-width: 0; flex: 1 1 auto; }
+  .device__title__text { font-size: 15px; font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .device__subtitle, .device__info small { font-size: 12px; color: var(--ink-muted); }
+
+  /* the per-device volume row: the theme's thin track with a white fill */
+  .outputs__menu input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 18px; margin: 8px 0 0; background: transparent;
+    &::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
+    &::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
+    &::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, .16), 0 2px 6px rgba(0, 0, 0, .6); }
+    &::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; }
+  }
+  .outputs__menu .fa, .outputs__menu .material-icons { color: #c2c8cd; }
+}
+
+/* phone: a bottom sheet, so the dimmed area above it is always there to tap */
+@media (max-width: 700px) and (orientation: portrait) {
+  body#artwork .outputs__menu {
+    top: auto; right: 0; left: 0; bottom: 0; width: auto; max-height: 72vh;
+    border-radius: 20px 20px 0 0; border-bottom: 0;
+    padding-top: 26px;
+  }
+  /* grab handle, the usual hint that the sheet pulls down / taps away */
+  body#artwork .outputs__menu::before {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 38px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4);
+  }
+}

@@ -30,8 +30,8 @@
       <span ng-if="!device.state.track" class="aw-zone__idle">{{device.state.status || 'idle'}}</span>
     </div>
     <div class="aw-zone__vol">
-      <input type="range" min="0" max="100" step="1" ng-model="device.state.volume" ng-change="multiRoomManager.setVolume(device)" aria-label="Volume {{device.name}}">
-      <span class="mono">{{device.state.volume}}</span>
+      <input type="range" min="0" max="100" step="1" ng-if="multiRoomManager.canSetVolume(device)" ng-model="device.state.volume" ng-change="multiRoomManager.setVolume(device)" aria-label="Volume {{device.name}}">
+      <span class="mono" ng-if="multiRoomManager.canSetVolume(device)">{{device.state.volume}}</span>
     </div>
     <div class="aw-zone__act">
       <button type="button" class="aw-zone__btn" ng-if="!device.isSelf && !device.isChild" ng-click="multiRoomManager.switchTo(device)">Open</button>

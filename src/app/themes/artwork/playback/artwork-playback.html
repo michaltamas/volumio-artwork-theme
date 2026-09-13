@@ -12,7 +12,8 @@
       </div>
     </div>
     <div id="np-badge-slot">
-      <div class="np-badge">
+      <div class="np-volume"><volume-manager is-on-footer="true"></volume-manager></div>
+      <div class="np-badge" ng-if="playback.npBitPerfect">
         <span class="np-dot"></span>
         <span class="mono">BIT PERFECT</span>
       </div>
@@ -46,13 +47,14 @@
           </div>
           <span class="np-format mono" ng-if="playback.npFormat">{{playback.npFormat}}</span>
         </div>
-        <!-- signal path (§5.6) — static nodes where live data is unavailable; refine later -->
+        <!-- signal path (§5.6): source format, the resample step from the real playback
+             settings (omitted while they are unknown), and the output device -->
         <div class="np-signalpath mono" ng-if="playback.playerService.state.samplerate">
           <span>SOURCE {{playback.npSignal}}</span>
-          <span class="np-arrow">&rarr;</span>
-          <span>NO RESAMPLE</span>
-          <span class="np-arrow">&rarr;</span>
-          <span class="np-node-final">{{playback.npOutput || 'DAC'}}</span>
+          <span class="np-arrow" ng-if="playback.npResample">&rarr;</span>
+          <span ng-if="playback.npResample">{{playback.npResample}}</span>
+          <span class="np-arrow" ng-if="playback.npOutput">&rarr;</span>
+          <span class="np-node-final" ng-if="playback.npOutput">{{playback.npOutput}}</span>
         </div>
       </div>
     </div>
@@ -101,7 +103,7 @@
       <span class="material-symbols-rounded">{{playback.playerService.state.status === 'play' ? 'pause' : 'play_arrow'}}</span>
     </button>
     <button type="button" class="np-m-bar__btn np-m-bar__btn--skip" ng-click="playback.playerService.next()" title="Next"><span class="material-symbols-rounded">skip_next</span></button>
-    <button type="button" class="np-m-bar__btn" ng-click="playback.$state.go('volumio.multi-room')" title="Zones"><span class="material-symbols-rounded">speaker</span></button>
+    <button type="button" class="np-m-bar__btn" ng-click="playback.openOutputs()" title="{{'MULTIDEVICE.ZONES_AND_OUTPUTS' | translate}}"><span class="material-symbols-rounded">speaker</span></button>
   </div>
 
 </div>

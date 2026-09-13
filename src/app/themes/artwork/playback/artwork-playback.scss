@@ -251,6 +251,10 @@ div#goBackPanelWrapper {
   }
   .np-dot { width: 7px; height: 7px; border-radius: 50%; background: #7de3b4; }
 
+  /* topbar right: the volume control, then the badge when the player is bit perfect */
+  #np-badge-slot { display: flex; align-items: center; justify-content: flex-end; gap: 16px; min-width: 0; }
+  .np-volume { display: flex; align-items: center; }
+
   .np-quality { display: flex; align-items: center; gap: 12px; }
   .np-chip {
     display: inline-flex; align-items: center; gap: 8px;
