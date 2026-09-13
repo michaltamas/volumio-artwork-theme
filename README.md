@@ -11,7 +11,7 @@ Artwork One turns your [Volumio](https://volumio.com) player into something you 
 Beneath the new look sits everything you already rely on. Every source, every setting and every plugin Volumio offers is still there, with nothing hidden and nothing taken away. It lives on your player, installs with a single command, and feels at home wherever you meet your music: on the phone in your hand, a tablet on the sofa, a desktop browser, or a small touch screen next to your DAC.
 
 - **Made for listening in high resolution.** Bit depth, sample rate, format and source, shown with pride instead of tucked away.
-- **A waveform instead of a progress bar.** Glide through a track with a finger, a mouse or the arrow keys.
+- **Seeking that invites a touch.** A generous track with a glowing handle: drag it with a finger or a mouse, or step by five seconds with the arrow keys.
 - **One fluid design.** No fixed breakpoints: it reshapes itself continuously for any screen, down to edge-to-edge on an iPhone.
 - **Free to try.** One line to install, one click in Settings to switch back.
 
@@ -43,12 +43,12 @@ Beneath the new look sits everything you already rely on. Every source, every se
 **Now Playing**
 - Large cover next to the title, artist and album, sized to fill the screen at any window size.
 - The real format as Volumio reports it: bit depth, sample rate, file type and streaming service (for example *24 BIT 192 kHz · FLAC · QOBUZ*), and the path from the source to the output device.
-- A waveform scrubber across the full width with a playhead and elapsed, remaining and total time. Drag it with the mouse or a finger, or use the arrow keys.
+- A seek bar across the full width, with elapsed, remaining and total time. Drag the handle with the mouse or a finger, or step through the track with the arrow keys.
 - *Up next* thumbnails that start the next tracks directly.
 - Opens from the mini player with a slide-up and closes back to where you were.
 
 **Mini player**
-- Cover, title, artist and a compact quality line (*24/192 · FLAC*), transport, waveform, volume, the zone and output picker, and the queue button with the number of tracks.
+- Cover, title, artist and a compact quality line (*24/192 · FLAC*), transport, seek bar, volume, the zone and output picker, and the queue button with the number of tracks.
 
 **Queue**
 - A floating panel instead of a separate page: drag to reorder, remove, shuffle, repeat, save as a playlist, clear, and the time the queue ends.
@@ -191,7 +191,6 @@ Volumio's other themes remain in the source tree. This project only builds and p
 
 ## Known limitations
 
-- The waveform is a generated pattern, not the actual audio peaks of the track, because Volumio does not provide peak data. It works as a normal seek bar.
 - The *Bit perfect* badge and the *No resample* step of the signal path are fixed labels. Volumio does not report whether the output is resampled, so they are not measured.
 - Only tested on Volumio 4.x.
 - Artwork One is not part of Volumio's built-in interface list, so installing it needs SSH once.

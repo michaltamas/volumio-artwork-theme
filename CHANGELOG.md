@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-09-13
+
+### Changed
+
+- Now Playing, the phone screen and the mini player use a real seek bar with a track, a fill and a draggable handle, in place of the waveform. The waveform was a generated pattern rather than the track's audio peaks, so it showed nothing true about the music. Dragging and the arrow keys (five second steps) work as before.
+
+### Fixed
+
+- Dragging the seek bar on a phone no longer closes Now Playing: the swipe gesture ignores the seek bar again.
+
 ## [1.0.1] - 2026-09-11
 
 ### Fixed
@@ -35,5 +45,6 @@ First public release.
 
 - The interface language was never applied after the socket connection was rebuilt, for example when a MyVolumio address was opened directly, so every text showed its translation key. Volumio's UI settings are now requested again for every new connection.
 
+[1.1.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.1.0
 [1.0.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.1
 [1.0.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.0
