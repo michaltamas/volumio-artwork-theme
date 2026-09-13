@@ -3,6 +3,11 @@
    under the panel and closes it on a tap, which on a phone is the only way out: the sheet
    used to cover the whole screen with the scrim buried beneath it. */
 body#artwork {
+  /* the core gives #sideMenu z-index 50, which caps the sheet inside it: the scrim then
+     painted over the sheet and blurred and dimmed its own contents (visible on iOS Safari).
+     Lift the container above the scrim instead. */
+  #sideMenu { z-index: 401; }
+
   #sideMenuScrim {
     position: fixed; inset: 0; z-index: 399;
     background: rgba(0, 0, 0, .55);
@@ -42,9 +47,22 @@ body#artwork {
   .device__title__text { font-size: 15px; font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .device__subtitle, .device__info small { font-size: 12px; color: var(--ink-muted); }
 
+  /* volume row: icon, then the track across the rest of the card */
+  .device__volume { display: flex; align-items: center; gap: 10px; margin: 8px 0 0; }
+  .device__control--volume {
+    flex: none; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 8px; background: transparent;
+    display: grid; place-items: center; color: #c2c8cd;
+    .outputs__action__icon { font-size: 15px; }
+    &:hover { background: transparent; color: #fff; }
+  }
+  .volume-control__popover {
+    position: static; display: block; flex: 1 1 auto; min-width: 0;
+    padding: 0; margin: 0; background: none; border: 0; box-shadow: none;
+  }
+
   /* the per-device volume row: the theme's thin track with a white fill */
   .outputs__menu input[type="range"] {
-    -webkit-appearance: none; appearance: none; width: 100%; height: 18px; margin: 8px 0 0; background: transparent;
+    -webkit-appearance: none; appearance: none; width: 100%; height: 18px; margin: 0; background: transparent;
     &::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
     &::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
     &::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: #fff;
