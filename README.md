@@ -70,7 +70,7 @@ Beneath the new look sits everything you already rely on. Every source, every se
 |---|---|
 | ![Home](docs/screenshots/home.jpg) | ![Album](docs/screenshots/album.jpg) |
 | **Home** | **Album** |
-| ![Artist](docs/screenshots/artist.jpg) | ![Queue](docs/screenshots/queue.jpg) |
+| ![Artist](docs/screenshots/artist.jpg) | ![Queue](docs/screenshots/home-queue.jpg) |
 | **Artist** | **Queue** |
 
 <p align="center">
