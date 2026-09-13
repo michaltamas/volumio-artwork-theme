@@ -1,7 +1,8 @@
 class AudioOutputsController {
-  constructor($log, audioOutputsService, socketService, playerService, $rootScope) {
+  constructor($log, audioOutputsService, socketService, playerService, $rootScope, $timeout) {
     "ngInject";
     this.audioOutputsService = audioOutputsService;
+    this.$timeout = $timeout;
     this.socketService = socketService;
     this.playerService = playerService;
     this.$log = $log;
@@ -58,6 +59,61 @@ class AudioOutputsController {
   onDeviceVolumeChange(id, level) {
     const volume = parseInt(level);
     this.audioOutputsService.onDeviceVolumeChange(id, volume);
+  }
+
+  // A dragged slider must not fight the player. The device objects are rebuilt on every
+  // push from the backend, which used to snap the handle back mid-drag; the dragged value
+  // wins for a moment, and the command goes out at most every 200 ms plus once at the end.
+  volumeFn(device) {
+    if (!device) { return () => 0; }
+    const id = device.id;
+    this._volFns = this._volFns || {};
+    this._localVol = this._localVol || {};
+    if (!this._volFns[id]) {
+      this._volFns[id] = (value) => {
+        if (value === undefined) {
+          const local = this._localVol[id];
+          if (local && Date.now() - local.at < 1200) { return local.value; }
+          return device.state ? parseInt(device.state.volume, 10) : 0;
+        }
+        const v = parseInt(value, 10);
+        if (isNaN(v)) { return; }
+        this._localVol[id] = { value: v, at: Date.now() };
+        this.sendVolume(device, v);
+        return v;
+      };
+    }
+    return this._volFns[id];
+  }
+
+  sendVolume(device, volume) {
+    this._volTimers = this._volTimers || {};
+    this._volSentAt = this._volSentAt || {};
+    const id = device.id;
+    const push = () => {
+      this._volSentAt[id] = Date.now();
+      this._volTimers[id] = null;
+      const item = { id: device.id, type: device.type, host: device.host, isSelf: device.isSelf, state: { volume: this.volumeFn(device)() } };
+      this.audioOutputsService.onDeviceVolumeChange(item);
+    };
+    if (this._volTimers[id]) { return; }                      // one is already queued
+    const since = Date.now() - (this._volSentAt[id] || 0);
+    if (since >= 200) { push(); } else { this._volTimers[id] = this.$timeout(push, 200 - since, false); }
+  }
+
+  // the speaker icon mutes and unmutes the device
+  toggleMute(device) {
+    if (!device || !device.state) { return; }
+    const muted = !!device.state.mute;
+    device.state.mute = !muted;                               // answer the tap at once
+    if (device.isSelf) {
+      this.playerService.toggleMute();
+      return;
+    }
+    this.socketService.emit('setAudioOutputVolume', {
+      id: device.id, type: device.type, host: device.host, isSelf: device.isSelf,
+      mute: !muted, volume: device.state.volume
+    });
   }
 
   onDeviceClick(device) {

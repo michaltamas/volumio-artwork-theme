@@ -73,6 +73,7 @@ import AwQueuePanelService from './services/aw-queue-panel.service';
 import AwMobileMenuDirective from './components/aw-mobile-menu/aw-mobile-menu.directive';
 import AwMobileMenuService from './services/aw-mobile-menu.service';
 import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
+import AwSheetDragDirective from './components/aw-sheet-drag/aw-sheet-drag.directive';
 // Track buttons
 import FavouriteTrackBtnDirective from './components/favourite-track-btn/favourite-track-btn.directive';
 import AddTrackToPlaylistBtnDirective from './components/add-track-to-playlist-btn/add-track-to-playlist-btn.directive';
@@ -296,6 +297,7 @@ angular.module('volumio', [
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
+  .directive('awSheetDrag', ($window) => new AwSheetDragDirective($window))
 
   //MyVolumio Directives
   .directive('stripePayButton', () => new StripePayButtonDirective())

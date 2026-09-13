@@ -25,6 +25,20 @@ body#artwork {
     border: 1px solid rgba(255, 255, 255, .1);
     box-shadow: 0 30px 70px -24px rgba(0, 0, 0, .8);
     color: var(--ink-1);
+    /* the core animation keeps its last frame (animation-fill-mode: forwards), which
+       overrides any transform set later — the sheet could not be dragged. Ours ends and
+       leaves the element alone. */
+    opacity: 1; transform: none; animation: aw-outputs-in .22s ease-out;
+  }
+
+  /* the strip that closes the sheet: a grab handle on phones, a round close button
+     on wide screens */
+  .outputs__grab {
+    position: absolute; top: 10px; right: 14px; width: 32px; height: 32px; padding: 0;
+    border: 0; border-radius: 50%; background: rgba(255, 255, 255, .08); color: #c2c8cd; cursor: pointer;
+    &::after { content: 'close'; font-family: 'Material Symbols Rounded'; font-size: 18px; line-height: 32px; }
+    &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
   }
 
   .outputs__title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
@@ -72,16 +86,27 @@ body#artwork {
   .outputs__menu .fa, .outputs__menu .material-icons { color: #c2c8cd; }
 }
 
+@keyframes aw-outputs-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes aw-outputs-up { from { transform: translateY(100%); } to { transform: none; } }
+
 /* phone: a bottom sheet, so the dimmed area above it is always there to tap */
 @media (max-width: 700px) and (orientation: portrait) {
   body#artwork .outputs__menu {
     top: auto; right: 0; left: 0; bottom: 0; width: auto; max-height: 72vh;
     border-radius: 20px 20px 0 0; border-bottom: 0;
     padding-top: 26px;
+    animation: aw-outputs-up .22s ease-out;
   }
-  /* grab handle, the usual hint that the sheet pulls down / taps away */
-  body#artwork .outputs__menu::before {
-    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-    width: 38px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4);
+  /* the handle spans the top of the sheet: tapping it closes, as does a tap outside */
+  body#artwork .outputs__grab {
+    top: 0; left: 0; right: 0; width: auto; height: 26px; border-radius: 20px 20px 0 0; background: transparent;
+    &::after {
+      content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 38px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4);
+    }
+    &:hover { background: transparent; &::after { background: rgba(255, 255, 255, .6); } }
+    touch-action: none; /* the finger drags the sheet, the page stays put */
   }
+  /* the sheet follows the finger, so it must not animate its own position meanwhile */
+  body#artwork .outputs__menu { will-change: transform; }
 }
