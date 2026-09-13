@@ -4,6 +4,22 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-09-13
+
+Thanks to the first tester on the Volumio community forum, who found all four of these
+on a Raspberry Pi 4 running Volumio 4.119.
+
+### Added
+
+- A volume control on Now Playing, next to the header badge, the same one the mini player uses.
+- On phones, the speaker button on Now Playing opens the Zones & Outputs sheet, which carries the volume, instead of the Zones page.
+
+### Fixed
+
+- The signal path claimed *No resample* whatever the player was set to, and the *Bit perfect* badge was always lit. Both now come from the player's own playback settings: the path shows the resampling target when resampling is on, omits the step while the settings are unknown, and the badge appears only when nothing touches the stream.
+- Changing this player's volume on the Zones page could crash the Volumio backend and reload the interface. The page sent the volume as a multiroom command, which a player without the multiroom plugin cannot answer. This player's volume now uses the plain volume command.
+- The Zones & Outputs sheet could not be closed on a phone: it covered the screen and the layer that dismisses it sat underneath. It is now a bottom sheet on phones and a panel on wide screens, and a tap outside closes it.
+
 ## [1.1.0] - 2026-09-13
 
 ### Changed
@@ -45,6 +61,7 @@ First public release.
 
 - The interface language was never applied after the socket connection was rebuilt, for example when a MyVolumio address was opened directly, so every text showed its translation key. Volumio's UI settings are now requested again for every new connection.
 
+[1.2.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.2.0
 [1.1.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.1.0
 [1.0.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.1
 [1.0.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.0.0

@@ -42,7 +42,8 @@ Beneath the new look sits everything you already rely on. Every source, every se
 
 **Now Playing**
 - Large cover next to the title, artist and album, sized to fill the screen at any window size.
-- The real format as Volumio reports it: bit depth, sample rate, file type and streaming service (for example *24 BIT 192 kHz · FLAC · QOBUZ*), and the path from the source to the output device.
+- The real format as Volumio reports it: bit depth, sample rate, file type and streaming service (for example *24 BIT 192 kHz · FLAC · QOBUZ*), the path from the source to the output device including any resampling, and a *Bit perfect* badge when nothing touches the stream.
+- Volume, the zone and its output device, all in the header.
 - A seek bar across the full width, with elapsed, remaining and total time. Drag the handle with the mouse or a finger, or step through the track with the arrow keys.
 - *Up next* thumbnails that start the next tracks directly.
 - Opens from the mini player with a slide-up and closes back to where you were.
@@ -191,7 +192,6 @@ Volumio's other themes remain in the source tree. This project only builds and p
 
 ## Known limitations
 
-- The *Bit perfect* badge and the *No resample* step of the signal path are fixed labels. Volumio does not report whether the output is resampled, so they are not measured.
 - Only tested on Volumio 4.x.
 - Artwork One is not part of Volumio's built-in interface list, so installing it needs SSH once.
 - A few labels the theme introduces, such as *Up next*, are in English only for now. Everything that comes from Volumio uses Volumio's translations.
