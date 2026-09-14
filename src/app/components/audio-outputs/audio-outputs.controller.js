@@ -73,7 +73,10 @@ class AudioOutputsController {
       this._volFns[id] = (value) => {
         if (value === undefined) {
           const local = this._localVol[id];
-          if (local && Date.now() - local.at < 1200) { return local.value; }
+          // the device list keeps the volume it was told at boot, so for this player read
+          // the live one; a remote device keeps the dragged value a little longer instead
+          if (local && Date.now() - local.at < (device.isSelf ? 900 : 3000)) { return local.value; }
+          if (device.isSelf && this.playerService.state) { return parseInt(this.playerService.state.volume, 10) || 0; }
           return device.state ? parseInt(device.state.volume, 10) : 0;
         }
         const v = parseInt(value, 10);
@@ -101,10 +104,16 @@ class AudioOutputsController {
     if (since >= 200) { push(); } else { this._volTimers[id] = this.$timeout(push, 200 - since, false); }
   }
 
+  isMuted(device) {
+    if (!device) { return false; }
+    if (device.isSelf && this.playerService.state) { return !!this.playerService.state.mute; }
+    return !!(device.state && device.state.mute);
+  }
+
   // the speaker icon mutes and unmutes the device
   toggleMute(device) {
     if (!device || !device.state) { return; }
-    const muted = !!device.state.mute;
+    const muted = device.isSelf && this.playerService.state ? !!this.playerService.state.mute : !!device.state.mute;
     device.state.mute = !muted;                               // answer the tap at once
     if (device.isSelf) {
       this.playerService.toggleMute();

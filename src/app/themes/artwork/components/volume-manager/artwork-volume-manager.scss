@@ -169,3 +169,14 @@ volume-manager{
     background: var(--ink-faint) !important;
   }
 }
+
+/* Now Playing: a longer track and a visible knob — this is where the volume is set
+   deliberately, so fine control matters more than in the mini player's strip */
+body#artwork #np .np-volume .volume-slider {
+  gap: 10px;
+  .volumeSlider, .slider.slider-horizontal { width: unquote("clamp(90px, 11vw, 150px)"); }
+  .slider.slider-horizontal .slider-track { height: 5px; margin-top: -2.5px; }
+  .slider-handle { width: 13px; height: 13px; margin-left: -6.5px; margin-top: -6.5px; opacity: 1;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .14), 0 2px 6px rgba(0, 0, 0, .55); }
+  .button-mute { width: 30px; height: 30px; .fa::before { font-size: 23px; } }
+}

@@ -30,7 +30,7 @@
               <!-- <div class="device__actions">
                 <div ng-if="audioOutputs.audioOutputsService.thisOutput.volumeAvailable" class="device__volume">
                   <button type="button" class="outputs__action device__control device__control--volume" ng-click="audioOutputs.toggleMute(audioOutputs.audioOutputsService.thisOutput)" title="{{ 'COMMON.TAB_VOLUME' | translate }} {{audioOutputs.audioOutputsService.thisOutput.state.volume}}">
-                <i class="outputs__action__icon fa" ng-class="audioOutputs.audioOutputsService.thisOutput.state.mute ? 'fa-volume-off' : 'fa-volume-up'"></i>
+                <i class="outputs__action__icon fa" ng-class="audioOutputs.isMuted(audioOutputs.audioOutputsService.thisOutput) ? 'fa-volume-off' : 'fa-volume-up'"></i>
               </button>
                   <input hidden class="volume-control-activator" id="{{audioOutputs.audioOutputsService.thisOutput.id}}-main" type="checkbox">
                   <div class="volume-control__popover">
@@ -42,7 +42,7 @@
             </div> <!-- /.device__title -->
             <div ng-if="audioOutputs.audioOutputsService.thisOutput.volumeAvailable" class="device__volume">
               <button type="button" class="outputs__action device__control device__control--volume" ng-click="audioOutputs.toggleMute(audioOutputs.audioOutputsService.thisOutput)" title="{{ 'COMMON.TAB_VOLUME' | translate }} {{audioOutputs.audioOutputsService.thisOutput.state.volume}}">
-                <i class="outputs__action__icon fa" ng-class="audioOutputs.audioOutputsService.thisOutput.state.mute ? 'fa-volume-off' : 'fa-volume-up'"></i>
+                <i class="outputs__action__icon fa" ng-class="audioOutputs.isMuted(audioOutputs.audioOutputsService.thisOutput) ? 'fa-volume-off' : 'fa-volume-up'"></i>
               </button>
               <div class="volume-control__popover">
                 <input type="range" name="volume-slider" id="volume-slider" min="0"

@@ -57,18 +57,32 @@ class PlaybackController {
         if (cfg.sections) { cfg.sections.forEach(s => walk(s.content)); }
         if (cfg.content) { walk(cfg.content); }
       } catch (e) { return; }
-      if (found.output_device === undefined) { return; } // a different plugin's config
-      this.npOutput = found.output_device ? String(found.output_device) : this.npOutput;
-      const res = found.resampling;
+      // a different plugin's config: none of the playback fields are in it
+      if (found.output_device === undefined && found.resampling === undefined && found.i2sid === undefined) { return; }
+      const device = found.output_device || found.i2sid || found.i2s_dac || '';
+      if (device) { this.npOutput = String(device); }
       this.npAlsa = {
-        resampling: (res === true || res === 'true') ? true : ((res === false || res === 'false') ? false : null),
+        resampling: this.alsaFlag(found.resampling),
         bitdepth: this.alsaTarget(found.resampling_target_bitdepth),
         samplerate: this.alsaTarget(found.resampling_target_samplerate),
+        normalization: this.alsaFlag(found.volume_normalization),
         mixerType: found.mixer_type ? String(found.mixer_type) : ''
       };
+      // so a tester can read what the theme sees: type __artworkPath in the browser console
+      try { window.__artworkPath = angular.extend({ output: this.npOutput }, this.npAlsa); } catch (e) { /* ignore */ }
     };
     this.socketService.on('pushUiConfig', handler);
     this.socketService.emit('getUiConfig', { page: 'audio_interface/alsa_controller' });
+  }
+
+  // switches come back as booleans, as "true"/"false", and on some builds as a label
+  alsaFlag(v) {
+    if (v === true || v === false) { return v; }
+    const s = String(v === undefined || v === null ? '' : v).trim().toLowerCase();
+    if (!s) { return null; }
+    if (['true', 'on', 'yes', 'enabled', '1'].indexOf(s) > -1) { return true; }
+    if (['false', 'off', 'no', 'disabled', '0'].indexOf(s) > -1) { return false; }
+    return null;
   }
 
   // "*" and "Native" both mean "leave this as the track has it"
@@ -94,7 +108,8 @@ class PlaybackController {
     const a = this.npAlsa;
     if (!a || a.resampling === null) { return false; }
     const mixer = String(a.mixerType || '').toLowerCase();
-    return a.resampling === false && (mixer === 'hardware' || mixer === 'none' || mixer === 'disabled');
+    const softMixer = !(mixer === 'hardware' || mixer === 'none' || mixer === 'disabled');
+    return a.resampling === false && !softMixer && a.normalization !== true;
   }
 
   // Zones & outputs sheet (the mini player's zone button opens the same one)
