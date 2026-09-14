@@ -41,38 +41,45 @@ class PlaybackController {
   // playback state, so read it from the ALSA-controller plugin UI config
   // (the same getUiConfig/pushUiConfig path the Playback Options page uses).
   fetchOutputDevice() {
-    const handler = (cfg) => {
-      if (!cfg) { return; }
-      const found = {};
-      const walk = (arr) => (arr || []).forEach((el) => {
-        if (!el) { return; }
-        const id = String(el.id || '');
-        if (id) {
-          const v = el.value;
-          found[id] = (v && typeof v === 'object') ? (v.label !== undefined ? v.label : v.value) : v;
-        }
-        if (el.content) { walk(el.content); }
-      });
-      try {
-        if (cfg.sections) { cfg.sections.forEach(s => walk(s.content)); }
-        if (cfg.content) { walk(cfg.content); }
-      } catch (e) { return; }
-      // a different plugin's config: none of the playback fields are in it
-      if (found.output_device === undefined && found.resampling === undefined && found.i2sid === undefined) { return; }
-      const device = found.output_device || found.i2sid || found.i2s_dac || '';
-      if (device) { this.npOutput = String(device); }
-      this.npAlsa = {
-        resampling: this.alsaFlag(found.resampling),
-        bitdepth: this.alsaTarget(found.resampling_target_bitdepth),
-        samplerate: this.alsaTarget(found.resampling_target_samplerate),
-        normalization: this.alsaFlag(found.volume_normalization),
-        mixerType: found.mixer_type ? String(found.mixer_type) : ''
-      };
-      // so a tester can read what the theme sees: type __artworkPath in the browser console
-      try { window.__artworkPath = angular.extend({ output: this.npOutput }, this.npAlsa); } catch (e) { /* ignore */ }
-    };
+    const handler = (cfg) => this.applyAlsaConfig(cfg);
     this.socketService.on('pushUiConfig', handler);
     this.socketService.emit('getUiConfig', { page: 'audio_interface/alsa_controller' });
+  }
+
+  // Reads the player's playback settings out of the ALSA plugin's UI config.
+  applyAlsaConfig(cfg) {
+    if (!cfg) { return; }
+    const found = {};
+    const walk = (arr) => (arr || []).forEach((el) => {
+      if (!el) { return; }
+      const id = String(el.id || '');
+      if (id) {
+        const v = el.value;
+        found[id] = (v && typeof v === 'object') ? (v.label !== undefined ? v.label : v.value) : v;
+      }
+      if (el.content) { walk(el.content); }
+    });
+    try {
+      if (cfg.sections) { cfg.sections.forEach(s => walk(s.content)); }
+      if (cfg.content) { walk(cfg.content); }
+    } catch (e) { return; }
+    // a different plugin's config: none of the playback fields are in it
+    if (found.output_device === undefined && found.resampling === undefined && found.i2sid === undefined) { return; }
+    // With an I2S DAC the output-device field is hidden and keeps whatever card was
+    // chosen before (an HDMI output, say); the DAC's own name is in i2sid.
+    const i2s = this.alsaFlag(found.i2s);
+    const device = (i2s === true && found.i2sid) ? found.i2sid : (found.output_device || found.i2sid || '');
+    if (device) { this.npOutput = String(device); }
+    this.npAlsa = {
+      i2s: i2s,
+      resampling: this.alsaFlag(found.resampling),
+      bitdepth: this.alsaTarget(found.resampling_target_bitdepth),
+      samplerate: this.alsaTarget(found.resampling_target_samplerate),
+      normalization: this.alsaFlag(found.volume_normalization),
+      mixerType: found.mixer_type ? String(found.mixer_type) : ''
+    };
+    // so a tester can read what the theme sees: type __artworkPath in the browser console
+    try { window.__artworkPath = angular.extend({ output: this.npOutput }, this.npAlsa); } catch (e) { /* ignore */ }
   }
 
   // switches come back as booleans, as "true"/"false", and on some builds as a label
