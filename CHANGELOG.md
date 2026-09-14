@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-09-14
+
+### Fixed
+
+- The playback path named the wrong output on players with an I2S DAC, an Allo Piano 2.1 showing as *HDMI OUT*. Volumio hides the output-device field when an I2S DAC is enabled and leaves the previously selected card in it; the path now uses the DAC's own name.
+
 ## [1.4.0] - 2026-09-14
 
 ### Fixed
@@ -89,6 +95,7 @@ First public release.
 
 - The interface language was never applied after the socket connection was rebuilt, for example when a MyVolumio address was opened directly, so every text showed its translation key. Volumio's UI settings are now requested again for every new connection.
 
+[1.4.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.4.1
 [1.4.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.4.0
 [1.3.0]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.3.0
 [1.2.1]: https://github.com/michaltamas/volumio-artwork-theme/releases/tag/v1.2.1
