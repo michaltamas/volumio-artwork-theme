@@ -730,7 +730,11 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
      otherwise the bar would run on behind it and end out of sight — and keeps a little air
      above it, so the scrollbar does not sit on the bar */
   > #browse-page { align-self: stretch; min-height: 0; margin-top: 104px; height: calc(100% - 104px - var(--mini-h) - 18px); overflow-y: auto; padding-bottom: 12px; /* level with the top of the cover: the head row plus its padding */
-    .main__list .album__tracks:first-child { padding-top: 0; } /* the inherited panel inset would push row 1 below the cover top */ }
+    .main__list .album__tracks:first-child { padding-top: 0; } /* the inherited panel inset would push row 1 below the cover top */
+    /* the end of the list is the end of the scroll: the inherited block spacing under the last
+       row would leave the scrollbar running on past it */
+    .main__source:last-child { margin-bottom: 0; }
+    .main__list .album__tracks:last-child { padding-bottom: 0; } }
 }
 
 /* --- album/playlist header (aw-albumhead) --- */
