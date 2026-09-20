@@ -1115,6 +1115,9 @@ body#artwork #browse.browsing-album {
     .item__number { font-size: 0; position: relative; width: 10px; height: 13px;
       &::before, &::after, .item__number-dot { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } .item__number-dot { left: 8px; animation-delay: .4s; } }
+    /* stopped or paused: the row stays marked, the bars stand still (this sits next to the rule
+       that starts them, or the one that stops them would lose on specificity) */
+    &.aw-paused .item__number::before, &.aw-paused .item__number::after, &.aw-paused .item__number .item__number-dot { animation-play-state: paused; }
   }
 }
 
@@ -1219,6 +1222,7 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
     .item__image .aw-eq { position: absolute; left: 50%; top: 50%; width: 10px; height: 13px; transform: translate(-50%, -50%); z-index: 1;
       &::before, &::after, i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } i { left: 8px; animation-delay: .4s; } }
+    &.aw-paused .aw-eq::before, &.aw-paused .aw-eq::after, &.aw-paused .aw-eq i { animation-play-state: paused; }
   }
 }
 
@@ -1345,7 +1349,8 @@ body#artwork #browse.browsing-artist .music-item {
     .item__image::before { display: none; }
     .aw-eq { position: relative; inset: auto; transform: none; width: 10px; height: 13px; display: block; background: none; border-radius: 0; }
     .aw-eq::before, .aw-eq::after, .aw-eq i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
-    .aw-eq::before { left: 0; } .aw-eq::after { left: 4px; animation-delay: .2s; } .aw-eq i { left: 8px; animation-delay: .4s; } }
+    .aw-eq::before { left: 0; } .aw-eq::after { left: 4px; animation-delay: .2s; } .aw-eq i { left: 8px; animation-delay: .4s; }
+    &.aw-paused .aw-eq::before, &.aw-paused .aw-eq::after, &.aw-paused .aw-eq i { animation-play-state: paused; } }
 }
 
 /* artists grid: the context button sits in the card's square corner (outside the round avatar)

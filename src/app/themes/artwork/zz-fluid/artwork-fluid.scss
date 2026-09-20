@@ -125,7 +125,9 @@ body#artwork #artwork-home .main__row { grid-template-columns: repeat(auto-fill,
 
 /* ---------- album page: one column when the two do not fit; on short screens the cover and
    the title shrink with the height so the header stays whole beside the list ---------- */
-body#artwork .aw-albumhead__cover { max-width: unquote("min(380px, 100%, 44vh)"); }
+/* the cover gives way before the page does: on a short window the title, the meta line and the
+   buttons under it have to stay clear of the mini player, so the art takes what is left */
+body#artwork .aw-albumhead__cover { max-width: unquote("min(380px, 100%, 44vh, calc(100vh - 400px))"); }
 body#artwork #browse.browsing-album .aw-albumhead__title { font-size: unquote("min(var(--t-h1), 6vh)"); }
 body#artwork #browse.browsing-album .aw-albumhead__actions { margin-top: clamp(12px, 2.6vh, 24px); }
 @media (max-width: 860px), (max-height: 560px) {
