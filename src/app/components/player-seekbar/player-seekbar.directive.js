@@ -76,14 +76,29 @@ class playerSeekBarController {
     });
   }
 
+  /* How far into the track we are, in milliseconds.
+     Volumio keeps counting its own `seek` while the player sits stopped at the end of a queue,
+     so the pushed state can claim a position hours past the end of a four-minute track. What
+     the bar shows has to stay inside the track: nothing when stopped, never past the duration. */
+  elapsedMs(){
+    const st = this.playerService.state;
+    if (!st || st.status === 'stop') { return 0; }
+    const ms = this.playerService.elapsedTime || 0;
+    const duration = st.duration ? st.duration * 1000 : 0;
+    return duration ? Math.min(Math.max(0, ms), duration) : Math.max(0, ms);
+  }
+
   // the played share of the track, 0..100 (the fill's width and the handle's position)
   playedPct(){
+    const st = this.playerService.state;
+    const duration = st && st.duration ? st.duration * 1000 : 0;
+    if (duration) { return Math.min(100, Math.max(0, (this.elapsedMs() / duration) * 100)); }
     const p = (this.playerService.seekPercent / this.seekScale) * 100;
     return Math.min(100, Math.max(0, p || 0));
   }
 
   ariaNow(){
-    return Math.round((this.playerService.seekPercent / this.seekScale) * 100);
+    return Math.round(this.playedPct());
   }
 
   onKey(ev){
@@ -120,14 +135,13 @@ class playerSeekBarController {
   }
 
   getElapsed() {
-    let elapsedTime = this.playerService.elapsedTime;
-    return this.momentToString(elapsedTime);
+    return this.momentToString(this.elapsedMs());
   }
 
   getRemaining(){
     const st = this.playerService.state;
     if (!st || !st.duration) { return ''; }
-    return this.momentToString(Math.max(0, st.duration * 1000 - (this.playerService.elapsedTime || 0)));
+    return this.momentToString(Math.max(0, st.duration * 1000 - this.elapsedMs()));
   }
 
   getDuration(){
