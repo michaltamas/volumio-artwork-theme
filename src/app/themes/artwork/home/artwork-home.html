@@ -4,15 +4,17 @@
   <!-- tabs row (the shared head: menu button, sticky, blurs what scrolls under it) -->
   <aw-page-head variant="start">
     <aw-head-nav>
-      <div class="home-tab active">Library</div>
-      <!-- the other tabs are the real browse sources (streaming services, web radio) -->
-      <div class="home-tab" ng-repeat="s in home.sources track by s.uri" ng-click="home.openSource(s)">{{s.name}}</div>
+      <div class="aw-tab active">Library</div>
+      <!-- the other tabs are the real browse sources, exactly as the Browse landing lists them -->
+      <div class="aw-tab" ng-repeat="s in home.streamingSources track by s.uri" ng-click="home.openSource(s)">{{s.name}}</div>
+      <div class="aw-tab" ng-if="home.sourceByUri('radio')" ng-click="home.openSource(home.sourceByUri('radio'))">Radio</div>
     </aw-head-nav>
     <aw-head-actions>
-      <div class="home-search" ng-click="home.goSearch()" role="button" tabindex="0" ng-keydown="$event.key === 'Enter' && home.goSearch()">
+      <!-- the same pill as the Browse landing; here it takes you there and focuses its field -->
+      <div class="aw-search" ng-click="home.goSearch()" role="button" tabindex="0" ng-keydown="$event.key === 'Enter' && home.goSearch()">
         <span class="material-symbols-rounded">search</span>
-        <span class="home-search-label">Search everything</span>
-        <span class="home-search-key mono">⌘K</span>
+        <span class="aw-search-label">Search everything</span>
+        <span class="aw-search-key mono">⌘K</span>
       </div>
     </aw-head-actions>
   </aw-page-head>

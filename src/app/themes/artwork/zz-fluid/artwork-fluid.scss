@@ -100,7 +100,7 @@ body#artwork .aw-queue { width: unquote("min(560px, calc(100vw - 24px))"); right
 /* ---------- browse landing, lists, grids ---------- */
 body#artwork .aw-cards { grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 250px)"), 1fr)); gap: clamp(10px, 1.25vw, 18px); }
 body#artwork .aw-sources { grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 200px)"), 1fr)); }
-body#artwork .aw-search, body#artwork .home-search { width: unquote("min(320px, 100%)"); }
+body#artwork .aw-search { width: 320px; min-width: 0; } /* a definite width: the pill is the same on Browse (an input) and on home (a button), and it may shrink with the row */
 body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 13vw, 190px), 1fr)); gap: clamp(12px, 1.7vw, 24px); }
 body#artwork .aw-head__row { flex-wrap: wrap; row-gap: 10px; }
 body#artwork .aw-filter { width: unquote("min(290px, 100%)"); }
@@ -380,10 +380,11 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* --- Home: the same head as Browse (hamburger + search), same paddings --- */
   body#artwork #artwork-home { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); min-height: 100%; }
   body#artwork .aw-head--start .aw-head__row { gap: 12px; flex-wrap: nowrap; }
-  body#artwork .aw-head--start .aw-head__actions { flex: 1; min-width: 0; }
-  body#artwork #artwork-home .home-tab, body#artwork #artwork-home .home-search-key { display: none; }
+  /* both landing heads give the search the rest of the row on a phone */
+  body#artwork .aw-head--start .aw-head__actions, body#artwork .aw-head--home .aw-head__actions { flex: 1; min-width: 0; }
+  body#artwork #artwork-home .aw-tab, body#artwork #artwork-home .aw-search-key { display: none; }
   body#artwork #artwork-home .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
-  body#artwork #artwork-home .home-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); }
+  body#artwork #artwork-home .aw-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); }
   body#artwork #artwork-home .home-hero { margin-top: 24px; gap: 16px; align-items: center; flex-wrap: nowrap; }
   body#artwork #artwork-home .home-hero-cover { flex: none; }
   body#artwork #artwork-home .home-hero-cover img { width: 120px; height: 120px; }

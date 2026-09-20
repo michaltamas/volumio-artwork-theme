@@ -87,7 +87,7 @@ body#artwork {
   #browse .panel .body-content.new-browse.with-search-header { padding-top: 0; }
   .aw-browse { padding-top: 0; }
   .aw-pe { padding-top: 0; --head-pad: clamp(24px, 4.4vh, 40px); }
-  #artwork-home { padding-top: 0; --head-pad: clamp(24px, 4.2vh, 38px); }
+  #artwork-home { padding-top: 0; } /* the head keeps the shared top padding, so home starts level with Browse */
 }
 
 @media (max-width: 700px) and (orientation: portrait) {

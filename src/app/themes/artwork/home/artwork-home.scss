@@ -5,21 +5,7 @@ body#artwork #artwork-home {
   color: var(--ink-1);
   min-height: 100%; box-sizing: border-box;
 
-  /* tabs row: laid out by the head component, only the tab spacing is ours */
-  .aw-head--start .aw-head__nav { gap: 26px; }
-  .home-tab {
-    font-size: 15px; color: var(--ink-dim); cursor: pointer; transition: color .15s;
-    &:hover { color: var(--ink-2); }
-    &.active { color: var(--ink); font-weight: 600; }
-  }
-  .home-search {
-    display: flex; align-items: center; gap: 11px;
-    height: 38px; padding: 0 16px; width: 290px; border-radius: 19px;
-    background: var(--glass-2-fill); border: 1px solid var(--glass-2-border); cursor: pointer;
-    .material-symbols-rounded { font-size: 20px; color: var(--ink-muted); }
-    .home-search-label { font-size: 14px; color: var(--ink-muted); }
-    .home-search-key { margin-left: auto; font-size: 11px; color: var(--ink-faint); }
-  }
+  /* the head is the Browse landing's, down to the tabs and the search pill (.aw-tab, .aw-search) */
   /* continue hero */
   .home-hero { display: flex; gap: 36px; margin-top: 34px; align-items: flex-end; }
   .home-hero-cover img {

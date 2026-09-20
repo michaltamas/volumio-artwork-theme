@@ -51,12 +51,22 @@ class HomeController {
     }, () => []);
   }
 
-  // tabs after "Library": streaming services and web radio, as Volumio reports them
+  // tabs after "Library": the same ones the Browse landing shows, from the same list
   loadSources() {
     this.browse(undefined).then(lists => {
-      const local = ['favourites', 'playlists', 'music-library', 'artists://', 'albums://', 'genres://', 'upnp', 'Last_100'];
-      this.sources = lists.filter(s => s && s.uri && local.indexOf(s.uri) === -1 && s.enabled !== false);
+      this.sources = lists.filter(s => s && s.uri);
     });
+  }
+
+  // streaming services: everything Volumio reports that is not one of the local entries
+  // (radio has a tab of its own, so it is not one of these)
+  get streamingSources() {
+    const builtIn = ['favourites', 'playlists', 'music-library', 'artists://', 'albums://', 'genres://', 'upnp', 'Last_100', 'radio'];
+    return (this.sources || []).filter(s => builtIn.indexOf(s.uri) === -1);
+  }
+
+  sourceByUri(uri) {
+    return (this.sources || []).filter(s => s.uri === uri)[0];
   }
 
   openSource(source) {
