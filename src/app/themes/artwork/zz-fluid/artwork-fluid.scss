@@ -259,7 +259,6 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* one top edge for every screen: the head row (menu · back · title/search) starts at --phone-top
      on all pages, so the hamburger never jumps when switching screens */
   :root { --phone-top: calc(22px + var(--sa-t)); }
-  body#artwork #browse.browsing-album #browseTablesWrapper { padding-top: var(--phone-top); }
   /* the sticky head takes the screen's top padding, so it can sit flush against the top edge
      and nothing shows in the strip above it */
   body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 0; --head-pad: var(--phone-top); }
@@ -400,7 +399,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
 
   /* --- Album page: head like the artist page (120px square cover beside the title), then
      compact rows (number · title · time · heart · ⋯) --- */
-  body#artwork #browse.browsing-album #browseTablesWrapper { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
+  body#artwork #browse.browsing-album #browseTablesWrapper { padding: 0 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-items: center; }
   /* head like the artist page: plain arrow, then "Library / <album>" */
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-head { grid-column: 1 / -1; }

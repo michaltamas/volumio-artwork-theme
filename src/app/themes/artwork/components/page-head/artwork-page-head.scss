@@ -16,7 +16,7 @@ aw-page-head { display: contents; }
 /* the transcluded slots keep their own element: it must disappear from the layout, or the
    nav/actions children would stack inside an inline box instead of sitting in the flex row */
 aw-head-nav, aw-head-actions { display: contents; }
-.aw-head__row { display: flex; align-items: center; gap: 16px; }
+.aw-head__row { display: flex; align-items: center; gap: 16px; min-height: 40px; } /* the filter pill sets the height; heads without one keep it, so every page starts on the same line */
 .aw-head__nav { min-width: 0; display: flex; align-items: center; gap: 16px; }
 .aw-head__actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
 .aw-head__actions:empty { display: none; }
