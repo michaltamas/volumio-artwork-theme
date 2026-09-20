@@ -58,6 +58,16 @@ aw-head-nav, aw-head-actions { display: contents; }
   }
 }
 
+/* The album page keeps its head inside the info column, not across the page, so a band would
+   stop in a hard edge halfway across the screen — and the track list beside it scrolls in its
+   own box, with nothing ever passing under the head. The blur and the tint therefore belong to
+   the phone layout, where the page is one column and the cover really does scroll underneath;
+   on wider screens the album head is just the row. */
+.aw-head--album {
+  &::after { content: none; }
+  .aw-hblur { display: none; }
+}
+
 /* search page: Volumio's own search box takes the row. The core markup floats the form right
    inside a centred band; in the head it is a plain full-width field like the landing's pill. */
 body#artwork .aw-head--search {
@@ -85,6 +95,8 @@ body#artwork {
   body#artwork #browse.browsing-artist #browseTablesWrapper { --head-pad: var(--phone-top); }
   body#artwork .aw-pe, body#artwork #artwork-home { padding-top: 0; }
   /* one line: the trail gives way (it ellipses) so the controls never need a second row */
+  body#artwork .aw-head--album::after { content: ''; }
+  body#artwork .aw-head--album .aw-hblur { display: block; }
   body#artwork .aw-head__row { flex-wrap: nowrap; gap: 12px; }
   /* the trail gives way long before the controls do */
   body#artwork .aw-head__nav { min-width: 0; overflow: hidden; flex-shrink: 100; }
