@@ -66,8 +66,7 @@ body#artwork #np .np-zone { max-width: 40vw; }
 body#artwork #browse .panel .body-content.new-browse { bottom: 0; height: auto !important; }
 body#artwork #browseTablesWrapper { padding-bottom: calc(var(--mini-h) + 16px); }
 body#artwork #browse.browsing-artist #browseTablesWrapper { padding-bottom: calc(var(--mini-h) + 48px); }
-body#artwork #browse.browsing-album #browseTablesWrapper > div:first-child,
-body#artwork #browse.browsing-album #browseTablesWrapper > #browse-page { padding-bottom: calc(var(--mini-h) + 24px); }
+body#artwork #browse.browsing-album #browseTablesWrapper > div:first-child { padding-bottom: calc(var(--mini-h) + 24px); }
 body#artwork .aw-browse { padding-bottom: calc(var(--mini-h) + 40px); }
 
 /* ---------- mini player ---------- */
