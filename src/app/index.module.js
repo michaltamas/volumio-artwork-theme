@@ -75,6 +75,7 @@ import AwMobileMenuService from './services/aw-mobile-menu.service';
 import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
 import AwSheetDragDirective from './components/aw-sheet-drag/aw-sheet-drag.directive';
 import AwHeadBlurDirective from './components/aw-head-blur/aw-head-blur.directive';
+import AwRangeFillDirective from './components/aw-range-fill/aw-range-fill.directive';
 import AwPageHeadDirective from './components/aw-page-head/aw-page-head.directive';
 import AwCrumbsDirective from './components/aw-page-head/aw-crumbs.directive';
 // Track buttons
@@ -302,6 +303,7 @@ angular.module('volumio', [
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
   .directive('awSheetDrag', ($window) => new AwSheetDragDirective($window))
   .directive('awHeadBlur', () => new AwHeadBlurDirective())
+  .directive('awRangeFill', () => new AwRangeFillDirective())
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 
