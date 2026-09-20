@@ -19,18 +19,16 @@
 
       </div>
 
-        <div class="dedicated-search-container" ng-if="browse.isDedicatedSearchView">
-          <div class="dedicated-search"
-               ng-include src="'app/browse/components/browse-search-box.html'">
-          </div>
-        </div> <!-- /.dedicated-search-container -->
-
-
-      <div class="dedicated-search-container-flow-space" ng-if="browse.isDedicatedSearchView"></div>
-
       <div class="body-content new-browse" ng-class="{ 'with-search-header': browse.isDedicatedSearchView }">
 
         <div id="browseTablesWrapper">
+
+          <!-- Dedicated search page (/search): Volumio's own search box, carried by the shared head -->
+          <aw-page-head variant="search" ng-if="browse.isDedicatedSearchView">
+            <aw-head-nav>
+              <div class="dedicated-search" ng-include src="'app/browse/components/browse-search-box.html'"></div>
+            </aw-head-nav>
+          </aw-page-head>
 
           <!-- the landing stays mounted while searching from its pill: results render below its header -->
           <div
@@ -44,7 +42,7 @@
           <!-- <div ng-if="browse.browseService.isBrowsing && !browse.browseService.isSearching"> -->
 
           <!-- Custom view headers -->
-          <div ng-if="browse.browseService.info && !browse.hideInfoHeader">
+          <div class="aw-headwrap" ng-if="browse.browseService.info && !browse.hideInfoHeader">
 
             <!-- ====== ARTIST PAGE ===== -->
             <div
@@ -67,32 +65,27 @@
           <!-- Content -->
 
           <!-- Artwork list pages (mockup 2e Artists): back + breadcrumb, local filter, grid/list toggle -->
-          <div class="aw-listbar" ng-if="browse.isPlainList">
-            <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
-            <button type="button" class="aw-listbar__back" ng-click="browse.goBack()" aria-label="Back" title="Back">
-              <span class="material-symbols-rounded">arrow_back</span>
-            </button>
-            <nav class="aw-crumbs" aria-label="Breadcrumb">
-              <a href ng-click="browse.backHome()">Library</a>
-              <span class="aw-crumbs__sep" ng-repeat-start="c in browse.awCrumbs track by $index">/</span>
-              <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title || c.name}}</a>
-              <span class="aw-crumbs__sep">/</span>
-              <span class="aw-crumbs__cur">{{browse.currentListTitle}}</span>
-            </nav>
-            <label class="aw-filter">
-              <span class="material-symbols-rounded">search</span>
-              <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
-                     placeholder="Filter {{browse.currentListTitle | lowercase}}" aria-label="Filter {{browse.currentListTitle | lowercase}}">
-            </label>
-            <div class="aw-viewtoggle" ng-if="browse.browseService.showGridViewSelector" role="group" aria-label="View">
-              <button type="button" ng-class="{active: browse.browseService.showGridView}" ng-click="browse.setGridView(true)" aria-label="Grid" title="Grid">
-                <span class="material-symbols-rounded">grid_view</span>
-              </button>
-              <button type="button" ng-class="{active: !browse.browseService.showGridView}" ng-click="browse.setGridView(false)" aria-label="List" title="List">
-                <span class="material-symbols-rounded">list</span>
-              </button>
-            </div>
-          </div>
+          <aw-page-head variant="list" on-back="browse.goBack()" ng-if="browse.isPlainList">
+            <aw-head-nav>
+              <aw-crumbs trail="browse.awCrumbs" current="browse.currentListTitle"
+                         on-home="browse.backHome()" on-crumb="browse.awGoCrumb(crumb)"></aw-crumbs>
+            </aw-head-nav>
+            <aw-head-actions>
+              <label class="aw-filter" ng-class="{'aw-filter--on': browse.awFilter.length}">
+                <span class="material-symbols-rounded">search</span>
+                <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
+                       placeholder="Filter {{browse.currentListTitle | lowercase}}" aria-label="Filter {{browse.currentListTitle | lowercase}}">
+              </label>
+              <div class="aw-viewtoggle" ng-if="browse.browseService.showGridViewSelector" role="group" aria-label="View">
+                <button type="button" ng-class="{active: browse.browseService.showGridView}" ng-click="browse.setGridView(true)" aria-label="Grid" title="Grid">
+                  <span class="material-symbols-rounded">grid_view</span>
+                </button>
+                <button type="button" ng-class="{active: !browse.browseService.showGridView}" ng-click="browse.setGridView(false)" aria-label="List" title="List">
+                  <span class="material-symbols-rounded">list</span>
+                </button>
+              </div>
+            </aw-head-actions>
+          </aw-page-head>
 
           <!-- title row: real name + count (filtered count while filtering) + sort order -->
           <div class="aw-listhead" ng-if="browse.isPlainList">

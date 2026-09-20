@@ -1,0 +1,7 @@
+<nav class="aw-crumbs" aria-label="Breadcrumb">
+  <a href ng-click="crumbs.home()">{{crumbs.rootLabel}}</a>
+  <span class="aw-crumbs__sep" ng-repeat-start="c in crumbs.trail track by $index">/</span>
+  <a href ng-repeat-end ng-click="crumbs.go(c)">{{c.title || c.name}}</a>
+  <span class="aw-crumbs__sep" ng-if="crumbs.current">/</span>
+  <span class="aw-crumbs__cur">{{crumbs.current}}</span>
+</nav>

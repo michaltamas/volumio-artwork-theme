@@ -3,24 +3,19 @@
      artist's own track list); the track rows below are Volumio's (#browse-page). -->
 <div class="aw-artist">
 
-  <div class="aw-listbar aw-artist__bar">
-    <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
-    <button type="button" class="aw-listbar__back" ng-click="browse.goBack()" aria-label="{{'COMMON.BACK' | translate}}" title="{{'COMMON.BACK' | translate}}">
-      <span class="material-symbols-rounded">arrow_back</span>
-    </button>
-    <nav class="aw-crumbs" aria-label="Breadcrumb">
-      <a href ng-click="browse.backHome()">Library</a>
-      <span class="aw-crumbs__sep" ng-repeat-start="c in browse.awCrumbs track by $index">/</span>
-      <a href ng-repeat-end ng-click="browse.awGoCrumb(c)">{{c.title || c.name}}</a>
-      <span class="aw-crumbs__sep">/</span>
-      <span class="aw-crumbs__cur">{{browse.browseService.info.title}}</span>
-    </nav>
-    <label class="aw-filter aw-artist__filter">
-      <span class="material-symbols-rounded">search</span>
-      <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
-             placeholder="Search this artist" aria-label="Search this artist">
-    </label>
-  </div>
+  <aw-page-head variant="artist" on-back="browse.goBack()" back-label="{{'COMMON.BACK' | translate}}">
+    <aw-head-nav>
+      <aw-crumbs trail="browse.awCrumbs" current="browse.browseService.info.title"
+                 on-home="browse.backHome()" on-crumb="browse.awGoCrumb(crumb)"></aw-crumbs>
+    </aw-head-nav>
+    <aw-head-actions>
+      <label class="aw-filter aw-artist__filter" ng-class="{'aw-filter--on': browse.awFilter.length}">
+        <span class="material-symbols-rounded">search</span>
+        <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
+               placeholder="Search this artist" aria-label="Search this artist">
+      </label>
+    </aw-head-actions>
+  </aw-page-head>
 
   <div class="aw-artist__hero">
     <img class="aw-artist__img" ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">

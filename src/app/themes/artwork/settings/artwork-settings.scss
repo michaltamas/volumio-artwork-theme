@@ -273,7 +273,7 @@ body#artwork .aw-state-myvolumio-profile .box .myvolumio-current-plan-card .pane
 body#artwork .aw-state-myvolumio-edit-profile .box { padding: 0; background: transparent; border: 0; box-shadow: none; }
 body#artwork .aw-pe {
   padding: clamp(24px, 4.4vh, 40px) var(--pad-screen) 60px; color: var(--ink-1);
-  .aw-albumhead__top { margin-bottom: 26px; }
+  .aw-head { margin-bottom: 26px; }
   &__title { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
   &__grid { display: grid; grid-template-columns: 196px 1fr; gap: 44px; margin-top: 34px; align-items: start; }
   &__avatar { display: flex; flex-direction: column; gap: 12px;

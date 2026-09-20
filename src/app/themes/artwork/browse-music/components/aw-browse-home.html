@@ -3,25 +3,26 @@
      Lines the device has no data for (hi-res counts, "last added") are omitted. -->
 <div class="aw-browse">
 
-  <div class="aw-tabs">
-    <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
-    <div class="aw-tab active">Library</div>
-    <div class="aw-tab" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">{{s.name}}</div>
-    <div class="aw-tab" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">Radio</div>
-    <!-- a real search field: Volumio's global search, results render on this page (⌘K focuses it) -->
-    <label class="aw-search" ng-class="{active: browse.searchField.length}">
-      <span class="material-symbols-rounded">search</span>
-      <input id="aw-search-input" type="search" ng-model="browse.searchField" ng-change="browse.awSearch()" ng-model-options="{ debounce: 150 }"
-             placeholder="{{browse.libraryHome.stats ? 'Search ' + browse.libraryHome.stats.songs + ' tracks' : 'Search everything'}}" aria-label="Search" autocomplete="off">
-      <span class="aw-search-key mono" ng-if="!browse.searchField.length">⌘K</span>
-      <button type="button" class="aw-search-clear" ng-if="browse.searchField.length" ng-click="browse.awClearSearch()" aria-label="Clear search">
-        <span class="material-symbols-rounded">close</span>
-      </button>
-    </label>
-    <div class="aw-avatar" ui-sref="myvolumio" role="button" tabindex="0" aria-label="MyVolumio">
-      <span class="material-symbols-rounded">person</span>
-    </div>
-  </div>
+  <!-- on the dedicated search page the search head above replaces this one -->
+  <aw-page-head variant="home" ng-if="!browse.isDedicatedSearchView">
+    <aw-head-nav>
+      <div class="aw-tab active">Library</div>
+      <div class="aw-tab" ng-repeat="s in browse.streamingSources track by s.uri" ng-click="browse.fetchLibrary(s)">{{s.name}}</div>
+      <div class="aw-tab" ng-if="browse.sourceByUri('radio')" ng-click="browse.fetchLibrary(browse.sourceByUri('radio'))">Radio</div>
+    </aw-head-nav>
+    <aw-head-actions>
+      <!-- a real search field: Volumio's global search, results render on this page (⌘K focuses it) -->
+      <label class="aw-search" ng-class="{active: browse.searchField.length}">
+        <span class="material-symbols-rounded">search</span>
+        <input id="aw-search-input" type="search" ng-model="browse.searchField" ng-change="browse.awSearch()" ng-model-options="{ debounce: 150 }"
+               placeholder="{{browse.libraryHome.stats ? 'Search ' + browse.libraryHome.stats.songs + ' tracks' : 'Search everything'}}" aria-label="Search" autocomplete="off">
+        <span class="aw-search-key mono" ng-if="!browse.searchField.length">⌘K</span>
+        <button type="button" class="aw-search-clear" ng-if="browse.searchField.length" ng-click="browse.awClearSearch()" aria-label="Clear search">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </label>
+    </aw-head-actions>
+  </aw-page-head>
 
     <!-- search results head (the lists themselves render in #browse-page below) -->
   <div class="aw-listhead aw-listhead--search" ng-if="browse.isLandingSearch">

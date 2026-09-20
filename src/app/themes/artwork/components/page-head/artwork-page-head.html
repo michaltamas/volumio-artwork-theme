@@ -1,0 +1,14 @@
+<!-- the shared page head: sticky, padded and blurred in one place (see artwork-page-head.scss) -->
+<div class="aw-head" ng-class="head.variant ? 'aw-head--' + head.variant : ''" aw-head-blur>
+  <div class="aw-head__row">
+    <button type="button" class="aw-menu-btn" ng-click="head.toggleMenu()" aria-label="Menu" title="Menu">
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+    <button type="button" class="aw-head__back" ng-if="head.hasBack" ng-click="head.back()"
+            aria-label="{{head.backLabel || ('COMMON.BACK' | translate)}}" title="{{head.backLabel || ('COMMON.BACK' | translate)}}">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <div class="aw-head__nav" ng-transclude="nav"></div>
+    <div class="aw-head__actions" ng-transclude="actions"></div>
+  </div>
+</div>

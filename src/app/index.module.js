@@ -74,6 +74,9 @@ import AwMobileMenuDirective from './components/aw-mobile-menu/aw-mobile-menu.di
 import AwMobileMenuService from './services/aw-mobile-menu.service';
 import AwSettingsSideDirective from './components/aw-settings-shell/aw-settings-side.directive';
 import AwSheetDragDirective from './components/aw-sheet-drag/aw-sheet-drag.directive';
+import AwHeadBlurDirective from './components/aw-head-blur/aw-head-blur.directive';
+import AwPageHeadDirective from './components/aw-page-head/aw-page-head.directive';
+import AwCrumbsDirective from './components/aw-page-head/aw-crumbs.directive';
 // Track buttons
 import FavouriteTrackBtnDirective from './components/favourite-track-btn/favourite-track-btn.directive';
 import AddTrackToPlaylistBtnDirective from './components/add-track-to-playlist-btn/add-track-to-playlist-btn.directive';
@@ -298,6 +301,9 @@ angular.module('volumio', [
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))
   .directive('awSheetDrag', ($window) => new AwSheetDragDirective($window))
+  .directive('awHeadBlur', () => new AwHeadBlurDirective())
+  .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
+  .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 
   //MyVolumio Directives
   .directive('stripePayButton', () => new StripePayButtonDirective())

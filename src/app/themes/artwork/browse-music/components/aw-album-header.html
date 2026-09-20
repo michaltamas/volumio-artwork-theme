@@ -7,20 +7,12 @@
          ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">
   </div>
 
-  <!-- mockup: back button + eyebrow on one row above the cover -->
-  <div class="aw-albumhead__top">
-    <button type="button" class="aw-menu-btn" ng-click="browse.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
-    <button class="aw-back" ng-click="browse.goBack()" aria-label="Back" title="Back">
-      <span class="material-symbols-rounded">arrow_back</span>
-    </button>
-    <div class="aw-albumhead__eyebrow mono">{{ browse.isPlaylistInfo ? 'PLAYLIST' : 'ALBUM' }}</div>
-    <!-- phone: breadcrumb like the artist page (the eyebrow is hidden there) -->
-    <nav class="aw-crumbs aw-crumbs--album" aria-label="Breadcrumb">
-      <a href ng-click="browse.backHome()">Library</a>
-      <span class="aw-crumbs__sep">/</span>
-      <span class="aw-crumbs__cur">{{ browse.browseService.info.title || browse.browseService.info.album }}</span>
-    </nav>
-  </div>
+  <aw-page-head variant="album" on-back="browse.goBack()">
+    <aw-head-nav>
+      <aw-crumbs trail="browse.awCrumbs" current="browse.browseService.info.title || browse.browseService.info.album"
+                 on-home="browse.backHome()" on-crumb="browse.awGoCrumb(crumb)"></aw-crumbs>
+    </aw-head-nav>
+  </aw-page-head>
 
   <div class="aw-albumhead__cover">
     <img ng-if="browse.browseService.info.albumart"

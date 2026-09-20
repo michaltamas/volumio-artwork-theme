@@ -1,0 +1,110 @@
+/* ============================================================
+   The shared page head (aw-page-head). Everything that used to be repeated per page lives
+   here: it sticks to the top of the screen, carries the screen's top padding, and blurs
+   whatever scrolls underneath. A page only fills the nav and actions slots.
+   ============================================================ */
+/* the host must not box the head in: sticky travels inside its nearest block parent, and a
+   host that is exactly as tall as the head would leave it nowhere to go. `contents` hands the
+   head straight to the page, exactly where each screen used to put its own bar. */
+aw-page-head { display: contents; }
+
+.aw-head {
+  position: sticky; top: 0; z-index: 25; /* over the mini player (10), the queue (5) and the phone top band (2); under the mobile menu (30) */
+  margin-left: calc(-1 * var(--pad-screen)); margin-right: calc(-1 * var(--pad-screen));
+  padding: var(--head-pad, 34px) var(--pad-screen) 12px;
+}
+/* the transcluded slots keep their own element: it must disappear from the layout, or the
+   nav/actions children would stack inside an inline box instead of sitting in the flex row */
+aw-head-nav, aw-head-actions { display: contents; }
+.aw-head__row { display: flex; align-items: center; gap: 16px; }
+.aw-head__nav { min-width: 0; display: flex; align-items: center; gap: 16px; }
+.aw-head__actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.aw-head__actions:empty { display: none; }
+
+/* back arrow: plain, no box — the same on every screen */
+.aw-head__back {
+  background: transparent; border: 0; padding: 0; margin: 0; display: grid; place-items: center; cursor: pointer;
+  .material-symbols-rounded { font-size: 22px; color: #c2c8cd; }
+  &:hover .material-symbols-rounded { color: #fff; }
+  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; border-radius: 6px; }
+}
+
+/* a whisper of shade over the blur, so text keeps its edge on bright covers */
+.aw-head::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--head-fade, 40px));
+  z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .36) 52%, transparent 100%);
+}
+
+/* Progressive blur. Each layer covers the head from the top down to its own depth and fades
+   out there; because a layer's backdrop includes the layers painted before it, the blur
+   accumulates towards the top and eases off downwards. */
+.aw-head .aw-hblur {
+  position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--head-fade, 40px));
+  z-index: -1; pointer-events: none;
+  i { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: block; }
+  $aw-hblur-radii: 0.25px 0.35px 0.5px 0.7px 1px 1.4px 2px 2.9px 4.2px 6px 8.6px 12.5px;
+  $aw-hblur-stops: 84% 77% 70% 63% 56% 49% 42% 35% 28% 21% 14% 7%;
+  $aw-hblur-ends:  100% 93% 86% 79% 72% 65% 58% 51% 44% 37% 30% 23%;
+  @for $i from 1 through length($aw-hblur-radii) {
+    i:nth-child(#{$i}) {
+      $r: nth($aw-hblur-radii, $i);
+      $stop: nth($aw-hblur-stops, $i);
+      $end: nth($aw-hblur-ends, $i);
+      -webkit-backdrop-filter: blur($r); backdrop-filter: blur($r);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 $stop, transparent $end);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 $stop, transparent $end);
+    }
+  }
+}
+
+/* search page: Volumio's own search box takes the row. The core markup floats the form right
+   inside a centred band; in the head it is a plain full-width field like the landing's pill. */
+body#artwork .aw-head--search {
+  .aw-head__nav { flex: 1; min-width: 0; }
+  .dedicated-search { flex: 1; min-width: 0; padding: 0; background: transparent; }
+  .dedicated-search .search-container { max-width: 640px; margin: 0; }
+  .dedicated-search form { float: none !important; width: 100%; }
+  .dedicated-search .clearfix { display: none; }
+}
+
+/* the screens hand their top padding to the head, so it can sit flush against the top edge */
+body#artwork {
+  #browse.browsing-list #browseTablesWrapper,
+  #browse.browsing-playlist #browseTablesWrapper,
+  #browse.browsing-artist #browseTablesWrapper { padding-top: 0; }
+  #browse.browsing-artist #browseTablesWrapper { --head-pad: 26px; }
+  #browse .panel .body-content.new-browse.with-search-header { padding-top: 0; }
+  .aw-browse { padding-top: 0; }
+  .aw-pe { padding-top: 0; --head-pad: clamp(24px, 4.4vh, 40px); }
+  #artwork-home { padding-top: 0; --head-pad: clamp(24px, 4.2vh, 38px); }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  body#artwork #browseTablesWrapper, body#artwork .aw-browse, body#artwork .aw-pe, body#artwork #artwork-home,
+  body#artwork #browse.browsing-artist #browseTablesWrapper { --head-pad: var(--phone-top); }
+  body#artwork .aw-pe, body#artwork #artwork-home { padding-top: 0; }
+  /* one line: the trail gives way (it ellipses) so the controls never need a second row */
+  body#artwork .aw-head__row { flex-wrap: nowrap; gap: 12px; }
+  /* the trail gives way long before the controls do */
+  body#artwork .aw-head__nav { min-width: 0; overflow: hidden; flex-shrink: 100; }
+  body#artwork .aw-head__actions { min-width: 0; }
+  body#artwork .aw-head .aw-crumbs { overflow: hidden; }
+  body#artwork .aw-head .aw-crumbs a { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* The filter would eat a whole row on a phone, so it rests as a magnifier and slides open on
+     a tap (the label hands the tap to its input, so it opens and focuses in one go). It stays
+     open while something is typed and closes again once the field is empty and loses focus. */
+  body#artwork .aw-head .aw-filter {
+    width: 44px; flex: none; padding: 0; gap: 0; justify-content: center; overflow: hidden;
+    cursor: pointer; /* collapsed it is a button, not a field */
+    transition: width .26s cubic-bezier(.4, 0, .2, 1), padding .26s cubic-bezier(.4, 0, .2, 1);
+    input { width: 0; flex: none; padding: 0; opacity: 0; transition: opacity .18s ease .04s; }
+    &:focus-within, &.aw-filter--on {
+      /* the width is what animates; on a narrow phone flex-shrink trims it further so the
+         view toggle never gets pushed off the edge */
+      width: unquote("min(45vw, 300px)"); flex: 0 1 auto; min-width: 0; padding: 0 16px; gap: 11px; cursor: text;
+      input { width: auto; flex: 1; opacity: 1; }
+    }
+  }
+}

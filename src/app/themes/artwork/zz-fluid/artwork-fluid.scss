@@ -25,6 +25,13 @@ body#artwork #np #np-transport, body#artwork #np #np-transport #playerButtons { 
 body#artwork #np #np-transport .playPause { width: clamp(56px, 5.3vw, 76px); height: clamp(56px, 5.3vw, 76px);
   .material-symbols-rounded { font-size: clamp(32px, 2.9vw, 42px); } }
 body#artwork #np #np-footer-row { flex-wrap: wrap; row-gap: 12px; }
+/* the footer row has to stay one line — the Now Playing screen does not scroll, so a wrapped
+   line falls off the bottom. As the window narrows the up-next covers step aside first, then
+   its label; the transport and the volume keep their places at the two ends. */
+@media (max-width: 1080px) { body#artwork #np .np-upnext-films { display: none; } }
+@media (max-width: 900px) { body#artwork #np .np-upnext-label { display: none; } }
+/* the transport's 36px spacing is the mockup's widest case; it closes up as the window narrows */
+body#artwork #np #np-transport, body#artwork #np #np-transport #playerButtons { gap: unquote("clamp(20px, 2.6vw, 36px)"); }
 /* the seek bar takes the full width at any size */
 body#artwork #np .np-badge { max-width: 48vw; overflow: hidden; }
 body#artwork #np .np-zone { max-width: 40vw; }
@@ -52,12 +59,16 @@ body#artwork #np .np-zone { max-width: 40vw; }
   body#artwork #np #np-footer { padding-top: 18px; }
 }
 
-/* ---------- browse pages end above the mini player ----------
-   #browse's body is absolutely positioned inside #content and takes the padding box, so its
-   scroll area ran under the mini player and the last rows were unreachable. Pin its bottom to
-   the bar instead of a height (works for both the bare top:0 pages and the core header case). */
-body#artwork #browse .panel .body-content.new-browse { bottom: var(--mini-h); height: auto !important; }
-body#artwork .main-container.with-playback-bar #browse .panel .body-content.new-browse { bottom: 0; }
+/* ---------- browse pages scroll under the mini player ----------
+   The scroll area reaches the bottom of the screen, so rows pass behind the mini player and
+   its blur has something to work on. Each scroller keeps a mini-player's worth of room at the
+   end, so the last row can still be read and reached. */
+body#artwork #browse .panel .body-content.new-browse { bottom: 0; height: auto !important; }
+body#artwork #browseTablesWrapper { padding-bottom: calc(var(--mini-h) + 16px); }
+body#artwork #browse.browsing-artist #browseTablesWrapper { padding-bottom: calc(var(--mini-h) + 48px); }
+body#artwork #browse.browsing-album #browseTablesWrapper > div:first-child,
+body#artwork #browse.browsing-album #browseTablesWrapper > #browse-page { padding-bottom: calc(var(--mini-h) + 24px); }
+body#artwork .aw-browse { padding-bottom: calc(var(--mini-h) + 40px); }
 
 /* ---------- mini player ---------- */
 /* mockup: columns 300px | 1fr | 280px, gap 24, padding 0 28. Fluid: the identity column is
@@ -91,7 +102,7 @@ body#artwork .aw-cards { grid-template-columns: repeat(auto-fill, minmax(unquote
 body#artwork .aw-sources { grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 200px)"), 1fr)); }
 body#artwork .aw-search, body#artwork .home-search { width: unquote("min(320px, 100%)"); }
 body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 13vw, 190px), 1fr)); gap: clamp(12px, 1.7vw, 24px); }
-body#artwork .aw-listbar { flex-wrap: wrap; row-gap: 10px; }
+body#artwork .aw-head__row { flex-wrap: wrap; row-gap: 10px; }
 body#artwork .aw-filter { width: unquote("min(290px, 100%)"); }
 body#artwork .aw-listhead { flex-wrap: wrap; row-gap: 10px; }
 @media (max-width: 640px) {
@@ -109,7 +120,7 @@ body#artwork .aw-listhead { flex-wrap: wrap; row-gap: 10px; }
 @media (max-height: 520px) { body#artwork .aw-alpha { display: none; } }
 body#artwork .home-hero { flex-wrap: wrap; gap: clamp(18px, 2.5vw, 36px); }
 body#artwork .home-hero-cover img { width: clamp(140px, 15.5vw, 224px); height: clamp(140px, 15.5vw, 224px); }
-body#artwork .home-tabs { flex-wrap: wrap; row-gap: 8px; }
+body#artwork .aw-head--start .aw-head__row { flex-wrap: wrap; row-gap: 8px; }
 body#artwork #artwork-home .main__row { grid-template-columns: repeat(auto-fill, minmax(clamp(110px, 12vw, 180px), 1fr)); gap: clamp(12px, 1.5vw, 22px); }
 
 /* ---------- album page: one column when the two do not fit; on short screens the cover and
@@ -157,8 +168,7 @@ body#artwork .aw-artist__albums { grid-template-columns: repeat(auto-fill, minma
 body#artwork #browse.browsing-artist .music-item .item__title { width: clamp(140px, 30vw, 290px); }
 @media (max-width: 700px) {
   body#artwork .aw-artist__actions { margin-left: 0; flex-basis: 100%; padding-bottom: 0; }
-  body#artwork .aw-artist__bar { flex-wrap: wrap; row-gap: 10px; }
-  body#artwork .aw-artist__filter { width: 100%; margin-left: 0; }
+  /* the artist head keeps one row like every other: its search collapses into the magnifier */
   body#artwork #browse.browsing-artist .music-item .item__title { width: auto; flex: 1; }
   body#artwork .aw-artist__menu .dropdown-menu { max-width: calc(100vw - 40px); }
   /* track rows: title over album, one line each; position slot 22px, tighter gaps */
@@ -231,7 +241,11 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
      top edge is painted in the mini player's colour: solid for the safe area plus 8px, fading
      into the backdrop over the next 64px. Behind the content, above the art. The menu sheet
      carries the same band above its scrim so opening it does not shift the colour. */
-  body#artwork::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 52px); z-index: 1; pointer-events: none;
+  /* The band belongs to the app's own stacking order, not to the page's: on the body it would
+     paint over everything (#layout-container is z 1), the sticky head included, and dim the menu
+     button and the search field. Inside #layout-container it still covers the art and everything
+     that scrolls, while the head (z 25) and the mobile menu (z 30) sit above it. */
+  body#artwork #layout-container::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 52px); z-index: 2; pointer-events: none;
     background: linear-gradient(to bottom, var(--aw-band, #0e1013) 0, var(--aw-band, #0e1013) calc(env(safe-area-inset-top, 0px) + 8px), transparent 100%); }
   body#artwork .aw-band { display: block; position: fixed; top: 0; left: 0; right: 0; height: 4px; background-color: var(--aw-band, #0e1013); z-index: 60; pointer-events: none; }
   body#artwork .aw-mm::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: calc(env(safe-area-inset-top, 0px) + 8px); background: var(--aw-band, #0e1013); pointer-events: none; z-index: 1; }
@@ -245,16 +259,17 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* one top edge for every screen: the head row (menu · back · title/search) starts at --phone-top
      on all pages, so the hamburger never jumps when switching screens */
   :root { --phone-top: calc(22px + var(--sa-t)); }
-  body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-album #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: var(--phone-top); }
+  body#artwork #browse.browsing-album #browseTablesWrapper { padding-top: var(--phone-top); }
+  /* the sticky head takes the screen's top padding, so it can sit flush against the top edge
+     and nothing shows in the strip above it */
+  body#artwork #browse.browsing-list #browseTablesWrapper, body#artwork #browse.browsing-artist #browseTablesWrapper, body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 0; --head-pad: var(--phone-top); }
   body#artwork .aw-browse, body#artwork #artwork-home, body#artwork .aw-zones, body#artwork #np, body#artwork .aw-pe { padding-top: var(--phone-top); }
-  body#artwork .aw-listbar, body#artwork .aw-artist__bar, body#artwork .aw-albumhead__top, body#artwork .aw-browse .aw-tabs, body#artwork #artwork-home .home-tabs, body#artwork .aw-zones .aw-listhead, body#artwork #np #np-topbar, body#artwork .aw-mnav__head { min-height: 44px; margin-top: 0; }
-  body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-artist__bar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn, body#artwork .aw-browse .aw-menu-btn, body#artwork #artwork-home .aw-menu-btn, body#artwork .aw-zones .aw-menu-btn, body#artwork #np .np-menu-btn, body#artwork .aw-mnav__back, body#artwork .aw-menu-btn--float { height: 44px; width: 32px; }
+  body#artwork .aw-head__row, body#artwork .aw-zones .aw-listhead, body#artwork #np #np-topbar, body#artwork .aw-mnav__head { min-height: 44px; margin-top: 0; }
+  body#artwork .aw-head .aw-menu-btn, body#artwork #artwork-home .aw-menu-btn, body#artwork .aw-zones .aw-menu-btn, body#artwork #np .np-menu-btn, body#artwork .aw-mnav__back, body#artwork .aw-menu-btn--float { height: 44px; width: 32px; }
   body#artwork .aw-menu-btn--float { top: var(--phone-top); }
   body#artwork #contentWrapper.aw-settings-shell .aw-mnav { padding-top: var(--phone-top); }
   body#artwork #pluginWrapper { padding-top: var(--phone-top); }
   body#artwork #pluginWrapper .boxHeader .title h2 { min-height: 44px; }
-  /* the top band (colour → backdrop) must paint above the page ground but below the bars */
-  body#artwork::before { z-index: 2; }
   body#artwork aw-mobile-menu .aw-mm__sheet { top: calc(14px + var(--sa-t)); bottom: calc(14px + var(--sa-b)); overflow-y: auto; scrollbar-width: none; } /* the component's own sheet rule loads later: element prefix outranks it */
   body#artwork aw-mobile-menu .aw-mm__sheet::-webkit-scrollbar { display: none; }
   body#artwork .aw-mm__foot { flex: none; padding-bottom: 2px; }
@@ -339,8 +354,8 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
 
   /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
-  body#artwork .aw-browse .aw-tabs { gap: 12px; flex-wrap: nowrap; }
-  body#artwork .aw-browse .aw-tab, body#artwork .aw-browse .aw-avatar, body#artwork .aw-browse .aw-search-key { display: none; }
+  body#artwork .aw-head--home .aw-head__row { gap: 12px; flex-wrap: nowrap; }
+  body#artwork .aw-browse .aw-tab, body#artwork .aw-browse .aw-search-key { display: none; }
   body#artwork .aw-browse .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork .aw-browse .aw-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); /* 42 + borders */
     input::placeholder { color: #a7adb3; } }
@@ -365,8 +380,9 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
 
   /* --- Home: the same head as Browse (hamburger + search), same paddings --- */
   body#artwork #artwork-home { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); min-height: 100%; }
-  body#artwork #artwork-home .home-tabs { gap: 12px; }
-  body#artwork #artwork-home .home-tab, body#artwork #artwork-home .home-avatar, body#artwork #artwork-home .home-search-key { display: none; }
+  body#artwork .aw-head--start .aw-head__row { gap: 12px; flex-wrap: nowrap; }
+  body#artwork .aw-head--start .aw-head__actions { flex: 1; min-width: 0; }
+  body#artwork #artwork-home .home-tab, body#artwork #artwork-home .home-search-key { display: none; }
   body#artwork #artwork-home .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork #artwork-home .home-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); }
   body#artwork #artwork-home .home-hero { margin-top: 24px; gap: 16px; align-items: center; flex-wrap: nowrap; }
@@ -380,17 +396,15 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #artwork-home .main__row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
 
   /* --- list, album and artist heads: the menu button next to Back --- */
-  body#artwork .aw-listbar .aw-menu-btn, body#artwork .aw-albumhead__top .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
+  body#artwork .aw-head .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: #e4e7ea; cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
 
   /* --- Album page: head like the artist page (120px square cover beside the title), then
      compact rows (number · title · time · heart · ⋯) --- */
   body#artwork #browse.browsing-album #browseTablesWrapper { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-items: center; }
   /* head like the artist page: plain arrow, then "Library / <album>" */
-  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__top { grid-column: 1 / -1; margin-bottom: 18px; gap: 12px; }
-  body#artwork .aw-albumhead .aw-back { width: auto; height: auto; background: transparent; border-radius: 0; color: #e4e7ea; .material-symbols-rounded { font-size: 24px; } }
-  body#artwork .aw-albumhead .aw-albumhead__top .aw-albumhead__eyebrow { display: none; }
-  body#artwork .aw-albumhead .aw-albumhead__top .aw-crumbs { display: flex; }
+  body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-head { grid-column: 1 / -1; }
+  body#artwork .aw-head--album { margin-bottom: 18px; .aw-head__row { gap: 12px; } }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__cover { grid-column: 1; grid-row: 2; width: 150px; max-width: none; img { box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .8); } }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__body { display: contents; }
   body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__title, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__artist, body#artwork .aw-albumhead:not(.aw-albumhead--playlist) .aw-albumhead__meta { grid-column: 2; min-width: 0; }
@@ -443,7 +457,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork .aw-state-myvolumio-profile .box .user-data .user-title { font-size: 30px; }
   body#artwork .aw-state-myvolumio-profile .box .user-data .btn { float: none; display: inline-flex; margin-top: 14px; }
   body#artwork .aw-pe { padding: var(--phone-top) 20px calc(var(--mini-h) + 20px); }
-  body#artwork .aw-pe .aw-albumhead__top { margin-bottom: 18px; }
+  body#artwork .aw-pe .aw-head { margin-bottom: 18px; }
   body#artwork .aw-pe__title { font-size: 24px; letter-spacing: -.02em; }
   body#artwork .aw-pe__grid { margin-top: 20px; gap: 20px; }
   body#artwork .aw-pe__avatar .avatar-image-box { width: 120px; height: 120px; .avatar-letter { font-size: 64px; } }

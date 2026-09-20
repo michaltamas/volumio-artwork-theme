@@ -3,13 +3,12 @@
      settings rows, key/value card, pills). -->
 <div class="aw-pe" ng-if="myVolumioEditProfileController.user !== null">
 
-  <div class="aw-albumhead__top">
-    <button type="button" class="aw-menu-btn" ng-click="layout.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
-    <button type="button" class="aw-back" ui-sref="myvolumio.profile" aria-label="{{'MYVOLUMIO.PROFILE' | translate}}" title="{{'MYVOLUMIO.PROFILE' | translate}}">
-      <span class="material-symbols-rounded">arrow_back</span>
-    </button>
-    <div class="aw-albumhead__eyebrow mono">{{'MYVOLUMIO.MY_VOLUMIO' | translate | uppercase}}</div>
-  </div>
+  <aw-page-head variant="profile" on-back="layout.$state.go('myvolumio.profile')" back-label="{{'MYVOLUMIO.PROFILE' | translate}}">
+    <aw-head-nav>
+      <aw-crumbs root="{{'MYVOLUMIO.MY_VOLUMIO' | translate}}" current="'MYVOLUMIO.EDIT_PROFILE' | translate"
+                 on-home="layout.$state.go('myvolumio.profile')"></aw-crumbs>
+    </aw-head-nav>
+  </aw-page-head>
   <h1 class="aw-pe__title">{{'MYVOLUMIO.EDIT_PROFILE' | translate}}</h1>
 
   <div class="aw-pe__grid">
@@ -100,9 +99,11 @@
 </div>
 
 <div class="aw-pe aw-pe--login" ng-if="myVolumioEditProfileController.user === null">
-  <div class="aw-albumhead__top">
-    <div class="aw-albumhead__eyebrow mono">{{'MYVOLUMIO.MY_VOLUMIO' | translate | uppercase}}</div>
-  </div>
+  <aw-page-head variant="profile">
+    <aw-head-nav>
+      <aw-crumbs root="{{'MYVOLUMIO.MY_VOLUMIO' | translate}}"></aw-crumbs>
+    </aw-head-nav>
+  </aw-page-head>
   <h1 class="aw-pe__title">{{'MYVOLUMIO.EDIT_PROFILE' | translate}}</h1>
   <p class="aw-pe__note"><span class="aw-pe__note-dot"></span><span translate="MYVOLUMIO.NOT_LOGGED_IN"></span></p>
   <button type="button" class="aw-btn aw-btn--primary" ng-click="myVolumioEditProfileController.logIn()"><span translate="MYVOLUMIO.LOGIN"></span></button>

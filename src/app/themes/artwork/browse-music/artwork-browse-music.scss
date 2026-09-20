@@ -814,23 +814,13 @@ body#artwork #browse.browsing-album .panel .body-content.new-browse,
 body#artwork #browse.browsing-playlist .panel .body-content.new-browse,
 body#artwork #browse.browsing-home .panel .body-content.new-browse { top: 0; height: 100%; }
 
-.aw-albumhead__top { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
-.aw-back {
-  width: 38px; height: 38px; border-radius: 11px; border: 0; padding: 0;
-  background: rgba(255, 255, 255, .12); color: var(--ink-1);
-  display: grid; place-items: center; cursor: pointer;
-  .material-symbols-rounded { font-size: 21px; }
-  &:hover { background: rgba(255, 255, 255, .18); }
-  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
-}
-.aw-albumhead__top .aw-albumhead__eyebrow { margin-top: 0; font-size: 11px; letter-spacing: .18em; color: #cfd4d8; }
+.aw-albumhead .aw-head { margin-bottom: 32px; align-self: stretch; }   /* the row itself is laid out by the head component; stretch, or the column's flex-start would shrink the blur to the text */
 
 /* ============================================================
    Browse landing (mockup 2b-browse) — values from the mockup's inline CSS
    ============================================================ */
 body#artwork .aw-browse { padding: var(--pad-top) var(--pad-screen) 40px; color: var(--ink-1); }
 
-.aw-tabs { display: flex; align-items: center; gap: 16px; }
 .aw-tab { font-size: 15px; color: #8c9298; cursor: pointer;
   &.active { color: #fff; font-weight: 600; }
   &:hover { color: var(--ink-2); } }
@@ -843,12 +833,6 @@ body#artwork .aw-browse { padding: var(--pad-top) var(--pad-screen) 40px; color:
   .aw-search-key { margin-left: auto; font-size: 11px; color: #71777d; }
   &:hover { background: rgba(255, 255, 255, .13); }
 }
-.aw-avatar {
-  width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, .14);
-  display: grid; place-items: center; cursor: pointer;
-  .material-symbols-rounded { font-size: 21px; color: #e4e7ea; }
-}
-
 .aw-browse-head { display: flex; align-items: baseline; gap: 16px; margin-top: 26px; }
 .aw-browse-title {
   margin: 0; font-family: var(--font-ui); font-size: 46px; font-weight: 800;
@@ -959,10 +943,10 @@ body#artwork #browse.browsing-artists .music-item .item__play:focus-within { opa
    title, then a real column-header row and rows on one grid
    (mockup: 30px 52px 1fr 260px 200px auto auto; QUALITY has no data here)
    ============================================================ */
-body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 34px; }
+body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 0; }
 .aw-albumhead--playlist {
   display: grid; grid-template-columns: 260px 1fr; column-gap: 40px; align-items: end;
-  .aw-albumhead__top { grid-column: 1 / -1; }
+  .aw-head { grid-column: 1 / -1; }
   .aw-albumhead__cover { max-width: 260px; grid-row: 2; }
   .aw-albumhead__title, .aw-albumhead__artist, .aw-albumhead__meta, .aw-albumhead__actions { grid-column: 2; }
   /* mockup: <img 260> + a flex column (title, description, meta, actions; padding-bottom 6) with
@@ -1006,18 +990,11 @@ body#artwork #browse.browsing-playlist .music-item .item__image { display: grid;
    ============================================================ */
 body#artwork #browse.browsing-list .browse-header-container { display: none; }
 body#artwork #browse.browsing-list .panel .body-content.new-browse { top: 0; height: 100%; }
-body#artwork #browse.browsing-list #browseTablesWrapper { position: relative; padding-top: 34px; }
+body#artwork #browse.browsing-list #browseTablesWrapper { position: relative; }
 body#artwork .aw-hidden { display: none !important; }
 /* rows are re-ordered with CSS order (Z–A), so the list must be a flex column */
 body#artwork #browse.browsing-list .main__list { display: flex; flex-direction: column; }
 
-.aw-listbar { display: flex; align-items: center; gap: 16px; }
-.aw-listbar__back {
-  background: transparent; border: 0; padding: 0; margin: 0; display: grid; place-items: center; cursor: pointer;
-  .material-symbols-rounded { font-size: 22px; color: #c2c8cd; }
-  &:hover .material-symbols-rounded { color: #fff; }
-  &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; border-radius: 6px; }
-}
 .aw-crumbs { font-size: 15px; color: #8c9298; display: flex; align-items: center; gap: 5px; min-width: 0;
   a { color: #8c9298; text-decoration: none; &:hover { color: #c2c8cd; text-decoration: none; } }
   .aw-crumbs__sep { color: #5f6669; }
@@ -1391,4 +1368,4 @@ body#artwork #browse .music-card__overlay { border-radius: var(--r-cover); }
 body#artwork #browse .music-card .meta__actions .dropdown-menu { right: 0; left: auto; }
 body#artwork #browse .music-card__wrapper:nth-child(odd) .meta__actions .dropdown-menu { left: 0; right: auto; }
 
-body#artwork .aw-albumhead .aw-crumbs--album { display: none; } /* phone only */
+

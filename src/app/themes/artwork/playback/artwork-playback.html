@@ -12,7 +12,6 @@
       </div>
     </div>
     <div id="np-badge-slot">
-      <div class="np-volume"><volume-manager is-on-footer="true"></volume-manager></div>
       <div class="np-badge" ng-if="playback.npBitPerfect">
         <span class="np-dot"></span>
         <span class="mono">BIT PERFECT</span>
@@ -78,6 +77,8 @@
         <favourite-track-btn class="np-fav"></favourite-track-btn>
         <player-buttons></player-buttons>
       </div>
+      <!-- right of the transport: what plays next, then the volume -->
+      <div id="np-footer-right">
       <div id="np-upnext" ng-if="playback.upNext.length">
         <button type="button" class="np-upnext-label mono" ng-click="playback.awQueue.show()" title="{{'COMMON.TAB_QUEUE' | translate}}">UP NEXT</button>
         <div class="np-upnext-films">
@@ -91,6 +92,8 @@
           <span class="material-symbols-rounded">queue_music</span>
           <span class="np-queue__count mono" ng-if="playback.npQueueLen">{{playback.npQueueLen}}</span>
         </button>
+      </div>
+        <div class="np-volume"><volume-manager is-on-footer="true"></volume-manager></div>
       </div>
     </div>
   </div>
