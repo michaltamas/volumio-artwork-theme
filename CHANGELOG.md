@@ -4,6 +4,25 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-09-20
+
+### Added
+
+- Every screen now shares one page head. It sticks to the top, carries the screen's own top padding and blurs whatever scrolls beneath it, so the interface no longer changes its mind from page to page. The home screen, the Browse landing, list pages, the artist page, albums and playlists, the MyVolumio profile and the search page all use it.
+- On a phone the filter rests as a magnifier and slides open on a tap, which keeps the head on a single line instead of spending a second row on a search field.
+
+### Changed
+
+- Now Playing moves the volume from the top bar to the bottom right, beside what plays next, and the transport spacing closes up as the window narrows so the row never wraps out of sight.
+- The volume in the Zones list looks like every other volume in the theme: a thin track with a white fill and a small knob, instead of the browser's own thick pill.
+- The search page no longer draws its own bar over the landing's head, so it offers one search field instead of two.
+- The home screen loses the avatar button: it pointed at an abstract state and did nothing. MyVolumio is reachable from the menu.
+
+### Fixed
+
+- The elapsed time could run past the end of a track — a four-minute song showing 165:12 — because Volumio keeps counting its own position while the player sits stopped at the end of a queue. The seek bar now shows nothing while stopped and never more than the track's length.
+- On a phone the band across the top edge dimmed the menu button and the search field. It now belongs to the app's own stacking order, so it still covers what scrolls under it while the head stays clear.
+
 ## [1.4.1] - 2026-09-14
 
 ### Fixed
