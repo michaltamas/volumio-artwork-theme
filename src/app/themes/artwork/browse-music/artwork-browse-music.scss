@@ -726,9 +726,10 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
   > div:first-child { align-self: stretch; min-height: 0; overflow-y: auto; scrollbar-width: none;
     margin: 0 0 0 -52px; padding: 0 0 0 52px; &::-webkit-scrollbar { display: none; } }
   /* track list: starts level with the top of the cover (the back-button row is 38px + 32px gap) */
-  /* the track column has a scrollbar of its own, so it stops where the mini player starts —
-     otherwise the bar would run on behind it and end out of sight */
-  > #browse-page { align-self: stretch; min-height: 0; margin-top: 104px; height: calc(100% - 104px - var(--mini-h)); overflow-y: auto; padding-bottom: 12px; /* level with the top of the cover: the head row plus its padding */
+  /* the track column has a scrollbar of its own, so it stops short of the mini player —
+     otherwise the bar would run on behind it and end out of sight — and keeps a little air
+     above it, so the scrollbar does not sit on the bar */
+  > #browse-page { align-self: stretch; min-height: 0; margin-top: 104px; height: calc(100% - 104px - var(--mini-h) - 18px); overflow-y: auto; padding-bottom: 12px; /* level with the top of the cover: the head row plus its padding */
     .main__list .album__tracks:first-child { padding-top: 0; } /* the inherited panel inset would push row 1 below the cover top */ }
 }
 
