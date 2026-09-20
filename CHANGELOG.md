@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-09-20
+
+### Fixed
+
+- The equaliser bars on the current track kept moving while the player was paused or stopped, on the album page, the artist page and in search results, so a still player looked like it was playing.
+- The album page drew a dark band across half the screen: its head sits in the info column, not across the page, so the tint and the blur ended in a hard edge. The band now belongs to the phone layout, where the cover really does scroll under the head.
+- The album head started 22px lower than every other page, and a head without a filter in it was shorter than one with. Every head now starts on the same line and keeps the same height.
+- The artist head sat 8px higher than the rest; it takes the same top padding now.
+- The album's track list ran behind the mini player, its scrollbar disappearing under it, and the list ended 56px before its own scroll did. The column now stops just above the player and finishes with the last track.
+- On a short window the album cover pushed the title, the meta line and the buttons behind the mini player. The cover gives way to what is left of the window instead.
+- The home screen and the Browse landing had two different heads: home left out streaming services that Volumio reports as disabled and named web radio itself. Both now show the same tabs, the same search pill and the same spacing.
+
 ## [1.5.0] - 2026-09-20
 
 ### Added
