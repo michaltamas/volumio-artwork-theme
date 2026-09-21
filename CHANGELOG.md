@@ -4,6 +4,24 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-09-21
+
+### Added
+
+- **A light theme.** The cover still bleeds behind everything, but the veil over it runs up to warm paper (`#faf8f5`) instead of down to black: white glass instead of dark, ink at `#14161a`, warm shadows, and a transport that becomes an ink disc with a paper glyph. Built from a design handoff rather than by eye, and held to a measured contrast floor — over the darkest cover in a test library the metadata grey keeps 4.54:1 and the primary ink 12.9:1.
+- **A theme switch** in Settings → Appearance: Dark, Light or System, which follows the device and changes with it. The choice is remembered in that browser, not in the player's configuration, so a phone can be light while the screen in the living room stays dark.
+
+### Changed
+
+- The theme's colours are written as tokens rather than literals — 842 of them, the white veils becoming a scale of their own. The dark theme came out of that pass with the same palette it had before, colour for colour.
+- The blurred cover carries further into the page than it did: a record tints the interface it is on instead of hinting at it.
+
+### Fixed
+
+- The trail could grow into nonsense — an album that was never on the way, wrapped over three lines — because Volumio's navigation stack is a history, not a path. An album's own page can never be an ancestor, so those are dropped, and the trail keeps to the last two steps on one line.
+- The seek track on Now Playing had an inset highlight that read as embossed plastic; it is a flat tint now.
+- Glyphs that stand in for a cover — a playlist, a web radio, a folder — were painted white by the inherited theme and vanished on paper.
+
 ## [1.5.1] - 2026-09-20
 
 ### Fixed
