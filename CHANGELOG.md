@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-09-21
+
+### Fixed
+
+- On the album page the track list sat on a lighter slab the exact size of the list — in Safari, Edge and Chrome, though not in a headless render, which is why it survived the last release. The head column was a scroll container, and the browser composited the page in pieces around it. It no longer scrolls: the cover is already clamped to the window, so the head always fits.
+- In a narrow or short window, where the album page scrolls as a whole, the last track ended under the mini player and could not be reached.
+- The cover's shadow on the album page was cut off at the column's edge.
+- Light theme: the row that plays and the row under the pointer are marked without a panel of their own — the playing one by its bars and bold title, the hovered one by a faint tint; the resting rows sit on nothing.
+- Light theme: the favourite heart in a track row is an ink glyph now, not a white one lost on the paper.
+
 ## [1.6.0] - 2026-09-21
 
 ### Added
