@@ -98,8 +98,9 @@
   --bar-fill:rgba(255,255,255,.60); --bar-solid:rgba(252,251,249,.90); --bar-veil:rgba(255,255,255,.72);
   --panel-fill:rgba(252,251,249,.90); --panel-deep:rgba(252,251,249,.96); --panel-sheet:rgba(252,251,249,.97); --scrim-page:rgba(24,20,14,.28);
   --menu-fill:rgba(252,251,249,.88); --menu-bright:1.04;
-  /* the row that plays and the row under the pointer keep their tint on paper (the handoff's .07 and .055); every other row sits on nothing */
-  --row-fill:rgba(20,22,26,.07); --row-hover:rgba(20,22,26,.055);
+  /* on paper no row carries a panel of its own, the playing one included: the bars and the bold
+     title mark it. Only the row under the pointer tints (the handoff's .055) */
+  --row-fill:transparent; --row-hover:rgba(20,22,26,.055);
   --warn-ink:#8a6a12; --warn-wash:rgba(176,132,26,.12); --warn-line:rgba(176,132,26,.30);
   /* the tint ladder: hover .055, row .07, active .09, then the seek track and its buffer */
   --fill-04:rgba(20,22,26,.04); --fill-05:rgba(20,22,26,.05); --fill-06:rgba(20,22,26,.055);

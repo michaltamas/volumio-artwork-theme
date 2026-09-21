@@ -1,11 +1,8 @@
 <!-- Artwork album/playlist header (clean bespoke markup, no inherited styles) -->
 <div class="aw-albumhead" ng-class="{'aw-albumhead--playlist': browse.isPlaylistInfo}">
 
-  <!-- blurred backdrop of this item's cover -->
-  <div class="aw-albumhead__bg" aria-hidden="true">
-    <img ng-if="browse.browseService.info.albumart"
-         ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">
-  </div>
+  <!-- the blurred backdrop of the cover sits at the root of #browse (artwork-browse-music.html):
+       inside this scrolling column the compositor cut it off under the track list -->
 
   <aw-page-head variant="album" on-back="browse.goBack()">
     <aw-head-nav>

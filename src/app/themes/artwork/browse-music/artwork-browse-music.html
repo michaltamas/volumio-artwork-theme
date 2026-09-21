@@ -1,5 +1,13 @@
 <div id="browse" class="boxTable" ng-class="{'browsing-album': browse.browseService.info.type === 'album' || browse.browseService.info.type === 'cd', 'browsing-playlist': browse.isPlaylistInfo,'browsing-home': !browse.browseService.isBrowsing && !browse.browseService.isSearching, 'browsing-search': browse.isLandingSearch, 'browsing-artists': browse.currentUri === 'artists://', 'browsing-artist': browse.browseService.info.type === 'artist', 'aw-artist-all': browse.awArtistShowAll || browse.awFilter, 'browsing-list': browse.isPlainList}" browse-scroll-manager>
 
+    <!-- album/playlist page: the blurred backdrop of the cover, fixed under everything. It lives
+         here and not in the head column because that column scrolls, and a fixed layer inside a
+         scroller is composited with it: the track list next door then painted without it -->
+    <div class="aw-albumhead__bg" aria-hidden="true"
+         ng-if="browse.browseService.info && !browse.hideInfoHeader && browse.browseService.info.albumart && (browse.browseService.info.type === 'album' || browse.browseService.info.type === 'song' || browse.isPlaylistInfo || browse.browseService.info.type === 'cd')">
+      <img ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}" alt="">
+    </div>
+
     <div class="panel panel-default">
 
       <div class="browse-header-container browse-music__browse-header-container">

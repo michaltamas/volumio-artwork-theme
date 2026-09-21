@@ -741,7 +741,8 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
 
 /* --- album/playlist header (aw-albumhead) --- */
 .aw-albumhead {
-  display: flex; flex-direction: column; align-items: flex-start; position: relative; z-index: auto; /* NO stacking context: the fixed backdrop (z:-1) must paint under the sibling track column, not over it */
+  display: flex; flex-direction: column; align-items: flex-start; position: relative;
+  /* the backdrop is a child of #browse, not of this head (see artwork-browse-music.html) */
   &__bg {
     position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
     img { width: 100%; height: 100%; object-fit: cover; filter: blur(70px) saturate(1.3); opacity: .55; transform: scale(1.1); }
