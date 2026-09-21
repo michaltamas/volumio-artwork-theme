@@ -134,7 +134,8 @@
 }
 :root[data-aw-theme="light"] { @include aw-light; }
 @media (prefers-color-scheme: light) {
-  /* "System" follows the device; before the script runs there is no attribute yet, and a light
-     device should not be shown a dark screen first */
-  :root[data-aw-theme="system"], :root:not([data-aw-theme]) { @include aw-light; }
+  /* "System" follows the device. Before the script runs there is no attribute yet, and the page
+     stays dark: dark is the default, and a kiosk display that knows no dark mode must not flash
+     paper at every start */
+  :root[data-aw-theme="system"] { @include aw-light; }
 }

@@ -6,6 +6,12 @@
  * prefers-color-scheme query). The choice belongs to the browser, not the player: one person's
  * phone can be light while the living-room screen stays dark, and nothing is written to the
  * player's configuration.
+ *
+ * Until a choice is made the theme is dark, as it always was. "System" has to be chosen: a
+ * display driven by the player itself (a kiosk on HDMI) has no dark mode of its own, reports
+ * a light scheme, and would come up on paper after an update with nobody able to touch it.
+ * A browser that cannot be reached by hand takes the choice from the address instead:
+ * `?theme=dark|light|system` is saved on load, so a kiosk URL can carry it.
  */
 const KEY = 'aw-theme';
 const MODES = ['dark', 'light', 'system'];
@@ -28,10 +34,18 @@ class AwThemeService {
 
   // a private window, or storage turned off, must not break the interface
   read() {
+    const asked = this.fromAddress();
     try {
+      if (asked) { this.$window.localStorage.setItem(KEY, asked); return asked; }
       const saved = this.$window.localStorage.getItem(KEY);
-      return MODES.indexOf(saved) > -1 ? saved : 'system';
-    } catch (e) { return 'system'; }
+      return MODES.indexOf(saved) > -1 ? saved : 'dark';
+    } catch (e) { return asked || 'dark'; }
+  }
+
+  // `?theme=light` in the address (before or after the hash) names a mode
+  fromAddress() {
+    const m = /[?&]theme=(dark|light|system)\b/.exec(this.$window.location.href || '');
+    return m ? m[1] : null;
   }
 
   get isLight() {
