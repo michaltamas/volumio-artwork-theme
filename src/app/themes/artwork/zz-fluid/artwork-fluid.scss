@@ -130,7 +130,9 @@ body#artwork .aw-albumhead__cover { max-width: unquote("min(380px, 100%, 44vh, c
 body#artwork #browse.browsing-album .aw-albumhead__title { font-size: unquote("min(var(--t-h1), 6vh)"); }
 body#artwork #browse.browsing-album .aw-albumhead__actions { margin-top: clamp(12px, 2.6vh, 24px); }
 @media (max-width: 860px), (max-height: 560px) {
-  body#artwork #browse.browsing-album #browseTablesWrapper { display: block; overflow-y: auto !important; }
+  /* the whole page scrolls here, so its end has to clear the mini player: the two-column
+     layout above zeroes this padding (there only the track list scrolls) */
+  body#artwork #browse.browsing-album #browseTablesWrapper { display: block; overflow-y: auto !important; padding-bottom: calc(var(--mini-h) + 16px); }
   body#artwork #browse.browsing-album #browseTablesWrapper > div:first-child { overflow: visible; margin: 0; padding: 0; scrollbar-width: auto; }
   body#artwork #browse.browsing-album #browseTablesWrapper > #browse-page { height: auto; margin-top: 28px; overflow: visible; }
   body#artwork .aw-albumhead__cover { max-width: unquote("min(320px, 60vw)"); }
