@@ -87,7 +87,10 @@ The same screens on paper. The cover still bleeds behind everything, but the vei
 up to a warm off-white instead of down to black, and the transport turns from a white disc with
 a dark glyph into an ink disc with a paper one. Pick **Dark**, **Light** or **System** in
 Settings → Appearance; the choice is remembered in that browser, so a phone can be light while
-the screen in the living room stays dark.
+the screen in the living room stays dark. Until something is picked the theme is dark. A screen
+driven by the player itself — a display on HDMI, the Touch Display plugin — is a browser of its
+own and keeps its own choice: pick it there, or put `?theme=light` (or `dark`, `system`) in the
+address the display opens; the choice is saved on the first load.
 
 | | |
 |---|---|

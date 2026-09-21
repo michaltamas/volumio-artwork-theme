@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-09-21
+
+### Fixed
+
+- A display driven by the player itself — HDMI, the Touch Display plugin — came up in the light theme after 1.6.0 and could not be switched back without touching it. The theme had defaulted to *System*, and a kiosk browser has no dark mode of its own, so it reported a light scheme. Dark is the default again, as it always was; *System* is now a choice to make. A display that cannot be reached by hand can carry the choice in its address instead: `?theme=dark`, `light` or `system` is saved on the first load.
+
 ## [1.6.1] - 2026-09-21
 
 ### Fixed
