@@ -67,6 +67,8 @@ import MainMenuDirective from './components/main-menu/main-menu.directive';
 import OnCloudActionsDirective from './components/on-cloud-actions/on-cloud-actions.directive';
 import PlayerSeekbarDirective from './components/player-seekbar/player-seekbar.directive';
 import AwSettingsService from './components/aw-settings-shell/aw-settings.service';
+import AwThemeService from './components/aw-theme/aw-theme.service';
+import AwAppearanceSlotDirective from './components/aw-appearance-slot/aw-appearance-slot.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
 import AwQueuePanelService from './services/aw-queue-panel.service';
@@ -297,6 +299,7 @@ angular.module('volumio', [
   .directive('onCloudActions', (themeManager) => new OnCloudActionsDirective(themeManager))
   .directive('playerSeekbar', (themeManager) => new PlayerSeekbarDirective(themeManager))
   .service('awSettingsService', AwSettingsService)
+  .service('awTheme', AwThemeService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
@@ -304,6 +307,7 @@ angular.module('volumio', [
   .directive('awSheetDrag', ($window) => new AwSheetDragDirective($window))
   .directive('awHeadBlur', () => new AwHeadBlurDirective())
   .directive('awRangeFill', () => new AwRangeFillDirective())
+  .directive('awAppearanceSlot', (themeManager) => new AwAppearanceSlotDirective(themeManager))
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 

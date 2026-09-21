@@ -42,12 +42,12 @@ $sideMenuWidth: 230px;
       text-transform: uppercase;
       text-align: left;
       font-size: 18px;
-      // color: #FFF;
+      // color: var(--ink);
       padding: 10px 0px 10px 5px;
-      border-bottom: solid 1px #333;
+      border-bottom: solid 1px var(--hairline);
       &:hover {
         // color: $theme-primary-color;
-        border-bottom: solid 1px #333;
+        border-bottom: solid 1px var(--hairline);
       }
     }
     &.ng-enter, &.ng-leave {

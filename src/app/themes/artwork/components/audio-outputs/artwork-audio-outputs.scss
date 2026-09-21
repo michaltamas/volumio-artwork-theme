@@ -10,7 +10,7 @@ body#artwork {
 
   #sideMenuScrim {
     position: fixed; inset: 0; z-index: 399;
-    background: rgba(0, 0, 0, .55);
+    background: var(--scrim-page);   /* the page dims behind a sheet in both themes */
     -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
   }
 
@@ -20,10 +20,10 @@ body#artwork {
     padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
     overflow-y: auto; -webkit-overflow-scrolling: touch;
     border-radius: 18px;
-    background: rgba(16, 18, 22, .92);
+    background: var(--panel-deep);
     -webkit-backdrop-filter: blur(34px) saturate(1.1); backdrop-filter: blur(34px) saturate(1.1);
-    border: 1px solid rgba(255, 255, 255, .1);
-    box-shadow: 0 30px 70px -24px rgba(0, 0, 0, .8);
+    border: 1px solid var(--fill-10);
+    box-shadow: 0 30px 70px -24px var(--shadow-strong);
     color: var(--ink-1);
     /* the core animation keeps its last frame (animation-fill-mode: forwards), which
        overrides any transform set later — the sheet could not be dragged. Ours ends and
@@ -35,25 +35,25 @@ body#artwork {
      on wide screens */
   .outputs__grab {
     position: absolute; top: 10px; right: 14px; width: 32px; height: 32px; padding: 0;
-    border: 0; border-radius: 50%; background: rgba(255, 255, 255, .08); color: #c2c8cd; cursor: pointer;
+    border: 0; border-radius: 50%; background: var(--fill-08); color: var(--ink-3); cursor: pointer;
     &::after { content: 'close'; font-family: 'Material Symbols Rounded'; font-size: 18px; line-height: 32px; }
-    &:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+    &:hover { background: var(--fill-16); color: var(--ink); }
     &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
   }
 
   .outputs__title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
-  .outputs__title__text { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #cfd4d8; }
+  .outputs__title__text { font-family: var(--font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-35); }
   .outputs__action {
     display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 13px; border-radius: 17px;
-    background: transparent; border: 1px solid rgba(255, 255, 255, .16); color: #e4e7ea; font-size: 13px; font-weight: 500;
-    &:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+    background: transparent; border: 1px solid var(--fill-16); color: var(--ink-2); font-size: 13px; font-weight: 500;
+    &:hover { background: var(--fill-08); color: var(--ink); }
     .outputs__action__icon { font-size: 17px; }
   }
-  .outputs__subtitle { margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #8c9298; }
+  .outputs__subtitle { margin: 0 0 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
 
   .outputs__device, .device {
     display: flex; align-items: center; gap: 12px; margin: 0 0 10px; padding: 12px; border-radius: 14px;
-    background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .09);
+    background: var(--fill-06); border: 1px solid var(--fill-09);
   }
   .device__thumb { flex: none; width: 44px; height: 44px; border-radius: 6px; overflow: hidden;
     img { width: 100%; height: 100%; object-fit: cover; } }
@@ -65,9 +65,9 @@ body#artwork {
   .device__volume { display: flex; align-items: center; gap: 10px; margin: 8px 0 0; }
   .device__control--volume {
     flex: none; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 8px; background: transparent;
-    display: grid; place-items: center; color: #c2c8cd;
+    display: grid; place-items: center; color: var(--ink-3);
     .outputs__action__icon { font-size: 15px; }
-    &:hover { background: transparent; color: #fff; }
+    &:hover { background: transparent; color: var(--ink); }
   }
   .volume-control__popover {
     position: static; display: block; flex: 1 1 auto; min-width: 0;
@@ -77,13 +77,13 @@ body#artwork {
   /* the per-device volume row: the theme's thin track with a white fill */
   .outputs__menu input[type="range"] {
     -webkit-appearance: none; appearance: none; width: 100%; height: 18px; margin: 0; background: transparent;
-    &::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
-    &::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .2); }
-    &::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: #fff;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, .16), 0 2px 6px rgba(0, 0, 0, .6); }
-    &::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; }
+    &::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: var(--fill-20); }
+    &::-moz-range-track { height: 4px; border-radius: 2px; background: var(--fill-20); }
+    &::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: var(--ink);
+      box-shadow: 0 0 0 3px var(--fill-16), 0 2px 6px rgba(0, 0, 0, .6); }
+    &::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--ink); }
   }
-  .outputs__menu .fa, .outputs__menu .material-icons { color: #c2c8cd; }
+  .outputs__menu .fa, .outputs__menu .material-icons { color: var(--ink-3); }
 }
 
 @keyframes aw-outputs-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -102,9 +102,9 @@ body#artwork {
     top: 0; left: 0; right: 0; width: auto; height: 26px; border-radius: 20px 20px 0 0; background: transparent;
     &::after {
       content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-      width: 38px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4);
+      width: 38px; height: 4px; border-radius: 2px; background: var(--fill-30);
     }
-    &:hover { background: transparent; &::after { background: rgba(255, 255, 255, .6); } }
+    &:hover { background: transparent; &::after { background: var(--fill-30); } }
     touch-action: none; /* the finger drags the sheet, the page stays put */
   }
   /* the sheet follows the finger, so it must not animate its own position meanwhile */

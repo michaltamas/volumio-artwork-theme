@@ -3,9 +3,9 @@
    larger than the track itself so the handle stays easy to grab. */
 .artwork-seek { display: flex; align-items: center; gap: 12px; width: 100%; }
 .artwork-seek .seek-time {
-  flex: none; font-size: 11px; letter-spacing: 0; color: #a7adb3; /* mockup: Space Mono, no tracking */
+  flex: none; font-size: 11px; letter-spacing: 0; color: var(--ink-muted); /* mockup: Space Mono, no tracking */
 }
-.artwork-seek .seek-elapsed { color: #fff; }
+.artwork-seek .seek-elapsed { color: var(--ink); }
 .artwork-seek .seek-duration { margin-left: auto; }
 .artwork-seek .seek-remaining { display: none; } /* Now Playing only */
 
@@ -17,16 +17,16 @@
 }
 .seek-track {
   position: relative; width: 100%; height: 4px; border-radius: 2px;
-  background: rgba(255, 255, 255, .18);
+  background: var(--fill-18);
 }
 .seek-fill {
   position: absolute; top: 0; bottom: 0; left: 0; border-radius: inherit;
-  background: #f2f3f5;
+  background: var(--ink-1);
 }
 .seek-handle {
   position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px;
-  border-radius: 50%; background: #fff; pointer-events: none;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .16), 0 2px 6px rgba(0, 0, 0, .6);
+  border-radius: 50%; background: var(--ink); pointer-events: none;
+  box-shadow: 0 0 0 3px var(--fill-16), 0 2px 6px rgba(0, 0, 0, .6);
 }
 
 /* mini player: the line fills the centre column under the transport */
@@ -43,11 +43,11 @@
   row-gap: 12px; column-gap: 0;
 }
 #np-seek .artwork-seek__hit { grid-area: track; width: 100%; height: 36px; }
-#np-seek .seek-track  { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .14); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .45); }
-#np-seek .seek-fill   { background: linear-gradient(90deg, #dfe3e7, #ffffff); }
+#np-seek .seek-track  { height: 8px; border-radius: 4px; background: var(--fill-14); }
+#np-seek .seek-fill   { background: linear-gradient(90deg, var(--ink-25), var(--ink)); }
 #np-seek .seek-handle { width: 20px; height: 20px; margin: -10px 0 0 -10px;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, .14), 0 0 18px rgba(255, 255, 255, .45), 0 3px 8px rgba(0, 0, 0, .55); }
+  box-shadow: 0 0 0 4px var(--fill-14), 0 0 18px rgba(255, 255, 255, .45), 0 3px 8px var(--shadow-soft); }
 #np-seek .seek-time      { font-size: 12px; }
-#np-seek .seek-elapsed   { grid-area: elapsed; justify-self: start; color: #f2f3f5; }
+#np-seek .seek-elapsed   { grid-area: elapsed; justify-self: start; color: var(--ink-1); }
 #np-seek .seek-remaining { display: block; grid-area: remaining; justify-self: center; }
 #np-seek .seek-duration  { grid-area: duration; justify-self: end; margin-left: 0; }

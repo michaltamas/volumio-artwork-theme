@@ -2,7 +2,7 @@
   @include make-row();
   #playerLogger{
     border: solid 0px red;
-    background-color: #999;
+    background-color: var(--ink-65);
     padding: 10px;
     margin:10px 0px;
     #log {

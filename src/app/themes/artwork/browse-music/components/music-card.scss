@@ -6,7 +6,7 @@
     position: relative;
     margin-bottom: 12px;
     padding-bottom: 100%;
-    background: rgba(0, 0, 0, .6)
+    background: var(--shade-60)
 }
 
 .music-card__img,
@@ -19,7 +19,7 @@
     display: block;
 }
 .music-card__img-icon {
-    background: rgba(20,20,20,.6);
+    background: var(--panel-fill);
     color: white;
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@
     }
     .dropdown-menu {
         border-radius: 8px;
-        background: rgba(0,0,0,.8);
+        background: var(--shade-80);
     }
 }
 
@@ -195,7 +195,7 @@
         &:hover {
             cursor: pointer;
             .music-card__overlay {
-                background-color: rgba(0, 0, 0, .6);
+                background-color: var(--shade-60);
             }
             .meta__genre,
             .meta__actions,

@@ -1041,7 +1041,18 @@ class BrowseMusicController {
     const stack = this.browseService.navigationStack || [];
     // memoised on the stack's contents: a fresh array each digest would never settle ng-repeat
     const key = stack.map(s => s.uri).join('|');
-    if (this._awCrumbsKey !== key) { this._awCrumbsKey = key; this._awCrumbs = stack.slice(0, -1).filter(s => s.title || s.name); }
+    if (this._awCrumbsKey !== key) {
+      this._awCrumbsKey = key;
+      // Volumio's navigation stack is a history, not a path: it only rewinds when the same uri
+      // comes round again, so stepping sideways — one album to the next, or back out to another
+      // root — leaves the earlier pages behind and the trail grows into nonsense.
+      // Two rules clean it up. An album's own page is a leaf (its children are tracks, not
+      // pages), so it can never be an ancestor of anything: albums://<artist>/<album> never
+      // appears in a trail. And whatever survives is cut to the last two steps, so a trail is
+      // always Library / … / here, however long the afternoon's browsing was.
+      const leaf = s => /^albums:\/\/[^/]+\/.+/.test(String(s.uri || ''));
+      this._awCrumbs = stack.slice(0, -1).filter(s => (s.title || s.name) && !leaf(s)).slice(-2);
+    }
     return this._awCrumbs;
   }
   awGoCrumb(item) {

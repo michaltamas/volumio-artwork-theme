@@ -14,7 +14,9 @@
     </aw-head-nav>
   </aw-page-head>
 
-  <div class="aw-albumhead__cover">
+  <!-- Favourites and the like have no cover, only Volumio's own icon: a white glyph on nothing,
+       which needs a tile under it and, on paper, inverting -->
+  <div class="aw-albumhead__cover" ng-class="{'aw-albumhead__cover--icon': (browse.browseService.info.albumart || '').indexOf('sourceicon') > -1}">
     <img ng-if="browse.browseService.info.albumart"
          ng-src="{{browse.playerService.getAlbumart(browse.browseService.info.albumart)}}"
          alt="{{browse.browseService.info.album}}">

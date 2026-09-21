@@ -1,0 +1,19 @@
+<!-- one more section on Volumio's Appearance page, in the page's own idiom -->
+<div class="panel panel-default aw-theme-section">
+  <div class="panel-heading"><h3 class="panel-title">Theme</h3></div>
+  <div class="panel-body">
+    <div class="aw-theme-card aw-theme-card--inline">
+      <div class="aw-theme-card__text">
+        <div class="aw-theme-card__title">Dark or light</div>
+        <div class="aw-theme-card__hint">Follow this device, or pick one. Remembered in this browser.</div>
+      </div>
+      <div class="aw-theme-pick" role="group" aria-label="Theme">
+        <button type="button" ng-repeat="m in ['dark', 'light', 'system']" ng-class="{active: slot.theme.is(m)}"
+                ng-click="slot.theme.set(m)" aria-pressed="{{slot.theme.is(m)}}">
+          <span class="material-symbols-rounded">{{m === 'dark' ? 'dark_mode' : (m === 'light' ? 'light_mode' : 'contrast')}}</span>
+          <span class="aw-theme-pick__label">{{m === 'dark' ? 'Dark' : (m === 'light' ? 'Light' : 'System')}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

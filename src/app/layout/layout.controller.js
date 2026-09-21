@@ -1,6 +1,7 @@
 class LayoutController {
-  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService, awQueuePanel, awMobileMenu) {
+  constructor($state, $scope, themeManager, $log, matchmediaService, playerService, awSettingsService, awQueuePanel, awMobileMenu, awTheme) {
     'ngInject';
+    this.awTheme = awTheme;   // constructed here so the attribute is on <html> before the first paint
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
     this.$state = $state;
@@ -65,9 +66,9 @@ class LayoutController {
       // SCSS→CSSO build cannot parse color-mix().
       st.textContent =
         '.art-scrim{background:linear-gradient(180deg,' +
-          'color-mix(in oklch,var(--art-1) 58%,rgba(6,10,13,.5)) 0%,' +
-          'color-mix(in oklch,var(--art-2) 86%,rgba(6,10,13,.9)) 50%,' +
-          'rgba(6,10,13,.96) 100%);' +
+          'color-mix(in oklch,var(--art-1) var(--art-mix-1),var(--art-veil-1)) 0%,' +
+          'color-mix(in oklch,var(--art-2) var(--art-mix-2),var(--art-veil-2)) 50%,' +
+          'var(--art-veil-3) 100%);' +
           'transition:opacity .6s ease;}';
       document.head.appendChild(st);
     }
@@ -75,6 +76,8 @@ class LayoutController {
       () => this.playerService.state && this.playerService.state.albumart,
       () => this.sampleCover()
     );
+    // dark and light sample the cover to different ends of the scale
+    this.$scope.$on('aw:theme', () => this.sampleCover());
   }
 
   sampleCover() {
@@ -100,8 +103,9 @@ class LayoutController {
         const h = Math.round(hsl[0] * 360);
         const s = Math.round(Math.min(0.16, Math.max(0.05, hsl[1])) * 100); // keep a ground
         const root = document.documentElement.style;
-        root.setProperty('--art-1', `hsl(${h}, ${s}%, 24%)`);
-        root.setProperty('--art-2', `hsl(${h}, ${s}%, 17%)`);
+        const light = this.awTheme && this.awTheme.isLight;
+        root.setProperty('--art-1', `hsl(${h}, ${light ? Math.min(s, 22) : s}%, ${light ? 96 : 24}%)`);
+        root.setProperty('--art-2', `hsl(${h}, ${light ? Math.min(s, 22) : s}%, ${light ? 93 : 17}%)`);
         this.setThemeColor(h, s);
       } catch (e) { /* cross-origin taint — keep the fixed fallback scrim */ }
     };
@@ -111,10 +115,11 @@ class LayoutController {
   }
 
   // The browser's own bands (status bar, overscroll) take the mini player's colour: its glass
-  // (rgba(10,12,15,.72)) over the backdrop's low, art-2 tinted end.
+  // over the backdrop's tinted end — dark glass over a dark ground, paper over a light one.
   setThemeColor(h, s) {
-    const art2 = this.hslToRgb(h / 360, s / 100, 0.17);
-    const glass = [10, 12, 15];
+    const light = this.awTheme && this.awTheme.isLight;
+    const art2 = this.hslToRgb(h / 360, (light ? Math.min(s, 22) : s) / 100, light ? 0.94 : 0.17);
+    const glass = light ? [250, 248, 245] : [10, 12, 15];
     const mix = art2.map((c, i) => Math.round(glass[i] * 0.9 + c * 0.1)); // measured against the rendered bar
     const css = 'rgb(' + mix.join(',') + ')';
     const meta = document.querySelector('meta[name="theme-color"]');

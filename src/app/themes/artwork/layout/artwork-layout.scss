@@ -91,8 +91,11 @@
   body#artwork .aw-card, body#artwork .aw-snav__item, body#artwork .slider-handle { transition: none; }
 }
 @supports not (backdrop-filter: blur(1px)) {
-  body#artwork #main-menu, body#artwork #footer-content { background: rgba(8, 10, 13, .86); }
-  body#artwork .aw-sside, body#artwork #playQueue .trackInfoBarButtons { background: rgba(8, 10, 13, .86); }
+  body#artwork #main-menu, body#artwork #footer-content { background: var(--bar-solid); }
+  /* the inherited shell paints a dark bar behind our glass: in a light theme it shows through */
+  body#artwork #footer-container { background-color: transparent; }
+  body#artwork #main-menu, body#artwork #main-menu a { color: var(--ink-2); }
+  body#artwork .aw-sside, body#artwork #playQueue .trackInfoBarButtons { background: var(--bar-solid); }
 }
 
 /* Now Playing has its own transport and no mini-player: the container must not reserve the

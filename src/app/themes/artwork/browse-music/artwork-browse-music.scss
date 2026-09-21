@@ -440,7 +440,7 @@
 }
 
 .album__tracks {
-    background: rgba(0,0,0,.4)
+    background: var(--shade-40)
 }
 
 @media (min-width: 768px) {
@@ -458,7 +458,7 @@
     }
 
     .header__content {
-        background: rgba(0, 0, 0, 0.6);
+        background: var(--shade-60);
     }
 
     .header__main {
@@ -544,7 +544,7 @@
 .album__body {
     flex: 1 1 100%;
     min-width: 0;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: var(--shade-80);
     padding: 24px;
 }
 
@@ -596,7 +596,7 @@ body#artwork {
     aspect-ratio: 1 / 1;
     border-radius: var(--r-cover);
     overflow: hidden;
-    box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .8);
+    box-shadow: 0 20px 40px -16px var(--shadow-strong);
   }
   .music-card__img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -690,8 +690,8 @@ body#artwork {
   #browse .dedicated-search { background: transparent !important; } /* the inner band carries the base theme's dark fill */
   #browse .panel .body-content.new-browse.with-search-header { top: 0; height: 100%; padding-top: 0; }
   .dedicated-search .search-container { max-width: 640px; margin: 0; }
-  .dedicated-search input.form-control { height: 46px; font-size: 15px; border-radius: 23px; background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .11); padding-left: 48px; }
-  .dedicated-search .search-icon .fa { font-size: 17px; color: #a7adb3; }
+  .dedicated-search input.form-control { height: 46px; font-size: 15px; border-radius: 23px; background: var(--fill-09); border-color: var(--fill-11); padding-left: 48px; }
+  .dedicated-search .search-icon .fa { font-size: 17px; color: var(--ink-muted); }
 }
 
 
@@ -744,12 +744,17 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
     position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
     img { width: 100%; height: 100%; object-fit: cover; filter: blur(70px) saturate(1.3); opacity: .55; transform: scale(1.1); }
     &::after { content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(8,10,12,.55) 0%, rgba(8,10,12,.86) 100%); }
+      background: linear-gradient(180deg, var(--cover-veil-1) 0%, var(--cover-veil-2) 100%); }
+  }
+  /* a source icon, not artwork: it gets a tile of its own, and turns over with the theme */
+  &__cover--icon {
+    background: var(--fill-08); border-radius: var(--r-cover);
+    img { padding: 24%; filter: unquote("invert(var(--icon-invert, 0))"); box-shadow: none; }   /* libsass owns invert() — pass it through */
   }
   &__cover {
     width: 100%; max-width: 380px;
     img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-cover);
-      box-shadow: 0 44px 90px -24px rgba(0,0,0,.85); display: block; }
+      box-shadow: 0 44px 90px -24px var(--shadow-deep); display: block; }
   }
   &__eyebrow { margin-top: 24px; font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
   &__title {
@@ -788,7 +793,7 @@ body#artwork {
     display: flex; align-items: center; gap: 14px;
     padding: 8px 14px; border-radius: var(--r-panel); min-height: 52px;
     transition: background .15s ease;
-    &:hover { background: rgba(255, 255, 255, .06); }
+    &:hover { background: var(--fill-06); }
   }
   .music-item .item__number { color: var(--ink-dim); font-family: var(--font-mono); font-size: 13px; }
   .music-item .item__info { gap: 18px; min-width: 0; }
@@ -828,31 +833,31 @@ body#artwork #browse.browsing-home .panel .body-content.new-browse { top: 0; hei
    ============================================================ */
 body#artwork .aw-browse { padding: var(--pad-top) var(--pad-screen) 40px; color: var(--ink-1); }
 
-.aw-tab { font-size: 15px; color: #8c9298; cursor: pointer;
-  &.active { color: #fff; font-weight: 600; }
+.aw-tab { font-size: 15px; color: var(--ink-dim); cursor: pointer;
+  &.active { color: var(--ink); font-weight: 600; }
   &:hover { color: var(--ink-2); } }
 .aw-search {
   margin-left: auto; display: flex; align-items: center; gap: 11px;
   height: 38px; padding: 0 16px; border-radius: 19px; width: 320px; cursor: pointer;
-  background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .11);
-  .material-symbols-rounded { font-size: 20px; color: #a7adb3; }
-  .aw-search-label { font-size: 14px; color: #a7adb3; }
-  .aw-search-key { margin-left: auto; font-size: 11px; color: #71777d; }
-  &:hover { background: rgba(255, 255, 255, .13); }
+  background: var(--fill-09); border: 1px solid var(--fill-11);
+  .material-symbols-rounded { font-size: 20px; color: var(--ink-muted); }
+  .aw-search-label { font-size: 14px; color: var(--ink-muted); }
+  .aw-search-key { margin-left: auto; font-size: 11px; color: var(--ink-faint); }
+  &:hover { background: var(--fill-13); }
 }
 .aw-browse-head { display: flex; align-items: baseline; gap: 16px; margin-top: 26px; }
 .aw-browse-title {
   margin: 0; font-family: var(--font-ui); font-size: 46px; font-weight: 800;
   letter-spacing: -.03em; line-height: 1; color: var(--ink);
 }
-.aw-browse-stats { font-size: 12px; letter-spacing: .1em; color: #a7adb3; }
+.aw-browse-stats { font-size: 12px; letter-spacing: .1em; color: var(--ink-muted); }
 
 .aw-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
 .aw-card {
   display: flex; align-items: center; gap: 18px; padding: 18px; border-radius: 16px; min-width: 0;
-  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .12);
+  background: var(--fill-08); border: 1px solid var(--fill-12);
   cursor: pointer; transition: background .25s ease;
-  &:hover { background: rgba(255, 255, 255, .13); }
+  &:hover { background: var(--fill-13); }
 }
 .aw-tile { width: 96px; height: 96px; border-radius: 8px; overflow: hidden; flex: none; background: var(--card-flat); } /* missing artwork degrades to a flat dark cell (spec §8) */
 .aw-tile--mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
@@ -862,38 +867,38 @@ body#artwork .aw-browse { padding: var(--pad-top) var(--pad-screen) 40px; color:
   img:nth-child(n+5) { display: none; } }
 .aw-tile--stack img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .aw-tile--avatars { display: flex; align-items: center; background: none; overflow: visible;
-  img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #0a0c0e; flex: none; }
+  img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ground); flex: none; }
   img:nth-child(2) { margin-left: -30px; } }
-.aw-tile--icon { display: grid; place-items: center; background: rgba(255, 255, 255, .07);
-  .material-symbols-rounded { font-size: 44px; color: #f2f3f5; } }
+.aw-tile--icon { display: grid; place-items: center; background: var(--fill-07);
+  .material-symbols-rounded { font-size: 44px; color: var(--ink-1); } }
 .aw-tile--lines { display: flex; flex-direction: column; justify-content: center; gap: 9px; padding: 0 16px;
   i { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .7); }
   i:nth-child(2) { width: 78%; background: rgba(255, 255, 255, .5); }
   i:nth-child(3) { width: 56%; background: rgba(255, 255, 255, .35); } }
 .aw-card-body { min-width: 0; flex: 1; }
 .aw-card-title { font-size: 20px; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
-.aw-card-sub { font-size: 14px; color: #a7adb3; margin-top: 5px; }
-.aw-card-meta { font-size: 11px; letter-spacing: .1em; color: #8c9298; margin-top: 9px; }
-.aw-card-chev { font-size: 22px; color: #a7adb3; flex: none; }
+.aw-card-sub { font-size: 14px; color: var(--ink-muted); margin-top: 5px; }
+.aw-card-meta { font-size: 11px; letter-spacing: .1em; color: var(--ink-dim); margin-top: 9px; }
+.aw-card-chev { font-size: 22px; color: var(--ink-muted); flex: none; }
 
 .aw-sources-head {
   display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, .1);
-  .mono { font-size: 11px; letter-spacing: .18em; color: #cfd4d8; }
+  border-bottom: 1px solid var(--fill-10);
+  .mono { font-size: 11px; letter-spacing: .18em; color: var(--ink-35); }
 }
-.aw-sources-manage { margin-left: auto; font-size: 13px; font-weight: 500; color: #c2c8cd; cursor: pointer; text-decoration: none;
+.aw-sources-manage { margin-left: auto; font-size: 13px; font-weight: 500; color: var(--ink-3); cursor: pointer; text-decoration: none;
   &:hover { color: var(--ink-1); text-decoration: none; } }
 .aw-sources { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
 .aw-source {
   display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 13px; min-width: 0;
-  background: rgba(255, 255, 255, .05); cursor: pointer; color: var(--ink-1); text-decoration: none;
-  > .material-symbols-rounded { font-size: 24px; color: #e4e7ea; flex: none; }
-  &:hover { background: rgba(255, 255, 255, .09); text-decoration: none; }
+  background: var(--fill-05); cursor: pointer; color: var(--ink-1); text-decoration: none;
+  > .material-symbols-rounded { font-size: 24px; color: var(--ink-2); flex: none; }
+  &:hover { background: var(--fill-09); text-decoration: none; }
 }
 .aw-source-body { min-width: 0; flex: 1; }
 .aw-source-name { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.aw-source-sub { font-size: 12px; color: #8c9298; margin-top: 2px; }
-.aw-source-chev { font-size: 20px; color: #a7adb3; flex: none; }
+.aw-source-sub { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
+.aw-source-chev { font-size: 20px; color: var(--ink-muted); flex: none; }
 
 /* the inherited theme paints a dark panel behind list content; the mockup's rows
    sit directly on the artwork */
@@ -911,10 +916,10 @@ body#artwork .browse-header-container .navButtons button:first-child { display: 
 body#artwork .browse-header-container { padding: 0 var(--pad-screen); }
 body#artwork .searchBox input { width: 440px; max-width: 100%; }
 
-/* title row: "Artists" + count (mockup: 46/800 + mono 13 #a7adb3) */
+/* title row: "Artists" + count (mockup: 46/800 + mono 13 var(--ink-muted)) */
 .aw-listhead { display: flex; align-items: baseline; gap: 12px; margin: 26px 0 18px; }
 .aw-listhead__title { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
-.aw-listhead__count { font-size: 13px; color: #a7adb3; }
+.aw-listhead__count { font-size: 13px; color: var(--ink-muted); }
 
 /* artists list view: 52px round avatar, name, ⋯ (mockup grid 52px 1fr … 24px, gap 20, pad 11 12, r 11) */
 body#artwork #browse.browsing-artists .music-item { gap: 20px; padding: 11px 12px; border-radius: 11px; }
@@ -922,7 +927,7 @@ body#artwork #browse.browsing-artists .music-item .item__image { width: 52px; he
 body#artwork #browse.browsing-artists .music-item .item__image img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
 body#artwork #browse.browsing-artists .music-item .item__title { font-size: 16px; font-weight: 600; }
 
-/* lists never sit on a panel — the inherited .album__tracks paints rgba(0,0,0,.4) */
+/* lists never sit on a panel — the inherited .album__tracks paints var(--shade-40) */
 body#artwork .album__tracks { background: transparent; }
 
 /* artists GRID: round avatars + centred labels. Library artists arrive as
@@ -969,8 +974,8 @@ body#artwork #browse.browsing-playlist #browseTablesWrapper { padding-top: 0; }
 /* column headers (theme markup above #browse-page) aligned to the row grid */
 .aw-cols {
   display: grid; grid-template-columns: 48px 44px 1fr 30px 27px; align-items: center; gap: 14px;
-  margin-top: 30px; padding: 22px 14px 11px; border-bottom: 1px solid rgba(255, 255, 255, .1);
-  font-size: 10px; letter-spacing: .16em; color: #8c9298;
+  margin-top: 30px; padding: 22px 14px 11px; border-bottom: 1px solid var(--fill-10);
+  font-size: 10px; letter-spacing: .16em; color: var(--ink-dim);
   .aw-cols__info { display: grid; grid-template-columns: 1fr 260px; column-gap: 20px; }
 }
 body#artwork #browse.browsing-playlist .music-item {
@@ -978,8 +983,8 @@ body#artwork #browse.browsing-playlist .music-item {
   .item__duration { display: none; } /* playlist items carry no duration (Volumio renders 0:00) */
   .item__info { display: grid; grid-template-columns: 1fr 260px; grid-template-areas: "title album" "artist album"; column-gap: 20px; row-gap: 2px; align-items: center; }
   .item__title  { grid-area: title; font-size: 16px; font-weight: 600; }
-  .item__artist { grid-area: artist; display: block; font-size: 13px; color: #8c9298; }
-  .item__album  { grid-area: album; display: block; font-size: 15px; color: #a7adb3; }
+  .item__artist { grid-area: artist; display: block; font-size: 13px; color: var(--ink-dim); }
+  .item__album  { grid-area: album; display: block; font-size: 15px; color: var(--ink-muted); }
   .item__info__separator { display: none; }
 }
 /* playlist rows: Volumio emits no index ("undefined.", hidden) and no art — the row
@@ -1002,38 +1007,43 @@ body#artwork .aw-hidden { display: none !important; }
 /* rows are re-ordered with CSS order (Z–A), so the list must be a flex column */
 body#artwork #browse.browsing-list .main__list { display: flex; flex-direction: column; }
 
-.aw-crumbs { font-size: 15px; color: #8c9298; display: flex; align-items: center; gap: 5px; min-width: 0;
-  a { color: #8c9298; text-decoration: none; &:hover { color: #c2c8cd; text-decoration: none; } }
-  .aw-crumbs__sep { color: #5f6669; }
-  .aw-crumbs__cur { color: #fff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.aw-crumbs { font-size: 15px; color: var(--ink-dim); display: flex; align-items: center; gap: 5px; min-width: 0;
+  flex-wrap: nowrap; white-space: nowrap; overflow: hidden;
+  /* a release title can run to fifty characters; the trail stays one line and lets each step
+     shorten rather than wrapping the whole head */
+  a, .aw-crumbs__cur { min-width: 0; max-width: unquote("clamp(70px, 13vw, 260px)"); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 0 1 auto; }
+  .aw-crumbs__sep { flex: none; }
+  a { color: var(--ink-dim); text-decoration: none; &:hover { color: var(--ink-3); text-decoration: none; } }
+  .aw-crumbs__sep { color: var(--ink-75); }
+  .aw-crumbs__cur { color: var(--ink); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 .aw-filter {
   margin-left: auto; display: flex; align-items: center; gap: 11px; height: 38px; padding: 0 16px; border-radius: 19px; width: 290px; margin-bottom: 0; font-weight: 400;
-  background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .11); cursor: text;
-  .material-symbols-rounded { font-size: 20px; color: #a7adb3; flex: none; }
-  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none;
+  background: var(--fill-09); border: 1px solid var(--fill-11); cursor: text;
+  .material-symbols-rounded { font-size: 20px; color: var(--ink-muted); flex: none; }
+  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: var(--ink); outline: 0; box-shadow: none;
     &:focus, &:focus-visible { outline: none; box-shadow: none; } /* the pill shows focus, not the inner input */
-    &::placeholder { color: #a7adb3; }
+    &::placeholder { color: var(--ink-muted); }
     &::-webkit-search-cancel-button { -webkit-appearance: none; } }
-  &:focus-within { border-color: rgba(255, 255, 255, .3); }
+  &:focus-within { border-color: var(--fill-30); }
 }
 .aw-viewtoggle {
-  display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .11);
+  display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--fill-08); border: 1px solid var(--fill-11);
   button { width: 34px; height: 30px; border-radius: 8px; border: 0; padding: 0; background: transparent; display: grid; place-items: center; cursor: pointer;
-    .material-symbols-rounded { font-size: 19px; color: #a7adb3; }
-    &.active { background: #fff; .material-symbols-rounded { color: #0d0e10; } }
-    &:hover:not(.active) .material-symbols-rounded { color: #fff; }
+    .material-symbols-rounded { font-size: 19px; color: var(--ink-muted); }
+    &.active { background: var(--ink); .material-symbols-rounded { color: var(--on-ink); } }
+    &:hover:not(.active) .material-symbols-rounded { color: var(--ink); }
     &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
 }
 /* title row: 46/800 + mono 13 count, sort pill on the right (h34, pad 15, r17, border .16) */
 body#artwork #browse.browsing-list .aw-listhead { gap: 16px; margin: 26px 0 0; }
 .aw-sort {
   margin-left: auto; display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 15px; border-radius: 17px;
-  border: 1px solid rgba(255, 255, 255, .16); background: transparent; cursor: pointer; align-self: center;
-  .aw-sort__k { font-size: 13px; color: #a7adb3; }
-  .aw-sort__v { font-size: 13px; font-weight: 500; color: #e4e7ea; }
-  .material-symbols-rounded { font-size: 17px; color: #a7adb3; }
-  &:hover { background: rgba(255, 255, 255, .06); }
+  border: 1px solid var(--fill-16); background: transparent; cursor: pointer; align-self: center;
+  .aw-sort__k { font-size: 13px; color: var(--ink-muted); }
+  .aw-sort__v { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .material-symbols-rounded { font-size: 17px; color: var(--ink-muted); }
+  &:hover { background: var(--fill-06); }
   &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
 }
 /* grid: 6 tiles, gap 24, 28px under the title row; tile label 15/600 centred, gap 12 */
@@ -1044,33 +1054,33 @@ body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(6,
 body#artwork #browse.browsing-artists .music-card__info { margin-top: 12px; justify-content: center; } /* .music-card__info is a flex row: text-align alone does not centre the label */
 body#artwork #browse.browsing-artists .music-card__label { max-width: 100%; }
 body#artwork #browse.browsing-artists .music-card__label { font-size: 15px; font-weight: 600; margin-top: 0; }
-body#artwork #browse.browsing-artists .music-card__meta { font-size: 12px; color: #8c9298; margin-top: 4px; }
+body#artwork #browse.browsing-artists .music-card__meta { font-size: 12px; color: var(--ink-dim); margin-top: 4px; }
 body#artwork #browse.browsing-artists .music-card .play-btn { width: 52px; height: 52px;
   .play-btn__icon, .fa { font-size: 22px; } }
 /* missing artwork: flat dark disc with a person glyph (mockup) */
-body#artwork #browse.browsing-artists .music-card__header { background: rgba(255, 255, 255, .06); box-shadow: none; }
+body#artwork #browse.browsing-artists .music-card__header { background: var(--fill-06); box-shadow: none; }
 body#artwork #browse.browsing-artists .music-card__img-icon { position: absolute; inset: 0; display: grid; place-items: center;
   .fa { font-size: 40px; color: #6f757b; } }
 
 /* list view: column header + rows on one grid (52px avatar · name · ⋯) */
 .aw-cols--artists {
   display: grid; grid-template-columns: 52px 1fr 24px; align-items: center; gap: 20px;
-  padding: 22px 12px 11px; margin-top: 14px; border-bottom: 1px solid rgba(255, 255, 255, .1);
-  font-size: 10px; letter-spacing: .16em; color: #8c9298;
+  padding: 22px 12px 11px; margin-top: 14px; border-bottom: 1px solid var(--fill-10);
+  font-size: 10px; letter-spacing: .16em; color: var(--ink-dim);
 }
 body#artwork #browse.browsing-artists .main__list { padding-top: 0; }
-body#artwork #browse.browsing-artists .album__tracks + .album__tracks .music-item { border-top: 1px solid rgba(255, 255, 255, .05); }
-body#artwork #browse.browsing-artists .music-item:hover { background: rgba(255, 255, 255, .1); }
+body#artwork #browse.browsing-artists .album__tracks + .album__tracks .music-item { border-top: 1px solid var(--fill-05); }
+body#artwork #browse.browsing-artists .music-item:hover { background: var(--fill-10); }
 body#artwork #browse.browsing-artists .music-item .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
-body#artwork #browse.browsing-artists .music-item:hover .item__title { font-weight: 700; color: #fff; }
+body#artwork #browse.browsing-artists .music-item:hover .item__title { font-weight: 700; color: var(--ink); }
 
 /* alphabet rail (design screenshot: mono letters down the right edge, active white) */
 .aw-alpha {
   /* fixed: #browseTablesWrapper is the scroller; centred on the content area above the 98px mini-player */
   position: fixed; right: 14px; top: calc(50% - 49px); transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 1px; z-index: 2;
-  button { background: transparent; border: 0; padding: 1px 5px; font: inherit; font-size: 10px; line-height: 1.35; letter-spacing: .04em; color: #8c9298; cursor: pointer;
-    &:hover, &.active { color: #fff; }
+  button { background: transparent; border: 0; padding: 1px 5px; font: inherit; font-size: 10px; line-height: 1.35; letter-spacing: .04em; color: var(--ink-dim); cursor: pointer;
+    &:hover, &.active { color: var(--ink); }
     &.active { font-weight: 700; }
     &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 1px; border-radius: 4px; } }
 }
@@ -1079,9 +1089,9 @@ body#artwork #browse.browsing-artists .music-item .item__actions .fa-ellipsis-v:
 
 /* ============================================================
    Album page track rows (mockup 2c): grid 26px · title · time · heart, gap 18, pad 13 14;
-   number mono 12 #8c9298; title 16/500; time mono 12 #8c9298; heart 20 #71777d.
+   number mono 12 var(--ink-dim); title 16/500; time mono 12 var(--ink-dim); heart 20 var(--ink-faint).
    Rows are separated by a straight 1px line (.06) — no radius on the line; only the playing
-   row is a rounded (r11) .12 panel with EQ bars in the number slot (title 700, time #e4e7ea).
+   row is a rounded (r11) .12 panel with EQ bars in the number slot (title 700, time var(--ink-2)).
    ============================================================ */
 @keyframes aw-eq { 0%, 100% { height: 4px; } 50% { height: 13px; } }
 /* paused: the current row stays marked, the bars stand still */
@@ -1092,35 +1102,35 @@ body#artwork #browse.browsing-album {
   .music-item {
     display: grid; grid-template-columns: 26px 1fr auto auto auto; align-items: center; gap: 18px;
     padding: 13px 14px; margin: 0; min-height: 0; border-radius: 0; border: 0;
-    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: rgba(255, 255, 255, .06); } /* separator outside the box: symmetric rows */
-    &:hover { background: rgba(255, 255, 255, .04); }
+    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--fill-06); } /* separator outside the box: symmetric rows */
+    &:hover { background: var(--fill-04); }
     .item__play, .item__albumart, .item__albumart-icon { display: none; }
     .item__image { width: auto; height: auto; min-width: 0; margin: 0; }
-    .item__number { display: block !important; font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
+    .item__number { display: block !important; font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); }
     .item__number-dot { display: none; }
     .item__info { display: block; }
     .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
-    .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
+    .item__duration { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); }
     /* the base theme keeps the heart invisible (opacity 0, stroked text) until hover; the mockup shows it always */
     .item__favorite { display: block; opacity: 1; padding: 0; -webkit-text-stroke: 0; text-stroke: 0; -webkit-text-fill-color: currentColor; text-fill-color: currentColor;
-      &.favorited .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
-      .item__favorite-heart .fa { font-size: 0; color: #71777d; -webkit-text-fill-color: #71777d; text-fill-color: #71777d;
+      &.favorited .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); }
+      .item__favorite-heart .fa { font-size: 0; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint); text-fill-color: var(--ink-faint);
         &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
-      &:hover .fa { color: #fff; } }
+      &:hover .fa { color: var(--ink); } }
     /* mockup column order: number · title · time · heart (Volumio's menu stays last) */
     .item__duration { order: 2; } .item__favorite { order: 3; } .item__actions { order: 4; }
-    .item__actions .fa { color: #71777d; font-size: 15px; }
+    .item__actions .fa { color: var(--ink-faint); font-size: 15px; }
   }
   .music-item.aw-playing {
-    background: rgba(255, 255, 255, .12); border-radius: 11px;
+    background: var(--fill-12); border-radius: 11px;
     &::after { display: none; }
-    .item__title { font-weight: 700; color: #fff; }
-    .item__duration { color: #e4e7ea; }
-    .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
+    .item__title { font-weight: 700; color: var(--ink); }
+    .item__duration { color: var(--ink-2); }
+    .item__favorite .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); }
     /* EQ bars (mockup: three 2px bars, 13px box, animation eq .9s with .2s/.4s delays):
        ::before, ::after and the (otherwise hidden) dot span are the three bars */
     .item__number { font-size: 0; position: relative; width: 10px; height: 13px;
-      &::before, &::after, .item__number-dot { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
+      &::before, &::after, .item__number-dot { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: var(--ink); animation: aw-eq .9s ease-in-out infinite; }
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } .item__number-dot { left: 8px; animation-delay: .4s; } }
     /* stopped or paused: the row stays marked, the bars stand still (this sits next to the rule
        that starts them, or the one that stops them would lose on specificity) */
@@ -1133,7 +1143,7 @@ body#artwork #browse.browsing-album {
 body#artwork #browse.browsing-album {
   .music-item { position: relative; }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: rgba(255, 255, 255, .07); border-radius: 11px;
+    background: var(--fill-07); border-radius: 11px;
     &::after { display: none; }
     .item__number { visibility: hidden; }
     .item__play { display: block; }
@@ -1141,38 +1151,48 @@ body#artwork #browse.browsing-album {
   .music-item .item__play {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; z-index: 1; padding: 0; margin: 0; /* base theme pads it 8px */
     .play-btn { width: 26px; height: 26px; padding: 0; border: 0; background: transparent; display: block; cursor: pointer; visibility: visible !important;
-      .fa { display: grid; place-items: center; width: 26px; height: 26px; font-size: 0; color: #fff; &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; line-height: 1; } } }
+      .fa { display: grid; place-items: center; width: 26px; height: 26px; font-size: 0; color: var(--ink); &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; line-height: 1; } } }
   }
 }
 
+/* rows that have no cover show one of Volumio's glyphs instead (playlists, web radio, folders).
+   The inherited theme paints them white, which is invisible on paper — they belong to the ink
+   ramp like every other icon in a row. */
+body#artwork .music-item .item__image,
+body#artwork .music-item .item__albumart-icon,
+body#artwork .music-item .item__albumart-icon .fa,
+body#artwork .aw-card .item__albumart-icon .fa { color: var(--ink-2); -webkit-text-fill-color: var(--ink-2); }
+
 /* ---- context menu (mockup "Context menu"): 272 wide, pad 8, r14, glass .09 + blur 60 sat 1.6 br .72,
-   border .14; header 36px cover · 14/600 title · mono 10 sub; items h44 pad 0 14 r10, icon 20 #a7adb3,
-   label 14/500 #e4e7ea; hover .09 + white; separator 1px .09 margin 6 10; danger #ff8f8f ---- */
+   border .14; header 36px cover · 14/600 title · mono 10 sub; items h44 pad 0 14 r10, icon 20 var(--ink-muted),
+   label 14/500 var(--ink-2); hover .09 + white; separator 1px .09 margin 6 10; danger var(--err-soft) ---- */
 body#artwork .hamburgerMenu ul.dropdown-menu.buttonsGroup {
   width: 272px; padding: 8px; margin: 0; border-radius: 14px; overflow: hidden;
-  background: rgba(255, 255, 255, .09); backdrop-filter: blur(60px) saturate(1.6) brightness(.72); -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(.72);
-  border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 34px 70px -26px rgba(0, 0, 0, .92);
+  /* the glass darkens what is behind it in the dark theme and lifts it in the light one */
+  background: var(--menu-fill); backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright));
+  -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright));
+  border: 1px solid var(--fill-14); box-shadow: 0 34px 70px -26px var(--shadow-deep);
   /* the items live inside the <browse-hamburger-menu> element, not directly under the ul */
   li { list-style: none; }
-  li > a { display: flex; align-items: center; gap: 13px; height: 44px; padding: 0 14px; border-radius: 10px; color: #e4e7ea; font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
-    .material-symbols-rounded { width: 20px; font-size: 20px; color: #a7adb3; flex: none; }
+  li > a { display: flex; align-items: center; gap: 13px; height: 44px; padding: 0 14px; border-radius: 10px; color: var(--ink-2); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
+    .material-symbols-rounded { width: 20px; font-size: 20px; color: var(--ink-muted); flex: none; }
     > span:not(.material-symbols-rounded):not(.aw-menu__badge) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-    &:hover, &:focus { background: rgba(255, 255, 255, .09); color: #fff; .material-symbols-rounded { color: #fff; } } }
-  .aw-menu__badge { font-size: 11px; color: #71777d; }
-  .aw-menu__sep { height: 1px; margin: 6px 10px; background: rgba(255, 255, 255, .09); }
-  .aw-menu__danger > a, .aw-menu__danger > a .material-symbols-rounded { color: #ff8f8f; }
-  .aw-menu__danger > a:hover { background: rgba(255, 143, 143, .08); color: #ff8f8f; .material-symbols-rounded { color: #ff8f8f; } }
+    &:hover, &:focus { background: var(--fill-09); color: var(--ink); .material-symbols-rounded { color: var(--ink); } } }
+  .aw-menu__badge { font-size: 11px; color: var(--ink-faint); }
+  .aw-menu__sep { height: 1px; margin: 6px 10px; background: var(--fill-09); }
+  .aw-menu__danger > a, .aw-menu__danger > a .material-symbols-rounded { color: var(--err-soft); }
+  .aw-menu__danger > a:hover { background: rgba(255, 143, 143, .08); color: var(--err-soft); .material-symbols-rounded { color: var(--err-soft); } }
   .aw-menu__head { display: flex; align-items: center; gap: 12px; padding: 10px 14px 12px;
     img { width: 36px; height: 36px; border-radius: 5px; object-fit: cover; flex: none; }
     .aw-menu__head-text { min-width: 0; }
     .aw-menu__title { font-size: 14px; font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .aw-menu__sub { font-size: 10px; letter-spacing: .08em; color: #a7adb3; margin-top: 2px; } }
+    .aw-menu__sub { font-size: 10px; letter-spacing: .08em; color: var(--ink-muted); margin-top: 2px; } }
 }
 
 /* ---- favourite state on album rows: the heart is filled (white) when the track is in Favourites.
    Volumio does not flag library items, so the theme derives it from the Favourites list. ---- */
 body#artwork #browse.browsing-album .music-item.aw-fav .item__favorite .item__favorite-heart .fa {
-  color: #fff; -webkit-text-fill-color: #fff;
+  color: var(--ink); -webkit-text-fill-color: var(--ink);
   &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); }
 }
@@ -1188,8 +1208,8 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
   .music-item {
     position: relative; padding: 10px 14px; margin: 0; min-height: 0; border-radius: 0; border: 0; gap: 18px; line-height: normal;
     /* the separator is drawn outside the box so the row (and its hover panel) stays vertically symmetric */
-    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: rgba(255, 255, 255, .06); }
-    &:hover { background: rgba(255, 255, 255, .04); }
+    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--fill-06); }
+    &:hover { background: var(--fill-04); }
     .item__number-dot { display: none; }
     .item__image { width: 44px; height: 44px; flex: none; margin: 0; position: relative; }
     /* the base .item__albumart keeps an 8px right margin inside a 44px centred flex box, which shifted the
@@ -1197,37 +1217,37 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
     .item__albumart, .item__image__img { width: 44px; height: 44px; margin: 0; border-radius: 6px; object-fit: cover; display: block; }
     .item__image { justify-content: flex-start; }
     .item__title { font-size: 16px; font-weight: 500; color: var(--ink-1); }
-    .item__album, .item__artist { font-size: 14px; color: #a7adb3; }
-    .item__duration { font-family: var(--font-mono); font-size: 12px; color: #8c9298; }
-    .item__actions .fa { color: #71777d; font-size: 15px; }
+    .item__album, .item__artist { font-size: 14px; color: var(--ink-muted); }
+    .item__duration { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); }
+    .item__actions .fa { color: var(--ink-faint); font-size: 15px; }
     /* heart: real favourite state, always visible */
     .item__favorite { display: block; opacity: 1; padding: 0; -webkit-text-stroke: 0; text-stroke: 0;
-      .item__favorite-heart .fa { font-size: 0; color: #71777d; -webkit-text-fill-color: #71777d;
+      .item__favorite-heart .fa { font-size: 0; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint);
         &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
-      &:hover .fa { color: #fff; -webkit-text-fill-color: #fff; } }
+      &:hover .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); } }
     /* the row's play button as an overlay on the cover, shown on hover / open menu */
     .item__play { display: none; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; padding: 0; margin: 0; z-index: 1; border-radius: 6px; background: rgba(6, 9, 12, .5);
       .play-btn { width: 44px; height: 44px; padding: 0; border: 0; background: transparent; display: block; cursor: pointer; visibility: visible !important;
-        .fa { display: grid; place-items: center; width: 44px; height: 44px; font-size: 0; color: #fff;
+        .fa { display: grid; place-items: center; width: 44px; height: 44px; font-size: 0; color: var(--ink);
           &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; line-height: 1; } } } }
   }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: rgba(255, 255, 255, .07); border-radius: 11px;
+    background: var(--fill-07); border-radius: 11px;
     &::after { display: none; }
     .item__play { display: block; }
   }
-  .music-item.aw-fav .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff;
+  .music-item.aw-fav .item__favorite .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink);
     &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); } }
   .music-item.aw-playing {
-    background: rgba(255, 255, 255, .12); border-radius: 11px;
+    background: var(--fill-12); border-radius: 11px;
     &::after { display: none; }
-    .item__title { font-weight: 700; color: #fff; }
-    .item__favorite .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
+    .item__title { font-weight: 700; color: var(--ink); }
+    .item__favorite .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); }
     /* EQ bars over the cover */
     .item__image::after { content: ''; position: absolute; inset: 0; border-radius: 6px; background: rgba(6, 9, 12, .5); }
     .item__image .aw-eq { position: absolute; left: 50%; top: 50%; width: 10px; height: 13px; transform: translate(-50%, -50%); z-index: 1;
-      &::before, &::after, i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
+      &::before, &::after, i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: var(--ink); animation: aw-eq .9s ease-in-out infinite; }
       &::before { left: 0; } &::after { left: 4px; animation-delay: .2s; } i { left: 8px; animation-delay: .4s; } }
     &.aw-paused .aw-eq::before, &.aw-paused .aw-eq::after, &.aw-paused .aw-eq i { animation-play-state: paused; }
   }
@@ -1236,13 +1256,13 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
 /* ---- landing search: the pill is an input; results render under the landing header ---- */
 body#artwork .aw-search {
   margin-bottom: 0; font-weight: 400; cursor: text;
-  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: #fff; outline: 0; box-shadow: none;
-    &::placeholder { color: #a7adb3; }
+  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: 0; height: 100%; font-size: 14px; color: var(--ink); outline: 0; box-shadow: none;
+    &::placeholder { color: var(--ink-muted); }
     &:focus, &:focus-visible { outline: none; box-shadow: none; }
     &::-webkit-search-cancel-button { -webkit-appearance: none; } }
-  &:focus-within { border-color: rgba(255, 255, 255, .3); }
-  .aw-search-clear { margin-left: auto; width: 22px; height: 22px; border-radius: 6px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; color: #a7adb3; cursor: pointer;
-    .material-symbols-rounded { font-size: 18px; } &:hover { color: #fff; background: rgba(255, 255, 255, .1); } }
+  &:focus-within { border-color: var(--fill-30); }
+  .aw-search-clear { margin-left: auto; width: 22px; height: 22px; border-radius: 6px; border: 0; background: transparent; padding: 0; display: grid; place-items: center; color: var(--ink-muted); cursor: pointer;
+    .material-symbols-rounded { font-size: 18px; } &:hover { color: var(--ink); background: var(--fill-10); } }
 }
 body#artwork #browse.browsing-search {
   .browse-header-container { display: none; }
@@ -1252,8 +1272,8 @@ body#artwork #browse.browsing-search {
   .aw-listhead--search { margin: 26px 0 6px; }
   /* result groups (Songs / Albums / Artists…) as section eyebrows */
   .main__source { margin: 0; }
-  .main__source__title { display: block; margin: 22px 0 6px; padding: 0 0 10px; border-bottom: 1px solid rgba(255, 255, 255, .1); background: transparent;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #cfd4d8; font-weight: 400; }
+  .main__source__title { display: block; margin: 22px 0 6px; padding: 0 0 10px; border-bottom: 1px solid var(--fill-10); background: transparent;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-35); font-weight: 400; }
   .main__row { padding: 12px 0 8px; }
 }
 
@@ -1273,30 +1293,30 @@ body#artwork .aw-artist {
   /* hero: flex, align-end, gap 28, 26px under the bar */
   &__hero { display: flex; align-items: flex-end; gap: 28px; padding-top: 26px; }
   &__img { width: 158px; height: 158px; border-radius: 50%; /* 156 + 1px border each side (content-box mockup) */ object-fit: cover; flex: none;
-    box-shadow: 0 26px 54px -22px rgba(0, 0, 0, .9); border: 1px solid rgba(255, 255, 255, .1); background: rgba(255, 255, 255, .06); }
+    box-shadow: 0 26px 54px -22px var(--shadow-deep); border: 1px solid var(--fill-10); background: var(--fill-06); }
   &__body { display: flex; flex-direction: column; gap: 12px; padding-bottom: 6px; min-width: 0; }
-  &__eyebrow { font-size: 11px; letter-spacing: .18em; color: #a7adb3; }
-  &__name { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1-lg); font-weight: 800; letter-spacing: -.035em; line-height: 1; color: #fff; text-wrap: pretty; }
-  &__meta { display: flex; align-items: center; gap: 18px; line-height: normal; .mono { font-size: 13px; color: #c2c8cd; } }
+  &__eyebrow { font-size: 11px; letter-spacing: .18em; color: var(--ink-muted); }
+  &__name { margin: 0; font-family: var(--font-ui); font-size: var(--t-h1-lg); font-weight: 800; letter-spacing: -.035em; line-height: 1; color: var(--ink); text-wrap: pretty; }
+  &__meta { display: flex; align-items: center; gap: 18px; line-height: normal; .mono { font-size: 13px; color: var(--ink-3); } }
   &__dot { width: 5px; height: 5px; background: rgba(255, 255, 255, .4); flex: none; }
-  &__story { font-size: 13px; color: #a7adb3; line-height: 1.5; max-width: 640px;
+  &__story { font-size: 13px; color: var(--ink-muted); line-height: 1.5; max-width: 640px;
     > span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } }
-  &__more { background: transparent; border: 0; padding: 0; margin-top: 4px; font-size: 13px; font-weight: 600; color: #c2c8cd; cursor: pointer; &:hover { color: #fff; } }
+  &__more { background: transparent; border: 0; padding: 0; margin-top: 4px; font-size: 13px; font-weight: 600; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
   &__actions { margin-left: auto; display: flex; align-items: center; gap: 10px; padding-bottom: 8px; flex: none; }
-  &__play { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 24px; border-radius: 23px; border: 0; background: #fff; color: #0d0e10; cursor: pointer;
-    .material-symbols-rounded { font-size: 23px; } > span:last-child { font-size: 15px; font-weight: 700; } &:hover { background: #f2f3f5; } }
-  &__shuffle { display: flex; align-items: center; gap: 9px; height: 48px; /* 46 + borders */ padding: 0 20px; border-radius: 23px; border: 1px solid rgba(255, 255, 255, .16); background: transparent; color: #e4e7ea; cursor: pointer;
-    .material-symbols-rounded { font-size: 21px; } > span:last-child { font-size: 14px; font-weight: 600; } &:hover { background: rgba(255, 255, 255, .08); } }
-  &__iconbtn { width: 48px; height: 48px; border-radius: 50%; /* 46 + borders */ display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 255, 255, .16); background: transparent; color: #c2c8cd; cursor: pointer;
-    .material-symbols-rounded { font-size: 21px; } &:hover { background: rgba(255, 255, 255, .08); color: #fff; } }
+  &__play { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 24px; border-radius: 23px; border: 0; background: var(--ink); color: var(--on-ink); cursor: pointer;
+    .material-symbols-rounded { font-size: 23px; } > span:last-child { font-size: 15px; font-weight: 700; } &:hover { background: var(--ink-1); } }
+  &__shuffle { display: flex; align-items: center; gap: 9px; height: 48px; /* 46 + borders */ padding: 0 20px; border-radius: 23px; border: 1px solid var(--fill-16); background: transparent; color: var(--ink-2); cursor: pointer;
+    .material-symbols-rounded { font-size: 21px; } > span:last-child { font-size: 14px; font-weight: 600; } &:hover { background: var(--fill-08); } }
+  &__iconbtn { width: 48px; height: 48px; border-radius: 50%; /* 46 + borders */ display: grid; place-items: center; padding: 0; border: 1px solid var(--fill-16); background: transparent; color: var(--ink-3); cursor: pointer;
+    .material-symbols-rounded { font-size: 21px; } &:hover { background: var(--fill-08); color: var(--ink); } }
   &__menu { position: relative; display: block; .dropdown-menu { top: 100%; margin-top: 8px; right: 0; left: auto; } } /* the ⋯ is the last item: the menu hangs from its right edge */
   &__play:focus-visible, &__shuffle:focus-visible, &__iconbtn:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
-  /* section heads: mono label · mono count · right link (13/600 #c2c8cd) */
+  /* section heads: mono label · mono count · right link (13/600 var(--ink-3)) */
   &__sechead { display: flex; align-items: center; gap: 14px; padding-top: 26px; line-height: normal; }
   &__sechead--tracks { padding-top: 24px; }
-  &__label { font-size: 11px; letter-spacing: .18em; color: #a7adb3; }
-  &__count { font-size: 11px; color: #5f6669; }
-  &__link { margin-left: auto; background: transparent; border: 0; padding: 0; font-size: 13px; font-weight: 600; color: #c2c8cd; cursor: pointer; &:hover { color: #fff; } }
+  &__label { font-size: 11px; letter-spacing: .18em; color: var(--ink-muted); }
+  &__count { font-size: 11px; color: var(--ink-75); }
+  &__link { margin-left: auto; background: transparent; border: 0; padding: 0; font-size: 13px; font-weight: 600; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
   /* albums grid: 7 columns, gap 20, 16px under the head */
   &__albums { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 20px; padding-top: 16px; }
   @media (max-width: 1400px) { &__albums { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
@@ -1305,14 +1325,14 @@ body#artwork .aw-artist {
 }
 body#artwork .aw-artist-album {
   display: flex; flex-direction: column; gap: 11px; cursor: pointer; min-width: 0;
-  &__cover { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, .08); box-shadow: 0 20px 40px -18px rgba(0, 0, 0, .85); background: rgba(255, 255, 255, .06);
+  &__cover { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--fill-08); box-shadow: 0 20px 40px -18px var(--shadow-deep); background: var(--fill-06);
     img { width: 100%; height: 100%; object-fit: cover; display: block; } }
-  &__play { position: absolute; right: 10px; bottom: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; padding: 0; background: #fff; color: #0d0e10;
+  &__play { position: absolute; right: 10px; bottom: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; padding: 0; background: var(--ink); color: var(--on-ink);
     display: grid; place-items: center; opacity: 0; transition: opacity .25s ease; cursor: pointer;
     .material-symbols-rounded { font-size: 24px; } }
   &:hover &__play, &__play:focus-visible { opacity: 1; }
-  &__title { font-size: 14px; font-weight: 600; line-height: normal; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  &__sub { font-size: 11px; line-height: normal; color: #8c9298; }
+  &__title { font-size: 14px; font-weight: 600; line-height: normal; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  &__sub { font-size: 11px; line-height: normal; color: var(--ink-dim); }
 }
 /* Volumio's own album cards for the artist are replaced by the grid above */
 body#artwork #browse.browsing-artist #browse-page .main__source.aw-artist-albums { display: none; }
@@ -1326,36 +1346,36 @@ body#artwork #browse.browsing-artist #browse-page .main__list { display: flex; f
 body#artwork #browse.browsing-artist .music-item {
   position: relative; display: flex; align-items: center; gap: 20px; height: 57px; min-height: 0; padding: 0 16px 1px; margin: 0; border-radius: 0; border: 0; /* 56 + the 1px line */
   counter-increment: aw-row;
-  &::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(255, 255, 255, .05); }
-  &:hover { background: rgba(255, 255, 255, .04); }
+  &::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--fill-05); }
+  &:hover { background: var(--fill-04); }
   /* 26px number slot: row position (real), play glyph on hover */
   .item__image { width: 26px; height: auto; min-width: 0; margin: 0; flex: none; display: grid; place-items: center;
-    &::before { content: counter(aw-row); font-family: var(--font-mono); font-size: 13px; color: #71777d; }
+    &::before { content: counter(aw-row); font-family: var(--font-mono); font-size: 13px; color: var(--ink-faint); }
     .item__number, .item__albumart, .item__albumart-icon { display: none !important; } }
   .item__play { display: block; position: absolute; left: 16px; top: 0; bottom: 0; width: 26px; padding: 0; margin: 0; opacity: 0;
     .play-btn { width: 26px; height: 100%; padding: 0; margin: 0; background: transparent; border: 0; display: grid; place-items: center;
-      .fa { font-size: 0; &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; color: #fff; } } } }
+      .fa { font-size: 0; &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; color: var(--ink); } } } }
   &:hover .item__play, &.aw-active .item__play { opacity: 1; }
   &:hover .item__image::before, &.aw-active .item__image::before { visibility: hidden; }
   .item__info { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
-  .item__title { width: 290px; flex: none; min-width: 0; font-size: 15px; font-weight: 500; color: #e4e7ea; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .item__album { flex: 1; min-width: 0; display: block; font-size: 14px; color: #8c9298; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item__title { width: 290px; flex: none; min-width: 0; font-size: 15px; font-weight: 500; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item__album { flex: 1; min-width: 0; display: block; font-size: 14px; color: var(--ink-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .item__artist, .item__info__separator, .item__duration { display: none; } /* artist repeats the page; Volumio's artist tracks carry no duration */
   .item__favorite { display: block; opacity: 1; padding: 0; -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor;
-    .item__favorite-heart .fa { font-size: 0; color: #71777d; -webkit-text-fill-color: #71777d;
+    .item__favorite-heart .fa { font-size: 0; color: var(--ink-faint); -webkit-text-fill-color: var(--ink-faint);
       &::before { content: 'favorite'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; line-height: 1; } }
-    &:hover .fa { color: #fff; } }
-  &.aw-fav .item__favorite .item__favorite-heart .fa, .item__favorite.favorited .item__favorite-heart .fa { color: #fff; -webkit-text-fill-color: #fff; }
+    &:hover .fa { color: var(--ink); } }
+  &.aw-fav .item__favorite .item__favorite-heart .fa, .item__favorite.favorited .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); }
   .item__actions { padding: 0; .action-btn { width: 20px; padding: 0; margin: 0; display: grid; place-items: center; }
-    .fa { color: #71777d; font-size: 0; &::before { content: 'more_vert'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; } } }
-  &.aw-active { background: rgba(255, 255, 255, .07); border-radius: 11px; &::after { display: none; } }
+    .fa { color: var(--ink-faint); font-size: 0; &::before { content: 'more_vert'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; } } }
+  &.aw-active { background: var(--fill-07); border-radius: 11px; &::after { display: none; } }
   /* playing row: same idiom as the album page (.12 panel, EQ bars in the number slot) */
-  &.aw-playing { background: rgba(255, 255, 255, .12); border-radius: 11px;
+  &.aw-playing { background: var(--fill-12); border-radius: 11px;
     &::after { display: none; }
-    .item__title { font-weight: 700; color: #fff; }
+    .item__title { font-weight: 700; color: var(--ink); }
     .item__image::before { display: none; }
     .aw-eq { position: relative; inset: auto; transform: none; width: 10px; height: 13px; display: block; background: none; border-radius: 0; }
-    .aw-eq::before, .aw-eq::after, .aw-eq i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: #fff; animation: aw-eq .9s ease-in-out infinite; }
+    .aw-eq::before, .aw-eq::after, .aw-eq i { content: ''; display: block; position: absolute; bottom: 0; width: 2px; height: 4px; background: var(--ink); animation: aw-eq .9s ease-in-out infinite; }
     .aw-eq::before { left: 0; } .aw-eq::after { left: 4px; animation-delay: .2s; } .aw-eq i { left: 8px; animation-delay: .4s; }
     &.aw-paused .aw-eq::before, &.aw-paused .aw-eq::after, &.aw-paused .aw-eq i { animation-play-state: paused; } }
 }

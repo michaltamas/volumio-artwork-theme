@@ -24,8 +24,8 @@ aw-head-nav, aw-head-actions { display: contents; }
 /* back arrow: plain, no box — the same on every screen */
 .aw-head__back {
   background: transparent; border: 0; padding: 0; margin: 0; display: grid; place-items: center; cursor: pointer;
-  .material-symbols-rounded { font-size: 22px; color: #c2c8cd; }
-  &:hover .material-symbols-rounded { color: #fff; }
+  .material-symbols-rounded { font-size: 22px; color: var(--ink-3); }
+  &:hover .material-symbols-rounded { color: var(--ink); }
   &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; border-radius: 6px; }
 }
 
@@ -33,7 +33,7 @@ aw-head-nav, aw-head-actions { display: contents; }
 .aw-head::after {
   content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--head-fade, 40px));
   z-index: -1; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .36) 52%, transparent 100%);
+  background: linear-gradient(to bottom, var(--head-tint-1) 0%, var(--head-tint-2) 52%, transparent 100%);
 }
 
 /* Progressive blur. Each layer covers the head from the top down to its own depth and fades

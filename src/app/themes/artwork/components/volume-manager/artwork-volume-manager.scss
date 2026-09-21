@@ -136,10 +136,10 @@ volume-manager{
   gap: 9px; /* mockup: icon · 70px track */
   .button-mute {
     float: none; width: 26px; height: 26px; padding: 0; margin: 0; border: 0; background: none;
-    display: grid; place-items: center; color: #c2c8cd; border-radius: var(--r-control);
+    display: grid; place-items: center; color: var(--ink-3); border-radius: var(--r-control);
     /* mockup glyph: Material volume_up (volume_off while muted), keyed on the mute state */
     .fa { font-size: 0; &::before { content: 'volume_up'; font-family: 'Material Symbols Rounded'; font-size: 22px; font-weight: 400; line-height: 1; } }
-    &:hover { color: #fff; background: transparent; }
+    &:hover { color: var(--ink); background: transparent; }
     &.selected { color: var(--ink-muted); .fa::before { content: 'volume_off'; } } /* muted */
   }
 
@@ -150,13 +150,13 @@ volume-manager{
   .slider.slider-horizontal { width: 70px; height: 20px; margin: 0; }
   .slider.slider-horizontal .slider-track {
     height: 4px; top: 50%; margin-top: -2px; border-radius: 2px;
-    background: rgba(255, 255, 255, .2) !important; background-image: none !important; box-shadow: none;
+    background: var(--fill-20) !important; background-image: none !important; box-shadow: none;
   }
   .slider-track-low, .slider-track-high {
     background: transparent !important; background-image: none !important; box-shadow: none;
   }
   .slider-selection {
-    background: #fff !important; background-image: none !important; /* bright from the left = current level */
+    background: var(--ink) !important; background-image: none !important; /* bright from the left = current level */
     box-shadow: none; border-radius: 2px;
   }
   .slider-handle {
@@ -177,6 +177,6 @@ body#artwork #np .np-volume .volume-slider {
   .volumeSlider, .slider.slider-horizontal { width: unquote("clamp(90px, 11vw, 150px)"); }
   .slider.slider-horizontal .slider-track { height: 5px; margin-top: -2.5px; }
   .slider-handle { width: 13px; height: 13px; margin-left: -6.5px; margin-top: -6.5px; opacity: 1;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, .14), 0 2px 6px rgba(0, 0, 0, .55); }
+    box-shadow: 0 0 0 3px var(--fill-14), 0 2px 6px var(--shadow-soft); }
   .button-mute { width: 30px; height: 30px; .fa::before { font-size: 23px; } }
 }

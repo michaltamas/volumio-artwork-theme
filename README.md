@@ -13,6 +13,7 @@ Beneath the new look sits everything you already rely on. Every source, every se
 - **Made for listening in high resolution.** Bit depth, sample rate, format and source, shown with pride instead of tucked away.
 - **Seeking that invites a touch.** A generous track with a glowing handle: drag it with a finger or a mouse, or step by five seconds with the arrow keys.
 - **One fluid design.** No fixed breakpoints: it reshapes itself continuously for any screen, down to edge-to-edge on an iPhone.
+- **Dark or light.** A paper theme beside the dark one, chosen per browser or left to follow the device.
 - **Free to try.** One line to install, one click in Settings to switch back.
 
 ![Now Playing](docs/screenshots/now-playing.jpg)
@@ -78,6 +79,23 @@ Beneath the new look sits everything you already rely on. Every source, every se
   <img src="docs/screenshots/phone-now-playing.jpg" width="260" alt="Now Playing on a phone">
   &nbsp;&nbsp;
   <img src="docs/screenshots/phone-home.jpg" width="260" alt="Home on a phone">
+</p>
+
+### The light theme
+
+The same screens on paper. The cover still bleeds behind everything, but the veil over it runs
+up to a warm off-white instead of down to black, and the transport turns from a white disc with
+a dark glyph into an ink disc with a paper one. Pick **Dark**, **Light** or **System** in
+Settings → Appearance; the choice is remembered in that browser, so a phone can be light while
+the screen in the living room stays dark.
+
+| | |
+|---|---|
+| ![Now Playing, light](docs/screenshots/light-now-playing.jpg) | ![Album, light](docs/screenshots/light-album.jpg) |
+| **Now Playing** | **Album** |
+
+<p align="center">
+  <img src="docs/screenshots/phone-light-home.jpg" width="260" alt="Home on a phone, light theme">
 </p>
 
 ## Requirements

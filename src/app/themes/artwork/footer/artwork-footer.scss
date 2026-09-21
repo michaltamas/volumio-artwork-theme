@@ -3,7 +3,7 @@
   position: fixed; left: var(--rail-w); right: 0; bottom: 0;
   height: var(--mini-h); z-index: 3;
   padding: 0 22px; /* mockup: the transport + seek block (46 + 9 + 16) is centred in the bar */
-  background: rgba(8, 10, 13, 0.55);
+  background: var(--bar-fill);
   backdrop-filter: blur(34px);
   -webkit-backdrop-filter: blur(34px);
   border-top: 1px solid var(--hairline-soft);
@@ -38,15 +38,15 @@
       background: none; border: 0; box-shadow: none;
       display: flex; align-items: center;
     }
-    .btn-link { color: #fff; border: 0; background: none;
+    .btn-link { color: var(--ink); border: 0; background: none;
       .material-symbols-rounded { font-size: 28px; } /* spec §5.8 mini: 28px skips */
-      &:hover { color: #fff; } }
+      &:hover { color: var(--ink); } }
     /* mockup order: shuffle · prev · play · next · repeat (Volumio's DOM: repeat first, shuffle last) */
     #playerButtons > .player-action-shuffle { order: -1; }
     #playerButtons > .repeat-button { order: 9; }
-    .player-action-shuffle, .repeat-button { color: #9aa0a8;
+    .player-action-shuffle, .repeat-button { color: var(--ink-65);
       .material-symbols-rounded { font-size: 22px; }
-      &:hover { color: #e4e7ea; } &.active { color: #fff; } }
+      &:hover { color: var(--ink-2); } &.active { color: var(--ink); } }
     .playPause {
       width: 46px; height: 46px; border-radius: var(--r-pill);
       background: var(--ink); color: var(--ground); display: grid; place-items: center;
@@ -67,11 +67,11 @@
   .mini-volume { display: flex; align-items: center; min-width: 0; flex: none; }
   .mini-zone {
     display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; /* mockup */
-    border-radius: 18px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .12);
-    color: #e4e7ea; cursor: pointer; max-width: 160px; /* a long zone name ellipsizes on one line */
-    .material-symbols-rounded { font-size: 19px; color: #e4e7ea; }
+    border-radius: 18px; background: var(--fill-10); border: 1px solid var(--fill-12);
+    color: var(--ink-2); cursor: pointer; max-width: 160px; /* a long zone name ellipsizes on one line */
+    .material-symbols-rounded { font-size: 19px; color: var(--ink-2); }
     .mini-zone-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    &:hover { background: rgba(255, 255, 255, .16); }
+    &:hover { background: var(--fill-16); }
   }
   .mini-queue { color: var(--ink-2); border: 0; background: none;
     .material-symbols-rounded { font-size: 22px; }
@@ -119,10 +119,10 @@ body#artwork .main-container.with-playback-bar ~ #footer-container #footer-conte
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
   }
   .mini-identity #trackInfo-artist-album {
-    grid-area: artist; font-size: 13px; line-height: 15px; color: #9aa0a8; /* mockup */
+    grid-area: artist; font-size: 13px; line-height: 15px; color: var(--ink-65); /* mockup */
     /* the text lives in the inner span/anchor, which inherits a larger size from the base theme */
     #trackInfo-artist, #trackInfo-artist a, a {
-      color: #9aa0a8 !important; font-size: 13px !important; font-weight: 400; line-height: 15px;
+      color: var(--ink-65) !important; font-size: 13px !important; font-weight: 400; line-height: 15px;
     }
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     #trackInfo-album { display: none; } /* artist only, quality shows below */
@@ -132,7 +132,7 @@ body#artwork .main-container.with-playback-bar ~ #footer-container #footer-conte
   /* rates + format collapse onto ONE clipped line (mockup: "24/192 · FLAC") */
   .mini-identity .track-info-rates {
     /* mono-s: 10px / .16em / --ink-muted (spec §5.10) */
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: #a7adb3; /* mockup */
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: var(--ink-muted); /* mockup */
     display: flex; align-items: center; gap: 6px; height: 15px; line-height: 15px; margin: 0; /* base theme: margin-top 10px */
     overflow: hidden; white-space: nowrap;
     span { line-height: 15px; }

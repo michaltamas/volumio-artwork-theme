@@ -126,7 +126,7 @@
 // MAIN CONTENT PLAYER
 #trackInfo {
   @include make-xs-column(24);
-  // border: solid 1px #999;
+  // border: solid 1px var(--ink-65);
   text-align: center;
   margin-top: 40px;
   scrollbar-width: none;
@@ -136,14 +136,14 @@
     margin: 10px auto;
     max-width: 400px;
     max-height: 400px;
-    border: 10px solid rgba(0,0,0,0.5);
+    border: 10px solid var(--shade-50);
   };
 
 
   #trackDetails {
     > div {
       padding: 2px 8px 0 8px;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: var(--shade-60);
     }
   }
 

@@ -10,7 +10,7 @@ body#artwork #artwork-home {
   .home-hero { display: flex; gap: 36px; margin-top: 34px; align-items: flex-end; }
   .home-hero-cover img {
     width: 224px; height: 224px; object-fit: cover; border-radius: var(--r-cover);
-    box-shadow: 0 34px 70px -22px rgba(0,0,0,.8); display: block;
+    box-shadow: 0 34px 70px -22px var(--shadow-strong); display: block;
   }
   .home-hero-meta { display: flex; flex-direction: column; padding-bottom: 6px; min-width: 0; }
   .home-eyebrow { font-size: 11px; letter-spacing: .2em; color: var(--ink-3); }
@@ -33,11 +33,11 @@ body#artwork #artwork-home {
   .home-shelf-head { display: flex; align-items: center; gap: 14px; }
   .home-shelf-title { font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
   .home-shelf-nav { margin-left: auto; display: flex; gap: 8px;
-    button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .16); background: transparent; padding: 0;
-      display: grid; place-items: center; cursor: pointer; color: #e4e7ea;
+    button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--fill-16); background: transparent; padding: 0;
+      display: grid; place-items: center; cursor: pointer; color: var(--ink-2);
       .material-symbols-rounded { font-size: 18px; }
-      &:disabled { color: #a7adb3; cursor: default; opacity: .6; }
-      &:hover:not(:disabled) { background: rgba(255, 255, 255, .08); } } }
+      &:disabled { color: var(--ink-muted); cursor: default; opacity: .6; }
+      &:hover:not(:disabled) { background: var(--fill-08); } } }
   /* mockup: one row of 6, gap 22, 20px under the head; a missing cover is a flat dark cell */
   .main__row { grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 20px; padding-bottom: 0; }
   .music-card__header { background: var(--card-flat); }

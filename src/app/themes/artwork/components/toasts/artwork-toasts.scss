@@ -1,7 +1,7 @@
 /* Toasts (mockup "Volumio OS 4 - Toasts"): angular-toastr markup restyled. Card 394 wide, pad 16 18 18,
-   r14, rgba(255,255,255,.09) + blur(60) saturate(1.6) brightness(.72), border .16, shadow 0 26 60 -24 .9;
-   34px icon tile (r11) per type; eyebrow = toastr title (mono 10/.16em #a7adb3); message 14/600 #f2f3f5;
-   close 19 #71777d; 3px progress bar on a .12 track. Stack: top 28 / right 32, gap 12. */
+   r14, var(--fill-09) + blur(60) saturate(1.6) brightness(.72), border .16, shadow 0 26 60 -24 .9;
+   34px icon tile (r11) per type; eyebrow = toastr title (mono 10/.16em var(--ink-muted)); message 14/600 var(--ink-1);
+   close 19 var(--ink-faint); 3px progress bar on a .12 track. Stack: top 28 / right 32, gap 12. */
 body#artwork #toast-container {
   top: 28px; right: 32px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none;
   &.toast-top-right, &.toast-top-left, &.toast-bottom-right, &.toast-bottom-left { top: 28px; right: 32px; left: auto; bottom: auto; }
@@ -14,35 +14,35 @@ body#artwork #toast-container {
     pointer-events: auto; position: relative; overflow: hidden; width: 394px; margin: 0; padding: 16px 18px 18px; border-radius: 14px; opacity: 1;
     /* toastr markup: [close button] > div(ng-switch: .toast-title, .toast-message) > progress-bar */
     display: flex; align-items: flex-start; gap: 14px;
-    background: rgba(255, 255, 255, .09) !important; background-image: none !important;
-    backdrop-filter: blur(60px) saturate(1.6) brightness(.72); -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(.72);
-    border: 1px solid rgba(255, 255, 255, .16); box-shadow: 0 26px 60px -24px rgba(0, 0, 0, .9); color: var(--ink-1);
-    &:hover { opacity: 1; box-shadow: 0 26px 60px -24px rgba(0, 0, 0, .9); cursor: default; }
+    background: var(--menu-fill) !important; background-image: none !important;
+    backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright)); -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright));
+    border: 1px solid var(--fill-16); box-shadow: 0 26px 60px -24px var(--shadow-deep); color: var(--ink-1);
+    &:hover { opacity: 1; box-shadow: 0 26px 60px -24px var(--shadow-deep); cursor: default; }
 
     /* icon tile: the type's glyph */
     &::before { content: 'info'; flex: none; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center;
-      font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; color: #e4e7ea;
-      background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13); }
-    &.toast-success::before { content: 'check'; color: #7de3b4; background: rgba(125, 227, 180, .14); border-color: rgba(125, 227, 180, .3); }
-    &.toast-error::before { content: 'error'; color: #ff8f8f; background: rgba(255, 107, 107, .14); border-color: rgba(255, 107, 107, .3); }
-    &.toast-warning::before { content: 'warning'; color: #e8c76a; background: rgba(232, 199, 106, .14); border-color: rgba(232, 199, 106, .3); }
-    &.toast-error { border-color: rgba(255, 107, 107, .22); }
+      font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; color: var(--ink-2);
+      background: var(--fill-08); border: 1px solid var(--fill-13); }
+    &.toast-success::before { content: 'check'; color: var(--ok); background: var(--ok-wash); border-color: var(--ok-line); }
+    &.toast-error::before { content: 'error'; color: var(--err-soft); background: var(--err-wash); border-color: var(--err-line); }
+    &.toast-warning::before { content: 'warning'; color: var(--warn-ink); background: var(--warn-wash); border-color: var(--warn-line); }
+    &.toast-error { border-color: var(--err-line); }
 
     > div[ng-switch] { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-    .toast-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 400; color: #a7adb3; margin: 0; padding: 0; }
-    .toast-message { font-family: var(--font-ui); font-size: 14px; font-weight: 600; line-height: 1.35; color: #f2f3f5; text-wrap: pretty; margin: 0; word-wrap: break-word;
-      a { color: #fff; } }
+    .toast-title { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 400; color: var(--ink-muted); margin: 0; padding: 0; }
+    .toast-message { font-family: var(--font-ui); font-size: 14px; font-weight: 600; line-height: 1.35; color: var(--ink-1); text-wrap: pretty; margin: 0; word-wrap: break-word;
+      a { color: var(--ink); } }
 
-    .toast-close-button { order: 3; flex: none; position: static; float: none; margin: 0; padding: 0; width: 19px; height: 19px; font-size: 0; line-height: 0; color: #71777d; opacity: 1; text-shadow: none; background: transparent; border: 0; cursor: pointer; align-self: flex-start;
+    .toast-close-button { order: 3; flex: none; position: static; float: none; margin: 0; padding: 0; width: 19px; height: 19px; font-size: 0; line-height: 0; color: var(--ink-faint); opacity: 1; text-shadow: none; background: transparent; border: 0; cursor: pointer; align-self: flex-start;
       &::before { content: 'close'; font-family: 'Material Symbols Rounded'; font-size: 19px; line-height: 1; }
-      &:hover, &:focus { color: #fff; opacity: 1; } }
+      &:hover, &:focus { color: var(--ink); opacity: 1; } }
 
     /* progress: track + bar, 3px along the bottom edge */
-    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, .12); }
+    &::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--fill-12); }
     progress-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; }
     .toast-progress { position: absolute; left: 0; bottom: 0; height: 3px; opacity: 1; z-index: 1; background: rgba(255, 255, 255, .75); }
-    &.toast-success .toast-progress { background: #7de3b4; }
-    &.toast-error .toast-progress { background: #ff8f8f; }
+    &.toast-success .toast-progress { background: var(--ok); }
+    &.toast-error .toast-progress { background: var(--err-soft); }
     &.toast-warning .toast-progress { background: #e8c76a; }
   }
 }

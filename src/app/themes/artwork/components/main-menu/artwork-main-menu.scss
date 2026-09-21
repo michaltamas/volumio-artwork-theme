@@ -5,7 +5,7 @@
   z-index: 3;
   display: flex; flex-direction: column; align-items: center;
   padding: 22px 0; /* mockup rail: padding:22px 0; gap:6px; bottom group margin-top:auto */
-  background: var(--glass-1-fill);
+  background: var(--rail-fill);   /* furniture, not glass over the page: dark keeps its own glass, light takes the bar tint */
   backdrop-filter: blur(var(--glass-1-blur));
   -webkit-backdrop-filter: blur(var(--glass-1-blur));
   border-right: 1px solid var(--glass-1-border);
@@ -35,11 +35,11 @@
     display: grid; place-items: center;
     width: var(--rail-item); height: var(--rail-item);
     border-radius: 13px; cursor: pointer;
-    color: #9aa0a8; text-decoration: none; /* mockup icon colour */
+    color: var(--ink-65); text-decoration: none; /* mockup icon colour */
     transition: background .18s, color .18s;
     .material-symbols-rounded { font-size: 23px; }
-    &:hover { background: rgba(255, 255, 255, .08); color: var(--ink-2); }
-    &.active { background: rgba(255, 255, 255, .14); color: var(--ink-1); }
+    &:hover { background: var(--fill-08); color: var(--ink-2); }
+    &.active { background: var(--fill-14); color: var(--ink-1); }
     &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; }
   }
 }

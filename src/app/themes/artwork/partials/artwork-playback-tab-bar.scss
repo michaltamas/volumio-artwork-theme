@@ -11,7 +11,7 @@
     height: $theme-tabbar-height-smartphone;
 
     i{
-      color: #ffffff;
+      color: var(--ink);
     }
 
     &.selected, &:hover{

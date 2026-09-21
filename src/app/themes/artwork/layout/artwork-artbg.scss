@@ -7,22 +7,22 @@
 .art-bg {
   position: absolute; width: 150%; height: 150%; left: -25%; top: -25%;
   object-fit: cover;
-  filter: blur(90px) saturate(1.6);
-  -webkit-filter: blur(90px) saturate(1.6);
-  opacity: .9;
+  filter: blur(90px) saturate(var(--wash-saturate));
+  -webkit-filter: blur(90px) saturate(var(--wash-saturate));
+  opacity: var(--wash-opacity);
   transition: opacity 1.2s cubic-bezier(.4, 0, .2, 1);
 }
 .art-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(180deg,
-    rgba(6, 10, 13, .40) 0%,
-    rgba(6, 10, 13, .72) 55%,
-    rgba(6, 10, 13, .94) 100%);
+    var(--art-veil-1) 0%,
+    var(--art-veil-2) 55%,
+    var(--art-veil-3) 100%);
 }
 /* §10 fallback: no backdrop-filter / low power — flat, still intentional */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .art-bg { filter: none; -webkit-filter: none; opacity: .35; }
-  .art-scrim { background: rgba(8, 10, 13, .86); }
+  .art-scrim { background: var(--bar-solid); }
 }
 /* keep app content above the background; reveal the background for this theme only
    (scoped by body id, which theme-manager sets to the theme name) */
