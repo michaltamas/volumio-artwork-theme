@@ -39,6 +39,8 @@
   /* panels that float over the page (the queue, the sheets) and the scrim behind them */
   --panel-fill:rgba(13,15,18,.86); --panel-deep:rgba(0,0,0,.9); --panel-sheet:rgba(13,15,18,.92); --scrim-page:rgba(5,6,8,.5);
   --menu-fill:rgba(255,255,255,.09); --menu-bright:.72;
+  /* the row that plays, and the row under the pointer */
+  --row-fill:rgba(255,255,255,.12); --row-hover:rgba(255,255,255,.07);
   --warn-ink:#e8c76a; --warn-wash:rgba(232,199,106,.14); --warn-line:rgba(232,199,106,.30);
   --shade-05:rgba(0,0,0,.05); --err-line:rgba(224,69,58,.45); --err-wash:rgba(224,69,58,.12);
   --err-deep-soft:rgba(176,30,33,.6);
@@ -51,6 +53,7 @@
   --ok-wash:rgba(125,227,180,.10); --ok-line:rgba(125,227,180,.26); --ok-ink:#a8ecce;
   /* shadows: a dark theme can drop a hard shadow, a light one cannot */
   --shadow-soft:rgba(0,0,0,.55); --shadow-strong:rgba(0,0,0,.8); --shadow-deep:rgba(0,0,0,.9);
+  --shadow-cover:0 44px 90px -24px rgba(0,0,0,.9);
   /* a plain surface a step off the ground (inherited panels that are not glass) */
   --surface-2:#333333;
   /* radius / space / rail (spec §3.4) */
@@ -95,6 +98,8 @@
   --bar-fill:rgba(255,255,255,.60); --bar-solid:rgba(252,251,249,.90); --bar-veil:rgba(255,255,255,.72);
   --panel-fill:rgba(252,251,249,.90); --panel-deep:rgba(252,251,249,.96); --panel-sheet:rgba(252,251,249,.97); --scrim-page:rgba(24,20,14,.28);
   --menu-fill:rgba(252,251,249,.88); --menu-bright:1.04;
+  /* on paper the rows carry no panel: the bars and the bold title mark the one that plays */
+  --row-fill:transparent; --row-hover:transparent;
   --warn-ink:#8a6a12; --warn-wash:rgba(176,132,26,.12); --warn-line:rgba(176,132,26,.30);
   /* the tint ladder: hover .055, row .07, active .09, then the seek track and its buffer */
   --fill-04:rgba(20,22,26,.04); --fill-05:rgba(20,22,26,.05); --fill-06:rgba(20,22,26,.055);
@@ -122,6 +127,7 @@
   --err-wash:rgba(179,38,30,.07); --err-line:rgba(179,38,30,.30); --err-deep-soft:rgba(179,38,30,.10);
   /* shadows stay warm — a neutral black shadow on paper reads as dirt */
   --shadow-soft:rgba(24,20,14,.28); --shadow-strong:rgba(24,20,14,.50); --shadow-deep:rgba(24,20,14,.55);
+  --shadow-cover:0 44px 90px -24px rgba(24,20,14,.55);
   --art-1:#fbf9f6; --art-2:#f6f3ef;
   --aw-band:#faf8f5;
 }

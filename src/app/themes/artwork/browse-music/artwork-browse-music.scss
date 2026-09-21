@@ -756,7 +756,7 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
   &__cover {
     width: 100%; max-width: 380px;
     img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-cover);
-      box-shadow: 0 44px 90px -24px var(--shadow-deep); display: block; }
+      box-shadow: var(--shadow-cover); display: block; }
   }
   &__eyebrow { margin-top: 24px; font-size: 11px; letter-spacing: .18em; color: var(--ink-3); }
   &__title {
@@ -1124,7 +1124,7 @@ body#artwork #browse.browsing-album {
     .item__actions .fa { color: var(--ink-faint); font-size: 15px; }
   }
   .music-item.aw-playing {
-    background: var(--fill-12); border-radius: 11px;
+    background: var(--row-fill); border-radius: 11px;
     &::after { display: none; }
     .item__title { font-weight: 700; color: var(--ink); }
     .item__duration { color: var(--ink-2); }
@@ -1145,7 +1145,7 @@ body#artwork #browse.browsing-album {
 body#artwork #browse.browsing-album {
   .music-item { position: relative; }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: var(--fill-07); border-radius: 11px;
+    background: var(--row-hover); border-radius: 11px;
     &::after { display: none; }
     .item__number { visibility: hidden; }
     .item__play { display: block; }
@@ -1234,7 +1234,7 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
           &::before { content: 'play_arrow'; font-family: 'Material Symbols Rounded'; font-size: 24px; font-weight: 400; line-height: 1; } } } }
   }
   .music-item:not(.aw-playing):hover, .music-item:not(.aw-playing).aw-active {
-    background: var(--fill-07); border-radius: 11px;
+    background: var(--row-hover); border-radius: 11px;
     &::after { display: none; }
     .item__play { display: block; }
   }
@@ -1242,7 +1242,7 @@ body#artwork #browse.browsing-list:not(.browsing-artists), body#artwork #browse.
     &::before { content: ''; display: block; width: 20px; height: 20px; background: no-repeat center / 20px 20px
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"); } }
   .music-item.aw-playing {
-    background: var(--fill-12); border-radius: 11px;
+    background: var(--row-fill); border-radius: 11px;
     &::after { display: none; }
     .item__title { font-weight: 700; color: var(--ink); }
     .item__favorite .item__favorite-heart .fa { color: var(--ink); -webkit-text-fill-color: var(--ink); }
@@ -1372,7 +1372,7 @@ body#artwork #browse.browsing-artist .music-item {
     .fa { color: var(--ink-faint); font-size: 0; &::before { content: 'more_vert'; font-family: 'Material Symbols Rounded'; font-size: 20px; font-weight: 400; } } }
   &.aw-active { background: var(--fill-07); border-radius: 11px; &::after { display: none; } }
   /* playing row: same idiom as the album page (.12 panel, EQ bars in the number slot) */
-  &.aw-playing { background: var(--fill-12); border-radius: 11px;
+  &.aw-playing { background: var(--row-fill); border-radius: 11px;
     &::after { display: none; }
     .item__title { font-weight: 700; color: var(--ink); }
     .item__image::before { display: none; }

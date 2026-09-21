@@ -220,7 +220,7 @@ div#goBackPanelWrapper {
     border-radius: var(--r-cover);
     img { width: 100%; height: 100%; object-fit: cover; display: block;
       border-radius: var(--r-cover);
-      box-shadow: 0 44px 90px -24px var(--shadow-deep); }
+      box-shadow: var(--shadow-cover); }
   }
   #np-meta { min-width: 0; padding-top: 14px; flex: 1; }
   /* mockup: eyebrow 11/.2em var(--ink-35); title 70/800 -.035em lh .98 mt16; artist 23 var(--ink-2) mt22;
