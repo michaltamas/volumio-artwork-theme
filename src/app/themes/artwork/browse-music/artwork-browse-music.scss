@@ -723,10 +723,11 @@ body#artwork #browse.browsing-album #browseTablesWrapper {
   overflow: hidden !important;
   /* header column: keeps its place; only if taller than the viewport does it scroll on its own
      (clip edges pushed out to the wrapper edges so the cover shadow is not cut) */
-  > div:first-child { align-self: stretch; min-height: 0; overflow-y: auto; scrollbar-width: none;
-    /* the column scrolls, so it clips: the cover's shadow needs room on both sides, taken with
-       a negative margin and given back as padding, which leaves the content box where it was */
-    margin: 0 -46px 0 -52px; padding: 0 46px 0 52px; &::-webkit-scrollbar { display: none; } }
+  /* the column does not scroll: as a scroller it became a compositor layer of its own and the
+     browser painted the page in pieces (Safari, Edge, Chrome: the track column lost the cover's
+     backdrop and sat on a lighter slab). The cover is clamped to the viewport (zz-fluid), so
+     the head fits; nothing clips, and the cover's shadow needs no room of its own */
+  > div:first-child { align-self: stretch; min-height: 0; overflow: visible; }
   /* track list: starts level with the top of the cover (the back-button row is 38px + 32px gap) */
   /* the track column has a scrollbar of its own, so it stops short of the mini player —
      otherwise the bar would run on behind it and end out of sight — and keeps a little air
