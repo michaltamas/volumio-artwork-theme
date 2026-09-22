@@ -1379,7 +1379,9 @@ class BrowseMusicController {
       this.awServiceSearching = false;
       this.awArtistShowAll = false; this.awArtistNewest = true;
     }
-    this.applyAwFilter(); this.applyAwSort();
+    // a service's search results are not filtered again by the same words
+    if (this.isServicePage) { this.awVisibleCount = null; this.awNodes().forEach(el => el.classList.remove('aw-hidden')); } else { this.applyAwFilter(); }
+    this.applyAwSort();
   }
 
   toggleGridView() {
