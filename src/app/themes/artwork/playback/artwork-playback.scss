@@ -371,7 +371,8 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   }
   #np-meta { display: flex; flex-direction: column; min-height: 0; }
   .np-byline { display: contents; }   /* the artist, album and chip stack as before */
-  .np-sheet-lyrics, .np-sheet-handle { display: none; }   /* the phone sheet's parts */
+  .np-lsheet { display: none; }   /* the phone's panel */
+  .np-lyrics-host { display: contents; }
   /* the Lyrics face fills the hero's height: the column below the head is the words' */
   &.np--lyrics #np-hero { align-items: stretch; }   /* (csso in the build cannot parse :has) */
   .np-meta--lyrics { align-self: stretch; }

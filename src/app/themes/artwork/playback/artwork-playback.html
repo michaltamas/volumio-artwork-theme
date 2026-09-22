@@ -37,10 +37,6 @@
         <span ng-if="!playback.npQueueLen">NOW PLAYING</span>
       </div>
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
-      <!-- the sheet's own handle on the phone: drag it down to put the words away -->
-      <div class="np-sheet-handle" ng-if="playback.lyricsOn" aw-drag-down="playback.toggleLyrics()" aria-hidden="true"></div>
-      <!-- the phone sheet's own way out, top right of its head -->
-      <button type="button" class="np-sheet-lyrics" ng-if="playback.lyricsOn" ng-click="playback.toggleLyrics()" title="Lyrics" aria-label="Hide lyrics"><span class="material-symbols-rounded">lyrics</span></button>
       <!-- artist, album and the format share one row on the Lyrics face; elsewhere they stack -->
       <div class="np-byline">
       <div class="np-artist">{{playback.playerService.state.artist}}</div>
@@ -76,24 +72,8 @@
       </div>
       </div>
 
-      <!-- the words (handoff 6a, 6d) -->
-      <div class="np-lyrics" ng-if="playback.lyricsOn" ng-class="'np-lyrics--' + playback.lyrics.state">
-        <div class="np-lyrics__col np-lyrics__col--synced" ng-if="playback.lyrics.state === 'synced'" aw-lyrics-list="playback.lyricsIndex">
-          <div class="np-lyrics__stack">
-            <div class="np-lyrics__line" ng-repeat="l in playback.lyrics.lines track by $index" data-line="{{$index}}"
-                 ng-class="playback.lineClass($index)" ng-click="playback.seekToLine(l)" role="button" tabindex="-1">
-              <span class="np-lyrics__mark" aria-hidden="true"></span><span class="np-lyrics__text">{{l.text}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="np-lyrics__col np-lyrics__col--plain" ng-if="playback.lyrics.state === 'plain'">
-          <div class="np-lyrics__eyebrow mono">LYRICS</div>
-          <div class="np-lyrics__plain"><div class="np-lyrics__line is-plain" ng-repeat="l in playback.lyricsPlainLines track by $index">{{l || '&nbsp;'}}</div></div>
-        </div>
-        <div class="np-lyrics__col np-lyrics__col--empty" ng-if="playback.lyrics.state === 'none'"><div class="np-lyrics__empty">No lyrics for this track.</div></div>
-        <div class="np-lyrics__col np-lyrics__col--loading" ng-if="playback.lyrics.state === 'loading'"><div class="np-lyrics__skeleton"><i></i><i></i><i></i><i></i><i></i></div></div>
-        <div class="np-lyrics__source mono" ng-if="playback.lyrics.state === 'synced' || playback.lyrics.state === 'plain'">LYRICS · LRCLIB</div>
-      </div>
+      <!-- the words (handoff 6a, 6d); on the phone they live in the sheet below -->
+      <div class="np-lyrics-host" ng-if="playback.lyricsOn" ng-include="'app/themes/artwork/playback/aw-lyrics-column.html'"></div>
     </div>
   </div>
 
@@ -138,6 +118,16 @@
         <div class="np-volume"><volume-manager is-on-footer="true"></volume-manager></div>
       </div>
     </div>
+  </div>
+
+  <!-- phone: the words as a panel over what plays; the handle drags it away (handoff 6b) -->
+  <div class="np-lsheet" ng-if="playback.lyricsOn">
+    <div class="np-sheet-handle" aw-drag-down="playback.toggleLyrics()" aria-hidden="true"></div>
+    <div class="np-lsheet__head">
+      <div class="np-lsheet__title">{{playback.playerService.state.title}}</div>
+      <div class="np-lsheet__artist" ng-if="playback.playerService.state.artist">{{playback.playerService.state.artist}}</div>
+    </div>
+    <div class="np-lsheet__body" ng-include="'app/themes/artwork/playback/aw-lyrics-column.html'"></div>
   </div>
 
   <!-- phone: transport bar at the bottom (queue · prev · play · next · zones) -->

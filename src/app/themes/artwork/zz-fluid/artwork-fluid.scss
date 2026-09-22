@@ -357,32 +357,33 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   /* the phone has no face switch: the tile in the actions row toggles the words */
   body#artwork #np .np-seg, body#artwork #np .np-library { display: none; }
   body#artwork #np .np-m-tile--lyrics:disabled { opacity: .35; }
-  /* --- the words on the phone (6b): the cover crops to a 338×180 band rather than shrinking, the
-     sheet rises under it with the title, the tile and the words; the transport stays where the
-     thumb already is. Drag the handle down to put the words away. --- */
-  body#artwork #np.np--lyrics {
-    #np-hero { flex: 1 1 auto; min-height: 0; margin-top: 16px; }
-    #np-cover { width: 100%; height: 180px; aspect-ratio: auto; max-width: none; border-radius: 6px;
-      img { height: 180px; object-fit: cover; object-position: 50% 30%; border-radius: 6px; box-shadow: 0 30px 60px -22px var(--shadow-deep); } }
-    #np-meta { position: relative; width: auto; flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; text-align: left; margin: 16px -20px 0; padding: 18px 26px 0; border-radius: 20px 20px 0 0;
-      background: var(--panel-sheet); backdrop-filter: blur(34px); -webkit-backdrop-filter: blur(34px); border-top: 1px solid var(--fill-14); }
-    .np-sheet-handle { display: block; order: -1; align-self: center; width: 38px; height: 4px; border-radius: 2px; background: var(--fill-30); margin-bottom: 16px; touch-action: none; }
-    .np-sheet-lyrics { display: grid; place-items: center; position: absolute; top: 38px; right: 26px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--fill-13); background: var(--fill-14); color: var(--ink-1); padding: 0; cursor: pointer;
-      .material-symbols-rounded { font-size: 23px; } }
-    .np-title { font-size: 24px; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 56px; }
-    .np-byline { display: block; margin: 0; }
-    .np-artist { display: block; font-size: 15px; color: var(--ink-2); margin: 3px 0 0; }
-    .np-album, #np-chip-slot { display: none; }
-    .np-lyrics { margin-top: 18px; }
-    .np-lyrics__col--synced { mask-image: linear-gradient(#000 0, #000 calc(100% - 46px), transparent 100%); -webkit-mask-image: linear-gradient(#000 0, #000 calc(100% - 46px), transparent 100%); }
-    .np-lyrics__stack { gap: 12px; }
-    .np-lyrics__line { font-size: 18px; gap: 12px; &.is-now { font-size: 20px; } .np-lyrics__mark { margin: 3px 0; } }
-    .np-lyrics__empty { font-size: 18px; }
-    .np-lyrics__source { font-size: 10px; margin-top: 8px; }
-    /* the tile row gives way to the sheet; its lyrics button sits in the sheet's head */
-    .np-m-actions { display: none; }
-    #np-footer { padding-top: 16px; margin: 0 -20px; padding-left: 26px; padding-right: 26px; background: var(--panel-sheet); }
+  /* --- the words on the phone (6b): a panel that rises over what plays — cover, title, tiles —
+     and leaves the seek and the transport where the thumb already is; its handle drags it away.
+     The page beneath keeps its layout, so nothing jumps when the panel goes. --- */
+  body#artwork #np .np-lyrics-host { display: none; }   /* the words live in the panel here */
+  body#artwork #np .np-lsheet {
+    display: flex; flex-direction: column; position: absolute; left: 0; right: 0; bottom: 0; top: calc(var(--phone-top) + 52px); z-index: 1;
+    border-radius: 20px 20px 0 0; padding: 18px 26px 0;
+    background: var(--panel-sheet); backdrop-filter: blur(34px); -webkit-backdrop-filter: blur(34px); border-top: 1px solid var(--fill-14);
+    animation: aw-lsheet-in .32s cubic-bezier(.2, .7, .2, 1) both;
   }
+  body#artwork #np .np-sheet-handle { flex: none; align-self: center; width: 38px; height: 4px; border-radius: 2px; background: var(--fill-30); touch-action: none; }
+  body#artwork #np .np-lsheet__head { margin-top: 16px; min-width: 0; }
+  body#artwork #np .np-lsheet__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #np .np-lsheet__artist { font-size: 15px; color: var(--ink-2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body#artwork #np .np-lsheet__body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column;
+    /* room for the seek and the bar that stay above the panel */
+    padding-bottom: calc(88px + var(--sa-b) + 118px); }
+  body#artwork #np .np-lsheet .np-lyrics { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; margin-top: 18px; }
+  body#artwork #np .np-lsheet .np-lyrics__col--synced { mask-image: linear-gradient(#000 0, #000 calc(100% - 46px), transparent 100%); -webkit-mask-image: linear-gradient(#000 0, #000 calc(100% - 46px), transparent 100%); }
+  body#artwork #np .np-lsheet .np-lyrics__stack { gap: 12px; }
+  body#artwork #np .np-lsheet .np-lyrics__line { font-size: 18px; gap: 12px; &.is-now { font-size: 20px; } .np-lyrics__mark { margin: 3px 0; } }
+  body#artwork #np .np-lsheet .np-lyrics__empty { font-size: 18px; }
+  body#artwork #np .np-lsheet .np-lyrics__source { font-size: 10px; margin-top: 8px; }
+  /* the seek and the transport sit on the panel */
+  body#artwork #np.np--lyrics #np-footer, body#artwork #np.np--lyrics .np-m-bar { position: relative; z-index: 2; }
+  body#artwork #np.np--lyrics #np-footer { margin: 0 -20px; padding-left: 26px; padding-right: 26px; background: var(--panel-sheet); }
+  @keyframes aw-lsheet-in { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
 
   /* --- Browse landing: hamburger + search, title + count, 3-column tiles --- */
   body#artwork .aw-head--home .aw-head__row { gap: 12px; flex-wrap: nowrap; }

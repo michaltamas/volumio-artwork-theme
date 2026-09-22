@@ -48,7 +48,7 @@ class PlaybackController {
     this.npView = v;
     try { this.$window.localStorage.setItem('aw-np-view', v); } catch (e) { /* nothing to remember it with */ }
   }
-  toggleLyrics() { this.setView(this.npView === 'lyrics' ? 'cover' : 'lyrics'); this.$timeout(() => this.fitCover(), 60, false); }
+  toggleLyrics() { this.setView(this.npView === 'lyrics' ? 'cover' : 'lyrics'); }
   get lyricsOn() { return this.npView === 'lyrics'; }
   // the words follow the same clock as the seek bar: inside the track, nothing when stopped
   get lyricsIndex() {
@@ -126,7 +126,7 @@ class PlaybackController {
     if (!np || !cover) { return; }
     const phone = this.themeManager.theme === 'artwork' && window.matchMedia('(max-width: 700px) and (orientation: portrait)').matches;
     cover.style.width = '';
-    if (!phone || this.lyricsOn) { return; }   // the Lyrics face crops the cover to a band; the stylesheet sizes it
+    if (!phone) { return; }
     const content = this.$document[0].getElementById('content');
     const avail = content ? content.clientHeight : window.innerHeight;
     const others = np.scrollHeight - cover.getBoundingClientRect().height;
