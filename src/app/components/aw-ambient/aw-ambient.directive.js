@@ -17,8 +17,9 @@ class AwAmbientDirective {
 }
 
 class AwAmbientController {
-  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme, awTrackInfo) {
+  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme, awTrackInfo, awPlayerSettings) {
     'ngInject';
+    this.player = awPlayerSettings;   // asked for here so the player's word arrives at startup, on every screen
     this.info = awTrackInfo;
     this.$scope = $scope;
     this.$timeout = $timeout;

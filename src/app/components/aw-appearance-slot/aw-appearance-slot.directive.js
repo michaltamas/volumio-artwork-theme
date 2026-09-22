@@ -24,9 +24,10 @@ class AwAppearanceSlotDirective {
 }
 
 class AwAppearanceSlotController {
-  constructor($scope, $timeout, $stateParams, awTheme, awAmbient, toastMessageService) {
+  constructor($scope, $timeout, $stateParams, awTheme, awAmbient, toastMessageService, awPlayerSettings) {
     'ngInject';
     this.ambient = awAmbient;
+    this.player = awPlayerSettings;
     this.toast = toastMessageService;
     // the rows edit a draft; Save applies it, like every other section on this page
     this.draft = angular.copy(awAmbient.settings);
@@ -45,9 +46,18 @@ class AwAppearanceSlotController {
       this.toast.showMessage('warning', 'Night hours need a time like 23:00 and 07:00.', 'Ambient display');
       return;
     }
-    this.ambient.set(angular.copy(d));
-    this.toast.showMessage('success', 'Ambient display settings saved.', 'Ambient display');
+    if (this.player.available) {
+      // the player keeps it and pushes it to every screen; this one hears it back like the rest
+      this.player.set({ ambient: angular.copy(d) });
+      this.toast.showMessage('success', 'Ambient display settings saved for every screen of this player.', 'Ambient display');
+    } else {
+      this.ambient.set(angular.copy(d));
+      this.toast.showMessage('success', 'Ambient display settings saved.', 'Ambient display');
+    }
   }
+
+  // the theme for the player's screens (companion plugin): '' clears the player's word
+  setPlayerTheme(mode) { this.player.set({ theme: mode || null }); }
 
   attach(host) {
     this.host = host;

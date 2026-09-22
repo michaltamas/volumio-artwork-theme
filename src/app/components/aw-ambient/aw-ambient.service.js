@@ -31,6 +31,7 @@ class AwAmbientService {
     this.delays = DELAYS;
     this.layouts = LAYOUTS;
     this.active = false;
+    this.remote = false;
     this.settings = this.read();
     this.kiosk = this.detectKiosk();
     this.idleTimer = null;
@@ -83,6 +84,27 @@ class AwAmbientService {
   set(patch) {
     angular.extend(this.settings, patch);
     try { this.$window.localStorage.setItem(KEY, JSON.stringify(this.settings)); } catch (e) { /* nothing to remember it with */ }
+    this.arm();
+    this.$rootScope.$broadcast('aw:ambient-settings', this.settings);
+  }
+
+  // the player's word (from the companion plugin): it beats the browser's copy, and is not
+  // written into it — the player is the one place these settings live from now on
+  adopt(remote) {
+    const s = angular.extend({}, DEFAULTS, remote || {});
+    if (DELAYS.indexOf(s.delay) < 0) { s.delay = DEFAULTS.delay; }
+    if (LAYOUTS.indexOf(s.layout) < 0) { s.layout = DEFAULTS.layout; }
+    if (s.clock !== '12' && s.clock !== '24') { s.clock = DEFAULTS.clock; }
+    this.settings = s;
+    this.remote = true;
+    if (this.active) { this.exit(); }
+    this.arm();
+    this.$rootScope.$broadcast('aw:ambient-settings', this.settings);
+  }
+
+  revert() {
+    this.settings = this.read();
+    this.remote = false;
     this.arm();
     this.$rootScope.$broadcast('aw:ambient-settings', this.settings);
   }

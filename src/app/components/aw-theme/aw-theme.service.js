@@ -3,14 +3,17 @@
  *
  * The theme is a set of custom properties; switching it is a single attribute on <html>, which
  * the stylesheet reads (`:root[data-aw-theme="light"]`, and the system case inside a
- * prefers-color-scheme query). The choice belongs to the browser, not the player: one person's
- * phone can be light while the living-room screen stays dark, and nothing is written to the
- * player's configuration.
+ * prefers-color-scheme query).
  *
- * Until a choice is made the theme is dark, as it always was. "System" has to be chosen: a
- * display driven by the player itself (a kiosk on HDMI) has no dark mode of its own, reports
- * a light scheme, and would come up on paper after an update with nobody able to touch it.
- * A browser that cannot be reached by hand takes the choice from the address instead:
+ * Two voices, in this order:
+ *   1. the browser's own choice (`aw-theme` in localStorage) — a phone can be light while the
+ *      living-room screen stays dark;
+ *   2. the player's word, when the Artwork One Companion plugin holds one (`follow`): it is
+ *      what a screen the player drives on HDMI shows, since nobody can touch that one, and what
+ *      any browser shows until it picks for itself.
+ * Until either speaks the theme is dark, as it always was. "System" has to be chosen: a kiosk
+ * display has no dark mode of its own, reports a light scheme, and would come up on paper.
+ * A browser that cannot be reached by hand also takes the choice from the address:
  * `?theme=dark|light|system` is saved on load, so a kiosk URL can carry it.
  */
 const KEY = 'aw-theme';
@@ -22,7 +25,9 @@ class AwThemeService {
     this.$rootScope = $rootScope;
     this.$window = $window;
     this.modes = MODES;
-    this.mode = this.read();
+    this.choice = this.read();     // this browser's own pick, or null
+    this.followed = null;          // the player's word, or null
+    this.forced = false;           // a kiosk screen: the player's word beats the browser's
     this.query = $window.matchMedia ? $window.matchMedia('(prefers-color-scheme: light)') : null;
     if (this.query) {
       const onChange = () => { if (this.mode === 'system') { this.apply(); this.$rootScope.$applyAsync(); } };
@@ -38,8 +43,8 @@ class AwThemeService {
     try {
       if (asked) { this.$window.localStorage.setItem(KEY, asked); return asked; }
       const saved = this.$window.localStorage.getItem(KEY);
-      return MODES.indexOf(saved) > -1 ? saved : 'dark';
-    } catch (e) { return asked || 'dark'; }
+      return MODES.indexOf(saved) > -1 ? saved : null;
+    } catch (e) { return asked || null; }
   }
 
   // `?theme=light` in the address (before or after the hash) names a mode
@@ -48,16 +53,38 @@ class AwThemeService {
     return m ? m[1] : null;
   }
 
+  // the mode in force: the browser's choice, else the player's word, else dark
+  get mode() {
+    if (this.forced && this.followed) { return this.followed; }
+    return this.choice || this.followed || 'dark';
+  }
+
   get isLight() {
     return this.mode === 'light' || (this.mode === 'system' && !!(this.query && this.query.matches));
   }
 
   is(mode) { return this.mode === mode; }
+  get hasChoice() { return !!this.choice; }
 
+  // this browser picks for itself
   set(mode) {
-    if (MODES.indexOf(mode) < 0 || mode === this.mode) { return; }
-    this.mode = mode;
+    if (MODES.indexOf(mode) < 0) { return; }
+    this.choice = mode;
     try { this.$window.localStorage.setItem(KEY, mode); } catch (e) { /* nothing to remember it with */ }
+    this.apply();
+  }
+
+  // the player's word (from the companion plugin); `forced` on a screen the player drives
+  follow(mode, forced) {
+    if (MODES.indexOf(mode) < 0) { return; }
+    this.followed = mode;
+    this.forced = !!forced;
+    this.apply();
+  }
+
+  unfollow() {
+    this.followed = null;
+    this.forced = false;
     this.apply();
   }
 
