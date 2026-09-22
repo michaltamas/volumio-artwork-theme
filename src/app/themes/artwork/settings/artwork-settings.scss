@@ -597,7 +597,7 @@ body#artwork .aw-select {
 }
 body#artwork .aw-amb-night { display: flex; align-items: center; gap: 10px; &__dash { color: var(--ink-3); } }
 body#artwork .aw-time {
-  width: 64px; height: 34px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--fill-12); background: var(--fill-08); color: var(--ink); text-align: center;
+  width: 76px; height: 34px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--fill-12); background: var(--fill-08); color: var(--ink); text-align: center;
   font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
   &:disabled { opacity: .45; }
   &::-webkit-calendar-picker-indicator { display: none; }
