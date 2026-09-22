@@ -605,4 +605,4 @@ body#artwork .aw-time {
 @media (max-width: 560px) {
   body#artwork .aw-amb-row { grid-template-columns: 1fr; gap: 10px; }
 }
-body#artwork .aw-amb-save { margin: 14px 0 0; .control-buttons { display: flex; justify-content: flex-end; } }
+body#artwork .aw-amb-save { margin: 14px 0 0; .control-buttons { display: flex; justify-content: flex-start; } } /* Save on the left, where the Language section keeps its own */
