@@ -1,5 +1,5 @@
 <!-- Artwork desktop Now Playing (spec §6.1) -->
-<div id="np">
+<div id="np" ng-class="{'np--lyrics': playback.lyricsOn}">
 
   <div id="np-topbar">
     <button type="button" class="np-menu-btn" ng-click="playback.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
@@ -25,12 +25,24 @@
            ng-src="{{playback.playerService.albumart}}"
            alt="{{playback.playerService.state.album}}"/>
     </div>
-    <div id="np-meta">
-      <div class="np-eyebrow mono">
+    <div id="np-meta" ng-class="{'np-meta--lyrics': playback.lyricsOn}">
+      <!-- the column's face (handoff 6a): the title and the cover never leave; only what is
+           under them changes -->
+      <div class="np-seg" role="tablist" aria-label="Now Playing view">
+        <button type="button" role="tab" ng-repeat="v in playback.views" ng-class="{active: playback.npView === v}" aria-selected="{{playback.npView === v}}"
+                ng-click="playback.setView(v)" ng-disabled="v === 'lyrics' && playback.lyrics.state === 'none'">{{v === 'cover' ? 'Cover' : (v === 'info' ? 'Info' : 'Lyrics')}}</button>
+      </div>
+      <div class="np-eyebrow mono" ng-if="!playback.lyricsOn">
         <span ng-if="playback.npQueueLen">TRACK {{playback.npTrackPos}} OF {{playback.npQueueLen}}</span>
         <span ng-if="!playback.npQueueLen">NOW PLAYING</span>
       </div>
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
+      <!-- the sheet's own handle on the phone: drag it down to put the words away -->
+      <div class="np-sheet-handle" ng-if="playback.lyricsOn" aria-hidden="true"></div>
+      <!-- the phone sheet's own way out, top right of its head -->
+      <button type="button" class="np-sheet-lyrics" ng-if="playback.lyricsOn" ng-click="playback.toggleLyrics()" title="Lyrics" aria-label="Hide lyrics"><span class="material-symbols-rounded">lyrics</span></button>
+      <!-- artist, album and the format share one row on the Lyrics face; elsewhere they stack -->
+      <div class="np-byline">
       <div class="np-artist">{{playback.playerService.state.artist}}</div>
       <div class="np-album">{{playback.playerService.state.album}}<span ng-if="playback.npYear">&nbsp;·&nbsp;{{playback.npYear}}</span></div>
       <div id="np-chip-slot">
@@ -47,14 +59,40 @@
           <span class="np-format mono" ng-if="playback.npFormat">{{playback.npFormat}}</span>
         </div>
         <!-- signal path (§5.6): source format, the resample step from the real playback
-             settings (omitted while they are unknown), and the output device -->
-        <div class="np-signalpath mono" ng-if="playback.playerService.state.samplerate">
+             settings (omitted while they are unknown), and the output device — the Info face -->
+        <div class="np-signalpath mono" ng-if="playback.npView === 'info' && playback.playerService.state.samplerate">
           <span>SOURCE {{playback.npSignal}}</span>
           <span class="np-arrow" ng-if="playback.npResample">&rarr;</span>
           <span ng-if="playback.npResample">{{playback.npResample}}</span>
           <span class="np-arrow" ng-if="playback.npOutput">&rarr;</span>
           <span class="np-node-final" ng-if="playback.npOutput">{{playback.npOutput}}</span>
         </div>
+        <!-- what the library knows about the record (local music), on the Info face -->
+        <div class="np-library mono" ng-if="playback.npView === 'info' && (playback.npYear || playback.npGenre)">
+          <span ng-if="playback.npYear">{{playback.npYear}}</span>
+          <span class="np-arrow" ng-if="playback.npYear && playback.npGenre">·</span>
+          <span ng-if="playback.npGenre">{{playback.npGenre}}</span>
+        </div>
+      </div>
+      </div>
+
+      <!-- the words (handoff 6a, 6d) -->
+      <div class="np-lyrics" ng-if="playback.lyricsOn" ng-class="'np-lyrics--' + playback.lyrics.state">
+        <div class="np-lyrics__col np-lyrics__col--synced" ng-if="playback.lyrics.state === 'synced'" aw-lyrics-list="playback.lyricsIndex">
+          <div class="np-lyrics__stack">
+            <div class="np-lyrics__line" ng-repeat="l in playback.lyrics.lines track by $index" data-line="{{$index}}"
+                 ng-class="playback.lineClass($index)" ng-click="playback.seekToLine(l)" role="button" tabindex="-1">
+              <span class="np-lyrics__mark" aria-hidden="true"></span><span class="np-lyrics__text">{{l.text}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="np-lyrics__col np-lyrics__col--plain" ng-if="playback.lyrics.state === 'plain'">
+          <div class="np-lyrics__eyebrow mono">LYRICS</div>
+          <div class="np-lyrics__plain"><div class="np-lyrics__line is-plain" ng-repeat="l in playback.lyricsPlainLines track by $index">{{l || '&nbsp;'}}</div></div>
+        </div>
+        <div class="np-lyrics__col np-lyrics__col--empty" ng-if="playback.lyrics.state === 'none'"><div class="np-lyrics__empty">No lyrics for this track.</div></div>
+        <div class="np-lyrics__col np-lyrics__col--loading" ng-if="playback.lyrics.state === 'loading'"><div class="np-lyrics__skeleton"><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="np-lyrics__source mono" ng-if="playback.lyrics.state === 'synced' || playback.lyrics.state === 'plain'">LYRICS · LRCLIB</div>
       </div>
     </div>
   </div>
@@ -67,6 +105,10 @@
       <span class="material-symbols-rounded">{{playback.playerService.state.repeat && playback.playerService.state.repeatSingle ? 'repeat_one' : 'repeat'}}</span>
     </button>
     <track-actions-btn class="np-m-tile"></track-actions-btn>
+    <button type="button" class="np-m-tile np-m-tile--lyrics" ng-class="{active: playback.lyricsOn}" ng-click="playback.toggleLyrics()"
+            ng-disabled="playback.lyrics.state === 'none'" title="Lyrics" aria-label="Lyrics">
+      <span class="material-symbols-rounded">lyrics</span>
+    </button>
   </div>
 
   <div id="np-footer">
@@ -76,6 +118,11 @@
         <!-- mockup: heart first (real favourite toggle for the current track), then the transport -->
         <favourite-track-btn class="np-fav"></favourite-track-btn>
         <player-buttons></player-buttons>
+        <!-- the words, one tap away; disabled when this track has none -->
+        <button type="button" class="np-lyrics-btn" ng-class="{active: playback.lyricsOn}" ng-click="playback.toggleLyrics()"
+                ng-disabled="playback.lyrics.state === 'none'" title="Lyrics" aria-label="Lyrics" aria-pressed="{{playback.lyricsOn}}">
+          <span class="material-symbols-rounded">lyrics</span>
+        </button>
       </div>
       <!-- right of the transport: what plays next, then the volume -->
       <div id="np-footer-right">

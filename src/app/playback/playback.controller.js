@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -17,6 +17,12 @@ class PlaybackController {
     this.previousState = 'volumio.browse';
     this.signal = awSignal;
     this.info = awTrackInfo;
+    this.lyrics = awLyrics;
+    this.$window = $window;
+    // the right column shows the cover's company, the info, or the lyrics (handoff 6a); the
+    // choice is this browser's and outlives the page
+    this.views = ['cover', 'info', 'lyrics'];
+    this.npView = this.readView();
 
     $rootScope.$on('$stateChangeStart', (event, toState, toStateParams, fromState, fromParams) => {
       this.previousState = fromState.name;
@@ -31,6 +37,51 @@ class PlaybackController {
   get npRoom() { return this.signal.room; }
   get npOutput() { return this.signal.output; }
   get npYear() { return this.info.year; }       // from the library's album, local music only
+  get npGenre() { return this.info.genre; }
+
+  // --- the right column's face: cover · info · lyrics ------------------------------------
+  readView() {
+    try { const v = this.$window.localStorage.getItem('aw-np-view'); return this.views.indexOf(v) > -1 ? v : 'cover'; } catch (e) { return 'cover'; }
+  }
+  setView(v) {
+    if (this.views.indexOf(v) < 0) { return; }
+    this.npView = v;
+    try { this.$window.localStorage.setItem('aw-np-view', v); } catch (e) { /* nothing to remember it with */ }
+  }
+  toggleLyrics() { this.setView(this.npView === 'lyrics' ? 'cover' : 'lyrics'); this.$timeout(() => this.fitCover(), 60, false); }
+  get lyricsOn() { return this.npView === 'lyrics'; }
+  // the words follow the same clock as the seek bar: inside the track, nothing when stopped
+  get lyricsIndex() {
+    if (this.lyrics.state !== 'synced') { return -1; }
+    return this.lyrics.indexAt(this.elapsedMs());
+  }
+  elapsedMs() {
+    const st = this.playerService.state;
+    if (!st || st.status === 'stop') { return 0; }
+    const ms = this.playerService.elapsedTime || 0;
+    const duration = st.duration ? st.duration * 1000 : 0;
+    return duration ? Math.min(Math.max(0, ms), duration) : Math.max(0, ms);
+  }
+  // how far a line sits from the one that plays: the ramp of the column
+  lineClass(i) {
+    const c = this.lyricsIndex, d = i - c;
+    if (d === 0) { return 'is-now'; }
+    if (d < 0) { return d === -1 ? 'is-dim' : 'is-faint'; }
+    return d === 1 ? 'is-muted' : (d === 2 ? 'is-dim' : 'is-faint');
+  }
+  // a tap on a synced line seeks there (the seek bar's own path: percent of the scale)
+  seekToLine(line) {
+    const st = this.playerService.state;
+    if (!line || !st || !st.duration || st.disableUi) { return; }
+    const scale = this.playerService._seekScale || 1000;
+    const p = Math.min(1, Math.max(0, line.t / (st.duration * 1000)));
+    this.playerService.stopSeek();
+    this.playerService.elapsedTime = line.t;
+    this.playerService.calculateElapsedTimeString();
+    this.playerService.seekPercent = Math.round(p * scale);
+    this.playerService.seek = Math.round(p * scale);
+  }
+  get lyricsPlainLines() { return this.lyrics.plain ? this.lyrics.plain.split(/\r?\n/) : []; }
   get npResample() { return this.signal.resample; }
   get npBitPerfect() { return this.signal.bitPerfect; }
 
@@ -75,7 +126,7 @@ class PlaybackController {
     if (!np || !cover) { return; }
     const phone = this.themeManager.theme === 'artwork' && window.matchMedia('(max-width: 700px) and (orientation: portrait)').matches;
     cover.style.width = '';
-    if (!phone) { return; }
+    if (!phone || this.lyricsOn) { return; }   // the Lyrics face crops the cover to a band; the stylesheet sizes it
     const content = this.$document[0].getElementById('content');
     const avail = content ? content.clientHeight : window.innerHeight;
     const others = np.scrollHeight - cover.getBoundingClientRect().height;

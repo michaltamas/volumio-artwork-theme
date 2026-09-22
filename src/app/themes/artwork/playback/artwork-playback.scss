@@ -350,3 +350,84 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   &:hover { background: var(--glass-2-hover); }
   &.active { background: var(--ink); color: var(--on-ink); }
 }
+
+/* ---- the right column's face: cover · info · lyrics (handoff 6a, 6d) ---------------------
+   The switch sits above the title; on the Lyrics face the title shrinks to 52px and the artist,
+   album and format pill share one row, so the column below is the words'. Lines: 24/500 lh 1.4
+   on the ink ramp, the one that plays 26/600 in full ink behind a 3px marker; a 58px mask fades
+   the top and bottom edges. A line change tweens 280ms; a seek does not. */
+#np {
+  --lyr-near: var(--ink-muted);   /* one line away */
+  --lyr-mid: var(--ink-dim);      /* two */
+  --lyr-far: var(--ink-faint);    /* further */
+  .np-seg {
+    display: inline-flex; align-self: flex-start; padding: 3px; border-radius: 999px; margin-bottom: 22px;
+    background: var(--fill-10); border: 1px solid var(--fill-13);
+    button { border: 0; background: transparent; border-radius: 999px; padding: 8px 16px; font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--ink-3); cursor: pointer;
+      &:hover:not(.active):not(:disabled) { color: var(--ink); }
+      &.active { background: var(--ink-1); color: var(--ground); font-weight: 700; }
+      &:disabled { opacity: .4; cursor: default; }
+      &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  }
+  #np-meta { display: flex; flex-direction: column; min-height: 0; }
+  .np-byline { display: contents; }   /* the artist, album and chip stack as before */
+  .np-sheet-lyrics, .np-sheet-handle { display: none; }   /* the phone sheet's parts */
+  /* the Lyrics face fills the hero's height: the column below the head is the words' */
+  &.np--lyrics #np-hero { align-items: stretch; }   /* (csso in the build cannot parse :has) */
+  .np-meta--lyrics { align-self: stretch; }
+  .np-library { margin-top: 12px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
+
+  /* the Lyrics face: a compact head */
+  .np-meta--lyrics {
+    .np-title { font-size: 52px; letter-spacing: -.032em; line-height: 1.02; margin-top: 0; }
+    .np-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+    .np-artist { font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
+    .np-album { font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
+      &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
+    #np-chip-slot { display: inline-flex; margin: 0; }
+    .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
+    .np-format { display: none; }
+  }
+  .np-lyrics { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; margin-top: 28px; }
+  .np-lyrics__col { position: relative; flex: 1 1 0; min-height: 0; overflow: hidden; }
+  .np-lyrics__col--synced { mask-image: linear-gradient(transparent 0, #000 58px, #000 calc(100% - 58px), transparent 100%); -webkit-mask-image: linear-gradient(transparent 0, #000 58px, #000 calc(100% - 58px), transparent 100%); }
+  .np-lyrics__stack { display: flex; flex-direction: column; gap: 14px; will-change: transform; transition: transform .28s cubic-bezier(.2, .7, .2, 1);
+    &.no-tween { transition: none; } }
+  .np-lyrics__line {
+    display: flex; align-items: flex-start; gap: 16px; font-size: 24px; font-weight: 500; line-height: 1.4; color: var(--lyr-far); cursor: pointer;
+    border-radius: 8px; transition: background-color .12s ease;
+    .np-lyrics__mark { flex: none; width: 3px; align-self: stretch; border-radius: 2px; margin: 4px 0; background: transparent; }
+    &.is-near, &.is-muted { color: var(--lyr-near); }
+    &.is-dim { color: var(--lyr-mid); }
+    &.is-faint { color: var(--lyr-far); }
+    &.is-now { font-size: 26px; font-weight: 600; line-height: 1.38; color: var(--ink);
+      .np-lyrics__mark { background: var(--ink-1); }
+      .np-lyrics__text { animation: aw-lyr-in .28s cubic-bezier(.2, .7, .2, 1); } }
+    /* the lines that follow keep the marker's width, the ones before do not (6a) */
+    &.is-now ~ .np-lyrics__line { .np-lyrics__mark { width: 3px; } }
+    .np-lyrics__mark { width: 0; }
+    &.is-now .np-lyrics__mark { width: 3px; }
+    &:active { background: var(--fill-07); }   /* pressed: the 7% ink tint of a track row */
+  }
+  .np-lyrics__col--plain { overflow-y: auto; scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
+  .np-lyrics__eyebrow { font-size: 11px; letter-spacing: .16em; color: var(--ink-dim); margin-bottom: 14px; }
+  .np-lyrics__plain { display: flex; flex-direction: column; gap: 10px; padding-bottom: 24px; }
+  .np-lyrics__line.is-plain { color: var(--ink-2); cursor: default; &:active { background: transparent; } }
+  .np-lyrics__empty { font-size: 24px; font-weight: 500; line-height: 1.4; color: var(--ink-dim); }
+  .np-lyrics__skeleton { display: flex; flex-direction: column; gap: 18px; padding-top: 6px; animation: aw-lyr-pulse 1.4s ease-in-out infinite;
+    i { display: block; height: 18px; border-radius: 4px; background: var(--fill-10); width: 62%; &:nth-child(2) { width: 78%; } &:nth-child(3) { width: 70%; } &:nth-child(4) { width: 54%; } &:nth-child(5) { width: 66%; } } }
+  .np-lyrics__source { font-size: 11px; letter-spacing: .16em; color: var(--ink-dim); margin-top: 16px; flex: none; }
+
+  /* the transport's lyrics button */
+  .np-lyrics-btn { border: 0; background: transparent; padding: 0; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--ink-2); cursor: pointer;
+    .material-symbols-rounded { font-size: 26px; }
+    &:hover:not(:disabled) { color: var(--ink); }
+    &.active { background: var(--fill-14); color: var(--ink); }
+    &:disabled { opacity: .35; cursor: default; } }
+}
+@keyframes aw-lyr-in { from { opacity: .4; } to { opacity: 1; } }
+@keyframes aw-lyr-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+/* paper: the ramp of the light frame (139/103/94) */
+html.aw-is-light body#artwork #np { --lyr-near: #5e646c; --lyr-mid: #676d74; --lyr-far: #8b9098; }
+/* one tap on a line seeks; a track row's pressed tint on paper */
+html.aw-is-light body#artwork #np .np-lyrics__line:active { background: rgba(20, 22, 26, .07); }
