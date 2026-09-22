@@ -422,9 +422,12 @@ html.aw-is-light body#artwork #np { --lyr-near: #5e646c; --lyr-mid: #676d74; --l
 /* one tap on a line seeks; a track row's pressed tint on paper */
 html.aw-is-light body#artwork #np .np-lyrics__line:active { background: rgba(20, 22, 26, .07); }
 /* the Lyrics face's byline: artist 21/600, album 17 after a dot, the chip beside them — one baseline
-   (outranks the fluid rules that space the artist and album on the other faces) */
-body#artwork #np .np-meta--lyrics .np-artist { display: inline; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
-body#artwork #np .np-meta--lyrics .np-album { display: inline; font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
-  &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
-body#artwork #np .np-meta--lyrics #np-chip-slot { display: inline-flex; align-self: center; margin: 0; }
-body#artwork #np .np-meta--lyrics .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
+   (outranks the fluid rules that space the artist and album on the other faces). Not on the
+   phone: there the words are a panel and the page beneath keeps its own layout. */
+@media not all and (max-width: 700px) and (orientation: portrait) {
+  body#artwork #np .np-meta--lyrics .np-artist { display: inline; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
+  body#artwork #np .np-meta--lyrics .np-album { display: inline; font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
+    &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
+  body#artwork #np .np-meta--lyrics #np-chip-slot { display: inline-flex; align-self: center; margin: 0; }
+  body#artwork #np .np-meta--lyrics .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
+}
