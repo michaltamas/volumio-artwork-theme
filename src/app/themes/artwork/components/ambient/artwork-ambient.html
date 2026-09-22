@@ -1,0 +1,65 @@
+<!-- Ambient: the display's resting state (handoff 5a–5g). One element, three layouts, the
+     states as classes; the seek hairline and the night scrim sit outside the drifting group. -->
+<div class="aw-amb" ng-if="amb.active"
+     ng-class="{'aw-amb--cover': amb.layout === 'cover', 'aw-amb--clock': amb.layout === 'clock', 'aw-amb--bleed': amb.layout === 'bleed',
+                'is-stopped': amb.stopped, 'is-paused': amb.paused, 'is-night': amb.night, 'is-swapping': amb.swapping}"
+     role="presentation">
+
+  <!-- the cover, blurred (full-bleed shows it as it is) -->
+  <div class="aw-amb__bg" ng-if="!amb.stopped && amb.cover">
+    <img class="aw-amb__bg-img" ng-src="{{amb.cover}}" alt="">
+    <div class="aw-amb__veil"></div>
+  </div>
+
+  <!-- the composition: everything that drifts together -->
+  <div class="aw-amb__group">
+
+    <!-- stopped / empty queue: the clock and the player's name, nothing else -->
+    <div class="aw-amb__idle" ng-if="amb.stopped">
+      <div class="aw-amb__clock aw-amb__clock--idle mono">{{amb.clockText}}<span class="aw-amb__ampm" ng-if="amb.clockSuffix">{{amb.clockSuffix}}</span></div>
+      <div class="aw-amb__name mono">{{amb.playerLine}}</div>
+    </div>
+
+    <div class="aw-amb__stage" ng-if="!amb.stopped">
+      <img class="aw-amb__cover" ng-if="amb.cover" ng-src="{{amb.cover}}" alt="{{amb.state.album}}">
+      <div class="aw-amb__text">
+        <div class="aw-amb__tag mono" ng-if="amb.paused">PAUSED</div>
+        <div class="aw-amb__title">{{amb.state.title}}</div>
+        <div class="aw-amb__artist" ng-if="amb.state.artist">{{amb.state.artist}}</div>
+        <div class="aw-amb__album" ng-if="amb.state.album">{{amb.state.album}}</div>
+
+        <!-- format pill + bit perfect + time (cover-led); the night and the other layouts fold
+             these into one mono line -->
+        <div class="aw-amb__row">
+          <div class="aw-amb__pill mono" ng-class="{'is-hires': amb.hiRes}" ng-if="amb.signalText || amb.bitrateText">
+            <span class="aw-amb__pill-num">{{amb.signalText || amb.bitrateText}}</span>
+            <span class="aw-amb__pill-unit" ng-if="amb.formatText">{{amb.formatText}}</span>
+          </div>
+          <div class="aw-amb__bp" ng-if="amb.bitPerfect && !amb.paused">
+            <span class="aw-amb__dot"></span><span class="mono">BIT PERFECT</span>
+          </div>
+          <div class="aw-amb__time aw-amb__time--inline mono" ng-if="amb.duration">
+            <span>{{amb.elapsed}}</span><span class="aw-amb__slash">/</span><span class="aw-amb__total">{{amb.duration}}</span>
+          </div>
+        </div>
+        <div class="aw-amb__time aw-amb__time--block mono" ng-if="amb.duration">
+          <span>{{amb.elapsed}}</span><span class="aw-amb__slash">/</span><span class="aw-amb__total">{{amb.duration}}</span>
+        </div>
+        <div class="aw-amb__line mono">
+          <span ng-if="amb.signalText || amb.bitrateText">{{amb.signalText || amb.bitrateText}}</span>
+          <span ng-if="amb.formatText">· {{amb.formatText}}</span>
+          <span ng-if="amb.duration">· {{amb.elapsed}} / {{amb.duration}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="aw-amb__clock mono" ng-if="!amb.stopped">{{amb.clockText}}<span class="aw-amb__ampm" ng-if="amb.clockSuffix">{{amb.clockSuffix}}</span></div>
+    <div class="aw-amb__name aw-amb__name--corner mono" ng-if="!amb.stopped">{{amb.playerLine}}</div>
+  </div>
+
+  <!-- night: one scrim over everything, playback untouched -->
+  <div class="aw-amb__night" ng-if="amb.night && !amb.stopped"></div>
+
+  <!-- the seek hairline stays flush to the bottom edge, outside the drift; gone when stopped -->
+  <div class="aw-amb__seek" ng-if="!amb.stopped && amb.duration"><div class="aw-amb__seek-fill" ng-style="{width: amb.playedPct + '%'}"></div></div>
+</div>

@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -15,109 +15,22 @@ class PlaybackController {
     this.socketService = socketService;
     this.playQueueService = playQueueService;
     this.previousState = 'volumio.browse';
-    this.npOutput = '';
+    this.signal = awSignal;
 
     $rootScope.$on('$stateChangeStart', (event, toState, toStateParams, fromState, fromParams) => {
       this.previousState = fromState.name;
       //$rootScope.previousStateParams = fromParams;
     });
 
-    // Now Playing header readout: current audio output device (spec §6.1)
-    this.npAlsa = null;
-    this.fetchOutputDevice();
     if (this.themeManager.theme === 'artwork') { this.initFitCover(); }
   }
 
-  // Zone / room = the self device in the multiroom list.
-  get npRoom() {
-    let list = (this.multiRoomService && this.multiRoomService.devices) || [];
-    if (list && list.list) { list = list.list; }
-    if (!Array.isArray(list)) { return ''; }
-    const self = list.find(d => d && d.isSelf);
-    return self ? self.name : '';
-  }
-
-  // Output device (DAC) for the header readout. Volumio doesn't expose it in
-  // playback state, so read it from the ALSA-controller plugin UI config
-  // (the same getUiConfig/pushUiConfig path the Playback Options page uses).
-  fetchOutputDevice() {
-    const handler = (cfg) => this.applyAlsaConfig(cfg);
-    this.socketService.on('pushUiConfig', handler);
-    this.socketService.emit('getUiConfig', { page: 'audio_interface/alsa_controller' });
-  }
-
-  // Reads the player's playback settings out of the ALSA plugin's UI config.
-  applyAlsaConfig(cfg) {
-    if (!cfg) { return; }
-    const found = {};
-    const walk = (arr) => (arr || []).forEach((el) => {
-      if (!el) { return; }
-      const id = String(el.id || '');
-      if (id) {
-        const v = el.value;
-        found[id] = (v && typeof v === 'object') ? (v.label !== undefined ? v.label : v.value) : v;
-      }
-      if (el.content) { walk(el.content); }
-    });
-    try {
-      if (cfg.sections) { cfg.sections.forEach(s => walk(s.content)); }
-      if (cfg.content) { walk(cfg.content); }
-    } catch (e) { return; }
-    // a different plugin's config: none of the playback fields are in it
-    if (found.output_device === undefined && found.resampling === undefined && found.i2sid === undefined) { return; }
-    // With an I2S DAC the output-device field is hidden and keeps whatever card was
-    // chosen before (an HDMI output, say); the DAC's own name is in i2sid.
-    const i2s = this.alsaFlag(found.i2s);
-    const device = (i2s === true && found.i2sid) ? found.i2sid : (found.output_device || found.i2sid || '');
-    if (device) { this.npOutput = String(device); }
-    this.npAlsa = {
-      i2s: i2s,
-      resampling: this.alsaFlag(found.resampling),
-      bitdepth: this.alsaTarget(found.resampling_target_bitdepth),
-      samplerate: this.alsaTarget(found.resampling_target_samplerate),
-      normalization: this.alsaFlag(found.volume_normalization),
-      mixerType: found.mixer_type ? String(found.mixer_type) : ''
-    };
-    // so a tester can read what the theme sees: type __artworkPath in the browser console
-    try { window.__artworkPath = angular.extend({ output: this.npOutput }, this.npAlsa); } catch (e) { /* ignore */ }
-  }
-
-  // switches come back as booleans, as "true"/"false", and on some builds as a label
-  alsaFlag(v) {
-    if (v === true || v === false) { return v; }
-    const s = String(v === undefined || v === null ? '' : v).trim().toLowerCase();
-    if (!s) { return null; }
-    if (['true', 'on', 'yes', 'enabled', '1'].indexOf(s) > -1) { return true; }
-    if (['false', 'off', 'no', 'disabled', '0'].indexOf(s) > -1) { return false; }
-    return null;
-  }
-
-  // "*" and "Native" both mean "leave this as the track has it"
-  alsaTarget(v) {
-    const s = String(v === undefined || v === null ? '' : v).trim();
-    if (!s || s === '*' || /native/i.test(s)) { return ''; }
-    return s;
-  }
-
-  // The resample step of the signal path, from the player's real playback settings.
-  // Empty while the settings are unknown, so the path never claims something untrue.
-  get npResample() {
-    const a = this.npAlsa;
-    if (!a || a.resampling === null) { return ''; }
-    if (!a.resampling) { return 'NO RESAMPLE'; }
-    const target = [a.bitdepth, a.samplerate].filter(Boolean).join(' / ');
-    return target ? 'RESAMPLE ' + target : 'RESAMPLE';
-  }
-
-  // Bit perfect means the stream reaches the DAC untouched: no resampling, and the volume
-  // is not applied in software. Hidden while the settings are unknown.
-  get npBitPerfect() {
-    const a = this.npAlsa;
-    if (!a || a.resampling === null) { return false; }
-    const mixer = String(a.mixerType || '').toLowerCase();
-    const softMixer = !(mixer === 'hardware' || mixer === 'none' || mixer === 'disabled');
-    return a.resampling === false && !softMixer && a.normalization !== true;
-  }
+  // The header readouts — zone, output, resample step, bit perfect — come from the shared
+  // signal service (the ambient display reads the same one).
+  get npRoom() { return this.signal.room; }
+  get npOutput() { return this.signal.output; }
+  get npResample() { return this.signal.resample; }
+  get npBitPerfect() { return this.signal.bitPerfect; }
 
   // Zones & outputs sheet (the mini player's zone button opens the same one)
   openOutputs() { this.$rootScope.$broadcast('volumio:toggleOutputs'); }
@@ -138,27 +51,11 @@ class PlaybackController {
   }
 
   // --- Now Playing readouts derived from real player state (spec §5.4–5.6) ---
-  // "24 bit" -> {n:"24", u:"bit"}, "48 kHz" -> {n:"48", u:"kHz"}
-  splitVal(s) {
-    const m = String(s || '').trim().match(/^([\d.]+)\s*(.*)$/);
-    return m ? { n: m[1], u: m[2] } : { n: '', u: String(s || '') };
-  }
+  splitVal(s) { return this.signal.splitVal(s); }
   get npBit()  { return this.splitVal(this.playerService.state && this.playerService.state.bitdepth); }
   get npRate() { return this.splitVal(this.playerService.state && this.playerService.state.samplerate); }
-
-  // "FLAC · QOBUZ": format, plus the service when it is a streaming source
-  get npFormat() {
-    const st = this.playerService.state || {};
-    const fmt = String(st.trackType || st.stream || '').toUpperCase();
-    const svc = String(st.service || '');
-    return svc && svc !== 'mpd' ? `${fmt} · ${svc.toUpperCase()}` : fmt;
-  }
-
-  // "24/48" for the signal path
-  get npSignal() {
-    const b = this.npBit.n, r = this.npRate.n;
-    return b && r ? `${b}/${r}` : (b || r || '');
-  }
+  get npFormat() { return this.signal.format(this.playerService.state); }   // "FLAC · QOBUZ"
+  get npSignal() { return this.signal.signal(this.playerService.state); }   // "24/48"
 
   get npQueueLen() {
     const q = (this.playQueueService && this.playQueueService.queue) || [];

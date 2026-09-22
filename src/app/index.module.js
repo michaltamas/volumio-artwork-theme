@@ -69,6 +69,9 @@ import PlayerSeekbarDirective from './components/player-seekbar/player-seekbar.d
 import AwSettingsService from './components/aw-settings-shell/aw-settings.service';
 import AwThemeService from './components/aw-theme/aw-theme.service';
 import AwAppearanceSlotDirective from './components/aw-appearance-slot/aw-appearance-slot.directive';
+import AwSignalService from './components/aw-signal/aw-signal.service';
+import AwAmbientService from './components/aw-ambient/aw-ambient.service';
+import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
 import AwQueuePanelService from './services/aw-queue-panel.service';
@@ -300,6 +303,8 @@ angular.module('volumio', [
   .directive('playerSeekbar', (themeManager) => new PlayerSeekbarDirective(themeManager))
   .service('awSettingsService', AwSettingsService)
   .service('awTheme', AwThemeService)
+  .service('awSignal', AwSignalService)
+  .service('awAmbient', AwAmbientService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
@@ -308,6 +313,7 @@ angular.module('volumio', [
   .directive('awHeadBlur', () => new AwHeadBlurDirective())
   .directive('awRangeFill', () => new AwRangeFillDirective())
   .directive('awAppearanceSlot', (themeManager) => new AwAppearanceSlotDirective(themeManager))
+  .directive('awAmbient', (themeManager) => new AwAmbientDirective(themeManager))
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 

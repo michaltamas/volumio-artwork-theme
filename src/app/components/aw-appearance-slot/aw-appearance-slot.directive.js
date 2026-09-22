@@ -24,8 +24,9 @@ class AwAppearanceSlotDirective {
 }
 
 class AwAppearanceSlotController {
-  constructor($scope, $timeout, $stateParams, awTheme) {
+  constructor($scope, $timeout, $stateParams, awTheme, awAmbient) {
     'ngInject';
+    this.ambient = awAmbient;
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.$stateParams = $stateParams;
