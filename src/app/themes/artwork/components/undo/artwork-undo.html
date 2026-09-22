@@ -1,0 +1,9 @@
+<!-- the undo toast (handoff 7b): bottom centre above the mini player, one at a time -->
+<div class="aw-undo" ng-if="u.undo.current" ng-class="{'aw-undo--np': u.onPlayback}" role="status">
+  <span class="material-symbols-rounded aw-undo__icon">{{u.undo.current.icon}}</span>
+  <div class="aw-undo__text">
+    <div class="aw-undo__eyebrow mono">{{u.undo.current.eyebrow}}</div>
+    <div class="aw-undo__title">{{u.undo.current.title}}</div>
+  </div>
+  <button type="button" class="aw-undo__btn" ng-if="u.undo.current.undo" ng-click="u.undo.undo()">Undo</button>
+</div>

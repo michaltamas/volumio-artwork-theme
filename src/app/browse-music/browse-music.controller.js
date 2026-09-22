@@ -1,9 +1,10 @@
 class BrowseMusicController {
   constructor($scope, browseService, playQueueService, playlistService, socketService,
     modalService, $timeout, matchmediaService, $compile, $document, $rootScope, $log, playerService,
-    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu) {
+    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu, awUndo) {
     'ngInject';
     this.awMenu = awMobileMenu;
+    this.awUndo = awUndo;
     this.$scope = $scope;
     this.$log = $log;
     this.browseService = browseService;
@@ -630,6 +631,60 @@ class BrowseMusicController {
       this.playQueueService.add(item);
     }
   }
+
+  // --- the queue, from the row menu (handoff 7a/7b): next, last, each with a way back ---
+  // Play next: Volumio slots the item right after the one that plays (the player knows its own
+  // position; the socket takes the item itself). The toast offers Undo, which takes that slot
+  // out again — as long as it still holds what was put there.
+  playNext(item) {
+    const st = this.playerService.state || {};
+    const pos = typeof st.position === 'number' ? st.position : -1;
+    const before = (this.playQueueService.queue || []).length;
+    this.socketService.emit('playNext', this.queueItem(item));
+    this.awUndo.show({
+      icon: 'playlist_play', eyebrow: 'PLAYING NEXT', title: item.title || item.name || item.album || item.uri, swallow: true,
+      undo: () => this.undoQueued(before, item, (q) => Math.min(q.length - 1, pos + 1))
+    });
+  }
+  // Play last: Volumio's own "add to queue"; Undo takes the end of the queue off again.
+  playLast(item) {
+    const before = (this.playQueueService.queue || []).length;
+    this.addToQueue(item);
+    this.awUndo.show({
+      icon: 'queue_music', eyebrow: 'ADDED TO THE END', title: item.title || item.name || item.album || item.uri, swallow: true,
+      undo: () => this.undoQueued(before, item, (q) => q.length - 1)
+    });
+  }
+  queueItem(item) {
+    const out = { uri: item.uri, service: item.service, type: item.type };
+    ['title', 'name', 'artist', 'album', 'albumart', 'duration', 'trackType', 'samplerate', 'bitdepth'].forEach(k => { if (item[k] !== undefined) { out[k] = item[k]; } });
+    return out;
+  }
+  // takes the rows the action added back out of the queue: one for a track; for a folder or an
+  // album everything the queue grew by, from the slot the action filled. A track that was
+  // already in the queue is moved by Play next, not added: then there is nothing to take out.
+  // (The queue names a track by mnt/… while the library says music-library/…: the slot is
+  // checked by title, not by uri.)
+  undoQueued(before, item, slotOf) {
+    const q = this.playQueueService.queue || [];
+    const grew = q.length - before;
+    if (grew <= 0) { return; }
+    const slot = slotOf(q);
+    if (slot < 0 || slot >= q.length) { return; }
+    if (grew === 1 && item.type === 'song') {
+      const there = q[slot] && String(q[slot].name || q[slot].title || ''), want = String(item.title || item.name || '');
+      if (there && want && there !== want) { return; }
+    }
+    const first = grew === 1 ? slot : Math.max(0, slot - grew + 1);
+    for (let i = first + grew - 1; i >= first; i--) { this.playQueueService.remove(i); }
+  }
+  // the library's own pages for the record's artist and album (local music: the library has them)
+  canGoToArtist(item) { return !!(item && item.type === 'song' && item.service === 'mpd' && item.artist && !this.onArtistPage(item.artist)); }
+  canGoToAlbum(item) { return !!(item && item.type === 'song' && item.service === 'mpd' && item.artist && item.album && !this.onAlbumPage(item)); }
+  onArtistPage(artist) { const i = this.browseService.info || {}; return i.type === 'artist' && (i.title === artist || i.artist === artist); }
+  onAlbumPage(item) { const i = this.browseService.info || {}; return i.type === 'album' && i.album === item.album && i.artist === item.artist; }
+  goToArtist(item) { this.fetchLibrary({ uri: 'artists://' + encodeURIComponent(item.artist), title: item.artist, name: item.artist, type: 'folder', service: 'mpd' }); }
+  goToAlbum(item) { this.fetchLibrary({ uri: 'albums://' + encodeURIComponent(item.artist) + '/' + encodeURIComponent(item.album), title: item.album, name: item.album, type: 'folder', service: 'mpd' }); }
 
   replaceAndPlay(item) {
     if (item.type === 'cuesong') {

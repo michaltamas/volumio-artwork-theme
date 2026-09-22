@@ -1,6 +1,7 @@
 class ToastMessageService {
-  constructor ($rootScope, toastr, socketService, $log) {
+  constructor ($rootScope, toastr, socketService, $log, $injector) {
     'ngInject';
+    this.$injector = $injector;
     this.socketService = socketService;
     this.toastr = toastr;
     this.$log = $log;
@@ -21,6 +22,8 @@ class ToastMessageService {
   }
 
   showMessage (type, message, title) {
+    // the Artwork theme shows some actions as an undo toast of its own; the player's echo of them stays quiet
+    try { if (this.$injector.has('awUndo') && this.$injector.get('awUndo').swallows(message)) { return; } } catch (e) { /* not that theme */ }
     switch (type) {
       case 'success':
         this.toastr.success(message, title, this.toastrDefaultConfig);

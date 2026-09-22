@@ -1,0 +1,21 @@
+/* The undo toast (handoff 7b): 420 wide, pad 14 18, r14, the menu's glass, 22px glyph, mono eyebrow,
+   15/600 title on one line, Undo underlined; 3.2 s at the bottom centre above the mini player. */
+body#artwork .aw-undo {
+  position: fixed; left: 50%; bottom: calc(var(--mini-h) + 16px); z-index: 950; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px; width: 420px; max-width: calc(100vw - 32px); padding: 14px 18px; border-radius: 14px;
+  background: var(--menu-fill); backdrop-filter: blur(34px) brightness(var(--menu-bright)); -webkit-backdrop-filter: blur(34px) brightness(var(--menu-bright));
+  border: 1px solid var(--fill-16); box-shadow: 0 20px 44px -22px var(--shadow-deep); color: var(--ink-1);
+  animation: aw-undo-in .26s cubic-bezier(.2, .7, .2, 1) both;
+  &__icon { flex: none; font-size: 22px; color: var(--ink); }
+  &__text { min-width: 0; flex: 1; }
+  &__eyebrow { font-size: 10px; letter-spacing: .16em; color: var(--ink-muted); }
+  &__title { font-size: 15px; font-weight: 600; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  &__btn { flex: none; margin-left: auto; border: 0; background: transparent; padding: 6px 2px; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px; &:hover { opacity: .8; } }
+}
+@keyframes aw-undo-in { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+/* the playback screen has its own transport at the bottom: the toast rises above it */
+body#artwork .aw-undo--np { bottom: 118px; }
+@media (max-width: 700px) and (orientation: portrait) {
+  body#artwork .aw-undo--np { bottom: calc(88px + var(--sa-b) + 16px); }
+}

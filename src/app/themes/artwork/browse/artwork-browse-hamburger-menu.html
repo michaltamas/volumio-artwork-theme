@@ -10,16 +10,20 @@
   </div>
 </li>
 
+<!-- play: now, next, last (handoff 7a — "Add to queue" is Play last: the same, named for where it lands) -->
 <li ng-if="::browse.showPlayButton(item)" ng-click="browse.play(item)" title="{{'BROWSER.PLAY' | translate}}">
-  <a href><span class="material-symbols-rounded">play_arrow</span><span translate="BROWSER.PLAY"></span></a>
+  <a href><span class="material-symbols-rounded">play_arrow</span><span>Play now</span></a>
 </li>
-<li ng-if="::browse.showAddToQueueButton(item)" ng-click="browse.addToQueue(item)" title="{{'BROWSER.ADD_TO_QUEUE' | translate}}">
-  <a href><span class="material-symbols-rounded">queue_music</span><span translate="BROWSER.ADD_TO_QUEUE"></span>
-    <span class="aw-menu__badge mono" ng-if="browse.playQueueService.playQueue.length">{{browse.playQueueService.playQueue.length}}</span></a>
+<li ng-if="::browse.showAddToQueueButton(item)" ng-click="browse.playNext(item)" title="Play next">
+  <a href><span class="material-symbols-rounded">playlist_play</span><span>Play next</span></a>
 </li>
-<li ng-if="::browse.showAddToPlaylist(item)" ng-click="browse.addToPlaylist(item)" title="{{'BROWSER.ADD_TO_PLAYLIST' | translate}}">
-  <a href><span class="material-symbols-rounded">playlist_add</span><span translate="BROWSER.ADD_TO_PLAYLIST"></span></a>
+<li ng-if="::browse.showAddToQueueButton(item)" ng-click="browse.playLast(item)" title="{{'BROWSER.ADD_TO_QUEUE' | translate}}">
+  <a href><span class="material-symbols-rounded">queue_music</span><span>Play last</span>
+    <span class="aw-menu__badge mono" ng-if="browse.playQueueService.queue.length">{{browse.playQueueService.queue.length}}</span></a>
 </li>
+
+<!-- collect: favourites, playlists, and what the item's kind allows -->
+<li class="aw-menu__sep" ng-if="::(browse.showPlayButton(item) || browse.showAddToQueueButton(item))"></li>
 <li ng-if="::(item.type === 'song' || item.type === 'folder-with-favourites') && browse.browseService.currentFetchRequest.uri !== 'favourites' && !item.favourite"
     ng-click="browse.playlistService.addToFavourites(item); browse.awFavouritesChanged()" title="{{'BROWSER.ADD_TO_FAVOURITES' | translate}}">
   <a href><span class="material-symbols-rounded">favorite</span><span translate="BROWSER.ADD_TO_FAVOURITES"></span></a>
@@ -27,6 +31,9 @@
 <li ng-if="::(browse.browseService.currentFetchRequest.uri === 'favourites' || item.favourite)"
     ng-click="browse.playlistService.removeFromFavourites(item); browse.awFavouritesChanged()" title="{{'BROWSER.REMOVE_FROM_FAVOURITES' | translate}}">
   <a href><span class="material-symbols-rounded">heart_broken</span><span translate="BROWSER.REMOVE_FROM_FAVOURITES"></span></a>
+</li>
+<li ng-if="::browse.showAddToPlaylist(item)" ng-click="browse.addToPlaylist(item)" title="{{'BROWSER.ADD_TO_PLAYLIST' | translate}}">
+  <a href><span class="material-symbols-rounded">playlist_add</span><span>{{'BROWSER.ADD_TO_PLAYLIST' | translate}}…</span></a>
 </li>
 <li ng-if="::browse.browseService.currentFetchRequest.type === 'playlist'"
     ng-click="browse.playlistService.removeFromPlaylist(item, browse.browseService.currentFetchRequest.title)" title="{{'BROWSER.REMOVE_FROM_PLAYLIST' | translate}}">
@@ -62,8 +69,17 @@
   <a href><span class="material-symbols-rounded">heart_broken</span><span translate="BROWSER.REMOVE_FROM_RADIO_FAVOURITES"></span></a>
 </li>
 
-<!-- destructive: replaces the queue -->
+<!-- navigate: the record's artist and album, where the library knows them -->
+<li class="aw-menu__sep" ng-if="::(browse.canGoToArtist(item) || browse.canGoToAlbum(item))"></li>
+<li ng-if="::browse.canGoToAlbum(item)" ng-click="browse.goToAlbum(item)" title="Go to album">
+  <a href><span class="material-symbols-rounded">album</span><span>Go to album</span></a>
+</li>
+<li ng-if="::browse.canGoToArtist(item)" ng-click="browse.goToArtist(item)" title="Go to artist">
+  <a href><span class="material-symbols-rounded">person</span><span>Go to artist</span></a>
+</li>
+
+<!-- destructive, alone at the end: it discards a queue the listener built -->
 <li class="aw-menu__sep" ng-if="::browse.showPlayButton(item)"></li>
 <li ng-if="::browse.showPlayButton(item)" class="aw-menu__danger" ng-click="browse.replaceAndPlay(item)" title="{{'BROWSER.CLEAR_AND_PLAY' | translate}}">
-  <a href><span class="material-symbols-rounded">clear_all</span><span translate="BROWSER.CLEAR_AND_PLAY"></span></a>
+  <a href><span class="material-symbols-rounded">playlist_remove</span><span translate="BROWSER.CLEAR_AND_PLAY"></span></a>
 </li>
