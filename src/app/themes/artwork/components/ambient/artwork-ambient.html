@@ -26,7 +26,7 @@
         <div class="aw-amb__tag mono" ng-if="amb.paused">PAUSED</div>
         <div class="aw-amb__title">{{amb.state.title}}</div>
         <div class="aw-amb__artist" ng-if="amb.state.artist">{{amb.state.artist}}</div>
-        <div class="aw-amb__album" ng-if="amb.state.album">{{amb.state.album}}</div>
+        <div class="aw-amb__album" ng-if="amb.state.album">{{amb.state.album}}<span ng-if="amb.year">&nbsp;·&nbsp;{{amb.year}}</span></div>
 
         <!-- format pill + bit perfect + time (cover-led); the night and the other layouts fold
              these into one mono line -->

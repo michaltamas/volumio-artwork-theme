@@ -71,6 +71,7 @@ import AwThemeService from './components/aw-theme/aw-theme.service';
 import AwAppearanceSlotDirective from './components/aw-appearance-slot/aw-appearance-slot.directive';
 import AwSignalService from './components/aw-signal/aw-signal.service';
 import AwAmbientService from './components/aw-ambient/aw-ambient.service';
+import AwTrackInfoService from './components/aw-track-info/aw-track-info.service';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
@@ -305,6 +306,7 @@ angular.module('volumio', [
   .service('awTheme', AwThemeService)
   .service('awSignal', AwSignalService)
   .service('awAmbient', AwAmbientService)
+  .service('awTrackInfo', AwTrackInfoService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))

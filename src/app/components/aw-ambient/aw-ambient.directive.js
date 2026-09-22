@@ -17,8 +17,9 @@ class AwAmbientDirective {
 }
 
 class AwAmbientController {
-  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme) {
+  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme, awTrackInfo) {
     'ngInject';
+    this.info = awTrackInfo;
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.playerService = playerService;
@@ -50,6 +51,7 @@ class AwAmbientController {
   get stopped() { const s = this.state.status; return !s || s === 'stop' || !this.state.title; }
 
   get cover() { return this.state.albumart ? this.playerService.albumart : ''; }
+  get year() { return this.info.year; }
 
   // "VOLUMIO · HEADPHONES": the zone, then the output it plays through
   get playerLine() {

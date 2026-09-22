@@ -32,7 +32,7 @@
       </div>
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
       <div class="np-artist">{{playback.playerService.state.artist}}</div>
-      <div class="np-album">{{playback.playerService.state.album}}</div>
+      <div class="np-album">{{playback.playerService.state.album}}<span ng-if="playback.npYear">&nbsp;·&nbsp;{{playback.npYear}}</span></div>
       <div id="np-chip-slot">
         <div class="np-quality">
           <div class="np-chip mono" ng-if="playback.playerService.state.bitdepth || playback.playerService.state.samplerate">

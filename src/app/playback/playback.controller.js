@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -16,6 +16,7 @@ class PlaybackController {
     this.playQueueService = playQueueService;
     this.previousState = 'volumio.browse';
     this.signal = awSignal;
+    this.info = awTrackInfo;
 
     $rootScope.$on('$stateChangeStart', (event, toState, toStateParams, fromState, fromParams) => {
       this.previousState = fromState.name;
@@ -29,6 +30,7 @@ class PlaybackController {
   // signal service (the ambient display reads the same one).
   get npRoom() { return this.signal.room; }
   get npOutput() { return this.signal.output; }
+  get npYear() { return this.info.year; }       // from the library's album, local music only
   get npResample() { return this.signal.resample; }
   get npBitPerfect() { return this.signal.bitPerfect; }
 
