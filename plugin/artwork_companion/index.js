@@ -11,7 +11,7 @@
  *
  * Contract (the interface's side lives in components/aw-player-settings):
  *   callMethod miscellanea/artwork_companion getSettings {}        -> pushArtworkSettings to the caller
- *   callMethod miscellanea/artwork_companion setSettings {theme?, ambient?}
+ *   callMethod miscellanea/artwork_companion setSettings {theme?, ambient?, pins?}
  *                                                                   -> pushArtworkSettings to everyone
  * A key is absent until someone chooses it: a fresh install answers {} and every screen keeps
  * what it had. A partial payload never clears the other key.
@@ -89,6 +89,30 @@ ArtworkCompanion.prototype.snapshot = function () {
   if (THEMES.indexOf(theme) > -1) { out.theme = theme; }
   var ambient = this.readAmbient();
   if (ambient) { out.ambient = ambient; }
+  var pins = this.readPins();
+  if (pins) { out.pins = pins; }
+  return out;
+};
+
+// the pins: quick access on Home, up to 24, each only what a tile needs
+ArtworkCompanion.prototype.readPins = function () {
+  var raw = this.config.get('pins');
+  if (!raw) { return null; }
+  try { return this.cleanPins(typeof raw === 'string' ? JSON.parse(raw) : raw); } catch (e) { return null; }
+};
+
+ArtworkCompanion.prototype.cleanPins = function (list) {
+  if (!Array.isArray(list)) { return null; }
+  var out = [], seen = {};
+  list.forEach(function (p) {
+    if (!p || typeof p !== 'object' || !p.uri || seen[p.uri] || out.length >= 24) { return; }
+    seen[p.uri] = true;
+    var pin = { uri: String(p.uri).slice(0, 600), service: String(p.service || '').slice(0, 40), type: String(p.type || '').slice(0, 40), title: String(p.title || '').slice(0, 200) };
+    if (p.albumart) { pin.albumart = String(p.albumart).slice(0, 600); }
+    if (p.artist) { pin.artist = String(p.artist).slice(0, 200); }
+    if (p.album) { pin.album = String(p.album).slice(0, 200); }
+    out.push(pin);
+  });
   return out;
 };
 
@@ -136,6 +160,11 @@ ArtworkCompanion.prototype.setSettings = function (data) {
       if (patch) { this.config.set('ambient', JSON.stringify(Object.assign({}, this.readAmbient() || {}, patch))); changed = true; }
       else { this.logger.warn('[artwork_companion] refused ambient ' + JSON.stringify(d.ambient)); }
     }
+  }
+  if (d.pins !== undefined) {
+    var pins = this.cleanPins(d.pins);
+    if (pins) { this.config.set('pins', JSON.stringify(pins)); changed = true; }
+    else { this.logger.warn('[artwork_companion] refused pins'); }
   }
   var snap = this.snapshot();
   if (changed) {
