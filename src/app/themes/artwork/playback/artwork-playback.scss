@@ -380,12 +380,7 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   /* the Lyrics face: a compact head */
   .np-meta--lyrics {
     .np-title { font-size: 52px; letter-spacing: -.032em; line-height: 1.02; margin-top: 0; }
-    .np-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
-    .np-artist { font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
-    .np-album { font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
-      &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
-    #np-chip-slot { display: inline-flex; margin: 0; }
-    .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
+    .np-byline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-top: 12px; }
     .np-format { display: none; }
   }
   .np-lyrics { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; margin-top: 28px; }
@@ -431,3 +426,10 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
 html.aw-is-light body#artwork #np { --lyr-near: #5e646c; --lyr-mid: #676d74; --lyr-far: #8b9098; }
 /* one tap on a line seeks; a track row's pressed tint on paper */
 html.aw-is-light body#artwork #np .np-lyrics__line:active { background: rgba(20, 22, 26, .07); }
+/* the Lyrics face's byline: artist 21/600, album 17 after a dot, the chip beside them — one baseline
+   (outranks the fluid rules that space the artist and album on the other faces) */
+body#artwork #np .np-meta--lyrics .np-artist { display: inline; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
+body#artwork #np .np-meta--lyrics .np-album { display: inline; font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
+  &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
+body#artwork #np .np-meta--lyrics #np-chip-slot { display: inline-flex; align-self: center; margin: 0; }
+body#artwork #np .np-meta--lyrics .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
