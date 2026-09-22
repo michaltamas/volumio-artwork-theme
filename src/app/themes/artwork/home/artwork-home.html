@@ -19,33 +19,6 @@
     </aw-head-actions>
   </aw-page-head>
 
-  <!-- pinned: quick access, above everything else (handoff 10a/10b); absent when nothing is pinned -->
-  <div class="home-pins" ng-if="home.pins.list.length" ng-class="{'is-editing': home.pinEdit}">
-    <div class="home-pins-head">
-      <span class="mono home-shelf-title">PINNED</span>
-      <span class="mono home-pins-count">{{home.pins.list.length}}</span>
-      <button type="button" class="home-pins-edit" ng-click="home.pinEdit = !home.pinEdit">{{home.pinEdit ? 'Done' : 'Edit'}}</button>
-    </div>
-    <div class="home-pins-row">
-      <div class="home-pin" ng-repeat="p in home.pins.list track by p.uri" data-index="{{$index}}" ng-class="{'is-lifted': home.drag && home.drag.from === $index}"
-           ng-click="!home.pinEdit && home.openPin(p)" aw-pointerdown="home.pinDragStart($event, $index)" role="button" tabindex="0" title="{{p.title}}">
-        <img class="home-pin__art" ng-if="home.pinArt(p)" ng-src="{{home.pinArt(p)}}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
-        <div class="home-pin__glyph" ng-style="{display: home.pinArt(p) ? 'none' : 'grid'}"><span class="material-symbols-rounded">{{home.pins.glyph(p)}}</span></div>
-        <div class="home-pin__title">{{p.title}}</div>
-        <div class="home-pin__sub mono">{{home.pins.eyebrow(p)}}</div>
-        <!-- the tile's own menu: the only place a pin is removed, so a mis-tap never unpins -->
-        <div class="home-pin__menu" uib-dropdown ng-click="$event.stopPropagation()">
-          <button type="button" class="home-pin__more" uib-dropdown-toggle aria-label="Options for {{p.title}}" aw-pointerdown="$event.stopPropagation()"><span class="material-symbols-rounded">more_horiz</span></button>
-          <ul class="dropdown-menu buttonsGroup" uib-dropdown-menu>
-            <li ng-click="home.openPin(p)"><a href><span class="material-symbols-rounded">{{p.type === 'webradio' || p.type === 'mywebradio' ? 'play_arrow' : 'open_in_new'}}</span><span>{{p.type === 'webradio' || p.type === 'mywebradio' ? 'Play' : 'Open'}}</span></a></li>
-            <li class="aw-menu__sep"></li>
-            <li class="aw-menu__danger" ng-click="home.pins.unpin(p)"><a href><span class="material-symbols-rounded">push_pin</span><span>Unpin</span></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- continue / pick up where you left off -->
   <div class="home-hero" ng-if="home.hasContinue">
     <div class="home-hero-cover">
@@ -89,6 +62,40 @@
             <div class="music-card__label" title="{{album.title || album.album}}">{{album.title || album.album}}</div>
           </div>
           <p class="music-card__meta">{{album.artist || ''}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- pinned: quick access (handoff 10a/10b), in the shelf's own dress, under the recent albums;
+       absent when nothing is pinned -->
+  <div class="home-shelf home-pins" ng-if="home.pins.list.length" ng-class="{'is-editing': home.pinEdit}">
+    <div class="home-shelf-head">
+      <span class="mono home-shelf-title">PINNED</span>
+      <span class="mono home-pins-count">{{home.pins.list.length}}</span>
+      <button type="button" class="home-pins-edit" ng-click="home.pinEdit = !home.pinEdit">{{home.pinEdit ? 'Done' : 'Edit'}}</button>
+    </div>
+    <div class="main__row">
+      <div class="music-card__wrapper home-pin" ng-repeat="p in home.pins.list track by p.uri" data-index="{{$index}}" ng-class="{'is-lifted': home.drag && home.drag.from === $index}"
+           aw-pointerdown="home.pinDragStart($event, $index)" title="{{p.title}}">
+        <div class="music-card" ng-click="!home.pinEdit && home.openPin(p)">
+          <div class="music-card__header">
+            <img class="music-card__img" ng-if="home.pinArt(p)" ng-src="{{home.pinArt(p)}}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
+            <div class="home-pin__glyph" ng-style="{display: home.pinArt(p) ? 'none' : 'grid'}"><span class="material-symbols-rounded">{{home.pins.glyph(p)}}</span></div>
+            <!-- the tile's own menu: the only place a pin is removed, so a mis-tap never unpins -->
+            <div class="home-pin__menu" uib-dropdown ng-click="$event.stopPropagation()">
+              <button type="button" class="home-pin__more" uib-dropdown-toggle aria-label="Options for {{p.title}}" aw-pointerdown="$event.stopPropagation()"><span class="material-symbols-rounded">more_horiz</span></button>
+              <ul class="dropdown-menu buttonsGroup" uib-dropdown-menu>
+                <li ng-click="home.openPin(p)"><a href><span class="material-symbols-rounded">{{p.type === 'webradio' || p.type === 'mywebradio' ? 'play_arrow' : 'open_in_new'}}</span><span>{{p.type === 'webradio' || p.type === 'mywebradio' ? 'Play' : 'Open'}}</span></a></li>
+                <li class="aw-menu__sep"></li>
+                <li class="aw-menu__danger" ng-click="home.pins.unpin(p)"><a href><span class="material-symbols-rounded">push_pin</span><span>Unpin</span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="music-card__info">
+            <div class="music-card__label" title="{{p.title}}">{{p.title}}</div>
+          </div>
+          <p class="music-card__meta">{{home.pins.eyebrow(p)}}</p>
         </div>
       </div>
     </div>
