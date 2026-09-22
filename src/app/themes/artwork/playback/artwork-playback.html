@@ -122,10 +122,13 @@
 
   <!-- phone: the words as a panel over what plays; the handle drags it away (handoff 6b) -->
   <div class="np-lsheet" ng-if="playback.lyricsOn">
-    <div class="np-sheet-handle" aw-drag-down="playback.toggleLyrics()" aria-hidden="true"></div>
+    <!-- the grip is the whole head, not the 4px handle: a finger has to land somewhere -->
+    <div class="np-lsheet__grip" aw-drag-down="playback.toggleLyrics()">
+      <div class="np-sheet-handle" aria-hidden="true"></div>
     <div class="np-lsheet__head">
       <div class="np-lsheet__title">{{playback.playerService.state.title}}</div>
       <div class="np-lsheet__artist" ng-if="playback.playerService.state.artist">{{playback.playerService.state.artist}}</div>
+    </div>
     </div>
     <div class="np-lsheet__body" ng-include="'app/themes/artwork/playback/aw-lyrics-column.html'"></div>
   </div>

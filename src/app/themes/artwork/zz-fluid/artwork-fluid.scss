@@ -367,7 +367,8 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
     background: var(--panel-sheet); backdrop-filter: blur(34px); -webkit-backdrop-filter: blur(34px); border-top: 1px solid var(--fill-14);
     animation: aw-lsheet-in .32s cubic-bezier(.2, .7, .2, 1) both;
   }
-  body#artwork #np .np-sheet-handle { flex: none; align-self: center; width: 38px; height: 4px; border-radius: 2px; background: var(--fill-30); touch-action: none; }
+  body#artwork #np .np-lsheet__grip { flex: none; display: flex; flex-direction: column; margin: -18px -26px 0; padding: 18px 26px 0; touch-action: none; cursor: grab; -webkit-user-select: none; user-select: none; }
+  body#artwork #np .np-sheet-handle { flex: none; align-self: center; width: 38px; height: 4px; border-radius: 2px; background: var(--fill-30); }
   body#artwork #np .np-lsheet__head { margin-top: 16px; min-width: 0; }
   body#artwork #np .np-lsheet__title { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   body#artwork #np .np-lsheet__artist { font-size: 15px; color: var(--ink-2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
