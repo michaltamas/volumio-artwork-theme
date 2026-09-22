@@ -23,7 +23,7 @@
 </li>
 
 <!-- collect: favourites, playlists, and what the item's kind allows -->
-<li class="aw-menu__sep" ng-if="::(browse.showPlayButton(item) || browse.showAddToQueueButton(item))"></li>
+<li class="aw-menu__sep" ng-if="::((browse.showPlayButton(item) || browse.showAddToQueueButton(item)) && (browse.showAddToPlaylist(item) || browse.awPins.canPin(item) || item.type === 'song' || item.type === 'folder-with-favourites' || item.type === 'webradio' || item.type === 'mywebradio' || item.type === 'playlist'))"></li>
 <li ng-if="::(item.type === 'song' || item.type === 'folder-with-favourites') && browse.browseService.currentFetchRequest.uri !== 'favourites' && !item.favourite"
     ng-click="browse.playlistService.addToFavourites(item); browse.awFavouritesChanged()" title="{{'BROWSER.ADD_TO_FAVOURITES' | translate}}">
   <a href><span class="material-symbols-rounded">favorite</span><span translate="BROWSER.ADD_TO_FAVOURITES"></span></a>
@@ -34,6 +34,9 @@
 </li>
 <li ng-if="::browse.showAddToPlaylist(item)" ng-click="browse.addToPlaylist(item)" title="{{'BROWSER.ADD_TO_PLAYLIST' | translate}}">
   <a href><span class="material-symbols-rounded">playlist_add</span><span>{{'BROWSER.ADD_TO_PLAYLIST' | translate}}…</span></a>
+</li>
+<li ng-if="::browse.awPins.canPin(item)" ng-click="browse.awPins.isPinned(item) ? browse.awPins.unpin(item) : browse.awPins.pin(item)" title="Pin to Home">
+  <a href><span class="material-symbols-rounded">push_pin</span><span>{{browse.awPins.isPinned(item) ? 'Unpin' : 'Pin to Home'}}</span></a>
 </li>
 <li ng-if="::browse.browseService.currentFetchRequest.type === 'playlist'"
     ng-click="browse.playlistService.removeFromPlaylist(item, browse.browseService.currentFetchRequest.title)" title="{{'BROWSER.REMOVE_FROM_PLAYLIST' | translate}}">

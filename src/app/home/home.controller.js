@@ -1,6 +1,10 @@
 class HomeController {
-  constructor($state, $scope, $http, playerService, socketService, browseService, awMobileMenu, $timeout) {
+  constructor($state, $scope, $http, playerService, socketService, browseService, awMobileMenu, $timeout, awPins, playQueueService) {
     'ngInject';
+    this.pins = awPins;
+    this.playQueueService = playQueueService;
+    this.pinEdit = false;
+    this.drag = null;
     this.awMenu = awMobileMenu;
     this.$timeout = $timeout;
     this.$state = $state;
@@ -73,6 +77,39 @@ class HomeController {
     this.browseService.historyUri = [];
     this.$state.go('volumio.browse');
     this.browseService.fetchLibrary(source);
+  }
+
+  // --- pins (handoff 10a/10b): a tile opens what it stands for; a station plays ---
+  openPin(p) {
+    if (p.type === 'webradio' || p.type === 'mywebradio') { this.playQueueService.replaceAndPlay(p); return; }
+    this.openSource({ uri: p.uri, service: p.service, type: p.type, title: p.title, name: p.title, albumart: p.albumart, artist: p.artist, album: p.album });
+  }
+  pinArt(p) { return p.albumart ? this.playerService.getAlbumart(p.albumart) : ''; }
+  // drag to reorder: the lifted tile follows the pointer; crossing another tile moves it there
+  pinDragStart(e, i) {
+    if (!this.pinEdit || (e.button && e.button !== 0)) { return; }
+    e.preventDefault();
+    const tile = e.currentTarget;
+    try { tile.setPointerCapture(e.pointerId); } catch (err) { /* older engines */ }
+    this.drag = { from: i, x: e.clientX, y: e.clientY };
+    const move = (ev) => {
+      if (!this.drag) { return; }
+      tile.style.transform = `translate(${ev.clientX - this.drag.x}px, ${ev.clientY - this.drag.y}px) rotate(-2deg) scale(1.03)`;
+      const under = document.elementsFromPoint(ev.clientX, ev.clientY).find(el => el !== tile && el.classList && el.classList.contains('home-pin'));
+      if (under) {
+        const to = parseInt(under.getAttribute('data-index'), 10);
+        if (!isNaN(to) && to !== this.drag.from) {
+          this.pins.move(this.drag.from, to);
+          this.drag.from = to;
+          this.$scope.$applyAsync();
+        }
+      }
+    };
+    const end = () => {
+      tile.removeEventListener('pointermove', move); tile.removeEventListener('pointerup', end); tile.removeEventListener('pointercancel', end);
+      tile.style.transform = ''; this.drag = null; this.$scope.$applyAsync();
+    };
+    tile.addEventListener('pointermove', move); tile.addEventListener('pointerup', end); tile.addEventListener('pointercancel', end);
   }
 
   // recently played albums: Last_100 tracks → unique (artist, album) in play order → the

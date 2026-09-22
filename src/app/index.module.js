@@ -77,6 +77,8 @@ import AwLyricsService from './components/aw-lyrics/aw-lyrics.service';
 import AwLyricsListDirective from './components/aw-lyrics/aw-lyrics-list.directive';
 import AwUndoService from './components/aw-undo/aw-undo.service';
 import AwSleepService from './components/aw-sleep/aw-sleep.service';
+import AwPinsService from './components/aw-pins/aw-pins.service';
+import AwPointerdownDirective from './components/aw-pins/aw-pointerdown.directive';
 import AwUndoDirective from './components/aw-undo/aw-undo.directive';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
@@ -318,6 +320,7 @@ angular.module('volumio', [
   .service('awLyrics', AwLyricsService)
   .service('awUndo', AwUndoService)
   .service('awSleep', AwSleepService)
+  .service('awPins', AwPinsService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
@@ -329,6 +332,7 @@ angular.module('volumio', [
   .directive('awAmbient', (themeManager) => new AwAmbientDirective(themeManager))
   .directive('awLyricsList', () => new AwLyricsListDirective())
   .directive('awUndo', (themeManager) => new AwUndoDirective(themeManager))
+  .directive('awPointerdown', () => new AwPointerdownDirective())
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 

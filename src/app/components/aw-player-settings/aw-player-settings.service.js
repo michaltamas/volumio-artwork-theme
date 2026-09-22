@@ -17,8 +17,9 @@ const ENDPOINT = 'miscellanea/artwork_companion';
 const EVENT = 'pushArtworkSettings';
 
 class AwPlayerSettingsService {
-  constructor($rootScope, socketService, awTheme, awAmbient) {
+  constructor($rootScope, socketService, awTheme, awAmbient, awPins) {
     'ngInject';
+    this.pins = awPins;
     this.$rootScope = $rootScope;
     this.socketService = socketService;
     this.theme = awTheme;
@@ -47,6 +48,9 @@ class AwPlayerSettingsService {
     // the ambient display is a matter of the player's screens: the player's word is final
     if (data.ambient) { this.ambient.adopt(data.ambient); }
     else if (this.ambient.remote) { this.ambient.revert(); }   // the player's word withdrawn: back to this browser's copy
+    // the pins: the player's list is the list; a change here goes back to it
+    if (Array.isArray(data.pins)) { this.pins.adopt(data.pins, (list) => this.set({ pins: list })); }
+    else if (!this.pins.remote) { this.pins.adopt(this.pins.read(), (list) => this.set({ pins: list })); }
     this.$rootScope.$broadcast('aw:player-settings', data);
     this.$rootScope.$applyAsync();
   }

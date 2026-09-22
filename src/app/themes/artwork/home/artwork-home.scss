@@ -42,3 +42,41 @@ body#artwork #artwork-home {
   .main__row { grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 20px; padding-bottom: 0; }
   .music-card__header { background: var(--card-flat); }
 }
+
+/* ---- Pinned: quick access above everything else on Home (handoff 10a). Tiles 168 wide, pad 10, r14, on
+   flat card ground; cover 148 r6, or the kind's glyph at 52 on a .06 tile; title 14/600; mono eyebrow
+   10/.14em. Drag to reorder in Edit: the lifted tile rotates 2°, scales 1.03 and casts a shadow. ---- */
+body#artwork #artwork-home {
+  .home-pins { margin-top: 26px; }
+  .home-pins-head { display: flex; align-items: center; gap: 12px; }
+  .home-pins-count { font-size: 11px; letter-spacing: .16em; color: var(--ink-faint); }
+  .home-pins-edit { margin-left: auto; border: 0; background: transparent; padding: 4px 2px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
+  .home-pins-row { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; }
+  .home-pin { position: relative; flex: none; width: 168px; padding: 10px; border-radius: 14px; background: var(--surface-2, var(--fill-06)); border: 1px solid var(--fill-08); cursor: pointer; user-select: none; -webkit-user-select: none;
+    transition: transform .18s cubic-bezier(.2, .7, .2, 1), box-shadow .18s ease;
+    &:hover { background: var(--fill-10); .home-pin__more { opacity: 1; } }
+    &.is-lifted { z-index: 5; transition: none; box-shadow: 0 26px 50px -18px var(--shadow-deep); outline: 1px solid var(--fill-20); }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  .is-editing .home-pin { cursor: grab; touch-action: none; }
+  .home-pin__art { display: block; width: 148px; height: 148px; border-radius: var(--r-cover); object-fit: cover; }
+  .home-pin__glyph { width: 148px; height: 148px; border-radius: var(--r-cover); background: var(--fill-06); display: grid; place-items: center; .material-symbols-rounded { font-size: 52px; color: var(--ink-3); } }
+  .home-pin__title { font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .home-pin__sub { font-size: 10px; letter-spacing: .14em; color: var(--ink-dim); margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .home-pin__menu { position: absolute; top: 16px; right: 16px; }
+  .home-pin__more { width: 30px; height: 30px; border-radius: 9px; border: 0; padding: 0; display: grid; place-items: center; background: rgba(8, 10, 13, .55); color: #fff; cursor: pointer; opacity: 0; transition: opacity .15s ease;
+    .material-symbols-rounded { font-size: 19px; } }
+  .home-pin__menu.open .home-pin__more { opacity: 1; }
+  .home-pin__menu .dropdown-menu { right: 0; left: auto; top: 100%; margin-top: 6px; }
+  .is-editing .home-pin__more { opacity: 1; }
+}
+/* the tile's menu wears the row menu's dress (the same rules key on .hamburgerMenu) */
+body#artwork #artwork-home .home-pin__menu ul.dropdown-menu.buttonsGroup { width: 200px; padding: 8px; margin: 6px 0 0; border-radius: 14px; overflow: hidden;
+  background: var(--menu-fill); backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright)); -webkit-backdrop-filter: blur(60px) saturate(1.6) brightness(var(--menu-bright));
+  border: 1px solid var(--fill-14); box-shadow: 0 34px 70px -26px var(--shadow-deep);
+  li { list-style: none; }
+  li > a { display: flex; align-items: center; gap: 13px; height: 44px; padding: 0 14px; border-radius: 10px; color: var(--ink-2); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
+    .material-symbols-rounded { width: 20px; font-size: 20px; color: var(--ink-muted); flex: none; }
+    &:hover, &:focus { background: var(--fill-09); color: var(--ink); .material-symbols-rounded { color: var(--ink); } } }
+  .aw-menu__sep { height: 1px; margin: 6px 10px; background: var(--fill-09); }
+  .aw-menu__danger > a, .aw-menu__danger > a .material-symbols-rounded { color: var(--err-soft); }
+}
