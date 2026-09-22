@@ -39,6 +39,10 @@ class AwAmbientController {
       this.swapping = true;
       $timeout(() => { this.swapping = false; }, 260);
     });
+    // the clock is redrawn the moment the screen opens and whenever the settings change, not
+    // only on the next tick: a format switched a second ago must show at once
+    $scope.$on('aw:ambient', () => this.tick());
+    $scope.$on('aw:ambient-settings', () => this.tick());
     $scope.$on('$destroy', () => $interval.cancel(clock));
   }
 
