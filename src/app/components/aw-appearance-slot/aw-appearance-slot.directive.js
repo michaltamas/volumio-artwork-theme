@@ -24,14 +24,29 @@ class AwAppearanceSlotDirective {
 }
 
 class AwAppearanceSlotController {
-  constructor($scope, $timeout, $stateParams, awTheme, awAmbient) {
+  constructor($scope, $timeout, $stateParams, awTheme, awAmbient, toastMessageService) {
     'ngInject';
     this.ambient = awAmbient;
+    this.toast = toastMessageService;
+    // the rows edit a draft; Save applies it, like every other section on this page
+    this.draft = angular.copy(awAmbient.settings);
+    $scope.$on('aw:ambient-settings', () => { this.draft = angular.copy(awAmbient.settings); });
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.$stateParams = $stateParams;
     this.theme = awTheme;
     this.placed = false;
+  }
+
+  saveAmbient() {
+    const d = this.draft;
+    const time = v => /^([01]?\d|2[0-3]):[0-5]\d$/.test(String(v || '').trim());
+    if (d.night && !(time(d.nightFrom) && time(d.nightTo))) {
+      this.toast.showMessage('warning', 'Night hours need a time like 23:00 and 07:00.', 'Ambient display');
+      return;
+    }
+    this.ambient.set(angular.copy(d));
+    this.toast.showMessage('success', 'Ambient display settings saved.', 'Ambient display');
   }
 
   attach(host) {
