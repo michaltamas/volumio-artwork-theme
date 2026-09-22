@@ -84,11 +84,11 @@
     <button type="button" class="np-m-tile" ng-class="{active: playback.playerService.state.repeat}" ng-click="playback.cycleRepeat()" title="{{'TRACK_INFO_BAR.REPEAT' | translate}}">
       <span class="material-symbols-rounded">{{playback.playerService.state.repeat && playback.playerService.state.repeatSingle ? 'repeat_one' : 'repeat'}}</span>
     </button>
-    <track-actions-btn class="np-m-tile"></track-actions-btn>
     <button type="button" class="np-m-tile np-m-tile--lyrics" ng-class="{active: playback.lyricsOn}" ng-click="playback.toggleLyrics()"
             ng-disabled="playback.lyrics.state === 'none'" title="Lyrics" aria-label="Lyrics">
       <span class="material-symbols-rounded">lyrics</span>
     </button>
+    <track-actions-btn class="np-m-tile"></track-actions-btn>
   </div>
 
   <div id="np-footer">
