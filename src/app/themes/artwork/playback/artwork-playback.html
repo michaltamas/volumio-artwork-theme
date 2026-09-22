@@ -10,6 +10,10 @@
       <div class="np-zone mono" ng-if="playback.npRoom">
         <span>{{playback.npRoom}}</span><span class="np-zone-out" ng-if="playback.npOutput">&nbsp;·&nbsp;{{playback.npOutput}}</span>
       </div>
+      <!-- the sleep timer's only trace while it runs (handoff 9b): a tag that reopens its sheet -->
+      <button type="button" class="np-sleep-tag" ng-if="playback.sleep.running" ng-click="playback.openSleep()" title="Sleep timer">
+        <span class="material-symbols-rounded">bedtime</span><span class="mono">SLEEP · {{playback.sleep.minutesLeft}} MIN</span>
+      </button>
     </div>
     <div id="np-badge-slot">
       <div class="np-badge" ng-if="playback.npBitPerfect">

@@ -55,6 +55,7 @@
 
     <div class="aw-amb__clock mono" ng-if="!amb.stopped">{{amb.clockText}}<span class="aw-amb__ampm" ng-if="amb.clockSuffix">{{amb.clockSuffix}}</span></div>
     <div class="aw-amb__name aw-amb__name--corner mono" ng-if="!amb.stopped">{{amb.playerLine}}</div>
+    <div class="aw-amb__sleep" ng-if="amb.sleep.running && !amb.stopped"><span class="material-symbols-rounded">bedtime</span><span class="mono">SLEEP · {{amb.sleep.minutesLeft}} MIN</span></div>
   </div>
 
   <!-- night: one scrim over everything, playback untouched -->

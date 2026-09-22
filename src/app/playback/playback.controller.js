@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window, awSleep, modalService) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -18,6 +18,8 @@ class PlaybackController {
     this.signal = awSignal;
     this.info = awTrackInfo;
     this.lyrics = awLyrics;
+    this.sleep = awSleep;
+    this.modalService = modalService;
     this.$window = $window;
     // the right column shows the cover's company, the info, or the lyrics (handoff 6a); the
     // choice is this browser's and outlives the page
@@ -84,6 +86,9 @@ class PlaybackController {
   get lyricsPlainLines() { return this.lyrics.plain ? this.lyrics.plain.split(/\r?\n/) : []; }
   get npResample() { return this.signal.resample; }
   get npBitPerfect() { return this.signal.bitPerfect; }
+
+  // the sleep timer's sheet (Volumio's own sleep modal, in the theme's dress)
+  openSleep() { this.modalService.openModal('ModalSleepController', 'app/components/side-menu/elements/modal-sleep.html', { name: 'Sleep' }, 'sm'); }
 
   // Zones & outputs sheet (the mini player's zone button opens the same one)
   openOutputs() { this.$rootScope.$broadcast('volumio:toggleOutputs'); }

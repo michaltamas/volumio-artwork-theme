@@ -572,3 +572,42 @@ body#artwork .aw-sheet--track {
   .aw-track__spin { animation: aw-spin 1s linear infinite; color: var(--ink-3); }
   .aw-track__sep { height: 1px; margin: 6px 0; background: var(--fill-09); }
 }
+
+/* ---- Sleep timer sheet (handoff 9a): 420 wide, pad 24 26 26, r18; four presets h56 r12 mono 16/700, the
+   chosen one in ink; a custom row h52; the action as a segmented pill; Start h50. Running: the countdown
+   mono 64, REMAINING · THEN …, a 4px bar, STARTED / ENDS, one action — Turn off timer. ---- */
+body#artwork .aw-sheet--sleep {
+  padding: 24px 26px 26px; color: var(--ink-1);
+  .aw-sleep__head { display: flex; align-items: center; gap: 10px; .material-symbols-rounded { font-size: 22px; color: var(--ink-2); } .mono { font-size: 11px; letter-spacing: .16em; color: var(--ink-muted); }
+    .aw-sheet__close { margin-left: auto; } }
+  .aw-sleep__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-top: 20px; }
+  .aw-sleep__preset { height: 56px; border-radius: 12px; display: grid; place-items: center; font-size: 16px; font-weight: 700; color: var(--ink); cursor: pointer;
+    background: var(--fill-08); border: 1px solid var(--fill-12);
+    &:hover:not(.active) { background: var(--fill-12); }
+    &.active { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
+    &:focus-visible { outline: 2px solid var(--ink-1); outline-offset: 2px; } }
+  .aw-sleep__unit { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); margin-top: 8px; }
+  .aw-sleep__custom { display: flex; align-items: center; justify-content: space-between; height: 52px; margin: 14px 0 0; padding: 0 14px; border-radius: 12px; border: 1px solid var(--fill-12); font-weight: 400; cursor: text;
+    > span:first-child { font-size: 15px; color: var(--ink-3); }
+    &.active { border-color: var(--ink); }
+    input { width: 3.2ch; border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 14px; text-align: right; outline: 0; padding: 0; &::placeholder { color: var(--ink-dim); } } }
+  .aw-sleep__custom-val { font-size: 14px; color: var(--ink-dim); display: inline-flex; align-items: center; gap: 6px; }
+  .aw-sleep__rule { height: 1px; background: var(--fill-09); margin: 20px 0; }
+  .aw-sleep__label { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .aw-sleep__seg { display: flex; margin-top: 12px; padding: 3px; border-radius: 999px; background: var(--fill-08); border: 1px solid var(--fill-12);
+    button { flex: 1; border: 0; background: transparent; border-radius: 999px; padding: 9px 0; font-family: var(--font-ui); font-size: 14px; color: var(--ink-3); cursor: pointer;
+      &.active { background: var(--ink); color: var(--on-ink); font-weight: 700; } &:hover:not(.active) { color: var(--ink); } } }
+  .aw-sleep__start, .aw-sleep__off { display: block; width: 100%; height: 50px; border-radius: 999px; font-family: var(--font-ui); font-size: 16px; cursor: pointer; }
+  .aw-sleep__start { margin-top: 22px; border: 0; background: var(--ink); color: var(--on-ink); font-weight: 700; &:disabled { opacity: .45; cursor: default; } &:hover:not(:disabled) { background: var(--ink-1); } }
+  .aw-sleep__run { display: flex; flex-direction: column; align-items: center; }
+  .aw-sleep__count { font-size: 64px; line-height: 1; letter-spacing: -.02em; color: var(--ink); margin-top: 34px; font-variant-numeric: tabular-nums; }
+  .aw-sleep__then { font-size: 11px; letter-spacing: .16em; color: var(--ink-3); margin-top: 10px; }
+  .aw-sleep__bar { align-self: stretch; height: 4px; border-radius: 2px; background: var(--fill-20); margin-top: 30px; }
+  .aw-sleep__bar-fill { height: 100%; border-radius: 2px; background: var(--ink); transition: width 1s linear; }
+  .aw-sleep__ends { align-self: stretch; display: flex; justify-content: space-between; margin-top: 9px; font-size: 11px; color: var(--ink-dim); }
+  .aw-sleep__off { margin-top: 34px; border: 1px solid var(--fill-20); background: transparent; color: var(--ink); font-weight: 600; &:hover { background: var(--fill-06); } }
+}
+/* the tag while it runs (9b): Now Playing's top bar and the mini player's rates line */
+body#artwork #np .np-sleep-tag { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; margin-left: 16px; border-radius: 999px; border: 1px solid var(--fill-13); background: var(--fill-10); color: var(--ink-1); cursor: pointer; flex: none;
+  .material-symbols-rounded { font-size: 18px; color: var(--ink-3); } .mono { font-size: 11px; letter-spacing: .14em; } &:hover { background: var(--fill-16); } }
+body#artwork #footer-content .track-info-rates .track-info-sleep::before { content: '·'; margin-right: 6px; }

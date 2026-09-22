@@ -76,6 +76,7 @@ import AwPlayerSettingsService from './components/aw-player-settings/aw-player-s
 import AwLyricsService from './components/aw-lyrics/aw-lyrics.service';
 import AwLyricsListDirective from './components/aw-lyrics/aw-lyrics-list.directive';
 import AwUndoService from './components/aw-undo/aw-undo.service';
+import AwSleepService from './components/aw-sleep/aw-sleep.service';
 import AwUndoDirective from './components/aw-undo/aw-undo.directive';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
@@ -316,6 +317,7 @@ angular.module('volumio', [
   .service('awPlayerSettings', AwPlayerSettingsService)
   .service('awLyrics', AwLyricsService)
   .service('awUndo', AwUndoService)
+  .service('awSleep', AwSleepService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))

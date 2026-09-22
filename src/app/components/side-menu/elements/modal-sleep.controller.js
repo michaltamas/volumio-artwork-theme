@@ -1,7 +1,17 @@
 class ModalSleepController {
-  constructor($uibModalInstance, socketService, dataObj, $log, $translate) {
+  constructor($uibModalInstance, socketService, dataObj, $log, $translate, $injector) {
     'ngInject';
     this.$uibModalInstance = $uibModalInstance;
+    // the Artwork sheet (handoff 9a): presets, a custom length, the action; the timer's state
+    // lives in awSleep, shared with the tags on Now Playing and the mini player
+    this.sleep = $injector.has('awSleep') ? $injector.get('awSleep') : null;
+    this.toast = $injector.has('toastMessageService') ? $injector.get('toastMessageService') : null;
+    this.undo = $injector.has('awUndo') ? $injector.get('awUndo') : null;
+    this.presets = [15, 30, 45, 60];
+    this.minutes = 30;
+    this.customOn = false;
+    this.custom = '';
+    this.action = this.sleep ? this.sleep.action : 'stop';
     this.socketService = socketService;
     this.dataObj = dataObj;
     this.showMeridian = false;
@@ -91,6 +101,29 @@ class ModalSleepController {
 
   cancel() {
     this.$uibModalInstance.dismiss('cancel');
+  }
+
+  /* ---- the Artwork sheet ---- */
+  pick(m) { this.minutes = m; this.customOn = false; }
+  pickCustom() {
+    const m = parseInt(String(this.custom).replace(/\D/g, ''), 10);
+    this.customOn = true;
+    this.minutes = m > 0 ? Math.min(m, 24 * 60 - 1) : 0;
+  }
+  start() {
+    if (!this.sleep || !this.minutes) { return; }
+    this.sleep.start(this.minutes, this.action);
+    // this screen's own toast first; the player's echo of the action, which follows, stays quiet
+    if (this.toast) { this.toast.showMessage('info', (this.action === 'poweroff' ? 'Player powers off at ' : 'Music stops at ') + this.sleep.endsText, 'Sleep timer'); }
+    if (this.undo) { this.undo.swallowNext(); }
+    this.$uibModalInstance.close();
+  }
+  off() {
+    if (!this.sleep) { return; }
+    this.sleep.off();
+    if (this.toast) { this.toast.showMessage('info', 'Timer off', 'Sleep timer'); }
+    if (this.undo) { this.undo.swallowNext(); }
+    this.$uibModalInstance.close();
   }
 
   /* ---- helpers for the Artwork sleep sheet (stepper, preset pills, "ends at") ---- */

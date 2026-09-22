@@ -16,10 +16,11 @@ class TrackInfoDirective {
 }
 
 class TrackInfoController {
-  constructor($scope, playerService) {
+  constructor($scope, playerService, $injector) {
     'ngInject';
     this.$scope = $scope;
     this.playerService = playerService;
+    this.sleep = $injector.has('awSleep') ? $injector.get('awSleep') : null;   // the Artwork theme's sleep tag
 
     this.isInFooter = this.$scope.isInFooter || false;
   }

@@ -40,6 +40,9 @@ class AwUndoService {
     this.$rootScope.$applyAsync();
   }
 
+  // another screen-side action that the player echoes with a toast of its own
+  swallowNext() { this.swallowUntil = Date.now() + 2500; }
+
   // the ordinary toast stack asks before it shows a message from the player: the first one after
   // an undoable action is that action's echo
   swallows() {
