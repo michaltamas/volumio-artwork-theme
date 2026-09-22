@@ -38,7 +38,7 @@
       </div>
       <h1 class="np-title" title="{{playback.playerService.state.title}}">{{playback.playerService.state.title}}</h1>
       <!-- the sheet's own handle on the phone: drag it down to put the words away -->
-      <div class="np-sheet-handle" ng-if="playback.lyricsOn" aria-hidden="true"></div>
+      <div class="np-sheet-handle" ng-if="playback.lyricsOn" aw-drag-down="playback.toggleLyrics()" aria-hidden="true"></div>
       <!-- the phone sheet's own way out, top right of its head -->
       <button type="button" class="np-sheet-lyrics" ng-if="playback.lyricsOn" ng-click="playback.toggleLyrics()" title="Lyrics" aria-label="Hide lyrics"><span class="material-symbols-rounded">lyrics</span></button>
       <!-- artist, album and the format share one row on the Lyrics face; elsewhere they stack -->

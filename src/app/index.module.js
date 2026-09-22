@@ -75,6 +75,7 @@ import AwTrackInfoService from './components/aw-track-info/aw-track-info.service
 import AwPlayerSettingsService from './components/aw-player-settings/aw-player-settings.service';
 import AwLyricsService from './components/aw-lyrics/aw-lyrics.service';
 import AwLyricsListDirective from './components/aw-lyrics/aw-lyrics-list.directive';
+import AwDragDownDirective from './components/aw-lyrics/aw-drag-down.directive';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
@@ -322,6 +323,7 @@ angular.module('volumio', [
   .directive('awAppearanceSlot', (themeManager) => new AwAppearanceSlotDirective(themeManager))
   .directive('awAmbient', (themeManager) => new AwAmbientDirective(themeManager))
   .directive('awLyricsList', () => new AwLyricsListDirective())
+  .directive('awDragDown', () => new AwDragDownDirective())
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 
