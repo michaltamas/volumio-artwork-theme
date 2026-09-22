@@ -54,6 +54,12 @@
   /* shadows: a dark theme can drop a hard shadow, a light one cannot */
   --shadow-soft:rgba(0,0,0,.55); --shadow-strong:rgba(0,0,0,.8); --shadow-deep:rgba(0,0,0,.9);
   --shadow-cover:0 44px 90px -24px rgba(0,0,0,.9);
+  /* quality badges (handoff 8a): only Hi-Res and DSD carry colour; lossless is ink, lossy muted */
+  --q-hires-ink:#8ab6ff; --q-hires-wash:rgba(92,140,255,.16); --q-hires-line:rgba(138,182,255,.32);
+  --q-dsd-ink:#c9a0ff; --q-dsd-wash:rgba(201,160,255,.14); --q-dsd-line:rgba(201,160,255,.30);
+  --q-lossless-num:#e4e7ea; --q-lossless-unit:#c2c8cd; --q-lossless-wash:rgba(255,255,255,.10); --q-lossless-line:rgba(255,255,255,.13);
+  --q-lossy-ink:#a7adb3; --q-lossy-wash:rgba(255,255,255,.06); --q-lossy-line:rgba(255,255,255,.10);
+  --q-radio-ink:#e4e7ea; --q-radio-line:rgba(255,255,255,.26);
   /* a plain surface a step off the ground (inherited panels that are not glass) */
   --surface-2:#333333;
   /* radius / space / rail (spec §3.4) */
@@ -129,6 +135,11 @@
   /* shadows stay warm — a neutral black shadow on paper reads as dirt */
   --shadow-soft:rgba(24,20,14,.28); --shadow-strong:rgba(24,20,14,.50); --shadow-deep:rgba(24,20,14,.55);
   --shadow-cover:0 44px 90px -24px rgba(24,20,14,.55);
+  --q-hires-ink:#1d4ed8; --q-hires-wash:rgba(29,78,216,.08); --q-hires-line:rgba(29,78,216,.22);
+  --q-dsd-ink:#6b3fa0; --q-dsd-wash:rgba(107,63,160,.08); --q-dsd-line:rgba(107,63,160,.24);
+  --q-lossless-num:#14161a; --q-lossless-unit:#5e646c; --q-lossless-wash:rgba(255,255,255,.70); --q-lossless-line:rgba(20,22,26,.12);
+  --q-lossy-ink:#5e646c; --q-lossy-wash:rgba(20,22,26,.04); --q-lossy-line:rgba(20,22,26,.10);
+  --q-radio-ink:#14161a; --q-radio-line:rgba(20,22,26,.26);
   --art-1:#fbf9f6; --art-2:#f6f3ef;
   --aw-band:#faf8f5;
 }

@@ -114,6 +114,24 @@ class AwSignalService {
     return b && r ? `${b}/${r}` : (b || r || '');
   }
 
+  // What kind of stream it is, for the badge's colour (handoff 8a): radio (no rate to show),
+  // dsd, hires (more than CD), lossless, lossy — or '' when the player says nothing about it.
+  // Works on the playback state and on a library item alike.
+  quality(o) {
+    const st = o || {};
+    const type = String(st.trackType || '').toLowerCase();
+    if (st.stream === true || /^(webradio|mywebradio)$/.test(String(st.type || '')) || type === 'webradio') { return 'radio'; }
+    const rateText = String(st.samplerate || '');
+    if (/dsd|dsf|dff/.test(type) || /dsd/i.test(rateText)) { return 'dsd'; }
+    const rate = parseFloat(this.splitVal(rateText).n) || 0;
+    const bits = parseInt(this.splitVal(st.bitdepth).n, 10) || 0;
+    if (rate > 48 || bits > 16) { return 'hires'; }
+    if (/^(mp3|aac|ogg|oga|opus|m4a|wma|mp4|mpeg|mpc)$/.test(type)) { return 'lossy'; }
+    if (/^(flac|alac|wav|wave|aiff|aif|ape|wv|tta|pcm)$/.test(type) || rate || bits) { return 'lossless'; }
+    if (st.bitrate && !rate && !bits) { return 'lossy'; }
+    return '';
+  }
+
   // "FLAC", or "FLAC · QOBUZ" when it comes from a streaming service
   format(state) {
     const st = state || {};

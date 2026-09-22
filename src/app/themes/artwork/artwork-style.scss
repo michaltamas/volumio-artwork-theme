@@ -926,3 +926,26 @@ p.lead {
 span.device-group-icon {
     // visibility: hidden;
 }
+
+/* ---- quality badges (handoff 8a): one tint on the existing pill. Only Hi-Res and DSD carry colour;
+   lossless is ink, lossy is muted, web radio is a dashed label with no rate. ---- */
+body#artwork .np-chip.aw-q--hires, body#artwork .aw-q.aw-q--hires { background: var(--q-hires-wash); border-color: var(--q-hires-line); }
+body#artwork .np-chip.aw-q--hires .np-chip-num, body#artwork .np-chip.aw-q--hires .np-chip-unit, body#artwork .aw-q.aw-q--hires .aw-q__num, body#artwork .aw-q.aw-q--hires .aw-q__unit { color: var(--q-hires-ink); }
+body#artwork .np-chip.aw-q--dsd, body#artwork .aw-q.aw-q--dsd { background: var(--q-dsd-wash); border-color: var(--q-dsd-line); }
+body#artwork .np-chip.aw-q--dsd .np-chip-num, body#artwork .np-chip.aw-q--dsd .np-chip-unit, body#artwork .aw-q.aw-q--dsd .aw-q__num, body#artwork .aw-q.aw-q--dsd .aw-q__unit { color: var(--q-dsd-ink); }
+body#artwork .np-chip.aw-q--lossless { background: var(--q-lossless-wash); border-color: var(--q-lossless-line); }
+body#artwork .np-chip.aw-q--lossless .np-chip-num { color: var(--q-lossless-num); }
+body#artwork .np-chip.aw-q--lossless .np-chip-unit { color: var(--q-lossless-unit); }
+body#artwork .np-chip.aw-q--lossy { background: var(--q-lossy-wash); border-color: var(--q-lossy-line); }
+body#artwork .np-chip.aw-q--lossy .np-chip-num, body#artwork .np-chip.aw-q--lossy .np-chip-unit, body#artwork .np-chip.aw-q--lossy .np-chip-val { color: var(--q-lossy-ink); }
+body#artwork .np-chip.aw-q--radio { background: transparent; border: 1px dashed var(--q-radio-line); .np-chip-num, .np-chip-unit, .np-chip-val { color: var(--q-radio-ink); } }
+/* the mini player's rates line: the ink follows the badge */
+body#artwork #footer-content .track-info-rates.aw-q--hires { color: var(--q-hires-ink); }
+body#artwork #footer-content .track-info-rates.aw-q--dsd { color: var(--q-dsd-ink); }
+/* track rows (8b): a small pill before the duration, only for Hi-Res and DSD */
+body#artwork .music-item .item__quality {
+  display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; margin-right: 14px; border-radius: 999px; flex: none;
+  border: 1px solid transparent; font-family: var(--font-mono);
+  .aw-q__num { font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+  .aw-q__unit { font-size: 9px; letter-spacing: .14em; }
+}

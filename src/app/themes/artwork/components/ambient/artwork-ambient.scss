@@ -23,7 +23,6 @@ body#artwork .aw-amb {
   --amb-bg-sat: 1.5;
   --amb-pill-fill: rgba(255, 255, 255, .10);
   --amb-pill-line: rgba(255, 255, 255, .13);
-  --amb-hires: #8ab6ff;
   --amb-track: rgba(255, 255, 255, .14);
   --amb-cover-shadow: 0 5.5vh 11vh -3vh rgba(0, 0, 0, .85);
 
@@ -41,7 +40,6 @@ body#artwork .aw-amb {
   --amb-bg-sat: 1.1;
   --amb-pill-fill: rgba(255, 255, 255, .66);
   --amb-pill-line: rgba(20, 22, 26, .12);
-  --amb-hires: #1d4ed8;
   --amb-track: rgba(20, 22, 26, .14);
   --amb-cover-shadow: 0 4.2vh 8.8vh -3.5vh rgba(24, 20, 14, .5);
 }
@@ -83,9 +81,10 @@ body#artwork .aw-amb__pill {
   border-radius: 999px; background: var(--amb-pill-fill); border: 1px solid var(--amb-pill-line);
   &-num { font-size: clamp(12px, 1.6vh, 17px); font-weight: 700; letter-spacing: .04em; color: var(--amb-ink-2); }
   &-unit { font-size: clamp(10px, 1.2vh, 13px); letter-spacing: .14em; color: var(--amb-ink-3); }
-  &.is-hires .aw-amb__pill-num, &.is-hires .aw-amb__pill-unit { color: var(--amb-hires); }
+  &.aw-q--hires { background: var(--q-hires-wash); border-color: var(--q-hires-line); .aw-amb__pill-num, .aw-amb__pill-unit { color: var(--q-hires-ink); } }
+  &.aw-q--dsd { background: var(--q-dsd-wash); border-color: var(--q-dsd-line); .aw-amb__pill-num, .aw-amb__pill-unit { color: var(--q-dsd-ink); } }
+  &.aw-q--lossy { background: var(--q-lossy-wash); border-color: var(--q-lossy-line); .aw-amb__pill-num, .aw-amb__pill-unit { color: var(--q-lossy-ink); } }
 }
-:root[data-aw-theme="light"] body#artwork .aw-amb__pill.is-hires, html.aw-is-light body#artwork .aw-amb__pill.is-hires { background: rgba(29, 78, 216, .08); border-color: rgba(29, 78, 216, .22); }
 body#artwork .aw-amb__bp { display: flex; align-items: center; gap: 8px; .mono { font-size: clamp(11px, 1.3vh, 14px); letter-spacing: .14em; color: var(--amb-ink); } }
 body#artwork .aw-amb__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
 body#artwork .aw-amb__time { display: flex; align-items: center; gap: 10px; font-size: clamp(11px, 1.5vh, 16px); letter-spacing: .1em; color: var(--amb-ink-2);

@@ -31,7 +31,7 @@
         <!-- format pill + bit perfect + time (cover-led); the night and the other layouts fold
              these into one mono line -->
         <div class="aw-amb__row">
-          <div class="aw-amb__pill mono" ng-class="{'is-hires': amb.hiRes}" ng-if="amb.signalText || amb.bitrateText">
+          <div class="aw-amb__pill mono" ng-class="'aw-q--' + amb.quality" ng-if="amb.signalText || amb.bitrateText">
             <span class="aw-amb__pill-num">{{amb.signalText || amb.bitrateText}}</span>
             <span class="aw-amb__pill-unit" ng-if="amb.formatText">{{amb.formatText}}</span>
           </div>

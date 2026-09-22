@@ -45,7 +45,7 @@
         </div>
 
         <!-- mockup: "24/192 · FLAC" — rates first, then the format -->
-        <div class="track-info-rates">
+        <div class="track-info-rates" ng-class="'aw-q--' + (trackInfo.playerService.state | awQuality)">
           <span class="track-info-rate" ng-if="trackInfo.rateLine">{{trackInfo.rateLine}}</span>
           <span class="track-info-type" ng-if="trackInfo.formatLabel">{{trackInfo.formatLabel}}</span>
         </div>

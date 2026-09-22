@@ -310,6 +310,7 @@ angular.module('volumio', [
   .service('awSettingsService', AwSettingsService)
   .service('awTheme', AwThemeService)
   .service('awSignal', AwSignalService)
+  .filter('awQuality', (awSignal) => (o) => awSignal.quality(o))
   .service('awAmbient', AwAmbientService)
   .service('awTrackInfo', AwTrackInfoService)
   .service('awPlayerSettings', AwPlayerSettingsService)

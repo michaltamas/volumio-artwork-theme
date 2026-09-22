@@ -68,12 +68,7 @@ class AwAmbientController {
   get formatText() { return this.signal.format(this.state); }     // FLAC · TIDAL
   get bitrateText() { return !this.signalText && this.state.bitrate ? String(this.state.bitrate) : ''; }
   get bitPerfect() { return this.signal.bitPerfect; }
-  // Hi-Res: more than CD (the same rule the quality badges use)
-  get hiRes() {
-    const rate = parseFloat(this.signal.splitVal(this.state.samplerate).n) || 0;
-    const bits = parseInt(this.signal.splitVal(this.state.bitdepth).n, 10) || 0;
-    return rate > 48 || bits > 16;
-  }
+  get quality() { return this.signal.quality(this.state); }   // the badge's colour (handoff 8a)
 
   // --- time --------------------------------------------------------------------------------
 

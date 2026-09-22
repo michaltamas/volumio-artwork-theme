@@ -1,10 +1,11 @@
 class BrowseMusicController {
   constructor($scope, browseService, playQueueService, playlistService, socketService,
     modalService, $timeout, matchmediaService, $compile, $document, $rootScope, $log, playerService,
-    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu, awUndo) {
+    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu, awUndo, awSignal) {
     'ngInject';
     this.awMenu = awMobileMenu;
     this.awUndo = awUndo;
+    this.signal = awSignal;
     this.$scope = $scope;
     this.$log = $log;
     this.browseService = browseService;
@@ -917,6 +918,18 @@ class BrowseMusicController {
     return joinItems;
   }
 
+  // a track list shows a badge only when it is Hi-Res or DSD (handoff 8b): everything else
+  // stays plain, so a list never turns into a rainbow
+  qualityPill(item) {
+    const q = this.signal.quality(item);
+    if (q !== 'hires' && q !== 'dsd') { return ''; }
+    const sig = this.signal.signal(item);
+    const num = q === 'dsd' ? (String(item.trackType || '').toUpperCase().replace(/^DSF|^DFF/, 'DSD')) : sig;
+    const unit = q === 'dsd' ? String(item.trackType || '').toUpperCase() : String(item.trackType || '').toUpperCase();
+    const esc = (v) => String(v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    return `<div class="item__quality mono aw-q aw-q--${q}"><span class="aw-q__num">${esc(num)}</span>${unit && unit !== num ? `<span class="aw-q__unit">${esc(unit)}</span>` : ''}</div>`;
+  }
+
   renderListItems(items, listIndex) {
     let angularThis = `angular.element('#browse-page').scope().browse`;
     const html = '';
@@ -972,6 +985,7 @@ class BrowseMusicController {
                     </span>
                 </div>
 
+                ${ this.qualityPill(item) }
                 <div
                     class="item__duration ${ !item.duration ? 'hidden' : '' }">
                         ${ this.timeFormat(item.duration) }
@@ -1057,6 +1071,7 @@ class BrowseMusicController {
                     </span>
                 </div>
 
+                ${ this.qualityPill(item) }
                 <div
                     class="item__duration ${ !item.duration ? 'hidden' : '' }">
                         ${ this.timeFormat(item.duration) }

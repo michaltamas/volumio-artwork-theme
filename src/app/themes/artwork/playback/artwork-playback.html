@@ -43,13 +43,13 @@
       <div class="np-album">{{playback.playerService.state.album}}<span ng-if="playback.npYear">&nbsp;·&nbsp;{{playback.npYear}}</span></div>
       <div id="np-chip-slot">
         <div class="np-quality">
-          <div class="np-chip mono" ng-if="playback.playerService.state.bitdepth || playback.playerService.state.samplerate">
+          <div class="np-chip mono" ng-class="'aw-q--' + (playback.playerService.state | awQuality)" ng-if="playback.playerService.state.bitdepth || playback.playerService.state.samplerate">
             <span class="np-chip-num" ng-if="playback.npBit.n">{{playback.npBit.n}}</span>
             <span class="np-chip-unit np-chip-unit--bit" ng-if="playback.npBit.u">{{playback.npBit.u}}</span>
             <span class="np-chip-num np-chip-num--rate" ng-if="playback.npRate.n">{{playback.npRate.n}}</span>
             <span class="np-chip-unit" ng-if="playback.npRate.u">{{playback.npRate.u}}</span>
           </div>
-          <div class="np-chip mono" ng-if="!playback.playerService.state.bitdepth && !playback.playerService.state.samplerate && playback.playerService.state.bitrate">
+          <div class="np-chip mono" ng-class="'aw-q--' + (playback.playerService.state | awQuality)" ng-if="!playback.playerService.state.bitdepth && !playback.playerService.state.samplerate && playback.playerService.state.bitrate">
             <span class="np-chip-val">{{playback.playerService.state.bitrate}}</span>
           </div>
           <span class="np-format mono" ng-if="playback.npFormat">{{playback.npFormat}}</span>
