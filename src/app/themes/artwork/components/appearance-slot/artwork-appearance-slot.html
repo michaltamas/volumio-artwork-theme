@@ -2,13 +2,11 @@
 <div class="panel panel-default aw-theme-section">
   <div class="panel-heading"><h3 class="panel-title">Theme</h3></div>
   <div class="panel-body">
-    <!-- this browser's own pick; on a screen the player drives the player's word is final, so
-         the row is not offered there -->
-    <div class="aw-theme-card aw-theme-card--inline" ng-if="!(slot.player.available && slot.ambient.kiosk)">
+    <!-- without the companion plugin the choice can only live in this browser -->
+    <div class="aw-theme-card aw-theme-card--inline" ng-if="!slot.player.available">
       <div class="aw-theme-card__text">
         <div class="aw-theme-card__title">Dark or light</div>
-        <div class="aw-theme-card__hint" ng-if="!slot.player.available">Pick one, or follow this device. Remembered in this browser only — a screen driven by the player keeps its own choice (dark unless set there).</div>
-        <div class="aw-theme-card__hint" ng-if="slot.player.available">This browser. Until it picks, it follows the player's screens below.</div>
+        <div class="aw-theme-card__hint">Pick one, or follow this device. Remembered in this browser only — a screen driven by the player keeps its own choice (dark unless set there).</div>
       </div>
       <div class="aw-theme-pick" role="group" aria-label="Theme">
         <button type="button" ng-repeat="m in ['dark', 'light', 'system']" ng-class="{active: slot.theme.hasChoice && slot.theme.choice === m}"
@@ -18,13 +16,13 @@
         </button>
       </div>
     </div>
-    <!-- the player's word, kept by the companion plugin and pushed to every screen -->
+    <!-- with the plugin the theme is one for the whole player, kept there and pushed to every screen -->
     <div class="aw-theme-card aw-theme-card--inline" ng-if="slot.player.available">
       <div class="aw-theme-card__text">
-        <div class="aw-theme-card__title">Player's screens</div>
-        <div class="aw-theme-card__hint">Every screen of this player — the display it drives, and any browser that has not picked its own. Takes effect at once, everywhere.</div>
+        <div class="aw-theme-card__title">Dark or light</div>
+        <div class="aw-theme-card__hint">One theme for every screen of this player — this browser, the display it drives, the phone. Kept on the player; takes effect at once, everywhere.</div>
       </div>
-      <div class="aw-theme-pick" role="group" aria-label="Theme for the player's screens">
+      <div class="aw-theme-pick" role="group" aria-label="Theme">
         <button type="button" ng-repeat="m in ['dark', 'light', 'system']" ng-class="{active: slot.player.playerTheme === m}"
                 ng-click="slot.setPlayerTheme(m)" aria-pressed="{{slot.player.playerTheme === m}}">
           <span class="material-symbols-rounded">{{m === 'dark' ? 'dark_mode' : (m === 'light' ? 'light_mode' : 'contrast')}}</span>

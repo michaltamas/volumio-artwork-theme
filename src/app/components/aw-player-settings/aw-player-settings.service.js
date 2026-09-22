@@ -39,9 +39,10 @@ class AwPlayerSettingsService {
     if (!data || typeof data !== 'object') { return; }
     this.available = true;
     this.settings = data;
-    // the theme: a screen the player drives follows the player; any other browser follows it
-    // only until it picks for itself
-    if (data.theme) { this.theme.follow(data.theme, this.ambient.kiosk); }
+    // the theme is one for the whole player: every screen — the display it drives, the phone,
+    // the desktop — shows the same one. The browser's own pick only counts while the player
+    // has no word (a fresh install), or without the plugin at all.
+    if (data.theme) { this.theme.follow(data.theme, true); }
     else { this.theme.unfollow(); }
     // the ambient display is a matter of the player's screens: the player's word is final
     if (data.ambient) { this.ambient.adopt(data.ambient); }
