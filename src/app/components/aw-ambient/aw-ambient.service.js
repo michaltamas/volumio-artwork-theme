@@ -38,6 +38,15 @@ class AwAmbientService {
     const onActivity = (e) => this.activity(e);
     ACTIVITY.forEach(t => $window.addEventListener(t, onActivity, { passive: false, capture: true }));
     this.arm();
+    // saved in another tab of this browser: take it over at once, no reload
+    $window.addEventListener('storage', (e) => {
+      if (e.key !== KEY) { return; }
+      this.settings = this.read();
+      if (this.active) { this.exit(); }
+      this.arm();
+      $rootScope.$broadcast('aw:ambient-settings', this.settings);
+      $rootScope.$applyAsync();
+    });
     if (/[?&]ambient=now\b/.test($window.location.href || '')) { $timeout(() => this.enter(), 1200, false); }
   }
 
