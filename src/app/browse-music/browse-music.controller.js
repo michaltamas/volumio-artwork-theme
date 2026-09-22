@@ -985,10 +985,9 @@ class BrowseMusicController {
                     </span>
                 </div>
 
-                ${ this.qualityPill(item) }
                 <div
                     class="item__duration ${ !item.duration ? 'hidden' : '' }">
-                        ${ this.timeFormat(item.duration) }
+                        ${ this.qualityPill(item) }${ this.timeFormat(item.duration) }
                 </div>
 
                 <div
@@ -1071,10 +1070,9 @@ class BrowseMusicController {
                     </span>
                 </div>
 
-                ${ this.qualityPill(item) }
                 <div
                     class="item__duration ${ !item.duration ? 'hidden' : '' }">
-                        ${ this.timeFormat(item.duration) }
+                        ${ this.qualityPill(item) }${ this.timeFormat(item.duration) }
                 </div>
 
                 <div

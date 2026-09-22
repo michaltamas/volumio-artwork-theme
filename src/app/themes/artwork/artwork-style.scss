@@ -943,8 +943,9 @@ body#artwork .np-chip.aw-q--radio { background: transparent; border: 1px dashed 
 body#artwork #footer-content .track-info-rates.aw-q--hires { color: var(--q-hires-ink); }
 body#artwork #footer-content .track-info-rates.aw-q--dsd { color: var(--q-dsd-ink); }
 /* track rows (8b): a small pill before the duration, only for Hi-Res and DSD */
+body#artwork .music-item .item__duration { display: inline-flex; align-items: center; justify-content: flex-end; gap: 12px; white-space: nowrap; }   /* the badge sits in the duration cell, so the row's columns stay put */
 body#artwork .music-item .item__quality {
-  display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; margin-right: 14px; border-radius: 999px; flex: none;
+  display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: 999px; flex: none;
   border: 1px solid transparent; font-family: var(--font-mono);
   .aw-q__num { font-size: 11px; font-weight: 700; letter-spacing: .04em; }
   .aw-q__unit { font-size: 9px; letter-spacing: .14em; }
