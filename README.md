@@ -30,6 +30,7 @@ Beneath the new look sits everything you already rely on. Every source, every se
 - [Switching back and uninstalling](#switching-back-and-uninstalling)
 - [Building from source](#building-from-source)
 - [How it works](#how-it-works)
+- [The companion plugin](#the-companion-plugin)
 - [Troubleshooting](#troubleshooting)
 - [Known limitations](#known-limitations)
 - [Contributing](#contributing)
@@ -59,6 +60,10 @@ Beneath the new look sits everything you already rely on. Every source, every se
 - Home with *Pick up where you left off* and recently played albums.
 - Album pages with the cover beside the track list, artist pages with albums and tracks, breadcrumbs, grid and list views, sorting, filtering and an A–Z index.
 - Every Volumio source works as before: the music library, Web Radio, Spotify, media servers and music service plugins.
+
+**The player's own display**
+- *Ambient*: after a few minutes without a touch, a display the player drives (HDMI, the Touch Display plugin, a TV) shows the cover, the essentials and a clock — cover-led, clock-led or full-bleed — and comes straight back on touch. Night hours dim it; the composition drifts slowly against burn-in.
+- One theme and one set of ambient settings for every screen of the player, kept on the player by the companion plugin: set them from a phone, the display follows at once.
 
 **Everywhere**
 - A fluid layout with no fixed breakpoints: it adapts continuously to phones, tablets, desktop browsers and unusual displays on media players.
@@ -205,6 +210,15 @@ Volumio's web interface is a single AngularJS application, [Volumio2-UI](https:/
 | `docs/volumio2-ui.md` | The upstream project's original README |
 
 Volumio's other themes remain in the source tree. This project only builds and publishes Artwork One.
+
+## The companion plugin
+
+The interface is static files: it has no place on the player to keep anything, so a choice made in one browser never reached another, and a display the player drives on HDMI — which nobody can touch — could not be told anything at all. The **Artwork One Companion** (`plugin/artwork_companion`) is that place: a small Volumio plugin that keeps the theme and the ambient display settings on the player, answers a screen that asks for them, and pushes every change to all connected screens. With it, Settings → Appearance sets the theme and the ambient display for the whole player at once.
+
+- The installer puts it in `/data/plugins/miscellanea/artwork_companion`, registers it in Volumio's plugin list and restarts Volumio once so it loads; the uninstaller removes it. `--no-companion` skips it, and the interface works without it — the theme and the ambient settings then stay per browser.
+- It has no dependencies of its own: Volumio's modules (`kew`, `v-conf`) are loaded from the player's core tree. Nothing is downloaded, built or sent anywhere.
+- Contract, over Volumio's `callMethod`: `miscellanea/artwork_companion` · `getSettings {}` answers the caller with `pushArtworkSettings`; `setSettings {theme?, ambient?}` saves and pushes `pushArtworkSettings` to every screen. A key is absent until someone chooses it; a field out of range is dropped and never overwrites the stored one.
+- Its page under Settings → Plugins only says where the settings are; the settings themselves live in Appearance.
 
 ## Troubleshooting
 
