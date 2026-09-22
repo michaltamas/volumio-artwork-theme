@@ -82,6 +82,7 @@ import AwPointerdownDirective from './components/aw-pins/aw-pointerdown.directiv
 import AwUndoDirective from './components/aw-undo/aw-undo.directive';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
+import AwSettingsSearchDirective from './components/aw-settings-shell/aw-settings-search.directive';
 import AwQueuePanelDirective from './components/aw-queue-panel/aw-queue-panel.directive';
 import AwQueuePanelService from './services/aw-queue-panel.service';
 import AwMobileMenuDirective from './components/aw-mobile-menu/aw-mobile-menu.directive';
@@ -322,6 +323,7 @@ angular.module('volumio', [
   .service('awSleep', AwSleepService)
   .service('awPins', AwPinsService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
+  .directive('awSettingsSearch', (themeManager) => new AwSettingsSearchDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
   .directive('awMobileMenu', (themeManager) => new AwMobileMenuDirective(themeManager))
   .directive('awSettingsSide', (themeManager) => new AwSettingsSideDirective(themeManager))

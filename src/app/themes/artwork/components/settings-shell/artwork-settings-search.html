@@ -1,0 +1,25 @@
+<!-- settings search (handoff 11a): the field, then rows while a query stands -->
+<div class="aw-ssearch" ng-class="{'is-active': ss.active}">
+  <label class="aw-ssearch__field">
+    <span class="material-symbols-rounded">search</span>
+    <input type="search" ng-model="ss.q" ng-change="ss.input()" ng-keydown="ss.key($event)" placeholder="Search settings" aria-label="Search settings" autocomplete="off">
+    <span class="aw-ssearch__key mono" ng-if="!ss.active">⌘K</span>
+    <button type="button" class="aw-ssearch__clear" ng-if="ss.active" ng-click="ss.clear()" aria-label="Clear"><span class="material-symbols-rounded">close</span></button>
+  </label>
+
+  <div class="aw-ssearch__results" ng-if="ss.active">
+    <div class="aw-ssearch__count mono" ng-if="ss.results.length">{{ss.results.length}} RESULT{{ss.results.length === 1 ? '' : 'S'}}</div>
+    <div class="aw-ssearch__list" ng-if="ss.results.length" role="listbox">
+      <div class="aw-ssearch__row" ng-repeat="r in ss.results track by r.key" ng-class="{'is-focus': $index === ss.focus}" ng-click="ss.open(r)" ng-mouseenter="ss.focus = $index" role="option" aria-selected="{{$index === ss.focus}}">
+        <div class="aw-ssearch__text">
+          <div class="aw-ssearch__eyebrow mono" ng-if="r.eyebrow">{{r.eyebrow | uppercase}}</div>
+          <div class="aw-ssearch__title">{{r.title}}</div>
+          <div class="aw-ssearch__sub" ng-if="r.sub">{{r.sub}}</div>
+        </div>
+        <span class="material-symbols-rounded aw-ssearch__chev">chevron_right</span>
+      </div>
+    </div>
+    <div class="aw-ssearch__loading" ng-if="ss.svc.indexing" ng-init="ss.refresh()"><span class="aw-ssearch__spin"></span><span class="mono">READING PLUGIN SECTIONS…</span></div>
+    <div class="aw-ssearch__none" ng-if="!ss.results.length && !ss.svc.indexing">Nothing in Settings matches “{{ss.q}}”.</div>
+  </div>
+</div>

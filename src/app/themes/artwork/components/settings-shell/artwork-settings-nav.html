@@ -24,7 +24,8 @@
       <div class="aw-mnav__sub mono" ng-if="nav.svc.systemInfo">VOLUMIO OS {{nav.svc.systemInfo.systemversion}}<span ng-if="nav.svc.systemInfo.hardware">&nbsp;·&nbsp;{{nav.svc.systemInfo.hardware | uppercase}}</span></div>
     </div>
   </div>
-  <div ng-repeat="g in nav.groups track by g.label">
+  <aw-settings-search></aw-settings-search>
+  <div ng-repeat="g in nav.groups track by g.label" ng-if="!nav.svc.searchQuery">
     <div class="aw-mnav__eyebrow mono">{{g.label}}</div>
     <div class="aw-mnav__card">
       <a class="aw-mnav__row" ng-repeat="item in g.items track by $index" ng-click="nav.svc.itemClick(item)">

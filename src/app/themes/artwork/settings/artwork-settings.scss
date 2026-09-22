@@ -70,9 +70,10 @@ body#artwork {
 /* ============================================================
    Artwork settings shell (mockup: grid 216px 1fr 340px)
    ============================================================ */
+/* the columns themselves are zz-fluid's (clamped, one column on the phone): a fixed width here
+   would load after that file and outrank it */
 body#artwork #contentWrapper.aw-settings-shell {
-  display: grid; grid-template-columns: 216px 1fr 340px; height: 100%;
-  &.aw-settings-shell--noside { grid-template-columns: 216px 1fr; }
+  display: grid; height: 100%;
   > #content { position: relative; height: 100%; overflow-y: auto; min-width: 0; }
 }
 
@@ -606,3 +607,33 @@ body#artwork .aw-time {
   body#artwork .aw-amb-row { grid-template-columns: 1fr; gap: 10px; }
 }
 body#artwork .aw-amb-save { margin: 14px 0 0; .control-buttons { display: flex; justify-content: flex-start; } } /* Save on the left, where the Language section keeps its own */
+
+/* ---- settings search (handoff 11a): a 46px pill; rows pad 12 14 r12, title 15/600, page 13 muted,
+   a plugin's name as a mono eyebrow; the focused row lit with an outline; one quiet line when
+   nothing matches; an honest spinner while plugin sections are still being read. ---- */
+body#artwork .aw-ssearch { margin: 0 0 22px; }
+body#artwork .aw-ssearch__field { display: flex; align-items: center; gap: 11px; height: 46px; padding: 0 16px; border-radius: 999px; margin: 0; font-weight: 400; cursor: text;
+  background: var(--fill-10); border: 1px solid var(--fill-13); transition: background-color .15s ease, border-color .15s ease;
+  > .material-symbols-rounded { font-size: 21px; color: var(--ink-3); }
+  input { flex: 1; min-width: 0; border: 0; background: transparent; outline: 0; padding: 0; font-family: var(--font-ui); font-size: 15px; color: var(--ink); &::placeholder { color: var(--ink-muted); } &::-webkit-search-cancel-button { display: none; } }
+}
+body#artwork .aw-ssearch.is-active .aw-ssearch__field, body#artwork .aw-ssearch__field:focus-within { background: var(--fill-14); border-color: var(--ink-1); > .material-symbols-rounded { color: var(--ink-1); } }
+body#artwork .aw-ssearch__key { margin-left: auto; font-size: 11px; letter-spacing: .1em; color: var(--ink-faint); }
+body#artwork .aw-ssearch__clear { margin-left: auto; border: 0; background: transparent; padding: 0; display: grid; place-items: center; color: var(--ink-3); cursor: pointer; .material-symbols-rounded { font-size: 19px; } &:hover { color: var(--ink); } }
+body#artwork .aw-ssearch__count { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); margin-top: 20px; }
+body#artwork .aw-ssearch__list { display: flex; flex-direction: column; gap: 2px; margin-top: 10px; }
+body#artwork .aw-ssearch__row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: 12px 14px; border-radius: 12px; cursor: pointer;
+  &.is-focus { background: var(--fill-10); outline: 2px solid var(--ink-1); outline-offset: 2px; .aw-ssearch__chev { color: var(--ink-3); } } }
+body#artwork .aw-ssearch__text { min-width: 0; }
+body#artwork .aw-ssearch__eyebrow { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); margin-bottom: 4px; }
+body#artwork .aw-ssearch__title { font-size: 15px; font-weight: 600; color: var(--ink); }
+body#artwork .aw-ssearch__sub { font-size: 13px; color: var(--ink-muted); margin-top: 2px; }
+body#artwork .aw-ssearch__chev { font-size: 20px; color: var(--ink-dim); }
+body#artwork .aw-ssearch__loading { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding: 0 14px; .mono { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); } }
+body#artwork .aw-ssearch__spin { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--fill-20); border-top-color: var(--ink-3); animation: aw-spin .9s linear infinite; }
+body#artwork .aw-ssearch__none { padding: 34px 14px 30px; font-size: 16px; color: #5e646c; }
+body#artwork aw-settings-search.is-active ~ .aw-settings-hint { display: none; }
+@keyframes aw-spin { to { transform: rotate(360deg); } }
+/* the section a result landed on: lit for 600ms */
+body#artwork #pluginWrapper .panel.aw-flash { animation: aw-flash .6s ease-out; }
+@keyframes aw-flash { 0% { background-color: var(--fill-14); } 100% { background-color: transparent; } }

@@ -20,7 +20,7 @@
           {{pluginComponent.pluginObj.page.description}}
         </h4>
 
-        <div class="panel panel-default" ng-if="!section.hidden" ng-repeat="section in pluginComponent.pluginObj.sections track by $index">
+        <div class="panel panel-default" ng-if="!section.hidden" ng-repeat="section in pluginComponent.pluginObj.sections track by $index" data-section-id="{{section.id}}">
 
           <div ng-if="section.coreSection" ng-include="'app/plugin/core-plugin/' + section.coreSection + '-plugin.html'">
           </div>
