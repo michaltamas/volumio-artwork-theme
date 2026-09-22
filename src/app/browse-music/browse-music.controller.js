@@ -1216,6 +1216,39 @@ class BrowseMusicController {
       el.classList.toggle('aw-artist-tracks', songs.indexOf(i) !== -1);
     });
   }
+  // --- the head field on a streaming service's pages searches the service; elsewhere it filters ---
+  // A Spotify or Tidal page holds twenty rows of thousands: filtering what is on screen finds
+  // nothing. Volumio's search takes a service, so on those pages the field asks the service.
+  get currentService() {
+    const r = this.browseService.currentFetchRequest || {};
+    if (!r.uri) { return null; }
+    return this.streamingSources.find(s => (s.plugin_name && (s.plugin_name === r.plugin_name || s.plugin_name === r.service)) || (s.service && s.service === r.service) || (s.uri && String(r.uri) === s.uri) || (s.uri && String(r.uri).indexOf(s.uri + '/') === 0) || (s.uri && String(r.uri).indexOf(s.uri + ':') === 0)) || null;
+  }
+  get isServicePage() { return !!this.currentService; }
+  get awHeadPlaceholder() {
+    const svc = this.currentService;
+    return svc ? 'Search ' + (svc.name || svc.title || '') : 'Filter ' + String(this.currentListTitle || '').toLowerCase();
+  }
+  awHeadInput() {
+    if (!this.isServicePage) { this.applyAwFilter(); return; }
+    const q = String(this.awFilter || '').trim();
+    if (this.awSearchTimer) { this.$timeout.cancel(this.awSearchTimer); this.awSearchTimer = null; }
+    if (!q) { this.awServiceRestore(); return; }
+    if (q.length < 2) { return; }
+    const svc = this.currentService, r = this.browseService.currentFetchRequest;
+    if (!this.awScopeFrom) { this.awScopeFrom = r; }
+    this.awSearchTimer = this.$timeout(() => {
+      this.awServiceSearching = true;
+      this.socketService.emit('search', { type: 'any', value: q, service: r.service || svc.service || svc.plugin_name, plugin_name: svc.plugin_name || r.plugin_name, plugin_type: svc.plugin_type || r.plugin_type || 'music_service', uri: svc.uri });
+    }, 400, false);
+  }
+  // the field emptied: the page comes back as it was, the trail untouched
+  awServiceRestore() {
+    const from = this.awScopeFrom;
+    this.awScopeFrom = null; this.awServiceSearching = false;
+    if (from && from.uri) { this.socketService.emit('browseLibrary', { uri: from.uri }); }
+  }
+
   applyAwFilter() {
     const q = this.awNorm(this.awFilter).trim();
     let visible = 0;
@@ -1342,6 +1375,8 @@ class BrowseMusicController {
     if (this._awListUri !== this.currentUri) {
       this._awListUri = this.currentUri;
       this.awFilter = ''; this.awSortDesc = false; this.awActiveLetter = ''; this.awVisibleCount = null;
+      if (!this.awServiceSearching) { this.awScopeFrom = null; }
+      this.awServiceSearching = false;
       this.awArtistShowAll = false; this.awArtistNewest = true;
     }
     this.applyAwFilter(); this.applyAwSort();

@@ -81,8 +81,9 @@
             <aw-head-actions>
               <label class="aw-filter" ng-class="{'aw-filter--on': browse.awFilter.length}">
                 <span class="material-symbols-rounded">search</span>
-                <input type="search" ng-model="browse.awFilter" ng-change="browse.applyAwFilter()"
-                       placeholder="Filter {{browse.currentListTitle | lowercase}}" aria-label="Filter {{browse.currentListTitle | lowercase}}">
+                <!-- on a streaming service's pages the field asks the service (Volumio's search, scoped); elsewhere it filters the rows -->
+                <input type="search" ng-model="browse.awFilter" ng-change="browse.awHeadInput()" ng-model-options="{ debounce: 0 }"
+                       placeholder="{{browse.awHeadPlaceholder}}" aria-label="{{browse.awHeadPlaceholder}}">
               </label>
               <div class="aw-viewtoggle" ng-if="browse.browseService.showGridViewSelector" role="group" aria-label="View">
                 <button type="button" ng-class="{active: browse.browseService.showGridView}" ng-click="browse.setGridView(true)" aria-label="Grid" title="Grid">
