@@ -355,7 +355,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #np .np-m-bar__play { width: 66px; height: 66px; border-radius: 50%; border: 0; background: var(--ink); color: var(--on-ink); display: grid; place-items: center; cursor: pointer; .material-symbols-rounded { font-size: 36px; } }
   body#artwork .with-playback-bar #content, body#artwork #content.playback { padding-bottom: 0; }
   /* the phone has no face switch: the tile in the actions row toggles the words */
-  body#artwork #np .np-seg, body#artwork #np .np-library, body#artwork #np .np-lyrics-btn { display: none; }
+  body#artwork #np .np-seg, body#artwork #np .np-library { display: none; }
   body#artwork #np .np-m-tile--lyrics:disabled { opacity: .35; }
   /* --- the words on the phone (6b): the cover crops to a 338×180 band rather than shrinking, the
      sheet rises under it with the title, the tile and the words; the transport stays where the

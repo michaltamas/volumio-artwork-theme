@@ -413,12 +413,6 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
     i { display: block; height: 18px; border-radius: 4px; background: var(--fill-10); width: 62%; &:nth-child(2) { width: 78%; } &:nth-child(3) { width: 70%; } &:nth-child(4) { width: 54%; } &:nth-child(5) { width: 66%; } } }
   .np-lyrics__source { font-size: 11px; letter-spacing: .16em; color: var(--ink-dim); margin-top: 16px; flex: none; }
 
-  /* the transport's lyrics button */
-  .np-lyrics-btn { border: 0; background: transparent; padding: 0; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--ink-2); cursor: pointer;
-    .material-symbols-rounded { font-size: 26px; }
-    &:hover:not(:disabled) { color: var(--ink); }
-    &.active { background: var(--fill-14); color: var(--ink); }
-    &:disabled { opacity: .35; cursor: default; } }
 }
 @keyframes aw-lyr-in { from { opacity: .4; } to { opacity: 1; } }
 @keyframes aw-lyr-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }

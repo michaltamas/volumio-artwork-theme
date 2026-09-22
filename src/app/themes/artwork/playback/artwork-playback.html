@@ -118,11 +118,6 @@
         <!-- mockup: heart first (real favourite toggle for the current track), then the transport -->
         <favourite-track-btn class="np-fav"></favourite-track-btn>
         <player-buttons></player-buttons>
-        <!-- the words, one tap away; disabled when this track has none -->
-        <button type="button" class="np-lyrics-btn" ng-class="{active: playback.lyricsOn}" ng-click="playback.toggleLyrics()"
-                ng-disabled="playback.lyrics.state === 'none'" title="Lyrics" aria-label="Lyrics" aria-pressed="{{playback.lyricsOn}}">
-          <span class="material-symbols-rounded">lyrics</span>
-        </button>
       </div>
       <!-- right of the transport: what plays next, then the volume -->
       <div id="np-footer-right">
