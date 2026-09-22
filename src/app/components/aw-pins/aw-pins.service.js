@@ -80,7 +80,8 @@ class AwPinsService {
   eyebrow(p) {
     const uri = String(p.uri || ''), type = String(p.type || '');
     let kind = 'ITEM';
-    if (/^albums:\/\/[^/]+\/./.test(uri) || type === 'album') { kind = 'ALBUM'; }
+    // an album is albums://Artist/Album, or — on an artist's page — artists://Artist/Album
+    if (/^(albums|artists):\/\/[^/]+\/./.test(uri) || type === 'album') { kind = 'ALBUM'; }
     else if (/^albums:\/\/?$/.test(uri)) { kind = 'ALBUMS'; }
     else if (/^artists:\/\/./.test(uri) || type === 'artist') { kind = 'ARTIST'; }
     else if (/^artists:\/\/?$/.test(uri)) { kind = 'ARTISTS'; }
@@ -103,8 +104,9 @@ class AwPinsService {
     const type = String(p.type || ''), uri = String(p.uri || '');
     if (type === 'webradio' || type === 'mywebradio') { return 'radio'; }
     if (type === 'playlist') { return 'queue_music'; }
+    if (/^(albums|artists):\/\/[^/]+\/./.test(uri) || type === 'album') { return 'album'; }
     if (/^artists:\/\//.test(uri) || type === 'artist') { return 'person'; }
-    if (/^albums:\/\//.test(uri) || type === 'album') { return 'album'; }
+    if (/^albums:\/\//.test(uri)) { return 'album'; }
     if (/^genres:\/\//.test(uri)) { return 'graphic_eq'; }
     if (type === 'remdisk') { return 'usb'; }
     return 'folder';
