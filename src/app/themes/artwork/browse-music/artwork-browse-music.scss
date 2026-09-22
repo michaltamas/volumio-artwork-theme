@@ -1328,13 +1328,24 @@ body#artwork .aw-artist {
   @media (max-width: 900px)  { &__albums { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 }
 body#artwork .aw-artist-album {
-  display: flex; flex-direction: column; gap: 11px; cursor: pointer; min-width: 0;
-  &__cover { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--fill-08); box-shadow: 0 20px 40px -18px var(--shadow-deep); background: var(--fill-06);
-    img { width: 100%; height: 100%; object-fit: cover; display: block; } }
+  display: flex; flex-direction: column; gap: 11px; cursor: pointer; min-width: 0; position: relative;
+  /* the cover stays unclipped so an open menu is not cut to the tile; the image keeps the corners */
+  &__cover { position: relative; aspect-ratio: 1; border-radius: 10px; border: 1px solid var(--fill-08); box-shadow: 0 20px 40px -18px var(--shadow-deep); background: var(--fill-06);
+    img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 10px; } }
+  /* hover: the same dim, play button and ⋯ as the library's cards */
+  &__overlay { position: absolute; inset: 0; border-radius: 10px; background: transparent; transition: background-color .15s ease-out; pointer-events: none; }
+  /* (`&:hover &__x` would prefix the child with the whole parent again: spell the children out) */
+  &:hover .aw-artist-album__overlay { background: var(--shade-60); }
   &__play { position: absolute; right: 10px; bottom: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; padding: 0; background: var(--ink); color: var(--on-ink);
     display: grid; place-items: center; opacity: 0; transition: opacity .25s ease; cursor: pointer;
     .material-symbols-rounded { font-size: 24px; } }
-  &:hover &__play, &__play:focus-visible { opacity: 1; }
+  &:hover .aw-artist-album__play, &__play:focus-visible { opacity: 1; }
+  &__actions { position: absolute; top: 8px; right: 8px; z-index: 2; }
+  &__more, .hamburgerMenu .action-btn { width: 30px; height: 30px; border-radius: 9px; border: 0; padding: 0; margin: 0; display: grid; place-items: center; background: rgba(8, 10, 13, .55); color: #fff; cursor: pointer; opacity: 0; transition: opacity .15s ease;
+    .material-symbols-rounded { font-size: 19px; } .fa { font-size: 15px; } }
+  &:hover .aw-artist-album__more, &:hover .hamburgerMenu .action-btn, .hamburgerMenu.open .action-btn { opacity: 1; }
+  &__actions .dropdown-menu { right: 0; left: auto; top: 100%; margin-top: 6px; }
+  &:hover, &:focus-within { z-index: 6; }
   &__title { font-size: 14px; font-weight: 600; line-height: normal; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   &__sub { font-size: 11px; line-height: normal; color: var(--ink-dim); }
 }

@@ -65,6 +65,12 @@
     <div class="aw-artist-album" ng-repeat="a in browse.awArtistAlbumsSorted track by a.uri" ng-click="browse.clickListItemByIndex(a.listIndex, a.itemIndex)">
       <div class="aw-artist-album__cover">
         <img ng-src="{{browse.playerService.getAlbumart(a.item.albumart)}}" alt="" onerror="this.style.visibility='hidden'">
+        <div class="aw-artist-album__overlay" aria-hidden="true"></div>
+        <!-- the same row menu the library's cards carry (the controller swaps this button for it) -->
+        <div class="aw-artist-album__actions" ng-click="$event.stopPropagation()">
+          <button type="button" id="hamburgerMenuBtn-{{a.listIndex}}-{{a.itemIndex}}" class="ghost-btn action-btn aw-artist-album__more"
+                  ng-click="browse.openMusicCardContenxtList($event, a.listIndex, a.itemIndex)" aria-label="More"><span class="material-symbols-rounded">more_horiz</span></button>
+        </div>
         <button type="button" class="aw-artist-album__play" ng-click="$event.stopPropagation(); browse.playRenderedMusicCardClick(a.listIndex, a.itemIndex)" aria-label="{{'BROWSER.PLAY' | translate}}">
           <span class="material-symbols-rounded">play_arrow</span>
         </button>

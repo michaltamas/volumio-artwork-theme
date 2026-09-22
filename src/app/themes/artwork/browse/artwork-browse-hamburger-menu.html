@@ -48,7 +48,7 @@
 <li ng-if="::item.type === 'remdisk'" ng-click="browse.safeRemoveDrive(item.title)" title="{{'BROWSER.SAFE_REMOVE' | translate}}">
   <a href><span class="material-symbols-rounded">eject</span><span>{{'BROWSER.SAFE_REMOVE' | translate}}</span></a>
 </li>
-<li ng-if="::item.type === 'folder' || item.type === 'internal-folder'" ng-click="browse.updateFolder(item.uri)" title="{{'BROWSER.UPDATE_FOLDER' | translate}}">
+<li ng-if="::((item.type === 'folder' && item.uri.indexOf('music-library/') === 0) || item.type === 'internal-folder')" ng-click="browse.updateFolder(item.uri)" title="{{'BROWSER.UPDATE_FOLDER' | translate}}">
   <a href><span class="material-symbols-rounded">sync</span><span>{{'BROWSER.UPDATE_FOLDER' | translate}}</span></a>
 </li>
 <li ng-if="::item.type === 'internal-folder'" class="aw-menu__danger" ng-click="browse.deleteFolder(browse.browseService.currentFetchRequest.uri, item)" title="{{'BROWSER.DELETE' | translate}}">
