@@ -7,6 +7,8 @@ cd "$(dirname "$0")/.."
 VERSION="${1:-$(git describe --tags --always 2>/dev/null || echo dev)}"
 [ -f dist/index.html ] || { echo "error: no dist/ - run ./build.sh artwork artwork first" >&2; exit 1; }
 echo "$VERSION" > dist/VERSION
+# the companion plugin rides along under companion/; the installer lifts it out before the UI is copied
+rm -rf dist/companion && cp -a plugin/artwork_companion dist/companion
 # the same offline fallback Volumio writes into its own builds
 [ -f dist/app/local-config.json ] || echo '{"localhost": "http://127.0.0.1:3000"}' > dist/app/local-config.json
 # no macOS metadata in the archive (GNU tar on the player warns about it)

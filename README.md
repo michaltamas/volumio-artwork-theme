@@ -87,10 +87,15 @@ The same screens on paper. The cover still bleeds behind everything, but the vei
 up to a warm off-white instead of down to black, and the transport turns from a white disc with
 a dark glyph into an ink disc with a paper one. Pick **Dark**, **Light** or **System** in
 Settings → Appearance; the choice is remembered in that browser, so a phone can be light while
-the screen in the living room stays dark. Until something is picked the theme is dark. A screen
-driven by the player itself — a display on HDMI, the Touch Display plugin — is a browser of its
-own and keeps its own choice: pick it there, or put `?theme=light` (or `dark`, `system`) in the
-address the display opens; the choice is saved on the first load.
+the screen in the living room stays dark. Until something is picked the theme is dark.
+
+A screen driven by the player itself — a display on HDMI, the Touch Display plugin — is a
+browser of its own, and nobody can touch it. That is what the **Artwork One Companion** is
+for: a small plugin the installer puts on the player, which keeps the theme and the ambient
+display settings there and pushes them to every screen. With it, Settings → Appearance gains a
+**Player's screens** row: what you pick there is what the display shows, and what any browser
+shows until it picks for itself. Without the plugin the choice stays per browser, and a display
+can still be told with `?theme=light` (or `dark`, `system`) in the address it opens.
 
 | | |
 |---|---|
@@ -133,7 +138,7 @@ curl -fsSL https://raw.githubusercontent.com/michaltamas/volumio-artwork-theme/m
 
 To install a particular version, pass `--version`, for example `bash -s -- --version v1.0.0`.
 
-**What the installer does.** It downloads `artwork-ui.tar.gz` from the [latest release](https://github.com/michaltamas/volumio-artwork-theme/releases/latest), unpacks it to `/data/artwork-ui` and registers it in `/data/thirdPartyUisList.json`, Volumio's list of additional interfaces. With `--activate` it also writes `/data/active_volumio_ui` and restarts Volumio. It changes nothing under `/volumio`. Because everything lives on the data partition, the installation survives Volumio system updates. You are welcome to read [the script](scripts/install.sh) before running it.
+**What the installer does.** It downloads `artwork-ui.tar.gz` from the [latest release](https://github.com/michaltamas/volumio-artwork-theme/releases/latest), unpacks it to `/data/artwork-ui` and registers it in `/data/thirdPartyUisList.json`, Volumio's list of additional interfaces. With `--activate` it also writes `/data/active_volumio_ui` and restarts Volumio. It changes nothing under `/volumio`. Because everything lives on the data partition, the installation survives Volumio system updates. You are welcome to read [the script](scripts/install.sh) before running it. It also installs the Artwork One Companion plugin to `/data/plugins/miscellanea/artwork_companion` and registers it, restarting Volumio once so it loads; `--no-companion` skips it.
 
 ## Updating
 
