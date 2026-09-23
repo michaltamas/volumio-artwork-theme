@@ -59,19 +59,18 @@
           <span class="np-format mono" ng-if="playback.npFormat">{{playback.npFormat}}</span>
         </div>
         <!-- signal path (§5.6): source format, the resample step from the real playback
-             settings (omitted while they are unknown), and the output device — the Info face -->
-        <div class="np-signalpath mono" ng-if="playback.npView === 'info' && playback.playerService.state.samplerate">
+             settings (omitted while they are unknown), and the output device — the Cover face
+             (the Info face is the artist's and the record's rows, 12B) -->
+        <div class="np-signalpath mono" ng-if="playback.npView === 'cover' && playback.playerService.state.samplerate">
           <span>SOURCE {{playback.npSignal}}</span>
           <span class="np-arrow" ng-if="playback.npResample">&rarr;</span>
           <span ng-if="playback.npResample">{{playback.npResample}}</span>
           <span class="np-arrow" ng-if="playback.npOutput">&rarr;</span>
           <span class="np-node-final" ng-if="playback.npOutput">{{playback.npOutput}}</span>
         </div>
-        <!-- what the library knows about the record (local music), on the Info face -->
-        <div class="np-library mono" ng-if="playback.npView === 'info' && (playback.npYear || playback.npGenre)">
-          <span ng-if="playback.npYear">{{playback.npYear}}</span>
-          <span class="np-arrow" ng-if="playback.npYear && playback.npGenre">·</span>
-          <span ng-if="playback.npGenre">{{playback.npGenre}}</span>
+        <!-- the record's genre from the library (local music), on the Cover face; its year is beside the album -->
+        <div class="np-library mono" ng-if="playback.npView === 'cover' && playback.npGenre">
+          <span>{{playback.npGenre}}</span>
         </div>
       </div>
       </div>

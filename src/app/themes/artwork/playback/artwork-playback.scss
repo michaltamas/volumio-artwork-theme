@@ -386,7 +386,6 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
      a 36px pill "Artist ›" / "Album ›"; the album row 14 below, its facts under the name. */
   /* (at body#artwork, so these outrank the fluid file's sizes for the other faces) */
   @at-root body#artwork #np.np--info {
-    .np-signalpath, .np-library { display: none; }   /* the face is the two rows now */
     .np-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 12px; }
     .np-artist { flex-basis: 100%; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
     .np-album { font-size: 16px; font-weight: 400; color: var(--ink-2); margin: 0; }
