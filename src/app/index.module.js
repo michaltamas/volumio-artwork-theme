@@ -78,6 +78,7 @@ import AwLyricsListDirective from './components/aw-lyrics/aw-lyrics-list.directi
 import AwUndoService from './components/aw-undo/aw-undo.service';
 import AwSleepService from './components/aw-sleep/aw-sleep.service';
 import AwPinsService from './components/aw-pins/aw-pins.service';
+import AwArtistCountsService from './components/aw-artist-counts/aw-artist-counts.service';
 import AwPointerdownDirective from './components/aw-pins/aw-pointerdown.directive';
 import AwMenuPlaceDirective from './components/aw-menu-place/aw-menu-place.directive';
 import AwUndoDirective from './components/aw-undo/aw-undo.directive';
@@ -323,6 +324,7 @@ angular.module('volumio', [
   .service('awUndo', AwUndoService)
   .service('awSleep', AwSleepService)
   .service('awPins', AwPinsService)
+  .service('awArtistCounts', AwArtistCountsService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awSettingsSearch', (themeManager) => new AwSettingsSearchDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))

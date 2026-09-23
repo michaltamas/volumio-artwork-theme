@@ -1,10 +1,11 @@
 class BrowseMusicController {
   constructor($scope, browseService, playQueueService, playlistService, socketService,
     modalService, $timeout, matchmediaService, $compile, $document, $rootScope, $log, playerService,
-    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu, awUndo, awSignal, awPins) {
+    uiSettingsService, $state, themeManager, $stateParams, mockService, $http, authService, $filter, awMobileMenu, awUndo, awSignal, awPins, awArtistCounts) {
     'ngInject';
     this.awMenu = awMobileMenu;
     this.awPins = awPins;
+    this.awArtistCounts = awArtistCounts;
     this.awUndo = awUndo;
     this.signal = awSignal;
     this.$scope = $scope;
@@ -1383,6 +1384,36 @@ class BrowseMusicController {
     // a service's search results are not filtered again by the same words
     if (this.isServicePage) { this.awVisibleCount = null; this.awNodes().forEach(el => el.classList.remove('aw-hidden')); } else { this.applyAwFilter(); }
     this.applyAwSort();
+    this.awFillArtistCounts();
+  }
+
+  /* ---- the Artists grid: "7 albums" under each name (mockup), asked for as tiles come into view ---- */
+  awFillArtistCounts() {
+    if (this.currentUri !== 'artists://' || !window.IntersectionObserver) { return; }
+    if (this._awCountsIO) { this._awCountsIO.disconnect(); }
+    const svc = this.awArtistCounts;
+    const lists = this.browseService.lists || [];
+    const write = (node, text) => {
+      const meta = node.querySelector('.music-card__meta, .item__artist');
+      if (!meta || !text) { return; }
+      meta.textContent = text; meta.classList.remove('hidden'); meta.title = '';
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) { return; }
+        io.unobserve(en.target);
+        const btn = en.target.querySelector('[id^="hamburgerMenuBtn-"]');
+        const m = btn && /^hamburgerMenuBtn-(\d+)-(\d+)$/.exec(btn.id);
+        const item = m && lists[+m[1]] && lists[+m[1]].items[+m[2]];
+        if (!item || !/^artists:\/\//.test(String(item.uri || ''))) { return; }
+        if (item.meta) { write(en.target, item.meta); return; }
+        svc.count(item.uri).then(n => { const t = svc.text(n); if (t) { item.meta = t; write(en.target, t); } });
+      });
+    }, { rootMargin: '200px 0px' });
+    this._awCountsIO = io;
+    svc.refresh().then(() => {
+      Array.prototype.forEach.call(document.querySelectorAll('#browse-page .music-card__wrapper:not(.placeholder-wrapper), #browse-page .music-item'), el => io.observe(el));
+    });
   }
 
   toggleGridView() {
