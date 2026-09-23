@@ -442,9 +442,9 @@ html.aw-is-light body#artwork #np .np-lyrics__line:active { background: rgba(20,
    (outranks the fluid rules that space the artist and album on the other faces). Not on the
    phone: there the words are a panel and the page beneath keeps its own layout. */
 @media not all and (max-width: 700px) and (orientation: portrait) {
-  body#artwork #np .np-meta--lyrics .np-artist { display: inline; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
-  body#artwork #np .np-meta--lyrics .np-album { display: inline; font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0;
-    &::before { content: '·'; color: var(--ink-dim); margin-right: 12px; } }
+  /* the row is the record and the chip; the artist reads on its own line beneath it */
+  body#artwork #np .np-meta--lyrics .np-album { display: inline; font-size: 17px; font-weight: 400; color: var(--ink-2); margin: 0; }
+  body#artwork #np .np-meta--lyrics .np-artist { order: 3; flex-basis: 100%; display: block; font-size: 17px; font-weight: 400; color: var(--ink-muted); margin: 2px 0 0; }
   body#artwork #np .np-meta--lyrics #np-chip-slot { display: inline-flex; align-self: center; margin: 0; }
   body#artwork #np .np-meta--lyrics .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
 }
