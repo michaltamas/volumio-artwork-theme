@@ -32,6 +32,7 @@ All notable changes to this project are documented here. The format is based on
 - A context menu near an edge opened off-screen or under the mini player; it now opens toward the free side, under the sticky head and above the mini player, and a pin's menu on Home is no longer cut to its tile.
 - The Settings landing on a phone was 216 px wide.
 - Lyrics: a track without an artist made LRCLIB answer 400; it goes straight to the search by title now.
+- On the phone the pins sat in a shelf of their own that scrolled sideways; they wrap into the same grid as Recent albums.
 
 ## [1.6.2] - 2026-09-21
 
