@@ -1055,6 +1055,8 @@ body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(6,
 @media (max-width: 1400px) { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(5, 1fr); } }
 @media (max-width: 1100px) { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 800px)  { body#artwork #browse.browsing-list .main__row { grid-template-columns: repeat(3, 1fr); } }
+/* the artists' rows breathe more: a round portrait, the name and its album count read as one column */
+body#artwork #browse.browsing-artists .main__row { row-gap: 40px; }
 body#artwork #browse.browsing-artists .music-card__info { margin-top: 12px; justify-content: center; } /* .music-card__info is a flex row: text-align alone does not centre the label */
 body#artwork #browse.browsing-artists .music-card__label { max-width: 100%; }
 body#artwork #browse.browsing-artists .music-card__label { font-size: 15px; font-weight: 600; margin-top: 0; }
