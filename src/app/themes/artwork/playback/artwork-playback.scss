@@ -429,7 +429,7 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   .np-lyrics__empty { font-size: 24px; font-weight: 500; line-height: 1.4; color: var(--ink-dim); }
   .np-lyrics__skeleton { display: flex; flex-direction: column; gap: 18px; padding-top: 6px; animation: aw-lyr-pulse 1.4s ease-in-out infinite;
     i { display: block; height: 18px; border-radius: 4px; background: var(--fill-10); width: 62%; &:nth-child(2) { width: 78%; } &:nth-child(3) { width: 70%; } &:nth-child(4) { width: 54%; } &:nth-child(5) { width: 66%; } } }
-  .np-lyrics__source { font-size: 11px; letter-spacing: .16em; color: var(--ink-dim); margin-top: 16px; flex: none; }
+  .np-lyrics__eyebrow--synced { flex: none; margin-bottom: 0; }
 
 }
 @keyframes aw-lyr-in { from { opacity: .4; } to { opacity: 1; } }

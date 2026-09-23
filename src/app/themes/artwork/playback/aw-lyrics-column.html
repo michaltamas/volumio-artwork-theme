@@ -1,5 +1,7 @@
 <!-- the words (handoff 6a, 6d): the column, used in the desktop face and in the phone sheet -->
 <div class="np-lyrics" ng-if="playback.lyricsOn" ng-class="'np-lyrics--' + playback.lyrics.state">
+        <!-- the source reads under the title, above the words, synced or plain -->
+        <div class="np-lyrics__eyebrow np-lyrics__eyebrow--synced mono" ng-if="playback.lyrics.state === 'synced'">LYRICS · LRCLIB</div>
         <div class="np-lyrics__col np-lyrics__col--synced" ng-if="playback.lyrics.state === 'synced'" aw-lyrics-list="playback.lyricsIndex">
           <div class="np-lyrics__stack">
             <div class="np-lyrics__line" ng-repeat="l in playback.lyrics.lines track by $index" data-line="{{$index}}"
@@ -14,6 +16,4 @@
         </div>
         <div class="np-lyrics__col np-lyrics__col--empty" ng-if="playback.lyrics.state === 'none'"><div class="np-lyrics__empty">No lyrics for this track.</div></div>
         <div class="np-lyrics__col np-lyrics__col--loading" ng-if="playback.lyrics.state === 'loading'"><div class="np-lyrics__skeleton"><i></i><i></i><i></i><i></i><i></i></div></div>
-        <!-- the source: under the synced words; the plain words name it in their eyebrow instead -->
-        <div class="np-lyrics__source mono" ng-if="playback.lyrics.state === 'synced'">LYRICS · LRCLIB</div>
-      </div>
+              </div>
