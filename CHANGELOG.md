@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-09-23
+
+### Changed
+
+- **Ambient, cover-led** — after a mockup from the community. The cover fills three quarters of the height on the left; the player's name sits top-left and a small clock top-right on one line; the text is centred beside the cover — title, artist, *album · year · #n* — with the format pill and BIT PERFECT beneath, and under a rule what comes next in the queue. The seek bar runs across the whole width under the cover with the elapsed and total time at its ends, instead of a hairline on the screen's edge with the time in the column.
+- **Ambient, full-bleed** — the seek bar is inset above the bottom edge with the times at its ends, and the format line no longer carries the time.
+
 ## [2.0.0] - 2026-09-23
 
 ### Added
