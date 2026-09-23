@@ -430,8 +430,7 @@ body#artwork .np-menu-btn, body#artwork .aw-menu-btn, body#artwork .aw-menu-btn-
   body#artwork #artwork-home .aw-tab, body#artwork #artwork-home .aw-search-key { display: none; }
   /* pins on the phone (10b): the shelf scrolls sideways, no Edit; the tile's menu is always in reach */
   body#artwork #artwork-home .home-pins-edit { display: none; }
-  body#artwork #artwork-home .home-pins .main__row { display: flex; flex-wrap: nowrap; gap: 12px; margin: 12px -20px 0; padding: 0 20px; overflow-x: auto; scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
-  body#artwork #artwork-home .home-pins .music-card__wrapper { flex: none; width: 132px; }
+  /* the pins wrap into the same three-column grid as Recent albums (no shelf of its own here) */
   body#artwork #artwork-home .home-pin__more { opacity: 1; width: 28px; height: 28px; }
   body#artwork #artwork-home .aw-menu-btn { display: grid; place-items: center; border: 0; background: transparent; padding: 0; color: var(--ink-2); cursor: pointer; .material-symbols-rounded { font-size: 24px; } }
   body#artwork #artwork-home .aw-search { flex: 1; width: auto; margin-left: 0; height: 44px; border-radius: 22px; padding: 0 14px; gap: 9px; background: var(--fill-09); border: 1px solid var(--fill-12); }
