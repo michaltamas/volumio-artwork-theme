@@ -51,7 +51,10 @@ body#artwork #artwork-home {
   .home-pins-edit { margin-left: auto; border: 0; background: transparent; padding: 4px 2px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
   .home-pin { position: relative; user-select: none; -webkit-user-select: none;
     &.is-lifted { z-index: 5; transition: none; box-shadow: 0 26px 50px -18px var(--shadow-deep); outline: 1px solid var(--fill-20); border-radius: var(--r-cover); }
-    .music-card__header { position: relative; }
+    /* the cover box must not clip the tile's menu (wider than the tile): the image and the
+       overlay keep the rounded corners themselves */
+    .music-card__header { position: relative; overflow: visible; }
+    .music-card__img, .music-card__overlay { border-radius: var(--r-cover); }
     &:hover .home-pin__more { opacity: 1; } }
   .is-editing .home-pin { cursor: grab; touch-action: none; .music-card { pointer-events: none; } .home-pin__menu { pointer-events: auto; } }
   .home-pin__glyph { position: absolute; inset: 0; border-radius: var(--r-cover); background: var(--card-flat, var(--fill-06)); display: grid; place-items: center; .material-symbols-rounded { font-size: 52px; color: var(--ink-3); } }
