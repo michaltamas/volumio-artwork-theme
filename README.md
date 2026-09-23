@@ -13,7 +13,9 @@ Beneath the new look sits everything you already rely on. Every source, every se
 - **Made for listening in high resolution.** Bit depth, sample rate, format and source, shown with pride instead of tucked away.
 - **Seeking that invites a touch.** A generous track with a glowing handle: drag it with a finger or a mouse, or step by five seconds with the arrow keys.
 - **One fluid design.** No fixed breakpoints: it reshapes itself continuously for any screen, down to edge-to-edge on an iPhone.
-- **Dark or light.** A paper theme beside the dark one, chosen per browser or left to follow the device.
+- **Dark or light.** A paper theme beside the dark one, one choice for every screen of the player.
+- **Three faces of Now Playing.** The cover, the words as they are sung, or who this is and what record — with the way into the library.
+- **A display that rests.** After a while without a touch, the player's own screen shows the cover, the essentials and a clock, and comes back on touch.
 - **Free to try.** One line to install, one click in Settings to switch back.
 
 ![Now Playing](docs/screenshots/now-playing.jpg)
@@ -44,10 +46,15 @@ Beneath the new look sits everything you already rely on. Every source, every se
 
 **Now Playing**
 - Large cover next to the title, artist and album, sized to fill the screen at any window size.
+- Three faces, switched above the title: **Cover**, **Info** and **Lyrics**. The title and the cover never leave; only the column beneath them changes.
+- **Lyrics** from [LRCLIB](https://lrclib.net), synced to the music when the record has them: the line being sung is lit, the rest fades with distance, a tap on a line seeks to it. Plain words when that is all there is. On the phone the words slide up over the player as a panel.
+- **Info**: who plays and what record, as two rows. The artist with Wikipedia's one-line description, the year they began and the opening paragraph of their biography; the record with its label, year and track count, and on a wide screen its own paragraph. The facts come from [MusicBrainz](https://musicbrainz.org) and [Wikipedia](https://en.wikipedia.org), the picture from Wikipedia; *Artist ›* and *Album ›* open their pages in the library.
 - The real format as Volumio reports it: bit depth, sample rate, file type and streaming service (for example *24 BIT 192 kHz · FLAC · QOBUZ*), the path from the source to the output device including any resampling, and a *Bit perfect* badge when nothing touches the stream.
+- A quality badge that says what the stream is at a glance — hi-res, DSD, lossless, lossy or radio — on Now Playing, in the mini player, in every track row and on the resting display.
 - Volume, the zone and its output device, all in the header.
 - A seek bar across the full width, with elapsed, remaining and total time. Drag the handle with the mouse or a finger, or step through the track with the arrow keys.
 - *Up next* thumbnails that start the next tracks directly.
+- A **sleep timer** from the Settings menu: four presets or any number of minutes, stop the music or power the player off, the countdown on Now Playing and in the mini player while it runs.
 - Opens from the mini player with a slide-up and closes back to where you were.
 
 **Mini player**
@@ -55,15 +62,20 @@ Beneath the new look sits everything you already rely on. Every source, every se
 
 **Queue**
 - A floating panel instead of a separate page: drag to reorder, remove, shuffle, repeat, save as a playlist, clear, and the time the queue ends.
+- **Play next** and **Play last** in every row's menu, with a toast that says where the track landed and an *Undo* while it shows.
 
 **Library and sources**
-- Home with *Pick up where you left off* and recently played albums.
-- Album pages with the cover beside the track list, artist pages with albums and tracks, breadcrumbs, grid and list views, sorting, filtering and an A–Z index.
+- Home with *Pick up where you left off*, recently played albums and a shelf of **pins**: anything you keep going back to — a source, a folder, a playlist, an album, a station — pinned from its row menu, dragged into order, kept on the player so every screen shows the same shelf.
+- Album pages with the cover beside the track list, artist pages with albums and tracks, breadcrumbs, grid and list views, sorting, filtering and an A–Z index. The artists grid says how many albums each has.
+- On a streaming service's pages the search field asks the service itself — Spotify's search in Spotify, Tidal's in Tidal — instead of filtering the rows on screen.
 - Every Volumio source works as before: the music library, Web Radio, Spotify, media servers and music service plugins.
+
+**Settings**
+- A search field on the Settings landing (⌘K / Ctrl+K) that finds a page or a section of one by name — *resamp* leads straight to Audio Resampling — across Volumio's pages, the installed plugins' pages and the theme's own sections.
 
 **The player's own display**
 - *Ambient*: after a few minutes without a touch, a display the player drives (HDMI, the Touch Display plugin, a TV) shows the cover, the essentials and a clock — cover-led, clock-led or full-bleed — and comes straight back on touch. Night hours dim it; the composition drifts slowly against burn-in.
-- One theme and one set of ambient settings for every screen of the player, kept on the player by the companion plugin: set them from a phone, the display follows at once.
+- One theme, one set of ambient settings and one shelf of pins for every screen of the player, kept on the player by the [companion plugin](#the-companion-plugin): set them from a phone, the display follows at once.
 
 **Everywhere**
 - A fluid layout with no fixed breakpoints: it adapts continuously to phones, tablets, desktop browsers and unusual displays on media players.
@@ -75,13 +87,19 @@ Beneath the new look sits everything you already rely on. Every source, every se
 
 | | |
 |---|---|
+| ![Now Playing, the Info face](docs/screenshots/now-playing-info.jpg) | ![Now Playing, the Lyrics face](docs/screenshots/now-playing-lyrics.jpg) |
+| **Info** — who plays and what record | **Lyrics** — the words as they are sung |
 | ![Home](docs/screenshots/home.jpg) | ![Album](docs/screenshots/album.jpg) |
-| **Home** | **Album** |
+| **Home** — with the pinned shelf | **Album** |
 | ![Artist](docs/screenshots/artist.jpg) | ![Queue](docs/screenshots/home-queue.jpg) |
 | **Artist** | **Queue** |
+| ![Ambient](docs/screenshots/ambient.jpg) | ![Settings search](docs/screenshots/settings-search.jpg) |
+| **Ambient** — the player's display at rest | **Settings search** |
 
 <p align="center">
   <img src="docs/screenshots/phone-now-playing.jpg" width="260" alt="Now Playing on a phone">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/phone-lyrics.jpg" width="260" alt="Lyrics on a phone">
   &nbsp;&nbsp;
   <img src="docs/screenshots/phone-home.jpg" width="260" alt="Home on a phone">
 </p>
@@ -91,21 +109,19 @@ Beneath the new look sits everything you already rely on. Every source, every se
 The same screens on paper. The cover still bleeds behind everything, but the veil over it runs
 up to a warm off-white instead of down to black, and the transport turns from a white disc with
 a dark glyph into an ink disc with a paper one. Pick **Dark**, **Light** or **System** in
-Settings → Appearance; the choice is remembered in that browser, so a phone can be light while
-the screen in the living room stays dark. Until something is picked the theme is dark.
+Settings → Appearance. Until something is picked the theme is dark.
 
-A screen driven by the player itself — a display on HDMI, the Touch Display plugin — is a
-browser of its own, and nobody can touch it. That is what the **Artwork One Companion** is
-for: a small plugin the installer puts on the player, which keeps the theme and the ambient
-display settings there and pushes them to every screen. With it, Settings → Appearance gains a
-**Player's screens** row: what you pick there is what the display shows, and what any browser
-shows until it picks for itself. Without the plugin the choice stays per browser, and a display
+With the [companion plugin](#the-companion-plugin) the choice is the player's: every screen —
+the phone, the desktop browser, a display on HDMI that nobody can touch — shows the theme
+picked in Appearance, at once. Without the plugin the choice stays per browser, and a display
 can still be told with `?theme=light` (or `dark`, `system`) in the address it opens.
 
 | | |
 |---|---|
 | ![Now Playing, light](docs/screenshots/light-now-playing.jpg) | ![Album, light](docs/screenshots/light-album.jpg) |
 | **Now Playing** | **Album** |
+| ![Ambient, light](docs/screenshots/ambient-light.jpg) | |
+| **Ambient** | |
 
 <p align="center">
   <img src="docs/screenshots/phone-light-home.jpg" width="260" alt="Home on a phone, light theme">
@@ -213,11 +229,11 @@ Volumio's other themes remain in the source tree. This project only builds and p
 
 ## The companion plugin
 
-The interface is static files: it has no place on the player to keep anything, so a choice made in one browser never reached another, and a display the player drives on HDMI — which nobody can touch — could not be told anything at all. The **Artwork One Companion** (`plugin/artwork_companion`) is that place: a small Volumio plugin that keeps the theme and the ambient display settings on the player, answers a screen that asks for them, and pushes every change to all connected screens. With it, Settings → Appearance sets the theme and the ambient display for the whole player at once.
+The interface is static files: it has no place on the player to keep anything, so a choice made in one browser never reached another, and a display the player drives on HDMI — which nobody can touch — could not be told anything at all. The **Artwork One Companion** ([`plugin/artwork_companion`](plugin/artwork_companion)) is that place: a small Volumio plugin that keeps the theme, the ambient display settings and the pinned shelf on the player, answers a screen that asks for them, and pushes every change to all connected screens. With it, Settings → Appearance sets the theme and the ambient display for the whole player at once, and a pin made on the phone is on the living-room screen a moment later.
 
 - The installer puts it in `/data/plugins/miscellanea/artwork_companion`, registers it in Volumio's plugin list and restarts Volumio once so it loads; the uninstaller removes it. `--no-companion` skips it, and the interface works without it — the theme and the ambient settings then stay per browser.
 - It has no dependencies of its own: Volumio's modules (`kew`, `v-conf`) are loaded from the player's core tree. Nothing is downloaded, built or sent anywhere.
-- Contract, over Volumio's `callMethod`: `miscellanea/artwork_companion` · `getSettings {}` answers the caller with `pushArtworkSettings`; `setSettings {theme?, ambient?}` saves and pushes `pushArtworkSettings` to every screen. A key is absent until someone chooses it; a field out of range is dropped and never overwrites the stored one.
+- Contract, over Volumio's `callMethod`: `miscellanea/artwork_companion` · `getSettings {}` answers the caller with `pushArtworkSettings`; `setSettings {theme?, ambient?, pins?}` saves and pushes `pushArtworkSettings` to every screen. A key is absent until someone chooses it; a field out of range is dropped and never overwrites the stored one; a pin keeps only what a tile needs (uri, service, type, title, artwork), at most 24 of them.
 - Its page under Settings → Plugins only says where the settings are; the settings themselves live in Appearance.
 
 ## Troubleshooting
@@ -236,6 +252,7 @@ The interface is static files: it has no place on the player to keep anything, s
 - Artwork One is not part of Volumio's built-in interface list, so installing it needs SSH once.
 - A few labels the theme introduces, such as *Up next*, are in English only for now. Everything that comes from Volumio uses Volumio's translations.
 - Plugins that bring their own custom HTML pages keep their own look inside the theme.
+- Lyrics and the Info face's facts come from the internet — LRCLIB, MusicBrainz and Wikipedia, asked by the browser directly, without keys or accounts. Without a connection those faces stay empty, and a record these services do not know shows what Volumio knows. Everything else works offline.
 
 ## Contributing
 

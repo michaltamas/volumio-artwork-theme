@@ -4,6 +4,35 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-09-23
+
+### Added
+
+- **Ambient.** After a few minutes without a touch, a display the player drives — HDMI, the Touch Display plugin, a TV — gives way to the cover, the essentials and a clock, and comes straight back on touch. Three layouts (cover-led, clock-led, full-bleed), a 12 or 24 hour clock, night hours that dim it, and a slow drift against burn-in. Set in Settings → Appearance; `?ambient=now` in the address shows it at once, `?kiosk=1` tells a browser it is the player's own display.
+- **The Artwork One Companion**, a small plugin the installer puts on the player. It keeps the theme, the ambient settings and the pinned shelf there and pushes every change to every screen, so a choice made on the phone is on the living-room display a moment later and a display nobody can touch can be told anything at all. `--no-companion` skips it.
+- **Lyrics**, a third face of Now Playing beside Cover and Info: the words from LRCLIB, synced to the music when the record has them, plain when not; a tap on a line seeks to it. On the phone they slide up over the player as a panel.
+- **Info**, redrawn: who plays and what record, as two rows — the artist with Wikipedia's one-line description, the year they began and their opening paragraph; the record with its label, year and track count, and on a wide screen its paragraph. From MusicBrainz and Wikipedia, asked by the browser without keys; *Artist ›* and *Album ›* lead into the library.
+- **Play next** and **Play last** in every row's menu, with a toast that says where the track landed and an *Undo* while it shows.
+- **Quality badges** — hi-res, DSD, lossless, lossy, radio — on Now Playing, in the mini player, in track rows and on the resting display.
+- **A sleep timer** from the Settings menu: presets or any number of minutes, stop or power off, the countdown on Now Playing and in the mini player.
+- **Pins** on Home: a shelf under Recent albums for anything one keeps going back to — a source, a folder, a playlist, an album, a station — pinned from its row menu, reordered by drag, unpinned from the tile's own menu, shared by every screen through the companion.
+- **Settings search** on the Settings landing (⌘K / Ctrl+K): finds a page or a section of one by name, across Volumio's pages, the installed plugins' pages and the theme's own.
+- On a streaming service's pages the search field asks the service itself instead of filtering the rows on screen.
+- The artists grid says how many albums each artist has; the artist page's album tiles carry the same hover and menu as the library's cards.
+- The Now Playing album line carries the record's year, from the library.
+
+### Changed
+
+- The theme is one choice for the whole player when the companion is there, not one per browser.
+- The Lyrics face keeps only the title above the words; the signal path reads on the Cover face.
+- The artists grid's rows sit further apart.
+
+### Fixed
+
+- A context menu near an edge opened off-screen or under the mini player; it now opens toward the free side, under the sticky head and above the mini player, and a pin's menu on Home is no longer cut to its tile.
+- The Settings landing on a phone was 216 px wide.
+- Lyrics: a track without an artist made LRCLIB answer 400; it goes straight to the search by title now.
+
 ## [1.6.2] - 2026-09-21
 
 ### Fixed
