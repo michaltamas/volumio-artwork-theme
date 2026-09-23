@@ -48,7 +48,7 @@
         <div class="aw-amb__line mono">
           <span ng-if="amb.signalText || amb.bitrateText">{{amb.signalText || amb.bitrateText}}</span>
           <span ng-if="amb.formatText">· {{amb.formatText}}</span>
-          <span ng-if="amb.duration">· {{amb.elapsed}} / {{amb.duration}}</span>
+          <span class="aw-amb__line-time" ng-if="amb.duration">· {{amb.elapsed}} / {{amb.duration}}</span>
         </div>
         <!-- what comes next, under a rule (cover-led) -->
         <div class="aw-amb__next" ng-if="amb.next">
@@ -68,6 +68,6 @@
 
   <!-- the seek hairline stays flush to the bottom edge, outside the drift; gone when stopped -->
   <div class="aw-amb__seek" ng-if="!amb.stopped && amb.duration"><div class="aw-amb__seek-fill" ng-style="{width: amb.playedPct + '%'}"></div></div>
-  <!-- cover-led: elapsed and total at the ends of the seek bar -->
+  <!-- cover-led and full-bleed: elapsed and total at the ends of the seek bar -->
   <div class="aw-amb__times mono" ng-if="!amb.stopped && amb.duration"><span>{{amb.elapsed}}</span><span>{{amb.duration}}</span></div>
 </div>

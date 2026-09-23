@@ -194,6 +194,15 @@ body#artwork .aw-amb--bleed {
   .aw-amb__clock { color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, .7); font-size: clamp(64px, 10.7vh, 120px); top: clamp(26px, 5vh, 60px); right: clamp(36px, 4vw, 80px); }
   .aw-amb__seek { background: rgba(255, 255, 255, .2); }
   .aw-amb__seek-fill { background: #fff; }
+  /* the seek bar inset above the bottom edge with the times at its ends, as on the cover-led
+     layout; the text block ends above it, and its mono line no longer carries the time */
+  --amb-x: clamp(28px, 5.5vw, 110px);
+  .aw-amb__stage { padding-bottom: clamp(80px, 15vh, 170px); }
+  .aw-amb__line-time { display: none; }
+  .aw-amb__seek { left: var(--amb-x); right: var(--amb-x); bottom: clamp(40px, 7.6vh, 84px); height: 6px; border-radius: 3px; overflow: hidden; animation: aw-amb-drift 240s ease-in-out infinite alternate; }
+  .aw-amb__times { display: flex; position: absolute; left: var(--amb-x); right: var(--amb-x); bottom: clamp(16px, 3.6vh, 40px); justify-content: space-between; font-size: clamp(11px, 1.7vh, 17px); letter-spacing: .06em; color: #fff; text-shadow: 0 1px 12px rgba(0, 0, 0, .6); animation: aw-amb-drift 240s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) { .aw-amb__seek, .aw-amb__times { animation: none; } }
+  &.is-night .aw-amb__times { display: none; }
 }
 
 /* --- the seek hairline: flush to the bottom edge, outside the drift ---------------------- */
