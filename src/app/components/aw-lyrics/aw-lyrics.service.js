@@ -17,8 +17,9 @@ const LRC_LINE = /^\s*((?:\[\d{1,2}:\d{2}(?:[.:]\d{1,3})?\])+)\s*(.*)$/;
 const LRC_STAMP = /\[(\d{1,2}):(\d{2})(?:[.:](\d{1,3}))?\]/g;
 
 class AwLyricsService {
-  constructor($rootScope, $http, $timeout, playerService) {
+  constructor($rootScope, $http, $timeout, playerService, $q) {
     'ngInject';
+    this.$q = $q;
     this.$http = $http;
     this.$timeout = $timeout;
     this.playerService = playerService;
@@ -67,7 +68,9 @@ class AwLyricsService {
     if (st.album) { params.album_name = st.album; }
     const headers = { 'Lrclib-Client': CLIENT };
     const settle = (entry) => { this.remember(k, entry); if (this.key === k) { this.show(entry); } };
-    this.$http.get(API + '/get', { params: params, headers: headers })
+    // the exact lookup needs an artist (400 without one): a track with none goes straight to the search
+    const exact = params.artist_name ? this.$http.get(API + '/get', { params: params, headers: headers }) : this.$q.reject();
+    exact
       .then((res) => settle(this.parse(res.data)))
       .catch(() => {
         // no exact record: the nearest one by artist and title, if any

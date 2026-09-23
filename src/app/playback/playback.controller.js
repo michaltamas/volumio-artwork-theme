@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window, awSleep, modalService) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window, awSleep, modalService, awAbout, awAmbient) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -17,6 +17,9 @@ class PlaybackController {
     this.previousState = 'volumio.browse';
     this.signal = awSignal;
     this.info = awTrackInfo;
+    this.about = awAbout;          // who plays and what record: MusicBrainz + Wikipedia, for the Info face
+    this.kiosk = !!awAmbient.kiosk; // a kiosk has no browser to open a page in
+    this.aboutOpen = {};
     this.lyrics = awLyrics;
     this.sleep = awSleep;
     this.modalService = modalService;

@@ -79,8 +79,10 @@ import AwUndoService from './components/aw-undo/aw-undo.service';
 import AwSleepService from './components/aw-sleep/aw-sleep.service';
 import AwPinsService from './components/aw-pins/aw-pins.service';
 import AwArtistCountsService from './components/aw-artist-counts/aw-artist-counts.service';
+import AwAboutService from './components/aw-about/aw-about.service';
 import AwPointerdownDirective from './components/aw-pins/aw-pointerdown.directive';
 import AwMenuPlaceDirective from './components/aw-menu-place/aw-menu-place.directive';
+import AwMoreBelowDirective from './components/aw-about/aw-more-below.directive';
 import AwUndoDirective from './components/aw-undo/aw-undo.directive';
 import AwAmbientDirective from './components/aw-ambient/aw-ambient.directive';
 import AwSettingsNavDirective from './components/aw-settings-shell/aw-settings-nav.directive';
@@ -325,6 +327,7 @@ angular.module('volumio', [
   .service('awSleep', AwSleepService)
   .service('awPins', AwPinsService)
   .service('awArtistCounts', AwArtistCountsService)
+  .service('awAbout', AwAboutService)
   .directive('awSettingsNav', (themeManager) => new AwSettingsNavDirective(themeManager))
   .directive('awSettingsSearch', (themeManager) => new AwSettingsSearchDirective(themeManager))
   .directive('awQueuePanel', (themeManager) => new AwQueuePanelDirective(themeManager))
@@ -339,6 +342,7 @@ angular.module('volumio', [
   .directive('awUndo', (themeManager) => new AwUndoDirective(themeManager))
   .directive('awPointerdown', () => new AwPointerdownDirective())
   .directive('awMenuPlace', () => new AwMenuPlaceDirective())
+  .directive('awMoreBelow', () => new AwMoreBelowDirective())
   .directive('awPageHead', (themeManager) => new AwPageHeadDirective(themeManager))
   .directive('awCrumbs', (themeManager) => new AwCrumbsDirective(themeManager))
 

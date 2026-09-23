@@ -374,9 +374,26 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   .np-lsheet { display: none; }   /* the phone's panel */
   .np-lyrics-host { display: contents; }
   /* the Lyrics face fills the hero's height: the column below the head is the words' */
-  &.np--lyrics #np-hero { align-items: stretch; }   /* (csso in the build cannot parse :has) */
+  &.np--lyrics #np-hero, &.np--info #np-hero { align-items: stretch; }   /* (csso in the build cannot parse :has) */
+  &.np--info #np-meta, &.np--info #np-chip-slot { display: flex; flex-direction: column; min-height: 0; }
+  &.np--info #np-chip-slot { flex: 1 1 auto; }
+  &.np--info .np-signalpath, &.np--info .np-library, &.np--info .np-quality { flex: none; }
   .np-meta--lyrics { align-self: stretch; }
   .np-library { margin-top: 12px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
+  /* about the artist / the record (Info face): eyebrow, a facts line, the opening paragraph
+     clamped to five lines with More, the source as a quiet mono link. The block scrolls when
+     open paragraphs outgrow the column. */
+  .np-about { margin-top: 26px; max-width: 600px; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 22px; padding-right: 6px;
+    &::-webkit-scrollbar { display: none; }
+    &.is-more { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); } }
+  .np-about__sec { flex: none; }
+  .np-about__eyebrow { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); }
+  .np-about__facts { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .12em; color: var(--ink-3); .np-arrow { color: var(--ink-dim); } }
+  .np-about__text { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    &.is-open { display: block; -webkit-line-clamp: none; } }
+  .np-about__foot { margin-top: 8px; display: flex; align-items: center; gap: 16px; }
+  .np-about__more { background: transparent; border: 0; padding: 0; font-size: 13px; font-weight: 600; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
+  .np-about__src { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); text-decoration: none; &:hover { color: var(--ink-3); } }
 
   /* the Lyrics face: a compact head */
   .np-meta--lyrics {

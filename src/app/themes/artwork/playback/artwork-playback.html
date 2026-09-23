@@ -1,5 +1,5 @@
 <!-- Artwork desktop Now Playing (spec §6.1) -->
-<div id="np" ng-class="{'np--lyrics': playback.lyricsOn}">
+<div id="np" ng-class="{'np--lyrics': playback.lyricsOn, 'np--info': playback.npView === 'info'}">
 
   <div id="np-topbar">
     <button type="button" class="np-menu-btn" ng-click="playback.awMenu.toggle()" aria-label="Menu" title="Menu"><span class="material-symbols-rounded">menu</span></button>
@@ -72,6 +72,33 @@
           <span ng-if="playback.npYear">{{playback.npYear}}</span>
           <span class="np-arrow" ng-if="playback.npYear && playback.npGenre">·</span>
           <span ng-if="playback.npGenre">{{playback.npGenre}}</span>
+        </div>
+        <!-- who plays and what record (MusicBrainz + Wikipedia), on the Info face -->
+        <div class="np-about" aw-more-below ng-if="playback.npView === 'info' && (playback.about.artist || playback.about.album)">
+          <section class="np-about__sec" ng-if="playback.about.artist">
+            <div class="np-about__eyebrow mono">ABOUT THE ARTIST</div>
+            <!-- Wikipedia's one-line description when there is one; else what MusicBrainz knows -->
+            <div class="np-about__facts mono" ng-if="playback.about.artist.description">{{playback.about.artist.description | uppercase}}</div>
+            <div class="np-about__facts mono" ng-if="!playback.about.artist.description && (playback.about.artist.since || playback.about.artist.country)">
+              <span ng-if="playback.about.artist.since">{{playback.about.artist.since}}</span><span class="np-arrow" ng-if="playback.about.artist.since && playback.about.artist.country">·</span><span ng-if="playback.about.artist.country">{{playback.about.artist.country | uppercase}}</span>
+            </div>
+            <p class="np-about__text" ng-if="playback.about.artist.extract" ng-class="{'is-open': playback.aboutOpen.artist}">{{playback.about.artist.extract}}</p>
+            <div class="np-about__foot" ng-if="playback.about.artist.extract">
+              <button type="button" class="np-about__more" ng-click="playback.aboutOpen.artist = !playback.aboutOpen.artist">{{playback.aboutOpen.artist ? 'Less' : 'More'}}</button>
+              <a class="np-about__src mono" ng-if="playback.about.artist.url && !playback.kiosk" ng-href="{{playback.about.artist.url}}" target="_blank" rel="noopener">WIKIPEDIA ↗</a>
+            </div>
+          </section>
+          <section class="np-about__sec" ng-if="playback.about.album">
+            <div class="np-about__eyebrow mono">ABOUT THE RECORD</div>
+            <div class="np-about__facts mono" ng-if="playback.about.album.year || playback.about.album.kind">
+              <span ng-if="playback.about.album.kind">{{playback.about.album.kind | uppercase}}</span><span class="np-arrow" ng-if="playback.about.album.kind && playback.about.album.year">·</span><span ng-if="playback.about.album.year">FIRST RELEASED {{playback.about.album.year}}</span>
+            </div>
+            <p class="np-about__text" ng-if="playback.about.album.extract" ng-class="{'is-open': playback.aboutOpen.album}">{{playback.about.album.extract}}</p>
+            <div class="np-about__foot" ng-if="playback.about.album.extract">
+              <button type="button" class="np-about__more" ng-click="playback.aboutOpen.album = !playback.aboutOpen.album">{{playback.aboutOpen.album ? 'Less' : 'More'}}</button>
+              <a class="np-about__src mono" ng-if="playback.about.album.url && !playback.kiosk" ng-href="{{playback.about.album.url}}" target="_blank" rel="noopener">WIKIPEDIA ↗</a>
+            </div>
+          </section>
         </div>
       </div>
       </div>
