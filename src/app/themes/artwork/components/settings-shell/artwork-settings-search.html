@@ -2,7 +2,7 @@
 <div class="aw-ssearch" ng-class="{'is-active': ss.active}">
   <label class="aw-ssearch__field">
     <span class="material-symbols-rounded">search</span>
-    <input type="search" ng-model="ss.q" ng-change="ss.input()" ng-keydown="ss.key($event)" placeholder="Search settings" aria-label="Search settings" autocomplete="off">
+    <input type="search" ng-model="ss.q" ng-change="ss.input()" ng-keydown="ss.key($event)" placeholder="Search settings" aria-label="Search settings" autocomplete="off" spellcheck="false">
     <span class="aw-ssearch__key mono" ng-if="!ss.active">⌘K</span>
     <button type="button" class="aw-ssearch__clear" ng-if="ss.active" ng-click="ss.clear()" aria-label="Clear"><span class="material-symbols-rounded">close</span></button>
   </label>

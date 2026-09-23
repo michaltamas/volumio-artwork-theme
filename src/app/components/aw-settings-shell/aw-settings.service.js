@@ -63,6 +63,10 @@ class AwSettingsService {
      runs (only on the landing: a push re-renders an open form, and would discard its edits).
      Keys are plugin names and section ids, never the translated text. */
   get searchIndex() { return this._sindex || (this._sindex = {}); }
+  // the sections this theme adds to Volumio's pages itself (the appearance slot): not in any push,
+  // so they are known from the start — ids as on the slot's panels, labels as the slot spells them
+  get themeSections() { return { 'miscellanea/appearance': [{ id: 'aw-theme', label: 'Theme' }, { id: 'aw-ambient', label: 'Ambient display' }] }; }
+  sectionsOf(pn) { return (this.searchIndex[pn] || []).concat(this.themeSections[pn] || []); }
 
   // the plugin page a push belongs to: the open one, or the one the landing just asked for
   indexUiConfig(cfg) {
@@ -122,7 +126,7 @@ class AwSettingsService {
       const key = pn || this.itemKey(item) || title;
       if (norm(title).indexOf(needle) > -1) { out.push({ kind: 'page', title: title, sub: item.installed ? item.group : '', eyebrow: '', item: item, key: key }); }
       if (!pn) { return; }
-      (this.searchIndex[pn] || []).forEach(sec => {
+      this.sectionsOf(pn).forEach(sec => {
         if (norm(sec.label).indexOf(needle) > -1) { out.push({ kind: 'section', title: sec.label, sub: item.installed ? item.group + ' · ' + title : title, eyebrow: item.installed ? title : '', item: item, section: sec.id, key: pn + '#' + sec.id }); }
       });
     });
