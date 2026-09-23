@@ -375,25 +375,100 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
   .np-lyrics-host { display: contents; }
   /* the Lyrics face fills the hero's height: the column below the head is the words' */
   &.np--lyrics #np-hero, &.np--info #np-hero { align-items: stretch; }   /* (csso in the build cannot parse :has) */
-  &.np--info #np-meta, &.np--info #np-chip-slot { display: flex; flex-direction: column; min-height: 0; }
-  &.np--info #np-chip-slot { flex: 1 1 auto; }
-  &.np--info .np-signalpath, &.np--info .np-library, &.np--info .np-quality { flex: none; }
+  &.np--info #np-meta { display: flex; flex-direction: column; min-height: 0; }
+  &.np--info .np-about { flex: 1 1 auto; }
   .np-meta--lyrics { align-self: stretch; }
   .np-library { margin-top: 12px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
-  /* about the artist / the record (Info face): eyebrow, a facts line, the opening paragraph
-     clamped to five lines with More, the source as a quiet mono link. The block scrolls when
-     open paragraphs outgrow the column. */
-  .np-about { margin-top: 26px; max-width: 600px; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 22px; padding-right: 6px;
-    &::-webkit-scrollbar { display: none; }
-    &.is-more { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); } }
-  .np-about__sec { flex: none; }
-  .np-about__eyebrow { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); }
-  .np-about__facts { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .12em; color: var(--ink-3); .np-arrow { color: var(--ink-dim); } }
-  .np-about__text { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-    &.is-open { display: block; -webkit-line-clamp: none; } }
-  .np-about__foot { margin-top: 8px; display: flex; align-items: center; gap: 16px; }
-  .np-about__more { background: transparent; border: 0; padding: 0; font-size: 13px; font-weight: 600; color: var(--ink-3); cursor: pointer; &:hover { color: var(--ink); } }
-  .np-about__src { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); text-decoration: none; &:hover { color: var(--ink-3); } }
+  /* ---- the Info face (12B–12D) ----
+     head: artist 21/600 ink mt12; the record and the chip on one row, 16 ink-2, chip 28px, mt6;
+     a hairline 26 above / 22 below; rows: 48px picture (round for the artist), name 16/700 with the
+     facts 13 ink-muted on its baseline, the bio 14/1.55 ink-2 clamped, BIO · WIKIPEDIA mono 10 ink-dim,
+     a 36px pill "Artist ›" / "Album ›"; the album row 14 below, its facts under the name. */
+  /* (at body#artwork, so these outrank the fluid file's sizes for the other faces) */
+  @at-root body#artwork #np.np--info {
+    .np-signalpath, .np-library { display: none; }   /* the face is the two rows now */
+    .np-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 12px; }
+    .np-artist { flex-basis: 100%; font-size: 21px; font-weight: 600; color: var(--ink); margin: 0; }
+    .np-album { font-size: 16px; font-weight: 400; color: var(--ink-2); margin: 0; }
+    #np-chip-slot { margin: 0; display: inline-flex; }
+    .np-chip { height: 28px; padding: 0 11px; gap: 7px; .np-chip-num { font-size: 11px; } .np-chip-unit { font-size: 10px; } }
+    @media (max-width: 1100px) {
+      .np-eyebrow { display: none; }
+      .np-title { font-size: 28px; letter-spacing: -.02em; line-height: 1.1; }
+      .np-byline { gap: 0; margin-top: 6px; align-items: baseline; }
+      .np-artist { flex-basis: auto; font-size: 16px; font-weight: 400; color: var(--ink-2); &::after { content: '·'; margin: 0 8px; color: var(--ink-dim); } }
+      .np-album { font-size: 16px; }
+      #np-chip-slot { display: none; }
+    }
+    @media (max-width: 840px) {
+      .np-title { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .np-artist { font-size: 15px; &::after { content: none; } }
+      .np-album { display: none; }
+    }
+  }
+  .np-about { min-height: 0; overflow-y: auto; scrollbar-width: none; max-width: 680px; &::-webkit-scrollbar { display: none; } }
+  .np-about__rule { height: 1px; background: var(--fill-10); margin: 26px 0 22px; flex: none; }
+  .np-about__row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 16px; align-items: start;
+    &.is-link { cursor: pointer; } }
+  .np-about__row--album { align-items: center; margin-top: 14px; }
+  .np-about__img { width: 48px; height: 48px; border-radius: 5px; object-fit: cover; display: block; background: var(--fill-08); }
+  .np-about__img--round { border-radius: 50%; object-position: 10% 5%; }
+  .np-about__body { min-width: 0; }
+  .np-about__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .np-about__name { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .np-about__sub { font-size: 13px; color: var(--ink-muted); }
+  .np-about__row--album .np-about__sub { display: block; margin-top: 2px; }
+  .np-about__text { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-wrap: pretty; }
+  .np-about__text--album { display: none; }   /* only the widest screens have room for the record's paragraph */
+  .np-about__src { display: inline-block; margin-top: 6px; font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); text-decoration: none; &:hover { color: var(--ink-3); } }
+  .np-about__go { display: flex; align-items: center; gap: 4px; height: 36px; padding: 0 8px 0 14px; border-radius: 999px; background: var(--fill-10); border: 1px solid var(--fill-13); color: var(--ink); cursor: pointer; font-family: var(--font-ui);
+    > span:first-child { font-size: 13px; font-weight: 600; } .material-symbols-rounded { font-size: 19px; color: var(--ink-3); }
+    &:hover { background: var(--fill-14); } }
+  /* 1920 (12B): 56px pictures, name 17, bio 15 in five lines, the record's paragraph in three, 40px pills */
+  @media (min-width: 1800px) {
+    .np-about__row { grid-template-columns: 56px minmax(0, 1fr) auto; gap: 18px; }
+    .np-about__img { width: 56px; height: 56px; }
+    .np-about__body { max-width: 62ch; }
+    .np-about__head { display: block; }
+    .np-about__name { font-size: 17px; }
+    .np-about__sub { display: block; margin-top: 2px; }
+    .np-about__text { margin-top: 10px; font-size: 15px; -webkit-line-clamp: 5; }
+    .np-about__text--album { display: -webkit-box; -webkit-line-clamp: 3; }
+    .np-about__src { margin-top: 8px; }
+    .np-about__go { height: 40px; padding: 0 10px 0 16px; > span:first-child { font-size: 14px; } .material-symbols-rounded { font-size: 20px; } }
+  }
+  /* a 10" panel (12D, 1024): a compact head (no eyebrow, the title 28px, artist · record on one line,
+     no chip), then 64px touch rows with a chevron, the bio in three lines under the artist's row,
+     the rows fading out at the bottom where they scroll */
+  @media (max-width: 1100px) {
+    .np-about { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); }
+    .np-about__rule { margin: 14px 0 0; background: transparent; }
+    .np-about__row { grid-template-columns: 44px minmax(0, 1fr) 24px; gap: 14px; align-items: center; min-height: 64px; }
+    .np-about__row--album { margin-top: 0; }
+    .np-about__img { width: 44px; height: 44px; }
+    .np-about__head { display: block; }
+    .np-about__name { font-size: 15px; font-weight: 600; }
+    .np-about__sub { display: block; margin-top: 1px; }
+    .np-about__body { display: contents; }
+    .np-about__body > .np-about__head, .np-about__row--album .np-about__body > .np-about__name, .np-about__row--album .np-about__body > .np-about__sub { grid-column: 2; }
+    .np-about__row--album .np-about__body > .np-about__name { align-self: end; }
+    .np-about__row--album .np-about__body > .np-about__sub { align-self: start; margin-top: 0; }
+    .np-about__text { grid-column: 2 / -1; margin: 0 0 14px; -webkit-line-clamp: 3; }
+    .np-about__row--album { position: relative; &::before { content: ''; position: absolute; left: 58px; right: 0; top: 0; height: 1px; background: var(--fill-08); } }
+    .np-about__src { display: none; }
+    /* the chevron sits on the name's row, not after the bio (the body's children are grid items) */
+    .np-about__img, .np-about__body > .np-about__head, .np-about__go { grid-row: 1; }
+    .np-about__row--artist .np-about__text { grid-row: 2; }
+    .np-about__go { grid-column: 3; align-self: center; height: auto; padding: 0; border: 0; background: transparent; > span:first-child { display: none; } .material-symbols-rounded { font-size: 22px; } }
+  }
+  /* a 7" panel (12D, 800): the title 24px with the artist beneath, then the two rows and nothing else */
+  @media (max-width: 840px) {
+    .np-about__row { min-height: 52px; grid-template-columns: minmax(0, 1fr) 24px; gap: 0; border-bottom: 1px solid var(--fill-08); }
+    .np-about__row--album { border-bottom: 0; &::before { left: 0; } }
+    .np-about__img, .np-about__text, .np-about__row .np-about__sub, .np-about__row--album .np-about__body > .np-about__sub { display: none; }
+    .np-about__body > .np-about__head, .np-about__row--album .np-about__body > .np-about__name { grid-column: 1; align-self: center; }
+    .np-about__go { grid-column: 2; }
+  }
 
   /* the Lyrics face: a compact head */
   .np-meta--lyrics {
@@ -448,3 +523,6 @@ html.aw-is-light body#artwork #np .np-lyrics__line:active { background: rgba(20,
   body#artwork #np .np-meta--lyrics #np-chip-slot { display: inline-flex; align-self: center; margin: 0; }
   body#artwork #np .np-meta--lyrics .np-chip { height: 30px; padding: 0 12px; gap: 7px; .np-chip-num { font-size: 12px; } .np-chip-unit { font-size: 10px; } }
 }
+/* the Info face in the light theme (12C light): the pill on paper .70 with a .12 ink line, the hairline .09 */
+html.aw-is-light body#artwork #np .np-about__go { background: rgba(255, 255, 255, .7); border-color: rgba(20, 22, 26, .12); }
+html.aw-is-light body#artwork #np .np-about__rule { background: rgba(20, 22, 26, .09); }

@@ -31,6 +31,7 @@ class AwTrackInfoService {
   // year and genre of the album that plays, or empty while unknown
   get year() { return this.current ? this.current.year : ''; }
   get genre() { return this.current ? this.current.genre : ''; }
+  get tracks() { return this.current ? this.current.tracks : 0; }
 
   refresh() {
     const k = this.key();
@@ -43,7 +44,9 @@ class AwTrackInfoService {
     const host = this.socketService.host || '';
     this.$http.get(host + '/api/v1/browse', { params: { uri: uri } }).then((res) => {
       const info = (res.data && res.data.navigation && res.data.navigation.info) || {};
-      const entry = { year: this.cleanYear(info.year), genre: String(info.genre || '').split(';')[0].trim() };
+      const lists = (res.data && res.data.navigation && res.data.navigation.lists) || [];
+      let tracks = 0; lists.forEach(l => (l.items || []).forEach(it => { if (it && it.type === 'song') { tracks++; } }));
+      const entry = { year: this.cleanYear(info.year), genre: String(info.genre || '').split(';')[0].trim(), tracks: tracks };
       this.remember(k, entry);
       if (this.key() === k) { this.current = entry; }
     }, () => { /* the library did not answer: the album stays without a year */ });

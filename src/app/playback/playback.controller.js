@@ -1,5 +1,5 @@
 class PlaybackController {
-  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window, awSleep, modalService, awAbout, awAmbient) {
+  constructor($rootScope, playerService, matchmediaService, $state, multiRoomService, socketService, playQueueService, $timeout, themeManager, $document, awQueuePanel, awMobileMenu, awSignal, awTrackInfo, awLyrics, $window, awSleep, modalService, awAbout, awAmbient, browseService) {
     'ngInject';
     this.awQueue = awQueuePanel;
     this.awMenu = awMobileMenu;
@@ -19,7 +19,10 @@ class PlaybackController {
     this.info = awTrackInfo;
     this.about = awAbout;          // who plays and what record: MusicBrainz + Wikipedia, for the Info face
     this.kiosk = !!awAmbient.kiosk; // a kiosk has no browser to open a page in
-    this.aboutOpen = {};
+    this.browseService = browseService;
+    // the Info face's rows lead to the artist's and the album's pages — local music only
+    this.goArtist = () => { const st = this.playerService.state || {}; if (!this.canGo) { return; } this.browseService.fetchLibrary({ uri: 'artists://' + encodeURIComponent(st.artist), title: st.artist, name: st.artist, type: 'folder', service: 'mpd' }); this.$state.go('volumio.browse'); };
+    this.goAlbum = () => { const st = this.playerService.state || {}; if (!this.canGo || !st.album) { return; } this.browseService.fetchLibrary({ uri: 'albums://' + encodeURIComponent(st.artist) + '/' + encodeURIComponent(st.album), title: st.album, name: st.album, type: 'folder', service: 'mpd' }); this.$state.go('volumio.browse'); };
     this.lyrics = awLyrics;
     this.sleep = awSleep;
     this.modalService = modalService;
@@ -41,6 +44,14 @@ class PlaybackController {
   // signal service (the ambient display reads the same one).
   get npRoom() { return this.signal.room; }
   get npOutput() { return this.signal.output; }
+  get canGo() { const st = this.playerService.state || {}; return String(st.service || '') === 'mpd' && !!st.artist; }
+  get npTracks() { return this.info.tracks; }
+  // the artist row's picture: Wikipedia's, else the cover
+  get aboutArtistImg() { const a = this.about.artist; const st = this.playerService.state || {}; return (a && a.thumb) || (st.albumart ? this.playerService.getAlbumart(st.albumart) : ''); }
+  // "English electronic band · 1980" — Wikipedia's line, then when it began
+  get aboutArtistSub() { const a = this.about.artist; if (!a) { return ''; } return [a.description, a.begin].filter(Boolean).join(' · '); }
+  // "Mute · 2009 · 13 tracks" — the label from MusicBrainz, the year, the library's count
+  get aboutAlbumSub() { const b = this.about.album; const n = this.npTracks; return [b && b.label, (b && b.year) || this.npYear, n ? n + (n === 1 ? ' track' : ' tracks') : ''].filter(Boolean).join(' · '); }
   get npYear() { return this.info.year; }       // from the library's album, local music only
   get npGenre() { return this.info.genre; }
 

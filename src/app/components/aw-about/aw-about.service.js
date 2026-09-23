@@ -80,6 +80,7 @@ class AwAboutService {
         const begin = (a['life-span'] && a['life-span'].begin || '').slice(0, 4);
         return {
           name: a.name, kind: a.type || '', country: a.country || (a.area && a.area.name) || '', begin: begin,
+          area: (a['begin-area'] && a['begin-area'].name) || (a.area && a.area.name) || '',
           since: begin ? (a.type === 'Group' ? 'FORMED ' : a.type === 'Person' ? 'BORN ' : 'SINCE ') + begin : '',
           mbUrl: 'https://musicbrainz.org/artist/' + a.id,
           extract: w ? w.extract : '', description: w ? w.description : '', url: w ? w.url : '', thumb: w ? w.thumb : ''
@@ -97,11 +98,21 @@ class AwAboutService {
     const p = this.mb('release-group/', { query: 'artist:' + this.lucene(artist) + ' AND releasegroup:' + this.lucene(album) + ' AND primarytype:album', limit: 1 }).then(d => {
       const g = d && d['release-groups'] && d['release-groups'][0];
       if (!g || g.score < 90) { return null; }
-      return this.mb('release-group/' + g.id, { inc: 'url-rels' }).then(full => this.wiki(full.relations).then(w => ({
+      // the label is on a release, not on the group: the first official one names it
+      // the label is on a release, not on the group: the earliest official one names it (a later
+      // reissue or another country's pressing may carry another)
+      const label = this.mb('release/', { query: 'rgid:' + g.id + ' AND status:official', limit: 25 })
+        .then(d => {
+          const rs = ((d && d.releases) || []).filter(r => r.date).sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+          for (const r of rs) { const li = (r['label-info'] || []).find(x => x.label && x.label.name); if (li) { return li.label.name; } }
+          return '';
+        })
+        .catch(() => '');
+      return this.mb('release-group/' + g.id, { inc: 'url-rels' }).then(full => this.$q.all([this.wiki(full.relations), label]).then(([w, lbl]) => ({
         title: g.title, date: g['first-release-date'] || '', year: (g['first-release-date'] || '').slice(0, 4),
-        kind: [g['primary-type']].concat(g['secondary-types'] || []).filter(Boolean).join(' · '),
+        kind: [g['primary-type']].concat(g['secondary-types'] || []).filter(Boolean).join(' · '), label: lbl,
         mbUrl: 'https://musicbrainz.org/release-group/' + g.id,
-        extract: w ? w.extract : '', url: w ? w.url : ''
+        extract: w ? w.extract : '', description: w ? w.description : '', url: w ? w.url : ''
       })));
     }).catch(() => null);
     this.remember(this.albums, k, p);

@@ -73,34 +73,38 @@
           <span class="np-arrow" ng-if="playback.npYear && playback.npGenre">·</span>
           <span ng-if="playback.npGenre">{{playback.npGenre}}</span>
         </div>
-        <!-- who plays and what record (MusicBrainz + Wikipedia), on the Info face -->
-        <div class="np-about" aw-more-below ng-if="playback.npView === 'info' && (playback.about.artist || playback.about.album)">
-          <section class="np-about__sec" ng-if="playback.about.artist">
-            <div class="np-about__eyebrow mono">ABOUT THE ARTIST</div>
-            <!-- Wikipedia's one-line description when there is one; else what MusicBrainz knows -->
-            <div class="np-about__facts mono" ng-if="playback.about.artist.description">{{playback.about.artist.description | uppercase}}</div>
-            <div class="np-about__facts mono" ng-if="!playback.about.artist.description && (playback.about.artist.since || playback.about.artist.country)">
-              <span ng-if="playback.about.artist.since">{{playback.about.artist.since}}</span><span class="np-arrow" ng-if="playback.about.artist.since && playback.about.artist.country">·</span><span ng-if="playback.about.artist.country">{{playback.about.artist.country | uppercase}}</span>
-            </div>
-            <p class="np-about__text" ng-if="playback.about.artist.extract" ng-class="{'is-open': playback.aboutOpen.artist}">{{playback.about.artist.extract}}</p>
-            <div class="np-about__foot" ng-if="playback.about.artist.extract">
-              <button type="button" class="np-about__more" ng-click="playback.aboutOpen.artist = !playback.aboutOpen.artist">{{playback.aboutOpen.artist ? 'Less' : 'More'}}</button>
-              <a class="np-about__src mono" ng-if="playback.about.artist.url && !playback.kiosk" ng-href="{{playback.about.artist.url}}" target="_blank" rel="noopener">WIKIPEDIA ↗</a>
-            </div>
-          </section>
-          <section class="np-about__sec" ng-if="playback.about.album">
-            <div class="np-about__eyebrow mono">ABOUT THE RECORD</div>
-            <div class="np-about__facts mono" ng-if="playback.about.album.year || playback.about.album.kind">
-              <span ng-if="playback.about.album.kind">{{playback.about.album.kind | uppercase}}</span><span class="np-arrow" ng-if="playback.about.album.kind && playback.about.album.year">·</span><span ng-if="playback.about.album.year">FIRST RELEASED {{playback.about.album.year}}</span>
-            </div>
-            <p class="np-about__text" ng-if="playback.about.album.extract" ng-class="{'is-open': playback.aboutOpen.album}">{{playback.about.album.extract}}</p>
-            <div class="np-about__foot" ng-if="playback.about.album.extract">
-              <button type="button" class="np-about__more" ng-click="playback.aboutOpen.album = !playback.aboutOpen.album">{{playback.aboutOpen.album ? 'Less' : 'More'}}</button>
-              <a class="np-about__src mono" ng-if="playback.about.album.url && !playback.kiosk" ng-href="{{playback.about.album.url}}" target="_blank" rel="noopener">WIKIPEDIA ↗</a>
-            </div>
-          </section>
-        </div>
       </div>
+      </div>
+
+      <!-- the Info face (12B–12D): the artist and the record as two rows under a hairline — a picture,
+           the name, one line of facts, the bio (five lines at 1920, four at 1440, three on a 10" panel,
+           none on a 7"), and the way to their pages in the library -->
+      <div class="np-about" ng-if="playback.npView === 'info' && playback.playerService.state.artist">
+        <div class="np-about__rule"></div>
+        <div class="np-about__row np-about__row--artist" ng-click="playback.goArtist()" ng-class="{'is-link': playback.canGo}">
+          <img class="np-about__img np-about__img--round" ng-if="playback.aboutArtistImg" ng-src="{{playback.aboutArtistImg}}" alt="" onerror="this.style.visibility='hidden'">
+          <div class="np-about__img np-about__img--round" ng-if="!playback.aboutArtistImg"></div>
+          <div class="np-about__body">
+            <div class="np-about__head">
+              <span class="np-about__name">{{playback.playerService.state.artist}}</span>
+              <span class="np-about__sub" ng-if="playback.aboutArtistSub">{{playback.aboutArtistSub}}</span>
+            </div>
+            <p class="np-about__text" ng-if="playback.about.artist.extract">{{playback.about.artist.extract}}</p>
+            <a class="np-about__src mono" ng-if="playback.about.artist.extract && playback.about.artist.url && !playback.kiosk" ng-href="{{playback.about.artist.url}}" target="_blank" rel="noopener" ng-click="$event.stopPropagation()">BIO · WIKIPEDIA</a>
+            <span class="np-about__src mono" ng-if="playback.about.artist.extract && (!playback.about.artist.url || playback.kiosk)">BIO · WIKIPEDIA</span>
+          </div>
+          <button type="button" class="np-about__go" ng-if="playback.canGo" aria-label="Open the artist"><span>Artist</span><span class="material-symbols-rounded">chevron_right</span></button>
+        </div>
+        <div class="np-about__row np-about__row--album" ng-if="playback.playerService.state.album" ng-click="playback.goAlbum()" ng-class="{'is-link': playback.canGo}">
+          <img class="np-about__img" ng-if="playback.playerService.state.albumart" ng-src="{{playback.playerService.getAlbumart(playback.playerService.state.albumart)}}" alt="">
+          <div class="np-about__img" ng-if="!playback.playerService.state.albumart"></div>
+          <div class="np-about__body">
+            <div class="np-about__name">{{playback.playerService.state.album}}</div>
+            <div class="np-about__sub" ng-if="playback.aboutAlbumSub">{{playback.aboutAlbumSub}}</div>
+            <p class="np-about__text np-about__text--album" ng-if="playback.about.album.extract">{{playback.about.album.extract}}</p>
+          </div>
+          <button type="button" class="np-about__go" ng-if="playback.canGo" aria-label="Open the album"><span>Album</span><span class="material-symbols-rounded">chevron_right</span></button>
+        </div>
       </div>
 
       <!-- the words (handoff 6a, 6d); on the phone they live in the sheet below -->
