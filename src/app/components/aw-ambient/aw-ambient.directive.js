@@ -17,8 +17,9 @@ class AwAmbientDirective {
 }
 
 class AwAmbientController {
-  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme, awTrackInfo, awPlayerSettings, awSleep) {
+  constructor($scope, $interval, $timeout, playerService, awAmbient, awSignal, awTheme, awTrackInfo, awPlayerSettings, awSleep, playQueueService) {
     'ngInject';
+    this.queue = playQueueService;
     this.player = awPlayerSettings;
     this.sleep = awSleep;   // asked for here so the player's word arrives at startup, on every screen
     this.info = awTrackInfo;
@@ -58,6 +59,16 @@ class AwAmbientController {
 
   get cover() { return this.state.albumart ? this.playerService.albumart : ''; }
   get year() { return this.info.year; }
+  // "#4": the track's place in the queue, when the queue has more than one
+  get trackNo() { const st = this.state, q = (this.queue && this.queue.queue) || []; return q.length > 1 && typeof st.position === 'number' ? '#' + (st.position + 1) : ''; }
+  // the queue entry after this one: its title, and its artist when that changes
+  get next() {
+    const q = (this.queue && this.queue.queue) || []; const st = this.state;
+    const n = typeof st.position === 'number' ? q[st.position + 1] : null;
+    if (!n || !n.name && !n.title) { return ''; }
+    const title = n.name || n.title, artist = n.artist && n.artist !== st.artist ? n.artist : '';
+    return artist ? title + ' · ' + artist : title;
+  }
 
   // "VOLUMIO · HEADPHONES": the zone, then the output it plays through
   get playerLine() {

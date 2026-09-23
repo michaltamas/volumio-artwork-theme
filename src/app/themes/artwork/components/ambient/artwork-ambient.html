@@ -26,7 +26,7 @@
         <div class="aw-amb__tag mono" ng-if="amb.paused">PAUSED</div>
         <div class="aw-amb__title">{{amb.state.title}}</div>
         <div class="aw-amb__artist" ng-if="amb.state.artist">{{amb.state.artist}}</div>
-        <div class="aw-amb__album" ng-if="amb.state.album">{{amb.state.album}}<span ng-if="amb.year">&nbsp;·&nbsp;{{amb.year}}</span></div>
+        <div class="aw-amb__album" ng-if="amb.state.album">{{amb.state.album}}<span ng-if="amb.year">&nbsp;·&nbsp;{{amb.year}}</span><span ng-if="amb.trackNo">&nbsp;·&nbsp;{{amb.trackNo}}</span></div>
 
         <!-- format pill + bit perfect + time (cover-led); the night and the other layouts fold
              these into one mono line -->
@@ -50,6 +50,11 @@
           <span ng-if="amb.formatText">· {{amb.formatText}}</span>
           <span ng-if="amb.duration">· {{amb.elapsed}} / {{amb.duration}}</span>
         </div>
+        <!-- what comes next, under a rule (cover-led) -->
+        <div class="aw-amb__next" ng-if="amb.next">
+          <div class="aw-amb__next-eyebrow mono">NEXT</div>
+          <div class="aw-amb__next-title">{{amb.next}}</div>
+        </div>
       </div>
     </div>
 
@@ -63,4 +68,6 @@
 
   <!-- the seek hairline stays flush to the bottom edge, outside the drift; gone when stopped -->
   <div class="aw-amb__seek" ng-if="!amb.stopped && amb.duration"><div class="aw-amb__seek-fill" ng-style="{width: amb.playedPct + '%'}"></div></div>
+  <!-- cover-led: elapsed and total at the ends of the seek bar -->
+  <div class="aw-amb__times mono" ng-if="!amb.stopped && amb.duration"><span>{{amb.elapsed}}</span><span>{{amb.duration}}</span></div>
 </div>

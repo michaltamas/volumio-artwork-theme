@@ -124,6 +124,45 @@ body#artwork .aw-amb.is-night {
   .aw-amb__seek-fill { background: rgba(242, 243, 245, .5); }
 }
 
+/* --- cover-led, after the community's mockup (1612×1000): the cover fills three quarters of
+   the height on the left, the player's name top-left and a small clock top-right on one
+   baseline, the text centred beside the cover with what comes next under a rule, and the seek
+   bar across the whole width beneath the cover with the times at its ends. Everything in vh/vw
+   of that frame: cover 750 = 75vh, top 118 = 11.8vh, sides 68 = 4.2vw, gap 57 = 3.5vw. ----- */
+body#artwork .aw-amb--cover {
+  --amb-x: clamp(28px, 4.2vw, 96px);
+  --amb-top: 11.8vh;
+  --amb-cover: 75vh;
+  --amb-gap: clamp(24px, 3.5vw, 64px);
+  .aw-amb__stage { inset: auto; left: var(--amb-x); right: var(--amb-x); top: var(--amb-top); height: var(--amb-cover); padding: 0; align-items: center; }
+  .aw-amb__cover { width: var(--amb-cover); height: var(--amb-cover); box-shadow: 0 3vh 8vh -2vh rgba(0, 0, 0, .7); }
+  .aw-amb__text { flex: 1; min-width: 0; }
+  .aw-amb__title { font-size: clamp(24px, 5.6vh, 64px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; -webkit-line-clamp: 2; }
+  .aw-amb__artist { font-size: clamp(16px, 3vh, 34px); font-weight: 700; color: var(--amb-ink-2); margin-top: 1.6vh; }
+  .aw-amb__album { font-size: clamp(13px, 2.4vh, 26px); color: var(--amb-ink-3); margin-top: .8vh; }
+  .aw-amb__row { margin-top: clamp(16px, 3.6vh, 40px); gap: clamp(8px, 1.4vh, 16px); }
+  .aw-amb__time--inline, .aw-amb__time--block { display: none; }   /* the times are at the seek bar's ends */
+  .aw-amb__bp .mono { color: var(--ok); }
+  .aw-amb__next { margin-top: clamp(20px, 5.5vh, 60px); padding-top: clamp(20px, 4.4vh, 48px); border-top: 1px solid var(--amb-pill-line); }
+  .aw-amb__next-eyebrow { font-size: clamp(10px, 1.5vh, 15px); letter-spacing: .16em; color: var(--amb-ink-3); }
+  .aw-amb__next-title { font-size: clamp(14px, 2.2vh, 24px); color: var(--amb-ink); margin-top: 1vh; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aw-amb__name--corner { left: var(--amb-x); bottom: auto; top: clamp(20px, 5.6vh, 60px); font-size: clamp(11px, 1.5vh, 15px); letter-spacing: .2em; }
+  .aw-amb__clock { top: clamp(16px, 4.8vh, 52px); right: var(--amb-x); font-size: clamp(20px, 3vh, 34px); letter-spacing: .02em; }
+  .aw-amb__ampm { font-size: .5em; }
+  .aw-amb__sleep { bottom: auto; top: clamp(16px, 4.8vh, 52px); right: calc(var(--amb-x) + 12vh); }
+  .aw-amb__seek { left: var(--amb-x); right: var(--amb-x); bottom: auto; top: calc(var(--amb-top) + var(--amb-cover) + 4.9vh); height: 6px; border-radius: 3px; overflow: hidden; }
+  .aw-amb__times { position: absolute; left: var(--amb-x); right: var(--amb-x); top: calc(var(--amb-top) + var(--amb-cover) + 4.9vh + 6px + 1.4vh); display: flex; justify-content: space-between; font-size: clamp(11px, 1.7vh, 17px); letter-spacing: .06em; color: var(--amb-ink-2); }
+  &.is-night .aw-amb__next, &.is-night .aw-amb__times { display: none; }
+  /* the bar and its times drift with the composition, so their left edge stays on the cover's */
+  .aw-amb__seek, .aw-amb__times { animation: aw-amb-drift 240s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) { .aw-amb__seek, .aw-amb__times { animation: none; } }
+}
+body#artwork .aw-amb__times { display: none; }
+body#artwork .aw-amb__next { display: none; }
+body#artwork .aw-amb--cover .aw-amb__next { display: block; }
+body#artwork .aw-amb--cover .aw-amb__times { display: flex; }
+body#artwork .aw-amb--cover.is-night .aw-amb__next, body#artwork .aw-amb--cover.is-night .aw-amb__times { display: none; }
+
 /* --- clock-led: the clock large in the middle, the track small beneath it ---------------- */
 body#artwork .aw-amb--clock {
   --amb-veil-0: rgba(6, 8, 10, .62); --amb-veil-1: rgba(6, 8, 10, .70); --amb-veil-2: rgba(6, 8, 10, .78);
