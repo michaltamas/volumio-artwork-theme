@@ -611,7 +611,8 @@ body#artwork .aw-amb-save { margin: 14px 0 0; .control-buttons { display: flex; 
 /* ---- settings search (handoff 11a): a 46px pill; rows pad 12 14 r12, title 15/600, page 13 muted,
    a plugin's name as a mono eyebrow; the focused row lit with an outline; one quiet line when
    nothing matches; an honest spinner while plugin sections are still being read. ---- */
-body#artwork .aw-ssearch { margin: 0 0 22px; }
+/* 20px under the title, no wider than the design's frame (720 less its 34px sides) */
+body#artwork .aw-ssearch { margin: 20px 0 0; max-width: 652px; }
 body#artwork .aw-ssearch__field { display: flex; align-items: center; gap: 11px; height: 46px; padding: 0 16px; border-radius: 999px; margin: 0; font-weight: 400; cursor: text;
   background: var(--fill-10); border: 1px solid var(--fill-13); transition: background-color .15s ease, border-color .15s ease;
   > .material-symbols-rounded { font-size: 21px; color: var(--ink-3); }
@@ -632,6 +633,7 @@ body#artwork .aw-ssearch__chev { font-size: 20px; color: var(--ink-dim); }
 body#artwork .aw-ssearch__loading { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding: 0 14px; .mono { font-size: 10px; letter-spacing: .16em; color: var(--ink-dim); } }
 body#artwork .aw-ssearch__spin { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--fill-20); border-top-color: var(--ink-3); animation: aw-spin .9s linear infinite; }
 body#artwork .aw-ssearch__none { padding: 34px 14px 30px; font-size: 16px; color: #5e646c; }
+body#artwork aw-settings-search + .aw-settings-hint { margin-top: 24px; }
 body#artwork aw-settings-search.is-active ~ .aw-settings-hint { display: none; }
 @keyframes aw-spin { to { transform: rotate(360deg); } }
 /* the section a result landed on: lit for 600ms */
