@@ -33,6 +33,7 @@ All notable changes to this project are documented here. The format is based on
 - The Settings landing on a phone was 216 px wide.
 - Lyrics: a track without an artist made LRCLIB answer 400; it goes straight to the search by title now.
 - On the phone the pins sat in a shelf of their own that scrolled sideways; they wrap into the same grid as Recent albums.
+- The album page's title sits 24 px under the cover instead of 10.
 
 ## [1.6.2] - 2026-09-21
 
