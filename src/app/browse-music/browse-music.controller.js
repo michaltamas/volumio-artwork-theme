@@ -771,6 +771,7 @@ class BrowseMusicController {
       <div
           uib-dropdown
           on-toggle="browse.toggledItem(open, $event)"
+          aw-menu-place
           class="hamburgerMenu">
         <button id="hamburgerMenuBtn-${listIndex}-${itemIndex}" class="ghost-btn action-btn" uib-dropdown-toggle>
           <i class="fa fa-ellipsis-v"></i>

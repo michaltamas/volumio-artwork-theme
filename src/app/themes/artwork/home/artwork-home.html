@@ -83,7 +83,7 @@
             <img class="music-card__img" ng-if="home.pinArt(p)" ng-src="{{home.pinArt(p)}}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
             <div class="home-pin__glyph" ng-style="{display: home.pinArt(p) ? 'none' : 'grid'}"><span class="material-symbols-rounded">{{home.pins.glyph(p)}}</span></div>
             <!-- the tile's own menu: the only place a pin is removed, so a mis-tap never unpins -->
-            <div class="home-pin__menu" uib-dropdown ng-click="$event.stopPropagation()">
+            <div class="home-pin__menu" uib-dropdown aw-menu-place ng-click="$event.stopPropagation()">
               <button type="button" class="home-pin__more" uib-dropdown-toggle aria-label="Options for {{p.title}}" aw-pointerdown="$event.stopPropagation()"><span class="material-symbols-rounded">more_horiz</span></button>
               <ul class="dropdown-menu buttonsGroup" uib-dropdown-menu>
                 <li ng-click="home.openPin(p)"><a href><span class="material-symbols-rounded">{{p.type === 'webradio' || p.type === 'mywebradio' ? 'play_arrow' : 'open_in_new'}}</span><span>{{p.type === 'webradio' || p.type === 'mywebradio' ? 'Play' : 'Open'}}</span></a></li>
