@@ -434,6 +434,7 @@ body#artwork #np.aw-np-out { animation: aw-np-out .38s cubic-bezier(.4, 0, .6, 1
     .np-about__sub { display: block; margin-top: 2px; }
     .np-about__text { margin-top: 10px; font-size: 15px; -webkit-line-clamp: 5; }
     .np-about__text--album { display: -webkit-box; -webkit-line-clamp: 3; }
+    .np-about__row--album { align-items: start; }   /* with a paragraph the cover and the pill sit at the title, like the artist's */
     .np-about__src { margin-top: 8px; }
     .np-about__go { height: 40px; padding: 0 10px 0 16px; > span:first-child { font-size: 14px; } .material-symbols-rounded { font-size: 20px; } }
   }
