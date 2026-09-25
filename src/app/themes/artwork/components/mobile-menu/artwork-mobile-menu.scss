@@ -1,17 +1,20 @@
 /* Phone menu sheet (mockup "Mobile — Menu", values from its inline CSS): 308px sheet 14px from
    the edges over a dimmed, blurred screen; zone head, bit-perfect chip, 56px rows, power foot. */
 body#artwork .aw-mm { position: fixed; inset: 0; z-index: 30; visibility: hidden; pointer-events: none;
-  transition: visibility 0s linear .3s;
+  transition: visibility 0s linear .24s;
   &.open { visibility: visible; pointer-events: auto; transition-delay: 0s; } }
-body#artwork .aw-mm__scrim { position: absolute; inset: 0; background: var(--scrim-page); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-  opacity: 0; transition: opacity .28s ease; }
+/* the scrim only dims: a blur behind it was a second full-screen backdrop filter animating on
+   a phone's GPU, and the sheet's own blur is what the eye reads */
+body#artwork .aw-mm__scrim { position: absolute; inset: 0; background: var(--scrim-page);
+  opacity: 0; transition: opacity .24s ease; }
 body#artwork .aw-mm.open .aw-mm__scrim { opacity: 1; }
 body#artwork .aw-mm__sheet {
   position: absolute; left: 14px; top: 14px; bottom: 14px; width: unquote("min(308px, calc(100vw - 28px))"); border-radius: 22px; overflow: hidden;
   display: flex; flex-direction: column; padding: 22px 14px 16px;
-  background: var(--panel-fill); backdrop-filter: blur(48px) saturate(1.15); -webkit-backdrop-filter: blur(48px) saturate(1.15);
+  background: var(--panel-fill); backdrop-filter: blur(24px) saturate(1.15); -webkit-backdrop-filter: blur(24px) saturate(1.15);   /* 48 read the same and cost twice */
   border: 1px solid var(--fill-11); box-shadow: 40px 0 90px -30px var(--shadow-deep); color: var(--ink-1);
-  transform: translateX(-24px); opacity: 0; transition: transform .32s cubic-bezier(.2, .7, .2, 1), opacity .26s ease;
+  transform: translateX(-24px); opacity: 0; transition: transform .24s cubic-bezier(.2, .7, .2, 1), opacity .2s ease;
+  will-change: transform, opacity;
 }
 body#artwork .aw-mm.open .aw-mm__sheet { transform: none; opacity: 1; }
 body#artwork .aw-mm__head { display: flex; align-items: center; gap: 13px; padding: 0 12px; }
